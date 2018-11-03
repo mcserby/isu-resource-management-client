@@ -1,0 +1,15 @@
+.principal {
+  width: 100%;
+  position: relative;
+}
+.units-container {
+  display: inline-grid;
+  grid-template-columns: auto auto auto;
+  background-color: Tomato;
+  padding: 10px;
+  grid-gap: 50px;
+}
+
+.unit-wrapper {
+
+}
