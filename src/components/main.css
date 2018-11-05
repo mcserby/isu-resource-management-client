@@ -1,0 +1,35 @@
+.main-wrapper {
+  background: linear-gradient(to bottom, #597FDF 0%, #597FDF 41.8%, #83A0E9 42.2%,#83A0E9 50%, #83A0E9 100%); /* W3C */
+}
+
+.menu-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  padding-bottom: 30vh;
+}
+
+.menu-link {
+  color: black;
+  background-color: #3764D6;
+  border-color: #3764D6;
+  font-weight: 600;
+  font-size: larger;
+  padding: 10px;
+  margin: 5px;
+  width: 30%;
+}
+
+.menu-link:hover {
+  color: #fff;
+  background-color: #1140B4;
+  border-color: #1140B4;
+}
+
+#headline {
+  margin-bottom: 50px;
+  font-size: 3em;
+}
