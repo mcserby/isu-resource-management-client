@@ -5,9 +5,10 @@
 .units-container {
   display: inline-grid;
   grid-template-columns: auto auto auto;
-  background-color: Tomato;
+  background-color: dodgerblue;
   padding: 10px;
   grid-gap: 50px;
+  width: 100%;
 }
 
 .unit-wrapper {

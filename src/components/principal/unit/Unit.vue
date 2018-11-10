@@ -3,10 +3,16 @@
     <div class="unit-header">
       {{unit.id}}
     </div>
+    <hr/>
     <div v-for="resource in unit.resources" v-bind:key="resource.name">
-      {{resource.name}}
+      <Resource :resource="resource"></Resource>
     </div>
-    <button class="btn btn-primary" @click="clearResources()">Clear Resources</button>
+    <div>
+      <button class="btn btn-primary" @click="clearResources()">Actualizează detașamentul</button>
+    </div>
+    <div>
+      <button class="btn btn-primary" @click="addResources()">Adauga resurse</button>
+    </div>
   </div>
 
 </template>
@@ -14,14 +20,21 @@
 <script>
 
 import A from '../../../constants/actions';
+import Resource from './resource/Resource.vue';
 
 export default {
   name: 'Unit',
   props: ['unit'],
-  components: {},
+  components: {
+    Resource,
+  },
   methods: {
     clearResources() {
       this.$store.dispatch(A.CLEAR_UNIT_RESOURCES, this.unit.id);
+      this.$store.dispatch(A.OPEN_ADD_RESOURCE_DIALOG, this.unit.id);
+    },
+    addResources() {
+      this.$store.dispatch(A.OPEN_ADD_RESOURCE_DIALOG, this.unit.id);
     }
   }
 }
