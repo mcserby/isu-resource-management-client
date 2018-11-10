@@ -1,40 +1,26 @@
 import A from '../../constants/actions'
 import M from '../../constants/mutations'
+import Resource from '../../contracts/resource'
+import Unit from '../../contracts/unit'
 import Vue from 'vue'
 
 // can be moved or removed, use contract for unit
-const defaultUnits = [{
-  id: 'CLUJ',
-  resources: [{
-    name: 'BMW',
-    plateNumber: 'CJ21ABC',
-    identificationNumber: '241',
-    crew: ['cpt. plt. Serby']
-  }, {name: 'AUDI', plateNumber: 'CJ21ABC', identificationNumber: '241', crew: ['cpt. plt. Serby']}],
-},
-  {
-    id: 'DEJ',
-    resources: [{
-      name: 'AUTOBASCULANTA',
-      plateNumber: 'CJ21ABC',
-      identificationNumber: '241',
-      crew: ['cpt. plt. Serby']
-    }, {name: 'MOTOPERCUTOR', plateNumber: 'CJ21ABC', identificationNumber: '241', crew: ['cpt. plt. Serby']}],
-  },
-  {
-    id: 'FLORESTI',
-    resources: [{
-      name: 'FANDROMA',
-      plateNumber: 'CJ21ABC',
-      identificationNumber: '241',
-      crew: ['cpt. plt. Serby']
-    }, {name: 'TAF', plateNumber: 'CJ21ABC', identificationNumber: '241', crew: ['cpt. plt. Serby']}, {
-      name: 'CHOPPA',
-      plateNumber: 'CJ21ABC',
-      identificationNumber: '241',
-      crew: ['cpt. plt. Serby']
-    }],
-  }]
+const defaultUnits = [
+  new Unit('Departament 1 CLUJ',[
+    new Resource('BMW','CJ21ABC', '241', ['cpt. plt. Serby']),
+    new Resource('AUDI','CJ21ABC', '241', ['cpt. plt. Serby'])
+    ]),
+  new Unit('Departament 2 CLUJ',[
+    new Resource('AUTOBASCULANTA','CJ21ABC', '123', ['cpt. plt. Serby']),
+    new Resource('MOTOSTIVUITOR','CJ21ABC', '456', ['cpt. plt. Serby']),
+    new Resource('AMBULANTA','CJ55URG', '666', ['sofer ambulanta Fifth'])
+  ]),
+  new Unit('GILAU',[
+    new Resource('FANDROMA','CJ21ABC', '123', ['cpt. plt. Serby']),
+    new Resource('CHOPPA','CJ21ABC', '456', ['cpt. plt. Serby']),
+    new Resource('AMBULANTA','CJ55URG', '666', ['sofer ambulanta Fifth'])
+  ])
+]
 
 const state = {
   units: defaultUnits,

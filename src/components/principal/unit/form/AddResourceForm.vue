@@ -58,6 +58,7 @@
 <script>
 
   import A from '../../../../constants/actions';
+  import Resource from '../../../../contracts/resource';
 
   export default {
     name: 'AddResourceForm',
@@ -74,21 +75,28 @@
 
     methods: {
       saveAndAddAnother(){
-        //TODO a new object should be constructed when contracts are ready
-        const crew = this.crew.split('\n');
-        this.$store.dispatch(A.ADD_RESOURCE, {name: this.name, plateNumber: this.plateNumber, identificationNumber: this.identificationNumber, crew: crew});
-        this.name = this.plateNumber = this.identificationNumber = this.crew = '';
+        this.addResouce();
+        this.clearFormValues();
       },
       saveAndClose(){
-        const crew = this.crew.split('\n');
-        this.$store.dispatch(A.ADD_RESOURCE, {name: this.name, plateNumber: this.plateNumber, identificationNumber: this.identificationNumber, crew: crew});
-        this.name = this.plateNumber = this.identificationNumber = this.crew = '';
-        this.$store.dispatch(A.CLOSE_ADD_RESOURCE_DIALOG);
+        this.addResouce();
+        this.clearFormValues();
+        this.closeAddResourceDialog();
         //TODO save -> send unit to backend
       },
       cancel(){
+        this.closeAddResourceDialog();
+      },
+      addResouce(){
+        this.$store.dispatch(A.ADD_RESOURCE, new Resource(this.name, this.plateNumber, this.identificationNumber, this.crew.split('\n')));
+      },
+      clearFormValues(){
+        this.name = this.plateNumber = this.identificationNumber = this.crew = '';
+      },
+      closeAddResourceDialog(){
         this.$store.dispatch(A.CLOSE_ADD_RESOURCE_DIALOG);
       }
+
     },
   }
 </script>
