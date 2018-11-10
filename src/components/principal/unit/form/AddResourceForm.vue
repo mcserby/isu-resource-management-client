@@ -75,11 +75,11 @@
 
     methods: {
       saveAndAddAnother(){
-        this.addResouce();
+        this.addResource();
         this.clearFormValues();
       },
       saveAndClose(){
-        this.addResouce();
+        this.addResource();
         this.clearFormValues();
         this.closeAddResourceDialog();
         //TODO save -> send unit to backend
@@ -87,7 +87,7 @@
       cancel(){
         this.closeAddResourceDialog();
       },
-      addResouce(){
+      addResource(){
         this.$store.dispatch(A.ADD_RESOURCE, new Resource(this.name, this.plateNumber, this.identificationNumber, this.crew.split('\n')));
       },
       clearFormValues(){
