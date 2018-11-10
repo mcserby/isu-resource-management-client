@@ -1,4 +1,4 @@
-// Resource contract
+// Unit contract
 
 class Unit {
   constructor(id, resources) {
