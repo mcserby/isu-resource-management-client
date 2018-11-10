@@ -1,0 +1,95 @@
+<template>
+    <div class="dialogContainer" style="display: block">
+        <div class="dialog modal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered add-resource-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Adaugă resurse</h5>
+                    </div>
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <label for="name">Numele resursei</label>
+                        <input type="text" v-model="name" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Numele resursei">
+                        <small id="nameHelp" class="form-text text-muted">Numele resursei</small>
+                      </div>
+                      <div class="form-group">
+                        <label for="plateNumber">Număr de înmatriculare/label</label>
+                        <input type="text" v-model="plateNumber" class="form-control" id="plateNumber" aria-describedby="plateNumberHelp" placeholder="Număr de înmatriculare">
+                        <small id="plateNumberHelp" class="form-text text-muted">Număr de înmatriculare</small>
+                      </div>
+                      <div class="form-group">
+                        <label for="identificationNumber">Număr de identificare</label>
+                        <input type="text" v-model="identificationNumber" class="form-control" id="identificationNumber" aria-describedby="identificationNumberHelp" placeholder="Număr de identificare">
+                        <small id="identificationNumberHelp" class="form-text text-muted">Număr de identificare</small>
+                      </div>
+                      <div class="form-group">
+                        <label for="crew">Echipaj</label>
+                        <textarea v-model="crew" class="form-control" id="crew" rows="3"></textarea>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                            <button
+                                    type="button"
+                                    :class="['btn', 'btn-primary'].join(' ')"
+                                    @click="saveAndAddAnother"
+                            >
+                                Salvează și adaugă o nouă resursă
+                            </button>
+                      <button
+                        type="button"
+                        :class="['btn', 'btn-primary'].join(' ')"
+                        @click="saveAndClose"
+                      >
+                        Salvează și închide
+                      </button>
+                      <button
+                        type="button"
+                        :class="['btn', 'btn-primary'].join(' ')"
+                        @click="cancel"
+                      >
+                        Închide fără a salva
+                      </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+
+  import A from '../../../../constants/actions';
+
+  export default {
+    name: 'AddResourceForm',
+    data: () => {
+      return {
+        name: '',
+        plateNumber: '',
+        identificationNumber: '',
+        crew: '',
+      }
+    },
+    computed: {
+    },
+
+    methods: {
+      saveAndAddAnother(){
+        //TODO a new object should be constructed when contracts are ready
+        const crew = this.crew.split('\n');
+        this.$store.dispatch(A.ADD_RESOURCE, {name: this.name, plateNumber: this.plateNumber, identificationNumber: this.identificationNumber, crew: crew});
+        this.name = this.plateNumber = this.identificationNumber = this.crew = '';
+      },
+      saveAndClose(){
+        const crew = this.crew.split('\n');
+        this.$store.dispatch(A.ADD_RESOURCE, {name: this.name, plateNumber: this.plateNumber, identificationNumber: this.identificationNumber, crew: crew});
+        this.name = this.plateNumber = this.identificationNumber = this.crew = '';
+        this.$store.dispatch(A.CLOSE_ADD_RESOURCE_DIALOG);
+        //TODO save -> send unit to backend
+      },
+      cancel(){
+        this.$store.dispatch(A.CLOSE_ADD_RESOURCE_DIALOG);
+      }
+    },
+  }
+</script>
+<style src="./addResourceForm.css"></style>
