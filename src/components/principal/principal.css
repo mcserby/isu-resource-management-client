@@ -5,7 +5,7 @@
 .units-container {
   display: inline-grid;
   grid-template-columns: auto auto auto;
-  background-color: dodgerblue;
+  background-color: #bae1f2;
   padding: 10px;
   grid-gap: 50px;
   width: 100%;
