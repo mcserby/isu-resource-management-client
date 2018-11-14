@@ -20,7 +20,7 @@ class WebsocketClient {
   }
 
   connect = function () {
-    if (!Boolean(this.connected)){
+    if (!this.connected){
       this.socket = new SockJS(SERVER_IP + ':' + PORT_NUMBER + '/' + RESOURCE_PATH);
       this.stompClient = Stomp.over(this.socket);
       this.stompClient.connect({'id': 'sub-1'}, response => {
