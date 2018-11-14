@@ -4,6 +4,7 @@ import Main from '../components/Main.vue';
 import Services from '../components/services/Services.vue';
 import Uat from '../components/uat/Uat.vue';
 import Principal from '../components/principal/Principal.vue';
+import WebsocketClient from '../components/websocket/WebsocketClient.vue';
 
 Vue.use(Router)
 
@@ -29,5 +30,10 @@ export default new Router({
       name: 'UAT',
       component: Uat
     },
+    {
+      path: '/test',
+      name: 'WebsocketClient',
+      component: WebsocketClient
+    }
   ]
 })
