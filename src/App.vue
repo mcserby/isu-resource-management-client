@@ -5,7 +5,21 @@
 </template>
 
 <script>
+  import Vue from 'vue';
+  import WebsocketClient from './websocket/websocketClient.js';
+  Vue.mixin({
+    data: function() {
+      return {
+        websocketClient: new WebsocketClient()
+      }
+    }
+  });
 export default {
-  name: 'App'
+  name: 'App',
+  beforeCreate: function() {
+    this.websocketClient = new WebsocketClient();
+    this.websocketClient.connect();
+  }
+
 }
 </script>
