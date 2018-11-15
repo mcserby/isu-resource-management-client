@@ -27,7 +27,7 @@ export default {
       return this.$store.state.principalStore.resourceDialogIsOpen;
     },
   },
-  beforeMount: function () {
+  mounted: function () {
     let subUnits = this.websocketClient.subscribe('subunits');
     console.log(subUnits);
   }

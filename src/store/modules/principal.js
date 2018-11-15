@@ -12,13 +12,43 @@ const defaultUnits = [
     ]),
   new Unit('Departament 2 CLUJ',[
     new Resource('AUTOBASCULANTA','CJ21ABC', '123', ['cpt. plt. Serby']),
-    new Resource('MOTOSTIVUITOR','CJ21ABC', '456', ['cpt. plt. Serby']),
-    new Resource('AMBULANTA','CJ55URG', '666', ['sofer ambulanta Fifth'])
+    new Resource('MOTOSTIVUITOR','CJ21ABC', '456', ['cpt. plt. Serby', 'tatuca\'', 'iliescu']),
+    new Resource('AMBULANTA','CJ55URG', '666', ['sofer ambulanta Fifth', 'copilu\''])
   ]),
   new Unit('GILAU',[
     new Resource('FANDROMA','CJ21ABC', '123', ['cpt. plt. Serby']),
     new Resource('CHOPPA','CJ21ABC', '456', ['cpt. plt. Serby']),
-    new Resource('AMBULANTA','CJ55URG', '666', ['sofer ambulanta Fifth'])
+    new Resource('AMBULANTA','CJ55URG', '666', ['sofer ambulanta Fifth', 'boss care nu face nimic'])
+  ]),
+  new Unit('Deva',[
+    new Resource('FANDROMA','CJ21ABC', '123', ['cpt. plt. Serby']),
+    new Resource('CHOPPA','CJ21ABC', '456', ['cpt. plt. Serby']),
+    new Resource('AMBULANTA','CJ55URG', '666', ['sofer ambulanta Fifth', 'boss care nu face nimic'])
+  ]),
+  new Unit('Vatra Dornei',[
+    new Resource('FANDROMA','CJ21ABC', '123', ['cpt. plt. Serby']),
+    new Resource('CHOPPA','CJ21ABC', '456', ['cpt. plt. Serby']),
+    new Resource('AMBULANTA','CJ55URG', '666', ['sofer ambulanta Fifth', 'boss care nu face nimic'])
+  ]),
+  new Unit('Costesti',[
+    new Resource('FANDROMA','CJ21ABC', '123', ['cpt. plt. Serby']),
+    new Resource('CHOPPA','CJ21ABC', '456', ['cpt. plt. Serby']),
+    new Resource('AMBULANTA','CJ55URG', '666', ['sofer ambulanta Fifth', 'boss care nu face nimic'])
+  ]),
+  new Unit('Scornicesti',[
+    new Resource('FANDROMA','CJ21ABC', '123', ['cpt. plt. Serby']),
+    new Resource('CHOPPA','CJ21ABC', '456', ['cpt. plt. Serby']),
+    new Resource('AMBULANTA','CJ55URG', '666', ['sofer ambulanta Fifth', 'boss care nu face nimic'])
+  ]),
+  new Unit('Mamaia',[
+    new Resource('FANDROMA','CJ21ABC', '123', ['cpt. plt. Serby']),
+    new Resource('CHOPPA','CJ21ABC', '456', ['cpt. plt. Serby']),
+    new Resource('AMBULANTA','CJ55URG', '666', ['sofer ambulanta Fifth', 'boss care nu face nimic'])
+  ]),
+  new Unit('Voronet',[
+    new Resource('FANDROMA','CJ21ABC', '123', ['cpt. plt. Serby']),
+    new Resource('CHOPPA','CJ21ABC', '456', ['cpt. plt. Serby']),
+    new Resource('AMBULANTA','CJ55URG', '666', ['sofer ambulanta Fifth', 'boss care nu face nimic'])
   ])
 ]
 
