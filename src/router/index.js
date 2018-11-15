@@ -28,6 +28,6 @@ export default new Router({
       path: '/uat',
       name: 'UAT',
       component: Uat
-    },
+    }
   ]
 })
