@@ -1,6 +1,8 @@
 .resource-wrapper {
   display: inline-grid;
   background-color: #83A0E9;
+  margin: 4px;
+  position: relative;
 }
 
 .resource-name {
@@ -39,3 +41,16 @@
 .resource-element-container {
   margin: 0px;
 }
+
+.resource-plate-number-summary {
+  background-color: #29a2d6;
+  font-size: smaller;
+}
+
+.resource-container {
+  position: absolute;
+  left: -70px;
+  top: 15px;
+  z-index: 1000;
+}
+

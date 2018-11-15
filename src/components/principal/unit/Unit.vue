@@ -5,7 +5,7 @@
     </div>
     <hr/>
     <div v-for="resource in unit.resources" v-bind:key="resource.name">
-      <Resource :resource="resource"></Resource>
+      <ResourceSummary :resource="resource"></ResourceSummary>
     </div>
     <div>
       <button class="btn btn-primary" @click="clearResources()">Actualizează detașamentul</button>
@@ -20,13 +20,13 @@
 <script>
 
 import A from '../../../constants/actions';
-import Resource from './resource/Resource.vue';
+import ResourceSummary from './resource/ResourceSummary.vue';
 
 export default {
   name: 'Unit',
   props: ['unit'],
   components: {
-    Resource,
+    ResourceSummary,
   },
   methods: {
     clearResources() {
