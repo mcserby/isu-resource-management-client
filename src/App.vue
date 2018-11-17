@@ -5,21 +5,14 @@
 </template>
 
 <script>
-  import Vue from 'vue';
-  import WebsocketClient from './websocket/websocketClient.js';
-  Vue.mixin({
-    data: function() {
-      return {
-        websocketClient: new WebsocketClient()
-      }
-    }
-  });
-export default {
-  name: 'App',
-  beforeCreate: function() {
-    this.websocketClient = new WebsocketClient();
-    this.websocketClient.connect();
-  }
+  import Vue from 'vue'
+  import A from './constants/actions'
 
-}
+  export default {
+    name: 'App',
+    beforeMount: function () {
+      console.log("App.vue mounted");
+      this.$store.dispatch(A.WEBSOCKET_CONNECT);
+    }
+  }
 </script>
