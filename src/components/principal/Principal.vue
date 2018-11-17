@@ -12,6 +12,8 @@
 <script>
 import Unit from './unit/Unit.vue';
 import AddResourceForm from './unit/form/AddResourceForm.vue';
+import A from '../../constants/actions';
+import WebsocketSubscribe from '../../contracts/websocketSubscribe';
 
 export default {
   name: 'Principal',
@@ -28,8 +30,14 @@ export default {
     },
   },
   mounted: function () {
-    let subUnits = this.websocketClient.subscribe('subunits');
-    console.log(subUnits);
+    console.log("Principal.vue mounted");
+    let onUnitsReceived = function(response){
+      console.log(response);
+    }
+    let onError = function(error){
+      console.err(error);
+    }
+    this.$store.dispatch(A.WEBSOCKET_SUBSCRIBE, new WebsocketSubscribe('subunits', onUnitsReceived, onError));
   }
 }
 </script>
