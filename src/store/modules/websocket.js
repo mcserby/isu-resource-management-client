@@ -47,9 +47,17 @@ const mutations = {
     state.connected = false;
   },
   [M.WEBSOCKET_SUBSCRIBE] (state, websocketSubscribe) {
-    if (state.websocketStompClient) {
-      state.websocketStompClient.subscribe('/topic/' + websocketSubscribe.topicName, websocketSubscribe.successCallbackFunction, websocketSubscribe.errorCallbackFunction)
-    }
+      var sendSubscribe = setInterval(websocketSend => {
+        if(state.websocketStompClient && state.connected === true){
+          state.websocketStompClient.subscribe('/topic/' + websocketSubscribe.topicName,
+            websocketSubscribe.successCallbackFunction,
+            websocketSubscribe.errorCallbackFunction);
+            clearInterval(sendSubscribe);
+        } else {
+          console.log('Not connected to websocket yet!!!');
+        }
+      }, 100);
+
   },
   [M.WEBSOCKET_SEND] (state, websocketSend) {
     if (state.websocketStompClient && state.websocketStompClient.connected) {

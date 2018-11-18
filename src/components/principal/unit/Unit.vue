@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="unit-locked">
     <div class="unit-header">
       {{unit.id}}
     </div>
@@ -7,11 +7,15 @@
     <div v-for="resource in unit.resources" v-bind:key="resource.name">
       <ResourceSummary :resource="resource"></ResourceSummary>
     </div>
-    <div>
-      <button class="btn btn-primary" @click="clearResources()">Actualizează detașamentul</button>
+    <div style="margin-top: 50px">
+      <button class="btn btn-primary" @click="clearResources()">
+        <span class="button-font-size">Actualizează</span>
+      </button>
     </div>
     <div>
-      <button class="btn btn-primary" @click="addResources()">Adauga resurse</button>
+      <button class="btn btn-primary" @click="addResources()">
+        <span class="button-font-size">Adauga resurse</span>
+      </button>
     </div>
   </div>
 
@@ -21,6 +25,8 @@
 
 import A from '../../../constants/actions';
 import ResourceSummary from './resource/ResourceSummary.vue';
+import WebsocketSend from '../../../contracts/websocketSend';
+import LockSubUnitRequest from '../../../contracts/edit/lockSubUnitRequest';
 
 export default {
   name: 'Unit',
@@ -30,6 +36,8 @@ export default {
   },
   methods: {
     clearResources() {
+      this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('locksubunit', new LockSubUnitRequest(this.unit.id)));
+
       this.$store.dispatch(A.CLEAR_UNIT_RESOURCES, this.unit.id);
       this.$store.dispatch(A.OPEN_ADD_RESOURCE_DIALOG, this.unit.id);
     },
