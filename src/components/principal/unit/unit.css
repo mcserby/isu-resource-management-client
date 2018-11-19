@@ -2,7 +2,9 @@
   font-size: x-large;
   font-weight: 800;
   font: Arial;
-  color: #186181;
+  color: #bae1f2;
+  background: #186181;
+  text-align:center;
 }
 
 .button-font-size {
@@ -39,5 +41,9 @@
     #FFFFFF 10px,
     #FFFFFF 20px
   );
+}
+
+.unit-buttons {
+  min-height: 100%;
 }
 

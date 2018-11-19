@@ -1,8 +1,5 @@
 <template>
-  <div class="main-wrapper">
-<!--    <div id="headline">
-      ISU - Managementul resurselor
-    </div>-->
+  <div class="main-wrapper app-sa">
     <div class = "menu-wrapper">
       <div id="headline">
         ISU EasyManage

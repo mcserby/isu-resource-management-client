@@ -86,20 +86,20 @@ const mutations = {
       state.units.push(u);
     })
   },
-  [M.CLEAR_UNIT_RESOURCES] (state, unitId) {
-    let unit = state.units.find(u => u.id === unitId)
+  [M.CLEAR_UNIT_RESOURCES] (state, unitName) {
+    let unit = state.units.find(u =>  u.name === unitName)
     if (unit) {
       Vue.set(unit, 'resources', [])
     }
   },
-  [M.OPEN_ADD_RESOURCE_DIALOG] (state, unitId) {
-    let unit = state.units.find(u => u.id === unitId);
+  [M.OPEN_ADD_RESOURCE_DIALOG] (state, unitName) {
+    let unit = state.units.find(u => u.name === unitName);
     if(unit){
       state.activeUnit = unit;
     }
     state.resourceDialogIsOpen = true;
   },
-  [M.CLOSE_ADD_RESOURCE_DIALOG] (state, unitId) {
+  [M.CLOSE_ADD_RESOURCE_DIALOG] (state) {
     state.resourceDialogIsOpen = false;
   },
   [M.ADD_RESOURCE] (state, resource) {

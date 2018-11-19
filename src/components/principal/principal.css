@@ -2,19 +2,27 @@
   width: 100%;
   position: relative;
 }
-.units-container {
+.units-container, .unit-buttons-container {
   display: inline-grid;
   grid-template-columns: repeat( auto-fit, minmax(40px, 1fr) );
   background-color: #bae1f2;
   padding: 10px;
-  grid-gap: 50px;
+  grid-gap: 5px;
   width: 100%;
 }
 
-.unit-wrapper {
+.unit-wrapper, .unit-buttons-wrapper{
 
 }
 
+.principal-title {
+  font-size: 3em;
+  font-weight: bold;
+  color: #F74356;
+  text-shadow: 4px 4px 4px #000000;
+  text-align: center;
+  padding-top: 5px;
+}
 .button-hidden{
   visibility: hidden;
 }
