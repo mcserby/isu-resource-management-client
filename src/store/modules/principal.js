@@ -74,6 +74,12 @@ const actions = {
   [A.ADD_RESOURCE] ({commit}, resource) {
     commit(M.ADD_RESOURCE, resource)
   },
+  [A.LOCK_UNIT] ({commit}, unitName) {
+    commit(M.LOCK_UNIT, unitName)
+  },
+  [A.UNLOCK_UNIT] ({commit}, unitName) {
+    commit(M.UNLOCK_UNIT, unitName)
+  },
 }
 
 const mutations = {
@@ -101,6 +107,18 @@ const mutations = {
   },
   [M.ADD_RESOURCE] (state, resource) {
     state.activeUnit.resources.push(resource);
+  },
+  [M.LOCK_UNIT] (state, unitName) {
+    let unit = state.units.find(u => u.name === unitName);
+    if (unit) {
+      Vue.set(unit, 'isLocked', true);
+    }
+  },
+  [M.UNLOCK_UNIT] (state, unitName) {
+    let unit = state.units.find(u => u.name === unitName);
+    if (unit) {
+      Vue.set(unit, 'isLocked', false);
+    }
   },
 }
 

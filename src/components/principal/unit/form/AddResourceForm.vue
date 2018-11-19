@@ -59,6 +59,8 @@
 
   import A from '../../../../constants/actions';
   import Resource from '../../../../contracts/resource';
+  import UnlockSubUnitRequest from '../../../../contracts/edit/unlockSubUnitRequest';
+  import WebsocketSend from '../../../../contracts/websocketSend';
 
   export default {
     name: 'AddResourceForm',
@@ -94,6 +96,7 @@
         this.name = this.plateNumber = this.identificationNumber = this.crew = '';
       },
       closeAddResourceDialog(){
+        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('unlockSubUnit', new UnlockSubUnitRequest(this.$store.state.principalStore.activeUnit.name)));
         this.$store.dispatch(A.CLOSE_ADD_RESOURCE_DIALOG);
       }
 
