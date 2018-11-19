@@ -1,12 +1,12 @@
 <template>
   <div class="unit-buttons">
     <div>
-      <button v-bind:class="['btn', 'custom-button', isUnitLocked ? 'button-hidden' : 'button-visible']" @click="clearResources()">
+      <button class="btn custom-button" :disabled="isUnitLocked" @click="clearResources()">
         <span class="button-font-size">Actualizează</span>
       </button>
     </div>
     <div>
-      <button v-bind:class="['btn', 'custom-button', isUnitLocked ? 'button-hidden' : 'button-visible']" @click="addResources()">
+      <button class="btn custom-button" :disabled="isUnitLocked" @click="addResources()">
         <span class="button-font-size">Adauga resurse</span>
       </button>
     </div>
