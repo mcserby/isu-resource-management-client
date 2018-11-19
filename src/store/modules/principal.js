@@ -53,12 +53,15 @@ const defaultUnits = [
 ]
 
 const state = {
-  units: defaultUnits,
+  units: [],
   activeUnit: null,
   resourceDialogIsOpen: false,
 }
 
 const actions = {
+  [A.INIT_UNITS] ({commit}, units) {
+    commit(M.INIT_UNITS, units)
+  },
   [A.CLEAR_UNIT_RESOURCES] ({commit}, unitId) {
     commit(M.CLEAR_UNIT_RESOURCES, unitId)
   },
@@ -74,6 +77,12 @@ const actions = {
 }
 
 const mutations = {
+  [M.INIT_UNITS] (state, units) {
+    // TODO replace with splice or Vue.set to set state all at once
+    units.forEach(u => {
+      state.units.push(u);
+    })
+  },
   [M.CLEAR_UNIT_RESOURCES] (state, unitId) {
     let unit = state.units.find(u => u.id === unitId)
     if (unit) {

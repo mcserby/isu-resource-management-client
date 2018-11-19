@@ -1,8 +1,8 @@
 // Resource contract
 
 class Resource {
-  constructor(name, plateNumber, identificationNumber, crew) {
-    this.name = name;
+  constructor(vehicleType, plateNumber, identificationNumber, crew) {
+    this.vehicleType = vehicleType;
     this.plateNumber = plateNumber;
     this.identificationNumber = identificationNumber;
     this.crew = crew;

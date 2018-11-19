@@ -3,7 +3,7 @@
     <div class="resource-wrapper">
       <div class="resource-name">
         <div class="resource-element-container">
-          {{resource.name}}
+          {{resource.vehicleType}}
         </div>
       </div>
       <div class="resource-plate-number">

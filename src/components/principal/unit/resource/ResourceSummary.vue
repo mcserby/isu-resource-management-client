@@ -2,7 +2,7 @@
   <div class="resource-wrapper"  v-on:mouseover="mouseOver"  v-on:mouseleave="mouseOut">
     <div class="resource-name-summary">
       <div class="resource-element-container">
-        {{resource.name}}
+        {{resource.vehicleType}}
       </div>
     </div>
     <div class="resource-plate-number-summary">

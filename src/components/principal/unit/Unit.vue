@@ -1,19 +1,19 @@
 <template>
   <div class="unit-locked">
     <div class="unit-header">
-      {{unit.id}}
+      {{unit.name}}
     </div>
     <hr/>
-    <div v-for="resource in unit.resources" v-bind:key="resource.name">
+    <div v-for="resource in unit.resources" v-bind:key="resource.plateNumber">
       <ResourceSummary :resource="resource"></ResourceSummary>
     </div>
     <div style="margin-top: 50px">
-      <button class="btn btn-primary" @click="clearResources()">
+      <button class="btn custom-button" @click="clearResources()">
         <span class="button-font-size">Actualizează</span>
       </button>
     </div>
     <div>
-      <button class="btn btn-primary" @click="addResources()">
+      <button class="btn custom-button" @click="addResources()">
         <span class="button-font-size">Adauga resurse</span>
       </button>
     </div>
