@@ -3,8 +3,12 @@
   background-color: #83A0E9;
   margin: 4px;
   position: relative;
+  margin-right: 5px;
+  text-align: center;
+  font-size: larger;
+  width: 100%;
 }
-
+H
 .resource-name {
   grid-column: 1 / span 1;
   grid-row: 1 / span 2;

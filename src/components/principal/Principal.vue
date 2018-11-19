@@ -2,7 +2,7 @@
   <div class="principal">
     <h1>Modulul Principal</h1>
     <div class="units-container">
-      <div class="unit-wrapper" v-for="unit in units" v-bind:key="unit.id">
+      <div class="unit-wrapper" v-for="unit in units" v-bind:key="unit.name">
         <Unit :unit="unit"></Unit>
       </div>
     </div>
@@ -31,8 +31,10 @@ export default {
   },
   mounted: function () {
     console.log("Principal.vue mounted");
+    const self = this;
     let onUnitsReceived = function(response){
-      console.log(response);
+      let r = JSON.parse(response.body);
+      self.$store.dispatch(A.INIT_UNITS,  r.subUnitsList);
     }
     let onError = function(error){
       console.err(error);

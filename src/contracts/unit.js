@@ -1,8 +1,8 @@
 // Unit contract
 
 class Unit {
-  constructor(id, resources) {
-    this.id = id;
+  constructor(name, resources) {
+    this.name = name;
     this.resources = resources;
   }
 }
