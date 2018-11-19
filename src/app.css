@@ -1,0 +1,8 @@
+body {
+  height: 100vh;
+}
+
+.app-sa {
+  background: linear-gradient(#eaf6fb, #29a2d6,#1d7296);
+  height: 100%;
+}

@@ -1,6 +1,5 @@
 .resource-wrapper {
   display: inline-grid;
-  background-color: #83A0E9;
   margin: 4px;
   position: relative;
   margin-right: 5px;
@@ -8,12 +7,25 @@
   font-size: larger;
   width: 100%;
 }
-H
+
+.odd {
+  background-color: #cde6f2;
+}
+
+.even {
+  background-color: #a6dbf2;
+}
+
 .resource-name {
   grid-column: 1 / span 1;
   grid-row: 1 / span 2;
   font-size: x-large;
   margin: 4px;
+}
+
+.resource-name-summary {
+  font-size: larger;
+  font-weight: 600;
 }
 
 .resource-plate-number {
@@ -44,10 +56,10 @@ H
 
 .resource-element-container {
   margin: 0px;
+  color: #186181;
 }
 
 .resource-plate-number-summary {
-  background-color: #29a2d6;
   font-size: smaller;
 }
 

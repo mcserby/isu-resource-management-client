@@ -1,25 +1,33 @@
 <template>
-  <div class="principal">
-    <h1>Modulul Principal</h1>
+  <div class="principal app-sa">
+    <h1 class="principal-title">Situația curentă a resurselor pe detașamente</h1>
     <div class="units-container">
       <div class="unit-wrapper" v-for="unit in units" v-bind:key="unit.name">
         <Unit :unit="unit"></Unit>
       </div>
     </div>
-    <AddResourceForm v-if="displayResourceForm"/>
+    <div class="unit-buttons-container">
+      <div class="unit-buttons-wrapper" v-for="unit in units" v-bind:key="unit.name">
+        <UnitButtons :unit="unit"></UnitButtons>
+      </div>
+    </div>
+    <AddResourceForm v-if="displayResourceForm"></AddResourceForm>
   </div>
 </template>
+
 <script>
 import Unit from './unit/Unit.vue';
 import AddResourceForm from './unit/form/AddResourceForm.vue';
 import A from '../../constants/actions';
 import WebsocketSubscribe from '../../contracts/websocketSubscribe';
+import UnitButtons from './unit/buttons/UnitButtons.vue';
 
 export default {
   name: 'Principal',
   components: {
     Unit,
     AddResourceForm,
+    UnitButtons,
   },
   computed: {
     units() {
