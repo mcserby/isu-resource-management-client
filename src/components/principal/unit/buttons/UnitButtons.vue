@@ -1,12 +1,12 @@
 <template>
   <div class="unit-buttons">
     <div>
-      <button class="btn custom-button" @click="clearResources()">
+      <button v-bind:class="['btn', 'custom-button', isUnitLocked ? 'button-hidden' : 'button-visible']" @click="clearResources()">
         <span class="button-font-size">Actualizează</span>
       </button>
     </div>
     <div>
-      <button class="btn custom-button" @click="addResources()">
+      <button v-bind:class="['btn', 'custom-button', isUnitLocked ? 'button-hidden' : 'button-visible']" @click="addResources()">
         <span class="button-font-size">Adauga resurse</span>
       </button>
     </div>
@@ -17,7 +17,6 @@
 <script>
 
   import A from '../../../../constants/actions';
-  import ResourceSummary from './../resource/ResourceSummary.vue';
   import WebsocketSend from '../../../../contracts/websocketSend';
   import LockSubUnitRequest from '../../../../contracts/edit/lockSubUnitRequest';
 
@@ -28,7 +27,7 @@
     },
     methods: {
       clearResources() {
-        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('locksubunit', new LockSubUnitRequest(this.unit.name)));
+        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('lockSubUnit', new LockSubUnitRequest(this.unit.name)));
 
         this.$store.dispatch(A.CLEAR_UNIT_RESOURCES, this.unit.name);
         this.$store.dispatch(A.OPEN_ADD_RESOURCE_DIALOG, this.unit.name);
@@ -37,6 +36,11 @@
         this.$store.dispatch(A.OPEN_ADD_RESOURCE_DIALOG, this.unit.name);
       }
     },
+    computed: {
+      isUnitLocked() {
+        return Boolean(this.unit.isLocked);
+      }
+    }
   }
 </script>
 

@@ -52,15 +52,25 @@ export default {
       let r = JSON.parse(response.body);
 
       self.$store.dispatch(A.LOCK_UNIT, r.subUnitName);
-      console.log(r);
     }
 
     let onLockSubUnitError = function(error) {
       console.err(error);
     }
 
+    let onUnLockSubUnitReceived = function(response){
+      let r = JSON.parse(response.body);
+
+      self.$store.dispatch(A.UNLOCK_UNIT, r.subUnitName);
+    }
+
+    let onUnLockSubUnitError = function(error) {
+      console.err(error);
+    }
+
     this.$store.dispatch(A.WEBSOCKET_SUBSCRIBE, new WebsocketSubscribe('subunits', onUnitsReceived, onError));
     this.$store.dispatch(A.WEBSOCKET_SUBSCRIBE, new WebsocketSubscribe('lockSubUnitNotification', onLockSubUnitReceived, onLockSubUnitError));
+    this.$store.dispatch(A.WEBSOCKET_SUBSCRIBE, new WebsocketSubscribe('unlockSubUnitNotification', onUnLockSubUnitReceived, onUnLockSubUnitError));
   }
 }
 </script>
