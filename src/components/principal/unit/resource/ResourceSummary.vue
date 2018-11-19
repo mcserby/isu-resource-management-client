@@ -1,5 +1,5 @@
 <template>
-  <div class="resource-wrapper"  v-on:mouseover="mouseOver"  v-on:mouseleave="mouseOut">
+  <div v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']"  v-on:mouseover="mouseOver"  v-on:mouseleave="mouseOut">
     <div class="resource-name-summary">
       <div class="resource-element-container">
         {{resource.vehicleType}}
@@ -13,21 +13,6 @@
     <div class="resource-container" v-if="showResourceDetails">
       <Resource :resource="resource"></Resource>
     </div>
-   <!-- <div class="modal fade" id="myModal" role="dialog" v-if="showResourceDetails">
-      <div class="modal-dialog">
-        &lt;!&ndash; Modal content&ndash;&gt;
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Modal Header</h4>
-          </div>
-          <div class="modal-body">
-            <div  class="resource-details-wrapper">
-              <Resource :resource="resource"></Resource>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>-->
   </div>
 </template>
 
@@ -37,7 +22,7 @@
 
   export default {
     name: 'ResourceSummary',
-    props: ['resource'],
+    props: ['resource', 'rowNr'],
     data: () => {
       return {
         showResourceDetails: false,
