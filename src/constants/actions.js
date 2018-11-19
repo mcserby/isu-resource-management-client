@@ -8,4 +8,5 @@ export default {
   WEBSOCKET_DISCONNECT: 'websocketDisconnect',
   WEBSOCKET_SUBSCRIBE: 'websocketSubscribe',
   WEBSOCKET_SEND: 'websocketSend',
+  LOCK_SUB_UNIT: 'lockSubUnit'
 };

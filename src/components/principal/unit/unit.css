@@ -4,3 +4,18 @@
   font: Arial;
   color: #186181;
 }
+
+.button-font-size {
+  font-size:smaller;
+}
+
+.unit-locked {
+  background: repeating-linear-gradient(
+    45deg,
+    #bae1f2,
+    #bae1f2 10px,
+    #FFFFFF 10px,
+    #FFFFFF 20px
+  );
+}
+
