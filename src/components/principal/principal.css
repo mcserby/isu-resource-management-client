@@ -15,4 +15,13 @@
 
 }
 
+.button-hidden{
+  visibility: hidden;
+}
+
+.button-visible{
+  visibility: visible;
+}
+
+
 

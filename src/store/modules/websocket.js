@@ -61,7 +61,7 @@ const mutations = {
   },
   [M.WEBSOCKET_SEND] (state, websocketSend) {
     if (state.websocketStompClient && state.websocketStompClient.connected) {
-      state.websocketStompClient.send('/topic/' + websocketSend.topicName, websocketSend.payload, {});
+      state.websocketStompClient.send('/topic/' + websocketSend.topicName, JSON.stringify(websocketSend.payload, {}));
     }
   },
 }

@@ -9,4 +9,5 @@ export default {
   WEBSOCKET_SUBSCRIBE: 'websocketSubscribe',
   WEBSOCKET_SEND: 'websocketSend',
   INIT_UNITS: 'initUnits',
+  LOCK_UNIT: 'lockUnit',
 };
