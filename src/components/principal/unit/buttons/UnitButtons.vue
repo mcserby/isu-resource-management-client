@@ -11,7 +11,7 @@
       </button>
     </div>
     <div style="text-align:center;">
-      <span><b>{{ unit.lastUpdate | moment("DD-MM-YYYY, hh:mm:ss") }}</b></span>
+      <span><b>{{ unit.lastUpdate | moment("DD.MM.YYYY, hh:mm:ss") }}</b></span>
     </div>
   </div>
 </template>
