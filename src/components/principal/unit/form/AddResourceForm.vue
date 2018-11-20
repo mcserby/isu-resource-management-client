@@ -61,6 +61,7 @@
   import Resource from '../../../../contracts/resource';
   import UnlockSubUnitRequest from '../../../../contracts/edit/unlockSubUnitRequest';
   import WebsocketSend from '../../../../contracts/websocketSend';
+  import UpdateSubUnitRequest from "../../../../contracts/edit/updateSubUnitRequest";
 
   export default {
     name: 'AddResourceForm',
@@ -84,7 +85,7 @@
         this.addResouce();
         this.clearFormValues();
         this.closeAddResourceDialog();
-        //TODO save -> send unit to backend
+        this.updateUnit();
       },
       cancel(){
         this.closeAddResourceDialog();
@@ -98,6 +99,9 @@
       closeAddResourceDialog(){
         this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('unlockSubUnit', new UnlockSubUnitRequest(this.$store.state.principalStore.activeUnit.name)));
         this.$store.dispatch(A.CLOSE_ADD_RESOURCE_DIALOG);
+      },
+      updateUnit(){
+        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('updatesubunit', new UpdateSubUnitRequest(this.$store.state.principalStore.activeUnit)));
       }
 
     },

@@ -44,9 +44,6 @@ export default {
       let r = JSON.parse(response.body);
       self.$store.dispatch(A.INIT_UNITS,  r.subUnitsList);
     }
-    let onError = function(error){
-      console.err(error);
-    }
 
     let onLockSubUnitReceived = function(response){
       let r = JSON.parse(response.body);
@@ -54,9 +51,6 @@ export default {
       self.$store.dispatch(A.LOCK_UNIT, r.subUnitName);
     }
 
-    let onLockSubUnitError = function(error) {
-      console.err(error);
-    }
 
     let onUnLockSubUnitReceived = function(response){
       let r = JSON.parse(response.body);
@@ -64,13 +58,20 @@ export default {
       self.$store.dispatch(A.UNLOCK_UNIT, r.subUnitName);
     }
 
-    let onUnLockSubUnitError = function(error) {
+    let onUnitUpdated = function(response){
+      let r = JSON.parse(response.body);
+
+      self.$store.dispatch(A.UNIT_UPDATED, r.subUnit);
+    }
+
+    let onError = function(error) {
       console.err(error);
     }
 
     this.$store.dispatch(A.WEBSOCKET_SUBSCRIBE, new WebsocketSubscribe('subunits', onUnitsReceived, onError));
-    this.$store.dispatch(A.WEBSOCKET_SUBSCRIBE, new WebsocketSubscribe('lockSubUnitNotification', onLockSubUnitReceived, onLockSubUnitError));
-    this.$store.dispatch(A.WEBSOCKET_SUBSCRIBE, new WebsocketSubscribe('unlockSubUnitNotification', onUnLockSubUnitReceived, onUnLockSubUnitError));
+    this.$store.dispatch(A.WEBSOCKET_SUBSCRIBE, new WebsocketSubscribe('lockSubUnitNotification', onLockSubUnitReceived, onError));
+    this.$store.dispatch(A.WEBSOCKET_SUBSCRIBE, new WebsocketSubscribe('unlockSubUnitNotification', onUnLockSubUnitReceived, onError));
+    this.$store.dispatch(A.WEBSOCKET_SUBSCRIBE, new WebsocketSubscribe('unitUpdatedNotification', onUnitUpdated, onError));
   }
 }
 </script>

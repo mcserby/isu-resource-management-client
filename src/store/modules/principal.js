@@ -62,6 +62,9 @@ const actions = {
   [A.INIT_UNITS] ({commit}, units) {
     commit(M.INIT_UNITS, units)
   },
+  [A.UNIT_UPDATED] ({commit}, unit) {
+    commit(M.UNIT_UPDATED, unit)
+  },
   [A.CLEAR_UNIT_RESOURCES] ({commit}, unitId) {
     commit(M.CLEAR_UNIT_RESOURCES, unitId)
   },
@@ -88,6 +91,12 @@ const mutations = {
     units.forEach(u => {
       state.units.push(u);
     })
+  },
+  [M.UNIT_UPDATED] (state, unit) {
+    let updatedUnit = state.units.find(u =>  u.name === unit.name);
+    if (updatedUnit) {
+      Vue.set(updatedUnit, 'resources', unit.resources)
+    }
   },
   [M.CLEAR_UNIT_RESOURCES] (state, unitName) {
     let unit = state.units.find(u =>  u.name === unitName)
