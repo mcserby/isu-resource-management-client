@@ -88,6 +88,7 @@
         this.updateUnit();
       },
       cancel(){
+        this.updateUnit();
         this.closeAddResourceDialog();
       },
       addResouce(){
