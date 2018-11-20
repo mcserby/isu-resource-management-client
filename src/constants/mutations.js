@@ -11,4 +11,5 @@ export default {
   LOCK_UNIT: 'lockUnit',
   UNLOCK_UNIT: 'unlockUnit',
   INIT_UNITS: 'initUnits',
+  UNIT_UPDATED: 'unitUpdated',
 };

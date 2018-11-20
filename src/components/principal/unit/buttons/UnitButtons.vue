@@ -10,6 +10,9 @@
         <span class="button-font-size">Adauga resurse</span>
       </button>
     </div>
+    <div style="text-align:center;">
+      <span><b>{{ unit.lastUpdate | moment("DD.MM.YYYY, hh:mm:ss") }}</b></span>
+    </div>
   </div>
 </template>
 
@@ -28,11 +31,11 @@
     methods: {
       clearResources() {
         this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('lockSubUnit', new LockSubUnitRequest(this.unit.name)));
-
         this.$store.dispatch(A.CLEAR_UNIT_RESOURCES, this.unit.name);
         this.$store.dispatch(A.OPEN_ADD_RESOURCE_DIALOG, this.unit.name);
       },
       addResources() {
+        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('lockSubUnit', new LockSubUnitRequest(this.unit.name)));
         this.$store.dispatch(A.OPEN_ADD_RESOURCE_DIALOG, this.unit.name);
       }
     },

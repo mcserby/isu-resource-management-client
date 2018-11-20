@@ -11,15 +11,18 @@
 
 <script>
 
-import ResourceSummary from './resource/ResourceSummary.vue';
+  import ResourceSummary from './resource/ResourceSummary.vue';
+  import Vue from 'vue';
 
-export default {
-  name: 'Unit',
-  props: ['unit'],
-  components: {
-    ResourceSummary,
-  },
-}
+  Vue.use(require('vue-moment'));
+
+  export default {
+    name: 'Unit',
+    props: ['unit'],
+    components: {
+      ResourceSummary,
+    },
+  }
 </script>
 
 <style src="./unit.css"></style>
