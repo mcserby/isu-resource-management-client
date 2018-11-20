@@ -95,7 +95,8 @@ const mutations = {
   [M.UNIT_UPDATED] (state, unit) {
     let updatedUnit = state.units.find(u =>  u.name === unit.name);
     if (updatedUnit) {
-      Vue.set(updatedUnit, 'resources', unit.resources)
+      Vue.set(updatedUnit, 'resources', unit.resources);
+      Vue.set(updatedUnit, 'lastUpdate', unit.lastUpdate)
     }
   },
   [M.CLEAR_UNIT_RESOURCES] (state, unitName) {
