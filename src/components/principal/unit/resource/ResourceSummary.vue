@@ -10,9 +10,11 @@
         {{resource.plateNumber}}
       </div>
     </div>
-    <div class="resource-container" v-if="showResourceDetails">
-      <Resource :resource="resource"></Resource>
-    </div>
+    <transition name="fade">
+      <div class="resource-container" v-if="showResourceDetails">
+        <Resource :resource="resource"></Resource>
+      </div>
+    </transition>
   </div>
 </template>
 

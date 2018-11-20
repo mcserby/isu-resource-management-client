@@ -9,22 +9,22 @@
                     <div class="modal-body">
                       <div class="form-group">
                         <label for="name">Numele resursei</label>
-                        <input type="text" v-model="name" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Numele resursei">
+                        <input type="text"  minlength="1" v-model="name" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Numele resursei">
                         <small id="nameHelp" class="form-text text-muted">Numele resursei</small>
                       </div>
                       <div class="form-group">
                         <label for="plateNumber">Număr de înmatriculare/label</label>
-                        <input type="text" v-model="plateNumber" class="form-control" id="plateNumber" aria-describedby="plateNumberHelp" placeholder="Număr de înmatriculare">
+                        <input type="text" minlength="5" v-model="plateNumber" class="form-control" id="plateNumber" aria-describedby="plateNumberHelp" placeholder="Număr de înmatriculare">
                         <small id="plateNumberHelp" class="form-text text-muted">Număr de înmatriculare</small>
                       </div>
                       <div class="form-group">
                         <label for="identificationNumber">Număr de identificare</label>
-                        <input type="text" v-model="identificationNumber" class="form-control" id="identificationNumber" aria-describedby="identificationNumberHelp" placeholder="Număr de identificare">
+                        <input minlength="2" type="text" v-model="identificationNumber" class="form-control" id="identificationNumber" aria-describedby="identificationNumberHelp" placeholder="Număr de identificare">
                         <small id="identificationNumberHelp" class="form-text text-muted">Număr de identificare</small>
                       </div>
                       <div class="form-group">
                         <label for="crew">Echipaj</label>
-                        <textarea v-model="crew" class="form-control" id="crew" rows="3"></textarea>
+                        <textarea minlength="5" v-model="crew" class="form-control" id="crew" rows="3"></textarea>
                       </div>
                     </div>
                     <div class="modal-footer">
