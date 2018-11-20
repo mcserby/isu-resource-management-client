@@ -31,11 +31,11 @@
     methods: {
       clearResources() {
         this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('lockSubUnit', new LockSubUnitRequest(this.unit.name)));
-
         this.$store.dispatch(A.CLEAR_UNIT_RESOURCES, this.unit.name);
         this.$store.dispatch(A.OPEN_ADD_RESOURCE_DIALOG, this.unit.name);
       },
       addResources() {
+        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('lockSubUnit', new LockSubUnitRequest(this.unit.name)));
         this.$store.dispatch(A.OPEN_ADD_RESOURCE_DIALOG, this.unit.name);
       }
     },
