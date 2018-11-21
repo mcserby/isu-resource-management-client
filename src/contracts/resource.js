@@ -6,8 +6,8 @@ class Resource {
     this.plateNumber = plateNumber;
     this.identificationNumber = identificationNumber;
     this.captain = crew[0];
-    this.crew = crew.splice(0, 1);
-
+    this.crew = crew.slice();
+    this.crew.shift();
   }
 }
 

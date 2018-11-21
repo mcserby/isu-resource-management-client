@@ -9,7 +9,7 @@
                     <div class="modal-body">
                       <div class="form-group">
                         <label class="form-label" for="name">Tip</label>
-                        <input type="text"  minlength="1" required v-model="name" @input="validateFields()" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Numele resursei">
+                        <input type="text"  minlength="1" required v-model="name" @input="validateFields()" class="form-control" id="name" aria-describedby="nameHelp" placeholder="tip">
                       </div>
                       <div class="form-group">
                         <label class="form-label" for="plateNumber">Număr de înmatriculare</label>
