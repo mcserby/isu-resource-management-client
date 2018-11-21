@@ -17,3 +17,15 @@
 .error {
   color: darkred;
 }
+
+.form-label {
+  color: #186181;
+}
+
+.modal-title {
+  color: #186181;
+}
+
+.modal-content {
+  background: #cde9f5;
+}

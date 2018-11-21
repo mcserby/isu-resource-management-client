@@ -78,6 +78,7 @@
 .last-updated {
   text-align:center;
   color: #186181;
+  overflow: hidden;
 }
 
 .resource {

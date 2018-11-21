@@ -8,19 +8,19 @@
                     </div>
                     <div class="modal-body">
                       <div class="form-group">
-                        <label for="name">Tip</label>
+                        <label class="form-label" for="name">Tip</label>
                         <input type="text"  minlength="1" required v-model="name" @input="validateFields()" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Numele resursei">
                       </div>
                       <div class="form-group">
-                        <label for="plateNumber">Număr de înmatriculare</label>
+                        <label class="form-label" for="plateNumber">Număr de înmatriculare</label>
                         <input type="text" minlength="5" required v-model="plateNumber" @input="validateFields()" class="form-control" id="plateNumber" aria-describedby="plateNumberHelp" placeholder="Număr de înmatriculare">
                       </div>
                       <div class="form-group">
-                        <label for="identificationNumber">Număr de identificare</label>
+                        <label class="form-label" for="identificationNumber">Număr de identificare</label>
                         <input minlength="2" type="text" required v-model="identificationNumber" @input="validateFields()" class="form-control" id="identificationNumber" aria-describedby="identificationNumberHelp" placeholder="Număr de identificare">
                       </div>
                       <div class="form-group">
-                        <label for="crew">Echipaj</label>
+                        <label class="form-label" for="crew">Echipaj</label>
                         <textarea minlength="5" required v-model="crew" class="form-control" @input="validateFields()" id="crew" rows="3"></textarea>
                       </div>
                       <div v-for="error in errors" v-bind:key="error">
