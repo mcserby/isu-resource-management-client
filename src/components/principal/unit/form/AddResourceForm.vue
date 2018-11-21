@@ -4,11 +4,11 @@
             <div class="modal-dialog modal-dialog-centered add-resource-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Adaugă resurse</h5>
+                        <h5 class="modal-title">Adaugă o resursă</h5>
                     </div>
                     <div class="modal-body">
                       <div class="form-group">
-                        <label for="name">Tipul resursei</label>
+                        <label for="name">Tip</label>
                         <input type="text"  minlength="1" required v-model="name" @input="validateFields()" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Numele resursei">
                       </div>
                       <div class="form-group">
@@ -31,7 +31,7 @@
                     <div class="modal-footer">
                             <button
                                     type="button"
-                                    :class="['btn', 'btn-primary'].join(' ')"
+                                    class="btn custom-button"
                                     @click="saveAndAddAnother"
                                     :disabled="saveDisabled"
                             >
@@ -39,7 +39,7 @@
                             </button>
                       <button
                         type="button"
-                        :class="['btn', 'btn-primary'].join(' ')"
+                        class="btn custom-button"
                         @click="saveAndClose"
                         :disabled="saveDisabled"
                       >
@@ -47,7 +47,7 @@
                       </button>
                       <button
                         type="button"
-                        :class="['btn', 'btn-primary'].join(' ')"
+                        class="btn custom-button"
                         @click="cancel"
                       >
                         Închide fără a salva
@@ -82,7 +82,9 @@
         return this.errors.length !== 0;
       }
     },
-
+    mounted(){
+      this.validateFields();
+    },
     methods: {
       saveAndAddAnother(){
         this.addResource();
@@ -99,12 +101,7 @@
         this.closeAddResourceDialog();
       },
       addResource() {
-        this.validateFields();
-        if (this.errors.length === 0) {
           this.$store.dispatch(A.ADD_RESOURCE, new Resource(this.name, this.plateNumber, this.identificationNumber, this.crew.split('\n')));
-        } else {
-
-        }
       },
       clearFormValues(){
         this.name = this.plateNumber = this.identificationNumber = this.crew = '';
