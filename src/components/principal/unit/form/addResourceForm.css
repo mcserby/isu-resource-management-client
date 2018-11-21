@@ -11,5 +11,21 @@
 }
 
 .add-resource-dialog {
-  max-width: 734px;
+  max-width: 796px;
+}
+
+.error {
+  color: darkred;
+}
+
+.form-label {
+  color: #186181;
+}
+
+.modal-title {
+  color: #186181;
+}
+
+.modal-content {
+  background: #cde9f5;
 }

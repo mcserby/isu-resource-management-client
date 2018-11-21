@@ -5,6 +5,7 @@
   color: #bae1f2;
   background: #186181;
   text-align:center;
+  max-height: 36px;
 }
 
 .button-font-size {
@@ -28,7 +29,7 @@
   width: 100%;
 }
 
-.custom-button:hover {
+.custom-button:hover:enabled {
   color: #186181;
   background-color: #eaf6fb;
 }
