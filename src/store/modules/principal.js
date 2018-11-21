@@ -87,10 +87,8 @@ const actions = {
 
 const mutations = {
   [M.INIT_UNITS] (state, units) {
-    // TODO replace with splice or Vue.set to set state all at once
-    units.forEach(u => {
-      state.units.push(u);
-    })
+    state.units.splice(0, state.units.length);
+    state.units = units;
   },
   [M.UNIT_UPDATED] (state, unit) {
     let updatedUnit = state.units.find(u =>  u.name === unit.name);
