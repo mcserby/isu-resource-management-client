@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-lg resource">
     <div class="resource-wrapper">
       <div class="resource-name">
         <div class="resource-element-container">
@@ -17,8 +17,15 @@
         </div>
       </div>
       <div class="resource-head-of-crew">
-        <div v-for="member in resource.crew">
+        <div>
           <div class="resource-element-container">
+            {{resource.captain}}
+          </div>
+        </div>
+      </div>
+      <div class="resource-crew-member" >
+        <div v-for="(member,index) in resource.crew">
+          <div v-bind:class="['resource-element-container', index % 2 == 0 ? 'odd' : 'even']">
             {{member}}
           </div>
         </div>

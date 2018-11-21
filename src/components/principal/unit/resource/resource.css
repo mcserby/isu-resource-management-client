@@ -19,7 +19,7 @@
 .resource-name {
   grid-column: 1 / span 1;
   grid-row: 1 / span 2;
-  font-size: x-large;
+  font-size: medium;
   margin: 4px;
 }
 
@@ -34,15 +34,19 @@
   grid-row-start: 1;
   grid-row-end: 1;
   text-align: center;
+  font-size: medium;
+}
+
+.resource-head-of-crew, .resource-crew-member {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  text-align: center;
+  font-size: smaller;
+  margin-right: 7px;
 }
 
 .resource-head-of-crew {
-  grid-column-start: 2;
-  grid-column-end: 2;
-  grid-row-start: 2;
-  grid-row-end: 2;
-  text-align: center;
-  background-color: antiquewhite;
+  background-color: #82c1dc;
 }
 
 .resource-identification-number {
@@ -50,7 +54,7 @@
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 2;
-  font-size: x-large;
+  font-size: large;
   margin: 4px;
 }
 
@@ -65,8 +69,21 @@
 
 .resource-container {
   position: absolute;
-  left: -70px;
+  left: 0px;
   top: 15px;
   z-index: 1000;
+
+}
+
+.resource {
+  background-color: #d8d8d8;
+  border: 2px solid #5eb5e89e;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 

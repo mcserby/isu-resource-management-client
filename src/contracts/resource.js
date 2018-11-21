@@ -5,7 +5,9 @@ class Resource {
     this.vehicleType = vehicleType;
     this.plateNumber = plateNumber;
     this.identificationNumber = identificationNumber;
-    this.crew = crew;
+    this.captain = crew[0];
+    this.crew = crew.splice(0, 1);
+
   }
 }
 
