@@ -28,7 +28,7 @@
   width: 100%;
 }
 
-.custom-button:hover {
+.custom-button:hover:enabled {
   color: #186181;
   background-color: #eaf6fb;
 }

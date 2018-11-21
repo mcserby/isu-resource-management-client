@@ -25,7 +25,7 @@
   width: 30%;
 }
 
-.menu-link:hover {
+.menu-link:hover:enabled {
   color: #eaf6fb;
   background-color: #186181;
 }

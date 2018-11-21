@@ -75,6 +75,11 @@
 
 }
 
+.last-updated {
+  text-align:center;
+  color: #186181;
+}
+
 .resource {
   background-color: #d8d8d8;
   border: 2px solid #5eb5e89e;
