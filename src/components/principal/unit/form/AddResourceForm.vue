@@ -97,8 +97,8 @@
         this.updateUnit();
       },
       cancel(){
-        this.updateUnit();
         this.closeAddResourceDialog();
+        this.updateUnit();
       },
       addResource() {
           this.$store.dispatch(A.ADD_RESOURCE, new Resource(this.name, this.plateNumber, this.identificationNumber, this.crew.split('\n')));
@@ -112,7 +112,7 @@
         this.$store.dispatch(A.CLOSE_ADD_RESOURCE_DIALOG);
       },
       updateUnit(){
-        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('updatesubunit', new UpdateSubUnitRequest(this.$store.state.principalStore.activeUnit)));
+        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('updateSubUnit', new UpdateSubUnitRequest(this.$store.state.principalStore.activeUnit)));
       },
       validateFields() {
         this.errors.splice(0, this.errors.length);
