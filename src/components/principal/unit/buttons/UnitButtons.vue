@@ -22,16 +22,17 @@
   import A from '../../../../constants/actions';
   import WebsocketSend from '../../../../contracts/websocketSend';
   import LockSubUnitRequest from '../../../../contracts/edit/lockSubUnitRequest';
+  import UpdateSubUnitRequest from "../../../../contracts/edit/updateSubUnitRequest";
 
   export default {
     name: 'UnitButtons',
     props: ['unit'],
-    components: {
-    },
+    components: {},
     methods: {
       clearResources() {
         this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('lockSubUnit', new LockSubUnitRequest(this.unit.name)));
         this.$store.dispatch(A.CLEAR_UNIT_RESOURCES, this.unit.name);
+        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('updatesubunit', new UpdateSubUnitRequest(this.unit)));
         this.$store.dispatch(A.OPEN_ADD_RESOURCE_DIALOG, this.unit.name);
       },
       addResources() {
