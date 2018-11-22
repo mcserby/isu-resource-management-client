@@ -7,11 +7,11 @@
     </div>
     <div>
       <button class="btn custom-button" :disabled="isUnitLocked" @click="addResources()">
-        <span class="button-font-size">Adauga resurse</span>
+        <span class="button-font-size">Adaugă resurse</span>
       </button>
     </div>
     <div class="last-updated">
-      <span><b>{{ unit.lastUpdate | moment("DD.MM.YYYY, hh:mm:ss") }}</b></span>
+      <span><b>{{ unit.lastUpdate | moment("DD.MM.YYYY, HH:mm:ss") }}</b></span>
     </div>
   </div>
 </template>
