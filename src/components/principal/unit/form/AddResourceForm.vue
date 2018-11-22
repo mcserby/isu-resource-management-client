@@ -98,6 +98,7 @@
       },
       cancel(){
         this.closeAddResourceDialog();
+        this.updateUnit();
       },
       addResource() {
           this.$store.dispatch(A.ADD_RESOURCE, new Resource(this.name, this.plateNumber, this.identificationNumber, this.crew.split('\n')));
