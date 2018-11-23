@@ -75,11 +75,12 @@
         plateNumber: '',
         identificationNumber: '',
         crew: '',
+        validationPerformedAtLeastOnce: false,
       }
     },
     computed: {
       saveDisabled() {
-        return this.errors.length !== 0;
+        return this.errors.length !== 0 || !this.validationPerformedAtLeastOnce;
       }
     },
     mounted(){
@@ -104,6 +105,7 @@
           this.$store.dispatch(A.ADD_RESOURCE, new Resource(this.name, this.plateNumber, this.identificationNumber, this.crew.split('\n')));
       },
       clearFormValues(){
+        this.validationPerformedAtLeastOnce = false;
         this.name = this.plateNumber = this.identificationNumber = this.crew = '';
         this.errors = [];
       },
@@ -115,6 +117,7 @@
         this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('updateSubUnit', new UpdateSubUnitRequest(this.$store.state.principalStore.activeUnit)));
       },
       validateFields() {
+        this.validationPerformedAtLeastOnce = true;
         this.errors.splice(0, this.errors.length);
         if(this.name.length < 3){
           this.errors.push("Numele trebuie să aibă cel puțin 3 caractere");
