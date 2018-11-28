@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']"  v-on:mouseover="mouseOver"  v-on:mouseleave="mouseOut">
+  <div v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']"  v-on:mouseover="mouseOver"  v-on:mouseleave="mouseOut" v-on:click="mouseClick">
     <div class="resource-name-summary">
       <div class="resource-element-container">
         {{resource.vehicleType}}
@@ -40,6 +40,9 @@
       mouseOut: function(){
         this.showResourceDetails = false;
       },
+      mouseClick: function () {
+
+      }
     }
   }
 </script>
