@@ -4,10 +4,11 @@
     <div class="modal-dialog modal-dialog-centered add-resource-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-
+          <h4 class="modal-title">Schimb de tura</h4>
+          <button type="button" class="btn custom-close-button" @click="onCancel">X</button>
         </div>
         <div class="modal-body">
-          <h4 class="modal-title">Sunteți sigur ca doriți să ștergeți toate datele pentru detașamentul {{unit.name}} ?</h4>
+          <h4 class="modal-body">Sunteți sigur ca doriți să ștergeți toate datele pentru detașamentul {{unit.name}} ?</h4>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn custom-button custom-dialog-button" @click="onConfirm">Da</button>

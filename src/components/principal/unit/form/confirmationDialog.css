@@ -22,8 +22,22 @@
   color: #186181;
 }
 
+.modal-header {
+    background-color: #186181;
+}
+
+custom-close-button {
+ width: 5%;
+ justify-content: right;
+ background-color: #186181;
+}
+
 .modal-title {
-  color: #186181;
+    color: #cde9f5;
+}
+
+.modal-body {
+ text-align:center;
 }
 
 .modal-content {
@@ -31,9 +45,9 @@
 }
 
 .modal-footer {
- justify-content: center
+ justify-content: center;
 }
 
 .custom-dialog-button {
-width: 20%
+ width: 20%;
 }
