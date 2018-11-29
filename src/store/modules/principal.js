@@ -56,6 +56,7 @@ const state = {
   units: [],
   activeUnit: null,
   resourceDialogIsOpen: false,
+  confirmationDialogIsOpen: false,
 }
 
 const actions = {
@@ -67,6 +68,12 @@ const actions = {
   },
   [A.CLEAR_UNIT_RESOURCES] ({commit}, unitId) {
     commit(M.CLEAR_UNIT_RESOURCES, unitId)
+  },
+  [A.OPEN_CONFIRMATION_DIALOG] ({commit}, unitId) {
+    commit(M.OPEN_CONFIRMATION_DIALOG, unitId)
+  },
+  [A.CLOSE_CONFIRMATION_DIALOG] ({commit}) {
+    commit(M.CLOSE_CONFIRMATION_DIALOG)
   },
   [A.OPEN_ADD_RESOURCE_DIALOG] ({commit}, unitId) {
     commit(M.OPEN_ADD_RESOURCE_DIALOG, unitId)
@@ -102,6 +109,16 @@ const mutations = {
     if (unit) {
       Vue.set(unit, 'resources', [])
     }
+  },
+  [M.OPEN_CONFIRMATION_DIALOG] (state, unitName) {
+    let unit = state.units.find(u => u.name === unitName);
+    if(unit){
+      state.activeUnit = unit;
+    }
+    state.confirmationDialogIsOpen = true;
+  },
+  [M.CLOSE_CONFIRMATION_DIALOG] (state) {
+    state.confirmationDialogIsOpen = false;
   },
   [M.OPEN_ADD_RESOURCE_DIALOG] (state, unitName) {
     let unit = state.units.find(u => u.name === unitName);

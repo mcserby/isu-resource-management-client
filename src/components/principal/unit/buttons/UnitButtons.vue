@@ -1,13 +1,13 @@
 <template>
   <div class="unit-buttons">
     <div>
-      <button class="btn custom-button" :disabled="isUnitLocked" @click="clearResources()">
-        <span class="button-font-size">Actualizează</span>
+      <button class="btn custom-button" :disabled="isUnitLocked" @click="shiftExchange()">
+        <span class="button-font-size">Schimb de tură</span>
       </button>
     </div>
     <div>
       <button class="btn custom-button" :disabled="isUnitLocked" @click="addResources()">
-        <span class="button-font-size">Adaugă resurse</span>
+        <span class="button-font-size">Actualizează</span>
       </button>
     </div>
     <div class="last-updated">
@@ -29,11 +29,10 @@
     props: ['unit'],
     components: {},
     methods: {
-      clearResources() {
+      shiftExchange() {
         this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('lockSubUnit', new LockSubUnitRequest(this.unit.name)));
         this.$store.dispatch(A.CLEAR_UNIT_RESOURCES, this.unit.name);
-        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('updateSubUnit', new UpdateSubUnitRequest(this.unit)));
-        this.$store.dispatch(A.OPEN_ADD_RESOURCE_DIALOG, this.unit.name);
+        this.$store.dispatch(A.OPEN_CONFIRMATION_DIALOG, this.unit.name);
       },
       addResources() {
         this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('lockSubUnit', new LockSubUnitRequest(this.unit.name)));
