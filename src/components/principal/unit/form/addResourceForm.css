@@ -6,14 +6,6 @@
     height: 100%;
 }
 
-.grid-container {
-  display: grid;
-}
-
-.item1 { grid-area: menu; }
-
-.item2 { grid-area: main; }
-
 .dialog {
     display: block;
 }

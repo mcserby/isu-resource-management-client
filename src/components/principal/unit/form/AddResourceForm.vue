@@ -6,11 +6,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title">Adaugă o resursă</h5>
                     </div>
-                    <div class="modal-body grid-container">
-                      <div class="item1" v-bind:key="activeUnit.subUnitName">
-                        <Unit :unit="activeUnit"></Unit>
-                      </div>
-                      <div class="item2">
+                    <div class="modal-body">
                       <div class="form-group">
                         <label class="form-label" for="name">Tip</label>
                         <input type="text"  minlength="1" required v-model="name" @input="validateFields()" class="form-control" id="name" aria-describedby="nameHelp" placeholder="tip">
@@ -30,7 +26,7 @@
                       <div v-for="error in errors" v-bind:key="error">
                         <p class="error">{{error}}</p>
                       </div>
-                    </div>
+
                     </div>
                     <div class="modal-footer">
                             <button
@@ -64,17 +60,14 @@
 </template>
 <script>
 
-  import Unit from '../Unit.vue';
   import A from '../../../../constants/actions';
   import Resource from '../../../../contracts/resource';
   import UnlockSubUnitRequest from '../../../../contracts/edit/unlockSubUnitRequest';
   import WebsocketSend from '../../../../contracts/websocketSend';
   import UpdateSubUnitRequest from "../../../../contracts/edit/updateSubUnitRequest";
 
-
   export default {
     name: 'AddResourceForm',
-    props: ['activeUnit'],
     data: () => {
       return {
         errors: [],

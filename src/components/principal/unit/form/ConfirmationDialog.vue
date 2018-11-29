@@ -1,10 +1,19 @@
 <template>
-<div class="modal">
-  <div class="modal-window">
-    <p>Sunteți sigur ca doriți să ștergeți toate datele pentru detașamentul <strong>{{activeUnit.subUnitName}}</strong> ?</p>
-    <div class="actions">
-      <button class="confirm" @click="onConfirm">Da</button>
-      <button class="cancel" @click="onCancel">Nu</button>
+<div class="dialogContainer" style="display: block">
+  <div class="dialog modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered add-resource-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+
+        </div>
+        <div class="modal-body">
+          <h4 class="modal-title">Sunteți sigur ca doriți să ștergeți toate datele pentru detașamentul {{unit.name}} ?</h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn custom-button custom-dialog-button" @click="onConfirm">Da</button>
+          <button type="button" class="btn custom-button custom-dialog-button" @click="onCancel">Nu</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -19,18 +28,17 @@ import UpdateSubUnitRequest from "../../../../contracts/edit/updateSubUnitReques
 
 export default {
   name: 'ConfirmationDialog',
-  props: ['activeUnit'],
+  props: ['unit'],
   methods: {
     onConfirm() {
       this.$store.dispatch(A.CLOSE_CONFIRMATION_DIALOG);
-      this.updateUnit();
+      this.$store.dispatch(A.CLEAR_UNIT_RESOURCES, this.unit.name);
+      this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('updateSubUnit', new UpdateSubUnitRequest(this.unit)));
+      this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('unlockSubUnit', new UnlockSubUnitRequest(this.unit.name)));
     },
     onCancel() {
-      this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('unlockSubUnit', new UnlockSubUnitRequest(this.$store.state.principalStore.activeUnit.name)));
+      this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('unlockSubUnit', new UnlockSubUnitRequest(this.unit.name)));
       this.$store.dispatch(A.CLOSE_CONFIRMATION_DIALOG);
-    },
-    updateUnit() {
-      this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('updateSubUnit', new UpdateSubUnitRequest(this.activeUnit)));
     },
   },
 }

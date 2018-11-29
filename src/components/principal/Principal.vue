@@ -11,8 +11,8 @@
         <UnitButtons :unit="unit"></UnitButtons>
       </div>
     </div>
-    <ConfirmationDialog v-if="displayConfirmationDialog" :activeUnit="activeUnit"></ConfirmationDialog>
-    <AddResourceForm v-if="displayResourceForm" :activeUnit="activeUnit"></AddResourceForm>
+    <ConfirmationDialog v-if="displayConfirmationDialog" :unit="activeUnit"></ConfirmationDialog>
+    <AddResourceForm v-if="displayResourceForm" ></AddResourceForm>
   </div>
 </template>
 
@@ -32,14 +32,12 @@ export default {
     AddResourceForm,
     UnitButtons,
   },
-  data: () => {
-    return {
-      activeUnit: this.$store.state.principalStore.activeUnit
-    }
-  },
   computed: {
     units() {
       return this.$store.state.principalStore.units;
+    },
+    activeUnit() {
+      return this.$store.state.principalStore.activeUnit;
     },
     displayResourceForm() {
       return this.$store.state.principalStore.resourceDialogIsOpen;
