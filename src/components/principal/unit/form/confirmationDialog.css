@@ -1,0 +1,53 @@
+.dialogContainer {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 30;
+    width: 100%;
+    height: 100%;
+}
+
+.dialog {
+    display: block;
+}
+
+.add-resource-dialog {
+  max-width: 796px;
+}
+
+.error {
+  color: darkred;
+}
+
+.form-label {
+  color: #186181;
+}
+
+.modal-header {
+    background-color: #186181;
+}
+
+custom-close-button {
+ width: 5%;
+ justify-content: right;
+ background-color: #186181;
+}
+
+.modal-title {
+    color: #cde9f5;
+}
+
+.modal-body {
+ text-align:center;
+}
+
+.modal-content {
+  background: #cde9f5;
+}
+
+.modal-footer {
+ justify-content: center;
+}
+
+.custom-dialog-button {
+ width: 20%;
+}
