@@ -12,7 +12,7 @@
     </div>
     <div class="resource-crew-number-summary">
       <div class="resource-element-container">
-        {{this.crewSize}}
+        {{this.resource.crew ? this.resource.crew.length + 1 : 1}}
       </div>
     </div>
     <transition name="fade">
@@ -32,7 +32,6 @@ export default {
   props: ['resource', 'rowNr'],
   data: () => {
     return {
-      crewSize: 0,
       showResourceDetails: false
     }
   },
@@ -45,17 +44,7 @@ export default {
     },
     mouseOut: function () {
       this.showResourceDetails = false
-    },
-    calculateCrewSize: function () {
-      if (this.resource.crew != null) {
-        this.crewSize = this.resource.crew.length + 1 // crew + captain
-      } else {
-        this.crewSize = 1
-      }
     }
-  },
-  created () {
-    this.calculateCrewSize()
   }
 }
 </script>
