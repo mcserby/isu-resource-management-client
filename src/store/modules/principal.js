@@ -114,8 +114,8 @@ const mutations = {
     let unit = state.units.find(u => u.name === unitName);
     if(unit){
       state.activeUnit = unit;
+      state.confirmationDialogIsOpen = true;
     }
-    state.confirmationDialogIsOpen = true;
   },
   [M.CLOSE_CONFIRMATION_DIALOG] (state) {
     state.confirmationDialogIsOpen = false;
@@ -124,8 +124,8 @@ const mutations = {
     let unit = state.units.find(u => u.name === unitName);
     if(unit){
       state.activeUnit = unit;
+      state.resourceDialogIsOpen = true;
     }
-    state.resourceDialogIsOpen = true;
   },
   [M.CLOSE_ADD_RESOURCE_DIALOG] (state) {
     state.resourceDialogIsOpen = false;
