@@ -5,9 +5,14 @@
         {{resource.vehicleType}}
       </div>
     </div>
-    <div class="resource-plate-number-summary">
+    <div class="resource-identification-number-summary">
       <div class="resource-element-container">
-        {{resource.plateNumber}}
+        {{resource.identificationNumber}}
+      </div>
+    </div>
+    <div class="resource-crew-number-summary">
+      <div class="resource-element-container">
+        {{this.resource.crew ? this.resource.crew.length + 1 : 1}}
       </div>
     </div>
     <transition name="fade">
@@ -20,28 +25,28 @@
 
 <script>
 
-  import Resource from './Resource.vue';
+import Resource from './Resource.vue'
 
-  export default {
-    name: 'ResourceSummary',
-    props: ['resource', 'rowNr'],
-    data: () => {
-      return {
-        showResourceDetails: false,
-      }
+export default {
+  name: 'ResourceSummary',
+  props: ['resource', 'rowNr'],
+  data: () => {
+    return {
+      showResourceDetails: false
+    }
+  },
+  components: {
+    Resource
+  },
+  methods: {
+    mouseOver: function () {
+      this.showResourceDetails = true
     },
-    components: {
-      Resource,
-    },
-    methods: {
-      mouseOver: function(){
-        this.showResourceDetails = true;
-      },
-      mouseOut: function(){
-        this.showResourceDetails = false;
-      },
+    mouseOut: function () {
+      this.showResourceDetails = false
     }
   }
+}
 </script>
 
 <style src="./resource.css"></style>
