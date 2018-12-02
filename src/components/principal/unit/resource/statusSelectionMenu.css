@@ -29,12 +29,24 @@
   background-color: #9eea8d;
 }
 
+.menu-option-disponibil:hover {
+   background-color: #226513
+}
+
 .menu-option-misiune {
   background-color: #F74356;
 }
 
+.menu-option-misiune:hover {
+  background-color: #710510
+}
+
 .menu-option-indisponibil {
   background-color: #dfe7ec;
+}
+
+.menu-option-indisponibil:hover {
+  background-color: #2f424f;
 }
 
 .mission-selection-dialog-container {
@@ -57,10 +69,6 @@
 
 .status-dialog-content {
   text-align: left
-}
-
-.modal-content {
-  background: #cde9f5;
 }
 
 .custom-status-selection-button {

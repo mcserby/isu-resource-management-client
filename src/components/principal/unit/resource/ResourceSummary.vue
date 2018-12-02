@@ -15,7 +15,7 @@
         {{this.resource.crew ? this.resource.crew.length + 1 : 1}}
       </div>
     </div>
-    <StatusSelectionMenu v-if="showMenu" :showMenu="showMenu"/>
+    <StatusSelectionMenu v-if="showMenu"/>
   </div>
 </template>
 
