@@ -1,5 +1,6 @@
 .resource-wrapper {
   display: inline-grid;
+  : create;
   margin: 4px;
   position: relative;
   margin-right: 5px;
@@ -24,9 +25,31 @@
 }
 
 .resource-name-summary {
-  font-size: larger;
+  grid-column: 1 / span 2;
+  grid-row: 1 / span 2;
+  font-size: small;
+  padding-right: 20%;
   font-weight: 600;
+
 }
+
+.resource-crew-number-summary {
+  grid-column: 1 / span 2;
+  grid-row: 2 / span 2;
+  font-size: small;
+  padding-right: 20%;
+  font-weight: 600;
+
+}
+
+.resource-identification-number-summary {
+  grid-column: 2 / span 2;
+  grid-row: 1 / span 2;
+  font-size: x-large;
+  grid-gap:100px ;
+
+}
+
 
 .resource-plate-number {
   grid-column-start: 2;
@@ -61,10 +84,6 @@
 .resource-element-container {
   margin: 0px;
   color: #186181;
-}
-
-.resource-plate-number-summary {
-  font-size: smaller;
 }
 
 .resource-container {

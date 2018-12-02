@@ -16,7 +16,6 @@
   </div>
 </template>
 
-
 <script>
 
   import A from '../../../../constants/actions';
