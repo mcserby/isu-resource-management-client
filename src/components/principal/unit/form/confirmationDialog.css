@@ -10,30 +10,17 @@
     display: block;
 }
 
-.add-resource-dialog {
+.confirmation-dialog {
   max-width: 796px;
 }
 
-.error {
-  color: darkred;
-}
-
-.form-label {
-  color: #186181;
-}
-
-.modal-header {
-    background-color: #186181;
-}
-
-custom-close-button {
+.custom-close-button {
  width: 5%;
  justify-content: right;
  background-color: #186181;
-}
-
-.modal-title {
-    color: #cde9f5;
+ color: #cde9f5;
+ padding: 5px;
+ font-size: medium
 }
 
 .modal-body {
