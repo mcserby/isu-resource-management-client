@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']"  v-on:mouseover="mouseOver"  v-on:mouseleave="mouseOut">
+  <div v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']" @contextmenu.prevent="showStatusMenu" v-click-outside="hideStatusMenu">
     <div class="resource-name-summary">
       <div class="resource-element-container">
         {{resource.vehicleType}}
@@ -15,37 +15,36 @@
         {{this.resource.crew ? this.resource.crew.length + 1 : 1}}
       </div>
     </div>
-    <transition name="fade">
-      <div class="resource-container" v-if="showResourceDetails">
-        <Resource :resource="resource"></Resource>
-      </div>
-    </transition>
+    <StatusSelectionMenu v-if="showMenu" :showMenu="showMenu"/>
   </div>
 </template>
 
 <script>
-
-import Resource from './Resource.vue'
+import StatusSelectionMenu from './StatusSelectionMenu.vue';
+import ClickOutside from 'vue-click-outside';
 
 export default {
   name: 'ResourceSummary',
   props: ['resource', 'rowNr'],
   data: () => {
     return {
-      showResourceDetails: false
+      showMenu: false
     }
   },
   components: {
-    Resource
+    StatusSelectionMenu
   },
   methods: {
-    mouseOver: function () {
-      this.showResourceDetails = true
+    showStatusMenu: function() {
+      this.showMenu = true;
     },
-    mouseOut: function () {
-      this.showResourceDetails = false
-    }
-  }
+    hideStatusMenu: function() {
+      this.showMenu = false;
+    },
+  },
+  directives: {
+    ClickOutside
+  },
 }
 </script>
 
