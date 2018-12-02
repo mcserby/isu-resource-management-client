@@ -1,30 +1,30 @@
 <template>
-<div class="menu" v-show="show" v-on-clickaway="close" @click="close">
+<div class="menu" v-show="showMenu" v-click-outside="closeMenu" @click="closeMenu">
   <menu class="menu-options">
-    <menuitem class="menu-option menu-option-disponibil" onclick="setStatusToDisponibil()">Disponibil</menuitem>
-    <menuitem class="menu-option menu-option-misiune" onclick="setStatusToMisiune()">Misiune</menuitem>
-    <menuitem class="menu-option menu-option-indisponibil" onclick="setStatusToIndisponibil()">Indisponibil</menuitem>
+    <menuitem class="menu-option menu-option-disponibil" @click="setStatusToDisponibil()">Disponibil</menuitem>
+    <menuitem class="menu-option menu-option-misiune" @click="setStatusToMisiune()">Misiune</menuitem>
+    <menuitem class="menu-option menu-option-indisponibil" @click="setStatusToIndisponibil()">Indisponibil</menuitem>
   </menu>
 </div>
 </template>
 <script>
+import Vue from 'vue';
+import ClickOutside from '../../../../directives/clickOutside.js';
+
 export default {
   name: 'StatusSelectionMenu',
-  props: [show],
+  props: ['showMenu'],
   methods: {
     setStatusToDisponibil: function() {
-
     },
     setStatusToMisiune: function() {
-
     },
     setStatusToIndisponibil: function() {
-
     },
-    close: function() {
-      this.show = false;
+    closeMenu: function() {
+      this.showMenu = false;
     }
-  }
+  },
 }
 </script>
 <style src="./statusSelectionMenu.css"></style>
