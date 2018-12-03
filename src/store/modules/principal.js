@@ -5,7 +5,7 @@ import Unit from '../../contracts/unit'
 import Vue from 'vue'
 
 // can be moved or removed, use contract for unit
-const defaultUnits = [
+/*const defaultUnits = [
   new Unit('Departament 1 CLUJ',[
     new Resource('BMW','CJ21ABC', '241', ['cpt. plt. Serby']),
     new Resource('AUDI','CJ21ABC', '241', ['cpt. plt. Serby'])
@@ -50,13 +50,15 @@ const defaultUnits = [
     new Resource('CHOPPA','CJ21ABC', '456', ['cpt. plt. Serby']),
     new Resource('AMBULANTA','CJ55URG', '666', ['sofer ambulanta Fifth', 'boss care nu face nimic'])
   ])
-]
+]*/
 
 const state = {
   units: [],
   activeUnit: null,
+  activeResource: null,
   resourceDialogIsOpen: false,
   confirmationDialogIsOpen: false,
+  resourceViewDialogIsOpen: false
 }
 
 const actions = {
@@ -80,6 +82,12 @@ const actions = {
   },
   [A.CLOSE_ADD_RESOURCE_DIALOG] ({commit}) {
     commit(M.CLOSE_ADD_RESOURCE_DIALOG)
+  },
+  [A.CLOSE_VIEW_RESOURCE_DIALOG] ({commit}) {
+    commit(M.CLOSE_VIEW_RESOURCE_DIALOG)
+  },
+  [A.OPEN_VIEW_RESOURCE_DIALOG] ({commit}, identificationNumber) {
+    commit(M.OPEN_VIEW_RESOURCE_DIALOG, identificationNumber)
   },
   [A.ADD_RESOURCE] ({commit}, resource) {
     commit(M.ADD_RESOURCE, resource)
@@ -120,6 +128,21 @@ const mutations = {
   [M.CLOSE_CONFIRMATION_DIALOG] (state) {
     state.confirmationDialogIsOpen = false;
   },
+ [M.OPEN_VIEW_RESOURCE_DIALOG] (state, identificationNumber) {
+    for (var unit of state.units) {
+      let resource = unit.resources.find(r => r.identificationNumber === identificationNumber)
+      if (resource) {
+        state.activeResource = resource;
+        state.resourceViewDialogIsOpen = true;
+      }
+    }
+},
+  [M.CLOSE_VIEW_RESOURCE_DIALOG] (state) {
+    state.resourceViewDialogIsOpen = false;
+  },
+[M.CLOSE_CONFIRMATION_DIALOG] (state) {
+  state.confirmationDialogIsOpen = false;
+},
   [M.OPEN_ADD_RESOURCE_DIALOG] (state, unitName) {
     let unit = state.units.find(u => u.name === unitName);
     if(unit){
