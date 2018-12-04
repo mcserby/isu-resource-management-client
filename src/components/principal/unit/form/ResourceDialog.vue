@@ -10,7 +10,7 @@
           <div class="modal-body">
             <div class="form-group">
               <label class="form-label" for="name">Detașament</label>
-              <input type="text" v-model="unitName" class="form-control" id="unit" readonly="true" placeholder="Detașament">
+              <input type="text" v-model="unit.name" class="form-control" id="unit" readonly="true" placeholder="Detașament">
             </div>
             <div class="form-group">
               <label class="form-label" for="name">Tip autospecială</label>
@@ -52,7 +52,7 @@ import Resource from '../resource/Resource.vue'
 
 export default {
   name: 'ResourceDialog',
-  props: ['resource', 'unitName'],
+  props: ['resource', 'unit'],
   data: () => {
     return {
       crewMembers: ''
