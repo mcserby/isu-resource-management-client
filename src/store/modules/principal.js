@@ -128,10 +128,11 @@ const mutations = {
   [M.CLOSE_CONFIRMATION_DIALOG] (state) {
     state.confirmationDialogIsOpen = false;
   },
- [M.OPEN_VIEW_RESOURCE_DIALOG] (state, identificationNumber) {
+ [M.OPEN_VIEW_RESOURCE_DIALOG] (state, resource) {
     for (var unit of state.units) {
-      let resource = unit.resources.find(r => r.identificationNumber === identificationNumber)
-      if (resource) {
+      let res = unit.resources.find(r => r === resource)
+      if (res) {
+        state.activeUnit = unit;
         state.activeResource = resource;
         state.resourceViewDialogIsOpen = true;
       }

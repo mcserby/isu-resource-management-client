@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     mouseClick: function () {
-      this.$store.dispatch(A.OPEN_VIEW_RESOURCE_DIALOG, this.resource.identificationNumber);
+      this.$store.dispatch(A.OPEN_VIEW_RESOURCE_DIALOG, this.resource);
     }
   }
 }

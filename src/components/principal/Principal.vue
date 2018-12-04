@@ -12,7 +12,7 @@
       </div>
     </div>
     <ConfirmationDialog v-if="displayConfirmationDialog" :unit="activeUnit"></ConfirmationDialog>
-    <ResourceDialog v-if="displayViewResourceDialog" :resource="activeResource"></ResourceDialog>
+    <ResourceDialog v-if="displayViewResourceDialog" :resource="activeResource" :unitName="activeUnitName"></ResourceDialog>
     <AddResourceForm v-if="displayResourceForm" ></AddResourceForm>
   </div>
 </template>
@@ -41,6 +41,9 @@ export default {
     },
     activeUnit() {
       return this.$store.state.principalStore.activeUnit;
+    },
+    activeUnitName() {
+      return this.$store.state.principalStore.activeUnit.name;
     },
     activeResource() {
       return this.$store.state.principalStore.activeResource;
