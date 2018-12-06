@@ -4,9 +4,17 @@
   position: absolute;
   z-index: 1;
   top: 10%;
-  left: 10%;
   width: 200px;
 }
+
+.menu-left {
+  left: -100px;
+}
+
+.menu-right {
+  left: 100px;
+}
+
 
 .menu-options {
   align-items: flex-start;
@@ -55,8 +63,16 @@
     height: 600px;
     width: 500px;
     top: 0px;
-    left: 200px;
 }
+
+.mission-selection-dialog-container-left {
+  left: -550px;
+}
+
+.mission-selection-dialog-container-right {
+  left: 200px;
+}
+
 
 .mission-status-dialog {
   display: block;

@@ -15,7 +15,7 @@
         {{this.resource.crew ? this.resource.crew.length + 1 : 1}}
       </div>
     </div>
-    <StatusSelectionMenu v-if="showMenu"/>
+    <StatusSelectionMenu :statusMenuPosition="statusMenuPosition" v-if="showMenu"/>
   </div>
 </template>
 
@@ -28,14 +28,16 @@ export default {
   props: ['resource', 'rowNr'],
   data: () => {
     return {
-      showMenu: false
+      showMenu: false,
+      statusMenuPosition : 'right'
     }
   },
   components: {
     StatusSelectionMenu
   },
   methods: {
-    showStatusMenu: function() {
+    showStatusMenu: function(event) {
+      this.statusMenuPosition = event.clientX > window.innerWidth / 2 ? 'left' : 'right';
       this.showMenu = true;
     },
     hideStatusMenu: function() {

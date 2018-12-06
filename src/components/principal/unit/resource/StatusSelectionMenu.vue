@@ -1,20 +1,8 @@
 <template>
-  <div class="menu" v-if="showMenu">
-    <menu class="menu-options">
-      <menuitem
-        class="menu-option menu-option-disponibil"
-        @click="setStatusToDisponibil()"
-      >Disponibil</menuitem>
-      <menuitem
-        class="menu-option menu-option-misiune"
-        @click="toggleMissionMenu()"
-      >Misiune</menuitem>
-      <menuitem
-        class="menu-option menu-option-indisponibil"
-        @click="setStatusToIndisponibil()"
-      >Indisponibil</menuitem>
-    </menu>
-    <div class="mission-selection-dialog-container" v-if="showMissionMenu" style="display: block">
+  <div>
+    <div
+      v-bind:class="['mission-selection-dialog-container', statusMenuPosition == 'right' ? 'mission-selection-dialog-container-right' : 'mission-selection-dialog-container-left']"
+      v-if="showMissionMenu" style="display: block">
       <div class="dialog modal mission-status-dialog" role="dialog">
         <div class="modal-dialog mission-status-dialog" role="document">
           <div class="modal-content">
@@ -46,49 +34,72 @@
                 type="button"
                 class="btn custom-button custom-status-selection-button"
                 @click="confirmMission"
-              >Confirmă misiunea</button>
+              >Confirmă misiunea
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div v-bind:class="['menu', statusMenuPosition == 'right' ? 'menu-right' : 'menu-left']" v-if="showMenu">
+      <menu class="menu-options">
+        <menuitem
+          class="menu-option menu-option-disponibil"
+          @click="setStatusToDisponibil()"
+        >Disponibil
+        </menuitem>
+        <menuitem
+          class="menu-option menu-option-misiune"
+          @click="toggleMissionMenu"
+        >Misiune
+        </menuitem>
+        <menuitem
+          class="menu-option menu-option-indisponibil"
+          @click="setStatusToIndisponibil()"
+        >Indisponibil
+        </menuitem>
+      </menu>
+    </div>
   </div>
 </template>
 <script>
-import ClickOutside from "vue-click-outside";
+  import ClickOutside from "vue-click-outside";
 
-export default {
-  name: "StatusSelectionMenu",
-  data: () => {
-    return {
-      showMenu: true,
-      showMissionMenu: false
-    };
-  },
-  methods: {
-    setStatusToDisponibil: function() {
-      this.closeMenu();
+  export default {
+    name: "StatusSelectionMenu",
+    props: ['statusMenuPosition'],
+    data: () => {
+      return {
+        showMissionMenuPosition: 'right',
+        showMenu: true,
+        showMissionMenu: false
+      };
     },
-    openMissionMenu: function() {
-      this.showMissionMenu = true;
+    methods: {
+      setStatusToDisponibil: function () {
+        this.closeMenu();
+      },
+      openMissionMenu: function () {
+        this.showMissionMenu = true;
+      },
+      closeMissionMenu: function () {
+        this.showMissionMenu = false;
+      },
+      toggleMissionMenu: function () {
+        this.showMissionMenu = !this.showMissionMenu;
+      },
+      setStatusToIndisponibil: function () {
+        this.closeMenu();
+      },
+      closeMenu: function () {
+        this.showMenu = false;
+      },
+      confirmMission: function () {
+      }
     },
-    closeMissionMenu: function() {
-      this.showMissionMenu = false;
-    },
-    toggleMissionMenu: function() {
-      this.showMissionMenu = !this.showMissionMenu;
-    },
-    setStatusToIndisponibil: function() {
-      this.closeMenu();
-    },
-    closeMenu: function() {
-      this.showMenu = false;
-    },
-    confirmMission: function() {}
-  },
-  directives: {
-    ClickOutside
-  }
-};
+    directives: {
+      ClickOutside
+    }
+  };
 </script>
 <style src="./statusSelectionMenu.css"></style>
