@@ -5,6 +5,8 @@ export default {
   CLOSE_CONFIRMATION_DIALOG: 'closeConfirmationDialog',
   OPEN_ADD_RESOURCE_DIALOG: 'openAddResourceDialog',
   CLOSE_ADD_RESOURCE_DIALOG: 'closeAddResourceDialog',
+  OPEN_VIEW_RESOURCE_DIALOG: 'openViewResourceDialog',
+  CLOSE_VIEW_RESOURCE_DIALOG: 'closeViewResourceDialog',
   ADD_RESOURCE: 'addResource',
   WEBSOCKET_CONNECT: 'websocketConnect',
   WEBSOCKET_DISCONNECT: 'websocketDisconnect',

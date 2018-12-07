@@ -12,6 +12,7 @@
       </div>
     </div>
     <ConfirmationDialog v-if="displayConfirmationDialog" :unit="activeUnit"></ConfirmationDialog>
+    <ResourceDialog v-if="displayViewResourceDialog" :resource="activeResource" :unit="activeUnit"></ResourceDialog>
     <AddResourceForm v-if="displayResourceForm" ></AddResourceForm>
   </div>
 </template>
@@ -23,14 +24,16 @@ import AddResourceForm from './unit/form/AddResourceForm.vue';
 import A from '../../constants/actions';
 import WebsocketSubscribe from '../../contracts/websocketSubscribe';
 import UnitButtons from './unit/buttons/UnitButtons.vue';
+import ResourceDialog from './unit/form/ResourceDialog'
 
 export default {
   name: 'Principal',
   components: {
+    ResourceDialog,
     Unit,
     ConfirmationDialog,
     AddResourceForm,
-    UnitButtons,
+    UnitButtons
   },
   computed: {
     units() {
@@ -39,12 +42,18 @@ export default {
     activeUnit() {
       return this.$store.state.principalStore.activeUnit;
     },
+    activeResource() {
+      return this.$store.state.principalStore.activeResource;
+    },
     displayResourceForm() {
       return this.$store.state.principalStore.resourceDialogIsOpen;
     },
     displayConfirmationDialog() {
       return this.$store.state.principalStore.confirmationDialogIsOpen;
     },
+    displayViewResourceDialog() {
+      return this.$store.state.principalStore.resourceViewDialogIsOpen;
+    }
   },
   mounted: function () {
     console.log("Principal.vue mounted");
