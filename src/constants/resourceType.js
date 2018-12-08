@@ -1,0 +1,5 @@
+export default {
+  EQUIPMENT: 'EQUIPMENT',
+  INTERVENTION: 'INTERVENTION',
+  OTHER: 'OTHER',
+}

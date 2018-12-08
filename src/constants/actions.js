@@ -16,4 +16,5 @@ export default {
   UNLOCK_UNIT: 'unlockUnit',
   INIT_UNITS: 'initUnits',
   UNIT_UPDATED: 'unitUpdated',
+  CHANGE_ACTIVE_TAB: 'changeActiveTab',
 };
