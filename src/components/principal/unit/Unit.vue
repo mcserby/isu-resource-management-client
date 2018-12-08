@@ -3,7 +3,7 @@
     <div class="unit-header">
       {{unit.name}}
     </div>
-    <div v-for="(resource,index) in unit.resources" v-bind:key="resource.plateNumber">
+    <div v-for="(resource,index) in filteredResources" v-bind:key="resource.plateNumber">
       <ResourceSummary :resource="resource" :rowNr="index"></ResourceSummary>
     </div>
   </div>
@@ -22,6 +22,15 @@
     components: {
       ResourceSummary,
     },
+    computed: {
+      resourceType() {
+        return this.$store.state.principalStore.activeTab.resourceType;
+      },
+      filteredResources(){
+        console.log('resources:', this.unit.resources);
+        return this.unit.resources.filter(r => r.type === this.resourceType);
+      }
+    }
   }
 </script>
 

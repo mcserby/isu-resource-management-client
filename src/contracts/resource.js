@@ -1,13 +1,14 @@
 // Resource contract
 
 class Resource {
-  constructor(vehicleType, plateNumber, identificationNumber, crew) {
+  constructor(vehicleType, plateNumber, identificationNumber, captain, crew, status, type) {
     this.vehicleType = vehicleType;
     this.plateNumber = plateNumber;
     this.identificationNumber = identificationNumber;
-    this.captain = crew[0];
-    this.crew = crew.slice();
-    this.crew.shift();
+    this.captain = captain;
+    this.crew = crew;
+    this.status = status;
+    this.type = type;
   }
 }
 
