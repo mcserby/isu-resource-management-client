@@ -27,7 +27,6 @@
         return this.$store.state.principalStore.activeTab.resourceType;
       },
       filteredResources(){
-        console.log('resources:', this.unit.resources);
         return this.unit.resources.filter(r => r.type === this.resourceType);
       }
     }

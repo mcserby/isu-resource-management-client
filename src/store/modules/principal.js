@@ -74,6 +74,8 @@ const mutations = {
   [M.UNIT_UPDATED] (state, unit) {
     let updatedUnit = state.units.find(u =>  u.name === unit.name);
     if (updatedUnit) {
+      // TODO randomly assigned type should be changed to the one receive from the backend service once ready
+      unit.resources.forEach(r => r.type = [ResourceType.EQUIPMENT, ResourceType.INTERVENTION, ResourceType.OTHER][Math.floor((Math.random() * 3))]);
       Vue.set(updatedUnit, 'resources', unit.resources);
       Vue.set(updatedUnit, 'lastUpdate', unit.lastUpdate);
     }
@@ -95,7 +97,7 @@ const mutations = {
     state.confirmationDialogIsOpen = false;
   },
  [M.OPEN_VIEW_RESOURCE_DIALOG] (state, resource) {
-    for (var unit of state.units) {
+    for (let unit of state.units) {
       let res = unit.resources.find(r => r === resource)
       if (res) {
         state.activeUnit = unit;

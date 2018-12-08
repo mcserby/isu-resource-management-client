@@ -109,6 +109,7 @@
         const captain = crewList[0];
         crewList = crewList.slice();
         crewList.shift();
+        console.log(this.resourceType);
         this.$store.dispatch(A.ADD_RESOURCE, new Resource(this.name, this.plateNumber, this.identificationNumber, captain, crewList, 'AVAILABLE_IN_GARAGE', this.resourceType));
       },
       clearFormValues(){
@@ -121,6 +122,7 @@
         this.$store.dispatch(A.CLOSE_ADD_RESOURCE_DIALOG);
       },
       updateUnit(){
+        console.log('updateUnit', this.$store.state.principalStore.activeUnit);
         this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('updateSubUnit', new UpdateSubUnitRequest(this.$store.state.principalStore.activeUnit)));
       },
       validateFields() {
