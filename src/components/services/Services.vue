@@ -1,6 +1,21 @@
 <template>
   <div>
     <div class="services-title">Modul Servicii</div>
+    <div class="services-buttons">
+      <button class="btn custom-service-button delete-button" @click="deleteServices()">
+        <span class="service-button-font-size">Șterge toate datele</span>
+      </button>
+      
+      <button class="btn custom-service-button add-button" @click="addService()">
+        <span class="service-button-font-size">Adaugă date</span>
+      </button>
+
+      <div class="last-updated">
+        <span>
+          <b>{{ services.lastUpdate | moment("DD.MM.YYYY, HH:mm:ss") }}</b>
+        </span>
+      </div>
+    </div>
     <div class="services">
       <div class="services-header">
         <div class="service-header-name">Nume și Prenume</div>
@@ -20,6 +35,7 @@ import Service from "./Service.vue";
 import A from "../../constants/services/actions";
 import WSA from "../../constants/actions";
 import WebsocketSubscribe from "../../contracts/websocketSubscribe";
+import WebsocketSend from "../../contracts/websocketSend";
 
 export default {
   name: "Services",
@@ -46,6 +62,16 @@ export default {
       WSA.WEBSOCKET_SUBSCRIBE,
       new WebsocketSubscribe("services", onServicesReceived, onError)
     );
+  },
+  methods: {
+    deleteServices() {
+      this.$store.dispatch(A.CLEAR_ALL_SERVICES);
+      this.$store.dispatch(
+        WSA.WEBSOCKET_SEND,
+        new WebsocketSend("deleteAllServices", "")
+      );
+    },
+    addService() {}
   }
 };
 </script>
