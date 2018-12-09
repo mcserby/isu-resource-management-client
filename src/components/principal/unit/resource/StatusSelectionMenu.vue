@@ -28,7 +28,7 @@
               </div>
               <div class="form-group">
                 <label class="form-label" for="crew">Echipaj:</label>
-                <textarea required v-model="crew" class="form-control" id="crew" rows="3"/>
+                <textarea required v-model="crew" class="form-control" id="crew" rows="3" v-text="buildFormattedCrewList"></textarea>
               </div>
             </div>
             <div class="modal-footer">
@@ -70,7 +70,7 @@ import WebsocketSend from "../../../../contracts/websocketSend";
 
 export default {
   name: "StatusSelectionMenu",
-  props: ["statusMenuPosition", "plateNumber"],
+  props: ["statusMenuPosition", "resource"],
   data: () => {
     return {
       showMissionMenuPosition: "right",
@@ -83,7 +83,15 @@ export default {
   },
   computed: {
     isSetStatusToMissionDisabled() {
-       return this.key === "" || this.description === "" || this.crew === "";
+      return this.key === "" || this.description === "" || this.crew === "";
+    },
+    buildFormattedCrewList() {
+      let formattedCrew = this.resource.captain;
+      for (var i = 0; i < this.resource.crew.length; i++) {
+        formattedCrew = formattedCrew + "\n" + this.resource.crew[i];
+      }
+
+      return formattedCrew;
     }
   },
   methods: {
@@ -107,7 +115,7 @@ export default {
         new WebsocketSend(
           "updateStatus",
           new UpdateResourceStatus(
-            this.plateNumber,
+            this.resource.plateNumber,
             new Status("AVAILABLE", null, null, null)
           )
         )
@@ -121,7 +129,7 @@ export default {
         new WebsocketSend(
           "updateStatus",
           new UpdateResourceStatus(
-            this.plateNumber,
+            this.resource.plateNumber,
             new Status("UNAVAILABLE", null, null, null)
           )
         )
@@ -139,7 +147,7 @@ export default {
         new WebsocketSend(
           "updateStatus",
           new UpdateResourceStatus(
-            this.plateNumber,
+            this.resource.plateNumber,
             new Status("IN_MISSION", this.key, this.description, crewList)
           )
         )

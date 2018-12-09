@@ -18,14 +18,12 @@
         <div class="resource-element-container">{{resource.identificationNumber}}</div>
       </div>
       <div class="resource-crew-number-summary">
-        <div
-          class="resource-element-container"
-        >{{this.resource.crew ? this.resource.crew.length + 1 : 1}}</div>
+        <div class="resource-element-container">{{this.crewSize}}</div>
       </div>
     </div>
     <StatusSelectionMenu
       :statusMenuPosition="statusMenuPosition"
-      :plateNumber="resource.plateNumber"
+      :resource="resource"
       v-if="showMenu"
     />
   </div>
@@ -45,6 +43,18 @@ export default {
       showMenu: false,
       statusMenuPosition: "right"
     };
+  },
+  computed: {
+    crewSize() {
+      let crewSize = 0;
+      if (this.resource.status.status == "IN_MISSION") {
+        crewSize = this.resource.status.crew ? this.resource.status.crew.length : 0;
+      } else {
+        crewSize = this.resource.crew ? this.resource.crew.length + 1 : 1;
+      }
+
+      return crewSize;
+    }
   },
   components: {
     StatusSelectionMenu,
