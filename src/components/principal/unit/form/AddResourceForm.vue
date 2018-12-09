@@ -81,6 +81,9 @@
     computed: {
       saveDisabled() {
         return this.errors.length !== 0 || !this.validationPerformedAtLeastOnce;
+      },
+      resourceType() {
+        return this.$store.state.principalStore.activeTab.resourceType;
       }
     },
     mounted(){
@@ -102,7 +105,12 @@
         this.updateUnit();
       },
       addResource() {
-          this.$store.dispatch(A.ADD_RESOURCE, new Resource(this.name, this.plateNumber, this.identificationNumber, this.crew.split('\n')));
+        let crewList = this.crew.split('\n')
+        const captain = crewList[0];
+        crewList = crewList.slice();
+        crewList.shift();
+        console.log(this.resourceType);
+        this.$store.dispatch(A.ADD_RESOURCE, new Resource(this.name, this.plateNumber, this.identificationNumber, captain, crewList, 'AVAILABLE_IN_GARAGE', this.resourceType));
       },
       clearFormValues(){
         this.validationPerformedAtLeastOnce = false;
@@ -114,6 +122,7 @@
         this.$store.dispatch(A.CLOSE_ADD_RESOURCE_DIALOG);
       },
       updateUnit(){
+        console.log('updateUnit', this.$store.state.principalStore.activeUnit);
         this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('updateSubUnit', new UpdateSubUnitRequest(this.$store.state.principalStore.activeUnit)));
       },
       validateFields() {

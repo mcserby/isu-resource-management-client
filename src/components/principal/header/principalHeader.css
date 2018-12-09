@@ -1,0 +1,17 @@
+.search-bar-wrapper {
+  margin-left: 231px;
+  margin-right: 231px;
+}
+
+.principal-header {
+  margin-bottom: 10px;
+}
+
+.principal-title {
+  font-size: 3em;
+  font-weight: bold;
+  color: #F74356;
+  text-shadow: 4px 4px 4px #000000;
+  text-align: center;
+  padding-top: 5px;
+}
