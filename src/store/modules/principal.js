@@ -16,6 +16,7 @@ const state = {
   tabs: tabs,
   activeTab: tabs[0],
   activeUnit: null,
+  activeStatusMenuId : null,
   activeResource: null,
   resourceDialogIsOpen: false,
   confirmationDialogIsOpen: false,
@@ -61,6 +62,12 @@ const actions = {
   },
   [A.CHANGE_ACTIVE_TAB] ({commit}, tab) {
     commit(M.CHANGE_ACTIVE_TAB, tab)
+  },
+  [A.OPEN_STATUS_MENU] ({commit}, resourceId) {
+    commit(M.OPEN_STATUS_MENU, resourceId)
+  },
+  [A.CLOSE_STATUS_MENU] ({commit}) {
+    commit(M.OPEN_STATUS_MENU)
   },
 }
 
@@ -138,6 +145,12 @@ const mutations = {
   [M.CHANGE_ACTIVE_TAB] (state, tab) {
     state.activeTab = tab;
   },
+  [M.OPEN_STATUS_MENU] (state, resourceId) {
+      state.activeStatusMenuId = resourceId;
+  },
+  [M.CLOSE_STATUS_MENU] (state) {
+    state.activeStatusMenuId = null;
+  }
 }
 
 const getters = {}

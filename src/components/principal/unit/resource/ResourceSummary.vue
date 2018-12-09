@@ -26,7 +26,7 @@
     <StatusSelectionMenu
       :statusMenuPosition="statusMenuPosition"
       :plateNumber="resource.plateNumber"
-      v-if="showMenu"
+      v-if="showStatusMenu"
     />
   </div>
 </template>
@@ -42,13 +42,18 @@ export default {
   props: ["resource", "rowNr"],
   data: () => {
     return {
-      showMenu: false,
       statusMenuPosition: "right"
     };
   },
   components: {
     StatusSelectionMenu,
     Resource
+  },
+  computed: {
+    showStatusMenu() {
+      //TODO Use unique id instead of plateNumber when available on backend.
+      return this.$store.state.principalStore.state.activeStatusMenuId === resource.plateNumber;
+    },
   },
   methods: {
     mouseClick: function() {
@@ -57,10 +62,11 @@ export default {
     showStatusMenu: function(event) {
       this.statusMenuPosition =
         event.clientX > window.innerWidth / 2 ? "left" : "right";
-      this.showMenu = true;
+      //TODO Use unique id instead of plateNumber when available on backend.
+      this.$store.dispatch(A.OPEN_STATUS_MENU, this.resource.plateNumber);
     },
     hideStatusMenu: function() {
-      this.showMenu = false;
+      this.$store.dispatch(A.CLOSE_STATUS_MENU, null);
     }
   },
   directives: {
