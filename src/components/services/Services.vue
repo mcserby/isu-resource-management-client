@@ -1,9 +1,53 @@
 <template>
-    <h1>Services</h1>
+  <div>
+    <div class="services-title">Modul Servicii</div>
+    <div class="services">
+      <div class="services-header">
+        <div class="service-header-name">Nume și Prenume</div>
+        <div class="service-header-title">Grad</div>
+        <div class="service-header-role">Funcție</div>
+        <div class="service-header-contact">Contact</div>
+      </div>
+      <div v-for="(service,index) in services" v-bind:key="service.id">
+        <Service :service="service" :rowNr="index"></Service>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: 'Services',
+import Service from "./Service.vue";
+import A from "../../constants/services/actions";
+import WSA from "../../constants/actions";
+import WebsocketSubscribe from "../../contracts/websocketSubscribe";
+
+export default {
+  name: "Services",
+  components: {
+    Service
+  },
+  computed: {
+    services() {
+      return this.$store.state.servicesStore.services;
+    }
+  },
+  mounted: function() {
+    console.log("Services.vue mounted");
+    const self = this;
+    let onServicesReceived = function(response) {
+      let r = JSON.parse(response.body);
+      self.$store.dispatch(A.INIT_SERVICES, r.services);
+    };
+    let onError = function(error) {
+      console.err(error);
+    };
+
+    this.$store.dispatch(
+      WSA.WEBSOCKET_SUBSCRIBE,
+      new WebsocketSubscribe("services", onServicesReceived, onError)
+    );
   }
+};
 </script>
+
+<style src="./services.css"></style>

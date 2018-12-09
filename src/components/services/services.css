@@ -1,0 +1,49 @@
+.services-title {
+  font-size: 3em;
+  font-weight: bold;
+  color: #f74356;
+  text-shadow: 4px 4px 4px #000000;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.services {
+  width: 90%;  
+  margin-left: 5%;
+  margin-top: 50px;
+}
+
+.services-header {
+  display: grid;
+  position: relative;
+  text-align: left;
+  font-size: x-large;
+  font-weight: 500;
+  color: #cde6f2;
+  background-color: #186181;
+  grid-auto-columns: 1fr;
+}
+
+.service-header-name {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
+  font-size: x-large;
+}
+
+.service-header-title {
+  grid-column: 2 / span 1;
+  grid-row: 1 / span 1;
+  font-size: x-large;
+}
+
+.service-header-role {
+  grid-column: 3 / span 1;
+  grid-row: 1 / span 1;
+  font-size: x-large;
+}
+
+.service-header-contact {
+  grid-column: 4 / span 1;
+  grid-row: 1 / span 1;
+  font-size: x-large;
+}
