@@ -1,7 +1,7 @@
 <template>
   <div class="unit-buttons">
     <div>
-      <button class="btn custom-button" :disabled="isUnitLocked" @click="shiftExchange()">
+      <button class="btn custom-button" :disabled="isShiftExchangeNotAllowed" @click="shiftExchange()">
         <span class="button-font-size">Schimb de tură</span>
       </button>
     </div>
@@ -38,6 +38,11 @@
       }
     },
     computed: {
+      isShiftExchangeNotAllowed() {
+        let currentResourceType = this.$store.state.principalStore.activeTab.resourceType;
+        let currentResources = this.unit.resources.filter(r => r.type == currentResourceType);
+        return (currentResources.length === 0 ||this.unit.isLocked === true );
+      },
       isUnitLocked() {
         return Boolean(this.unit.isLocked);
       }

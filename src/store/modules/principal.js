@@ -79,7 +79,9 @@ const mutations = {
   [M.CLEAR_UNIT_RESOURCES] (state, unitName) {
     let unit = state.units.find(u =>  u.name === unitName)
     if (unit) {
-      Vue.set(unit, 'resources', [])
+      let currentResourceType =  state.activeTab.resourceType;
+      let updatedUnitResources = unit.resources.filter(r => r.type != currentResourceType);
+      Vue.set(unit, 'resources', updatedUnitResources)
     }
   },
   [M.OPEN_CONFIRMATION_DIALOG] (state, unitName) {
