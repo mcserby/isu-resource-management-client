@@ -1,0 +1,92 @@
+.menu {
+  display: block;
+  text-align: left;
+  position: absolute;
+  z-index: 1;
+  top: 10%;
+  width: 200px;
+}
+
+.menu-left {
+  left: -100px;
+}
+
+.menu-right {
+  left: 100px;
+}
+
+
+.menu-options {
+  align-items: flex-start;
+  width: 100%;
+}
+
+.menu-option {
+  width: 100%;
+  height: 33%;
+  display: block;
+  line-height: 2;
+  font-size: larger;
+  margin-left: 0;
+  margin-right: 0;
+  text-indent: 10%;
+  padding-inline-end: 10%;
+}
+
+.menu-option-disponibil {
+  background-color: #9eea8d;
+}
+
+.menu-option-disponibil:hover {
+   background-color: #226513
+}
+
+.menu-option-misiune {
+  background-color: #F74356;
+}
+
+.menu-option-misiune:hover {
+  background-color: #710510
+}
+
+.menu-option-indisponibil {
+  background-color: #dfe7ec;
+}
+
+.menu-option-indisponibil:hover {
+  background-color: #2f424f;
+}
+
+.mission-selection-dialog-container {
+    position: absolute;
+    z-index: 30;
+    height: 600px;
+    width: 500px;
+    top: 0px;
+}
+
+.mission-selection-dialog-container-left {
+  left: -550px;
+}
+
+.mission-selection-dialog-container-right {
+  left: 300px;
+}
+
+
+.mission-status-dialog {
+  display: block;
+  position: absolute;
+  height: 600px;
+  width: 500px;
+  top: 0px;
+  left: 0px;
+}
+
+.status-dialog-content {
+  text-align: left
+}
+
+.custom-status-selection-button {
+  width: 200px;
+}
