@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-click-outside="closeStatusMenu">
     <div
       v-bind:class="['mission-selection-dialog-container', statusMenuPosition == 'right' ? 'mission-selection-dialog-container-right' : 'mission-selection-dialog-container-left']"
       v-if="showMissionMenu"
@@ -44,7 +44,6 @@
     </div>
     <div
       v-bind:class="['menu', statusMenuPosition == 'right' ? 'menu-right' : 'menu-left']"
-      v-click-outside="closeStatusMenu"
       v-if="showMenu"
     >
       <menu class="menu-options">
@@ -90,6 +89,7 @@ export default {
     },
     closeStatusMenu: function() {
       this.showMenu = false;
+      this.$store.dispatch(A.CLOSE_STATUS_MENU);
     },
     setStatusToDisponibil: function() {
       this.closeMissionMenu();

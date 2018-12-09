@@ -17,6 +17,7 @@ const state = {
   activeTab: tabs[0],
   activeUnit: null,
   activeStatusMenuId : null,
+  statusMenuIsOpen : false,
   activeResource: null,
   resourceDialogIsOpen: false,
   confirmationDialogIsOpen: false,
@@ -67,41 +68,41 @@ const actions = {
     commit(M.OPEN_STATUS_MENU, resourceId)
   },
   [A.CLOSE_STATUS_MENU] ({commit}) {
-    commit(M.OPEN_STATUS_MENU)
-  },
+    commit(M.CLOSE_STATUS_MENU)
+  }
 }
 
 const mutations = {
-  [M.INIT_UNITS] (state, units) {
+  [M.INIT_UNITS](state, units) {
     state.units.splice(0, state.units.length);
     state.units = units;
   },
-  [M.UNIT_UPDATED] (state, unit) {
-    let updatedUnit = state.units.find(u =>  u.name === unit.name);
+  [M.UNIT_UPDATED](state, unit) {
+    let updatedUnit = state.units.find(u => u.name === unit.name);
     if (updatedUnit) {
       Vue.set(updatedUnit, 'resources', unit.resources);
       Vue.set(updatedUnit, 'lastUpdate', unit.lastUpdate);
     }
   },
-  [M.CLEAR_UNIT_RESOURCES] (state, unitName) {
-    let unit = state.units.find(u =>  u.name === unitName)
+  [M.CLEAR_UNIT_RESOURCES](state, unitName) {
+    let unit = state.units.find(u => u.name === unitName)
     if (unit) {
-      let currentResourceType =  state.activeTab.resourceType;
+      let currentResourceType = state.activeTab.resourceType;
       let updatedUnitResources = unit.resources.filter(r => r.type != currentResourceType);
       Vue.set(unit, 'resources', updatedUnitResources)
     }
   },
-  [M.OPEN_CONFIRMATION_DIALOG] (state, unitName) {
+  [M.OPEN_CONFIRMATION_DIALOG](state, unitName) {
     let unit = state.units.find(u => u.name === unitName);
-    if(unit){
+    if (unit) {
       state.activeUnit = unit;
       state.confirmationDialogIsOpen = true;
     }
   },
-  [M.CLOSE_CONFIRMATION_DIALOG] (state) {
+  [M.CLOSE_CONFIRMATION_DIALOG](state) {
     state.confirmationDialogIsOpen = false;
   },
- [M.OPEN_VIEW_RESOURCE_DIALOG] (state, resource) {
+  [M.OPEN_VIEW_RESOURCE_DIALOG](state, resource) {
     for (let unit of state.units) {
       let res = unit.resources.find(r => r === resource)
       if (res) {
@@ -110,46 +111,47 @@ const mutations = {
         state.resourceViewDialogIsOpen = true;
       }
     }
-},
-  [M.CLOSE_VIEW_RESOURCE_DIALOG] (state) {
+  },
+  [M.CLOSE_VIEW_RESOURCE_DIALOG](state) {
     state.resourceViewDialogIsOpen = false;
   },
-[M.CLOSE_CONFIRMATION_DIALOG] (state) {
-  state.confirmationDialogIsOpen = false;
-},
-  [M.OPEN_ADD_RESOURCE_DIALOG] (state, unitName) {
+  [M.CLOSE_CONFIRMATION_DIALOG](state) {
+    state.confirmationDialogIsOpen = false;
+  },
+  [M.OPEN_ADD_RESOURCE_DIALOG](state, unitName) {
     let unit = state.units.find(u => u.name === unitName);
-    if(unit){
+    if (unit) {
       state.activeUnit = unit;
       state.resourceDialogIsOpen = true;
     }
   },
-  [M.CLOSE_ADD_RESOURCE_DIALOG] (state) {
+  [M.CLOSE_ADD_RESOURCE_DIALOG](state) {
     state.resourceDialogIsOpen = false;
   },
-  [M.ADD_RESOURCE] (state, resource) {
+  [M.ADD_RESOURCE](state, resource) {
     state.activeUnit.resources.push(resource);
   },
-  [M.LOCK_UNIT] (state, unitName) {
+  [M.LOCK_UNIT](state, unitName) {
     let unit = state.units.find(u => u.name === unitName);
     if (unit) {
       Vue.set(unit, 'isLocked', true);
     }
   },
-  [M.UNLOCK_UNIT] (state, unitName) {
+  [M.UNLOCK_UNIT](state, unitName) {
     let unit = state.units.find(u => u.name === unitName);
     if (unit) {
       Vue.set(unit, 'isLocked', false);
     }
   },
-  [M.CHANGE_ACTIVE_TAB] (state, tab) {
+  [M.CHANGE_ACTIVE_TAB](state, tab) {
     state.activeTab = tab;
   },
-  [M.OPEN_STATUS_MENU] (state, resourceId) {
-      state.activeStatusMenuId = resourceId;
+  [M.OPEN_STATUS_MENU](state, resourceId) {
+    state.statusMenuIsOpen = true;
+    state.activeStatusMenuId = resourceId;
   },
-  [M.CLOSE_STATUS_MENU] (state) {
-    state.activeStatusMenuId = null;
+  [M.CLOSE_STATUS_MENU](state) {
+    state.statusMenuIsOpen = false;
   }
 }
 

@@ -50,7 +50,8 @@ export default {
   },
   computed: {
     isStatusMenuVisible() {
-      return this.$store.state.principalStore.activeStatusMenuId === this.resource.plateNumber;
+      return this.$store.state.principalStore.statusMenuIsOpen &&
+        this.$store.state.principalStore.activeStatusMenuId === this.resource.plateNumber;
     }
   },
   methods: {
