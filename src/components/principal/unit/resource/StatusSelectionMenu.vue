@@ -42,10 +42,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-bind:class="['menu', statusMenuPosition == 'right' ? 'menu-right' : 'menu-left']"
-      v-if="showMenu"
-    >
+    <div v-bind:class="['menu', statusMenuPosition == 'right' ? 'menu-right' : 'menu-left']">
       <menu class="menu-options">
         <menuitem
           class="menu-option menu-option-disponibil"
@@ -72,7 +69,6 @@ export default {
   props: ["statusMenuPosition", "plateNumber"],
   data: () => {
     return {
-      showMenu: true,
       showMissionMenu : false,
       showMissionMenuPosition: "right",
       key: "",
@@ -88,7 +84,6 @@ export default {
       this.showMissionMenu = false;
     },
     closeStatusMenu: function() {
-      this.showMenu = false;
       this.$store.dispatch(A.CLOSE_STATUS_MENU);
     },
     setStatusToDisponibil: function() {
