@@ -36,6 +36,7 @@
                 type="button"
                 class="btn custom-button custom-status-selection-button"
                 @click="confirmMission"
+                :disabled="isSetStatusToMissionDisabled"
               >Confirmă misiunea</button>
             </div>
           </div>
@@ -79,6 +80,11 @@ export default {
       description: "",
       crew: []
     };
+  },
+  computed: {
+    isSetStatusToMissionDisabled() {
+       return this.key === "" || this.description === "" || this.crew === "";
+    }
   },
   methods: {
     openMissionMenu: function() {
