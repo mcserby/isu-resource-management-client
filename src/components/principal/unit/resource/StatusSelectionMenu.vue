@@ -44,6 +44,7 @@
     </div>
     <div
       v-bind:class="['menu', statusMenuPosition == 'right' ? 'menu-right' : 'menu-left']"
+      v-click-outside="closeStatusMenu"
       v-if="showMenu"
     >
       <menu class="menu-options">
@@ -72,30 +73,28 @@ export default {
   props: ["statusMenuPosition", "plateNumber"],
   data: () => {
     return {
-      showMissionMenuPosition: "right",
       showMenu: true,
-      showMissionMenu: false,
+      showMissionMenu : false,
+      showMissionMenuPosition: "right",
       key: "",
       description: "",
       crew: []
     };
   },
   methods: {
-    openMissionMenu: function() {
-      this.showMissionMenu = true;
-    },
     toggleMissionMenu: function() {
       this.showMissionMenu = !this.showMissionMenu;
     },
     closeMissionMenu: function() {
       this.showMissionMenu = false;
     },
-    closeMenu: function() {
+    closeStatusMenu: function() {
       this.showMenu = false;
     },
     setStatusToDisponibil: function() {
       this.closeMissionMenu();
-      this.closeMenu();
+      this.closeStatusMenu();
+
       this.$store.dispatch(
         A.WEBSOCKET_SEND,
         new WebsocketSend(
@@ -109,7 +108,7 @@ export default {
     },
     setStatusToIndisponibil: function() {
       this.closeMissionMenu();
-      this.closeMenu();
+      this.closeStatusMenu();
       this.$store.dispatch(
         A.WEBSOCKET_SEND,
         new WebsocketSend(
@@ -123,7 +122,8 @@ export default {
     },
     confirmMission: function() {
       this.closeMissionMenu();
-      this.closeMenu();
+      this.closeStatusMenu();
+
       let crewList = this.crew.split("\n");
       const captain = crewList[0];
       crewList = crewList.slice();

@@ -2,7 +2,6 @@
   <div
     v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']"
     @contextmenu.prevent="showStatusMenu"
-    v-click-outside="hideStatusMenu"
   >
     <div
       v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']"
@@ -26,7 +25,7 @@
     <StatusSelectionMenu
       :statusMenuPosition="statusMenuPosition"
       :plateNumber="resource.plateNumber"
-      v-if="isStatusMenuActive"
+      v-if="isStatusMenuVisible"
     />
   </div>
 </template>
@@ -50,10 +49,9 @@ export default {
     Resource
   },
   computed: {
-    isStatusMenuActive() {
-      //TODO Use unique id instead of plateNumber when available on backend.
+    isStatusMenuVisible() {
       return this.$store.state.principalStore.activeStatusMenuId === this.resource.plateNumber;
-    },
+    }
   },
   methods: {
     mouseClick: function() {
@@ -64,9 +62,6 @@ export default {
         event.clientX > window.innerWidth / 2 ? "left" : "right";
       //TODO Use unique id instead of plateNumber when available on backend.
       this.$store.dispatch(A.OPEN_STATUS_MENU, this.resource.plateNumber);
-    },
-    hideStatusMenu: function() {
-      this.$store.dispatch(A.CLOSE_STATUS_MENU, null);
     }
   },
   directives: {
