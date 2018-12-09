@@ -2,7 +2,9 @@
   <div>
     <div
       v-bind:class="['mission-selection-dialog-container', statusMenuPosition == 'right' ? 'mission-selection-dialog-container-right' : 'mission-selection-dialog-container-left']"
-      v-if="showMissionMenu" style="display: block">
+      v-if="showMissionMenu"
+      style="display: block"
+    >
       <div class="dialog modal mission-status-dialog" role="dialog">
         <div class="modal-dialog mission-status-dialog" role="document">
           <div class="modal-content">
@@ -34,72 +36,113 @@
                 type="button"
                 class="btn custom-button custom-status-selection-button"
                 @click="confirmMission"
-              >Confirmă misiunea
-              </button>
+              >Confirmă misiunea</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div v-bind:class="['menu', statusMenuPosition == 'right' ? 'menu-right' : 'menu-left']" v-if="showMenu">
+    <div
+      v-bind:class="['menu', statusMenuPosition == 'right' ? 'menu-right' : 'menu-left']"
+      v-if="showMenu"
+    >
       <menu class="menu-options">
         <menuitem
           class="menu-option menu-option-disponibil"
           @click="setStatusToDisponibil()"
-        >Disponibil
-        </menuitem>
-        <menuitem
-          class="menu-option menu-option-misiune"
-          @click="toggleMissionMenu"
-        >Misiune
-        </menuitem>
+        >Disponibil</menuitem>
+        <menuitem class="menu-option menu-option-misiune" @click="toggleMissionMenu">Misiune</menuitem>
         <menuitem
           class="menu-option menu-option-indisponibil"
           @click="setStatusToIndisponibil()"
-        >Indisponibil
-        </menuitem>
+        >Indisponibil</menuitem>
       </menu>
     </div>
   </div>
 </template>
 <script>
-  import ClickOutside from "vue-click-outside";
+import ClickOutside from "vue-click-outside";
+import A from "../../../../constants/actions";
+import Status from "../../../../contracts/status";
+import UpdateResourceStatus from "../../../../contracts/edit/updateResourceStatus";
+import WebsocketSend from "../../../../contracts/websocketSend";
 
-  export default {
-    name: "StatusSelectionMenu",
-    props: ['statusMenuPosition'],
-    data: () => {
-      return {
-        showMissionMenuPosition: 'right',
-        showMenu: true,
-        showMissionMenu: false
-      };
+export default {
+  name: "StatusSelectionMenu",
+  props: ["statusMenuPosition", "plateNumber"],
+  data: () => {
+    return {
+      showMissionMenuPosition: "right",
+      showMenu: true,
+      showMissionMenu: false,
+      key: "",
+      description: "",
+      crew: []
+    };
+  },
+  methods: {
+    openMissionMenu: function() {
+      this.showMissionMenu = true;
     },
-    methods: {
-      setStatusToDisponibil: function () {
-        this.closeMenu();
-      },
-      openMissionMenu: function () {
-        this.showMissionMenu = true;
-      },
-      closeMissionMenu: function () {
-        this.showMissionMenu = false;
-      },
-      toggleMissionMenu: function () {
-        this.showMissionMenu = !this.showMissionMenu;
-      },
-      setStatusToIndisponibil: function () {
-        this.closeMenu();
-      },
-      closeMenu: function () {
-        this.showMenu = false;
-      },
-      confirmMission: function () {
-      }
+    toggleMissionMenu: function() {
+      this.showMissionMenu = !this.showMissionMenu;
     },
-    directives: {
-      ClickOutside
+    closeMissionMenu: function() {
+      this.showMissionMenu = false;
+    },
+    closeMenu: function() {
+      this.showMenu = false;
+    },
+    setStatusToDisponibil: function() {
+      this.closeMissionMenu();
+      this.closeMenu();
+      this.$store.dispatch(
+        A.WEBSOCKET_SEND,
+        new WebsocketSend(
+          "updateStatus",
+          new UpdateResourceStatus(
+            this.plateNumber,
+            new Status("AVAILABLE", null, null, null)
+          )
+        )
+      );
+    },
+    setStatusToIndisponibil: function() {
+      this.closeMissionMenu();
+      this.closeMenu();
+      this.$store.dispatch(
+        A.WEBSOCKET_SEND,
+        new WebsocketSend(
+          "updateStatus",
+          new UpdateResourceStatus(
+            this.plateNumber,
+            new Status("UNAVAILABLE", null, null, null)
+          )
+        )
+      );
+    },
+    confirmMission: function() {
+      this.closeMissionMenu();
+      this.closeMenu();
+      let crewList = this.crew.split("\n");
+      const captain = crewList[0];
+      crewList = crewList.slice();
+      crewList.shift();
+      this.$store.dispatch(
+        A.WEBSOCKET_SEND,
+        new WebsocketSend(
+          "updateStatus",
+          new UpdateResourceStatus(
+            this.plateNumber,
+            new Status("IN_MISSION", this.key, this.description, crewList)
+          )
+        )
+      );
     }
-  };
+  },
+  directives: {
+    ClickOutside
+  }
+};
 </script>
 <style src="./statusSelectionMenu.css"></style>
