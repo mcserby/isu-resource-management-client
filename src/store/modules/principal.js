@@ -6,7 +6,7 @@ import ResourceType from '../../constants/resourceType';
 import Resource from '../../contracts/resource';
 
 const tabs = [
-  new Tab('Tehnică de primă intervenție', ResourceType.INTERVENTION),
+  new Tab('Tehnică de primă intervenție', ResourceType.FIRST_INTERVENTION),
   new Tab('Alte tipuri de tehnică', ResourceType.OTHER),
   new Tab('Echipamente', ResourceType.EQUIPMENT)
 ];
@@ -67,15 +67,11 @@ const actions = {
 const mutations = {
   [M.INIT_UNITS] (state, units) {
     state.units.splice(0, state.units.length);
-    // TODO randomly assigned type should be changed to the one receive from the backend service once ready
-    units.forEach(u => u.resources.forEach(r => r.type = [ResourceType.EQUIPMENT, ResourceType.INTERVENTION, ResourceType.OTHER][Math.floor((Math.random() * 3))]));
     state.units = units;
   },
   [M.UNIT_UPDATED] (state, unit) {
     let updatedUnit = state.units.find(u =>  u.name === unit.name);
     if (updatedUnit) {
-      // TODO randomly assigned type should be changed to the one receive from the backend service once ready
-      unit.resources.forEach(r => r.type = [ResourceType.EQUIPMENT, ResourceType.INTERVENTION, ResourceType.OTHER][Math.floor((Math.random() * 3))]);
       Vue.set(updatedUnit, 'resources', unit.resources);
       Vue.set(updatedUnit, 'lastUpdate', unit.lastUpdate);
     }
@@ -83,7 +79,9 @@ const mutations = {
   [M.CLEAR_UNIT_RESOURCES] (state, unitName) {
     let unit = state.units.find(u =>  u.name === unitName)
     if (unit) {
-      Vue.set(unit, 'resources', [])
+      let currentResourceType =  state.activeTab.resourceType;
+      let updatedUnitResources = unit.resources.filter(r => r.type != currentResourceType);
+      Vue.set(unit, 'resources', updatedUnitResources)
     }
   },
   [M.OPEN_CONFIRMATION_DIALOG] (state, unitName) {
