@@ -26,7 +26,7 @@
     <StatusSelectionMenu
       :statusMenuPosition="statusMenuPosition"
       :plateNumber="resource.plateNumber"
-      v-if="showStatusMenu"
+      v-if="isStatusMenuActive"
     />
   </div>
 </template>
@@ -50,9 +50,9 @@ export default {
     Resource
   },
   computed: {
-    showStatusMenu() {
+    isStatusMenuActive() {
       //TODO Use unique id instead of plateNumber when available on backend.
-      return this.$store.state.principalStore.state.activeStatusMenuId === resource.plateNumber;
+      return this.$store.state.principalStore.activeStatusMenuId === this.resource.plateNumber;
     },
   },
   methods: {
