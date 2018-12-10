@@ -19,7 +19,7 @@
       <div class="resource-crew-number-summary">
         <div
           class="resource-element-container"
-        >{{this.resource.crew ? this.resource.crew.length + 1 : 1}}</div>
+        >{{this.crewSize}}</div>
       </div>
     </div>
     <StatusSelectionMenu
