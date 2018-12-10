@@ -24,7 +24,7 @@
     </div>
     <StatusSelectionMenu
       :statusMenuPosition="statusMenuPosition"
-      :plateNumber="resource.plateNumber"
+      :resource="resource"
       v-if="isStatusMenuVisible"
     />
   </div>
@@ -45,6 +45,10 @@ export default {
       statusMenuPosition: "right"
     };
   },
+  components: {
+    StatusSelectionMenu,
+    Resource
+  },
   computed: {
     crewSize() {
       let crewSize = 0;
@@ -60,10 +64,6 @@ export default {
       return this.$store.state.principalStore.statusMenuIsOpen &&
         this.$store.state.principalStore.activeStatusMenuId === this.resource.plateNumber;
     }
-  },
-  components: {
-    StatusSelectionMenu,
-    Resource
   },
   methods: {
     mouseClick: function() {
