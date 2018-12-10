@@ -27,6 +27,7 @@
       @confirm="onConfirm"
       @cancel="onCancel"
     ></ConfirmationDialog>
+    <AddServiceForm v-if="displayAddServiceForm"></AddServiceForm>
   </div>
 </template>
 
@@ -37,18 +38,21 @@ import WSA from "../../constants/actions";
 import WebsocketSubscribe from "../../contracts/websocketSubscribe";
 import WebsocketSend from "../../contracts/websocketSend";
 import ConfirmationDialog from "../common/ConfirmationDialog.vue";
+import AddServiceForm from "./form/AddServiceForm.vue";
 
 export default {
   name: "Services",
   components: {
     Service,
-    ConfirmationDialog
+    ConfirmationDialog,
+    AddServiceForm
   },
   data: () => {
     return {
       confirmationDialogText:
         "Sunteți sigur că doriți să ștergeți toate datele ?",
-      displayConfirmationDialog: false
+      displayConfirmationDialog: false,
+      displayAddServiceForm: false
     };
   },
   computed: {
@@ -76,7 +80,9 @@ export default {
     deleteServices() {
       this.displayConfirmationDialog = true;
     },
-    addService() {},
+    addService() {
+      this.displayAddServiceForm = true;
+    },
     onConfirm() {
       this.$store.dispatch(A.CLEAR_ALL_SERVICES);
       this.$store.dispatch(
