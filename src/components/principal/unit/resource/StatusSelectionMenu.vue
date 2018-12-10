@@ -130,11 +130,7 @@ export default {
     confirmMission: function() {
       this.closeMissionMenu();
       this.closeStatusMenu();
-
       let crewList = this.crew.split("\n");
-      const captain = crewList[0];
-      crewList = crewList.slice();
-      crewList.shift();
       this.$store.dispatch(
         A.WEBSOCKET_SEND,
         new WebsocketSend(
