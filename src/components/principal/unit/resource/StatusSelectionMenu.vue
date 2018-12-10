@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-click-outside="closeStatusMenu">
     <div
       v-bind:class="['mission-selection-dialog-container', statusMenuPosition == 'right' ? 'mission-selection-dialog-container-right' : 'mission-selection-dialog-container-left']"
       v-if="showMissionMenu"
@@ -43,10 +43,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-bind:class="['menu', statusMenuPosition == 'right' ? 'menu-right' : 'menu-left']"
-      v-if="showMenu"
-    >
+    <div v-bind:class="['menu', statusMenuPosition == 'right' ? 'menu-right' : 'menu-left']">
       <menu class="menu-options">
         <menuitem
           class="menu-option menu-option-disponibil"
@@ -74,9 +71,8 @@ export default {
   props: ["statusMenuPosition", "resource"],
   data: () => {
     return {
+      showMissionMenu : false,
       showMissionMenuPosition: "right",
-      showMenu: true,
-      showMissionMenu: false,
       key: "",
       description: "",
       crew: []
@@ -93,21 +89,19 @@ export default {
     }
   },
   methods: {
-    openMissionMenu: function() {
-      this.showMissionMenu = true;
-    },
     toggleMissionMenu: function() {
       this.showMissionMenu = !this.showMissionMenu;
     },
     closeMissionMenu: function() {
       this.showMissionMenu = false;
     },
-    closeMenu: function() {
-      this.showMenu = false;
+    closeStatusMenu: function() {
+      this.$store.dispatch(A.CLOSE_STATUS_MENU);
     },
     setStatusToDisponibil: function() {
       this.closeMissionMenu();
-      this.closeMenu();
+      this.closeStatusMenu();
+
       this.$store.dispatch(
         A.WEBSOCKET_SEND,
         new WebsocketSend(
@@ -121,7 +115,7 @@ export default {
     },
     setStatusToIndisponibil: function() {
       this.closeMissionMenu();
-      this.closeMenu();
+      this.closeStatusMenu();
       this.$store.dispatch(
         A.WEBSOCKET_SEND,
         new WebsocketSend(
@@ -135,7 +129,8 @@ export default {
     },
     confirmMission: function() {
       this.closeMissionMenu();
-      this.closeMenu();
+      this.closeStatusMenu();
+
       let crewList = this.crew.split("\n");
       const captain = crewList[0];
       crewList = crewList.slice();

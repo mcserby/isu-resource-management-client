@@ -2,7 +2,6 @@
   <div
     v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']"
     @contextmenu.prevent="showStatusMenu"
-    v-click-outside="hideStatusMenu"
   >
     <div
       v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']"
@@ -18,13 +17,15 @@
         <div class="resource-element-container">{{resource.identificationNumber}}</div>
       </div>
       <div class="resource-crew-number-summary">
-        <div class="resource-element-container">{{this.crewSize}}</div>
+        <div
+          class="resource-element-container"
+        >{{this.resource.crew ? this.resource.crew.length + 1 : 1}}</div>
       </div>
     </div>
     <StatusSelectionMenu
       :statusMenuPosition="statusMenuPosition"
       :resource="resource"
-      v-if="showMenu"
+      v-if="isStatusMenuVisible"
     />
   </div>
 </template>
@@ -41,9 +42,12 @@ export default {
   props: ["resource", "rowNr"],
   data: () => {
     return {
-      showMenu: false,
       statusMenuPosition: "right"
     };
+  },
+  components: {
+    StatusSelectionMenu,
+    Resource
   },
   computed: {
     crewSize() {
@@ -55,11 +59,11 @@ export default {
       }
 
       return crewSize;
+    },
+    isStatusMenuVisible() {
+      return this.$store.state.principalStore.statusMenuIsOpen &&
+        this.$store.state.principalStore.activeStatusMenuId === this.resource.plateNumber;
     }
-  },
-  components: {
-    StatusSelectionMenu,
-    Resource
   },
   methods: {
     mouseClick: function() {
@@ -68,10 +72,8 @@ export default {
     showStatusMenu: function(event) {
       this.statusMenuPosition =
         event.clientX > window.innerWidth / 2 ? "left" : "right";
-      this.showMenu = true;
-    },
-    hideStatusMenu: function() {
-      this.showMenu = false;
+      //TODO Use unique id instead of plateNumber when available on backend.
+      this.$store.dispatch(A.OPEN_STATUS_MENU, this.resource.plateNumber);
     }
   },
   directives: {
