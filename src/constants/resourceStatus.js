@@ -1,0 +1,5 @@
+export default {
+  AVAILABLE: 'AVAILABLE',
+  IN_MISSION: 'IN_MISSION',
+  UNAVAILABLE: 'UNAVAILABLE',
+}
