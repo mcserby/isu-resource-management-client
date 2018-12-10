@@ -67,6 +67,7 @@ import A from "../../../../constants/actions";
 import Status from "../../../../contracts/status";
 import UpdateResourceStatus from "../../../../contracts/edit/updateResourceStatus";
 import WebsocketSend from "../../../../contracts/websocketSend";
+import ResourceStatus from '../../../../constants/resourceStatus';
 
 export default {
   name: "StatusSelectionMenu",
@@ -87,10 +88,7 @@ export default {
     },
     buildFormattedCrewList() {
       let formattedCrew = this.resource.captain;
-      for (var i = 0; i < this.resource.crew.length; i++) {
-        formattedCrew = formattedCrew + "\n" + this.resource.crew[i];
-      }
-
+      formattedCrew = formattedCrew + "\n" + this.resource.crew.join('\n')
       return formattedCrew;
     }
   },
@@ -116,7 +114,7 @@ export default {
           "updateStatus",
           new UpdateResourceStatus(
             this.resource.plateNumber,
-            new Status("AVAILABLE", null, null, null)
+            new Status(ResourceStatus.AVAILABLE, null, null, null)
           )
         )
       );
@@ -130,7 +128,7 @@ export default {
           "updateStatus",
           new UpdateResourceStatus(
             this.resource.plateNumber,
-            new Status("UNAVAILABLE", null, null, null)
+            new Status(ResourceStatus.UNAVAILABLE, null, null, null)
           )
         )
       );
@@ -148,7 +146,7 @@ export default {
           "updateStatus",
           new UpdateResourceStatus(
             this.resource.plateNumber,
-            new Status("IN_MISSION", this.key, this.description, crewList)
+            new Status(ResourceStatus.IN_MISSION, this.key, this.description, crewList)
           )
         )
       );
