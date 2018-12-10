@@ -2,7 +2,6 @@
   <div
     v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']"
     @contextmenu.prevent="showStatusMenu"
-    v-click-outside="hideStatusMenu"
   >
     <div
       v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']"
@@ -18,13 +17,15 @@
         <div class="resource-element-container">{{resource.identificationNumber}}</div>
       </div>
       <div class="resource-crew-number-summary">
-        <div class="resource-element-container">{{this.crewSize}}</div>
+        <div
+          class="resource-element-container"
+        >{{this.resource.crew ? this.resource.crew.length + 1 : 1}}</div>
       </div>
     </div>
     <StatusSelectionMenu
       :statusMenuPosition="statusMenuPosition"
       :resource="resource"
-      v-if="showMenu"
+      v-if="isStatusMenuVisible"
     />
   </div>
 </template>
@@ -34,31 +35,35 @@ import StatusSelectionMenu from "./StatusSelectionMenu.vue";
 import ClickOutside from "vue-click-outside";
 import Resource from "./Resource.vue";
 import A from "../../../../constants/actions";
+import ResourceStatus from '../../../../constants/resourceStatus.js';
 
 export default {
   name: "ResourceSummary",
   props: ["resource", "rowNr"],
   data: () => {
     return {
-      showMenu: false,
       statusMenuPosition: "right"
     };
+  },
+  components: {
+    StatusSelectionMenu,
+    Resource
   },
   computed: {
     crewSize() {
       let crewSize = 0;
-      if (this.resource.status.status == "IN_MISSION") {
+      if (this.resource.status.status === ResourceStatus.IN_MISSION) {
         crewSize = this.resource.status.crew ? this.resource.status.crew.length : 0;
       } else {
         crewSize = this.resource.crew ? this.resource.crew.length + 1 : 1;
       }
 
       return crewSize;
+    },
+    isStatusMenuVisible() {
+      return this.$store.state.principalStore.statusMenuIsOpen &&
+        this.$store.state.principalStore.activeStatusMenuId === this.resource.plateNumber;
     }
-  },
-  components: {
-    StatusSelectionMenu,
-    Resource
   },
   methods: {
     mouseClick: function() {
@@ -67,10 +72,8 @@ export default {
     showStatusMenu: function(event) {
       this.statusMenuPosition =
         event.clientX > window.innerWidth / 2 ? "left" : "right";
-      this.showMenu = true;
-    },
-    hideStatusMenu: function() {
-      this.showMenu = false;
+      //TODO Use unique id instead of plateNumber when available on backend.
+      this.$store.dispatch(A.OPEN_STATUS_MENU, this.resource.plateNumber);
     }
   },
   directives: {

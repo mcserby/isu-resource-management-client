@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-click-outside="closeStatusMenu">
     <div
       v-bind:class="['mission-selection-dialog-container', statusMenuPosition == 'right' ? 'mission-selection-dialog-container-right' : 'mission-selection-dialog-container-left']"
       v-if="showMissionMenu"
@@ -43,10 +43,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-bind:class="['menu', statusMenuPosition == 'right' ? 'menu-right' : 'menu-left']"
-      v-if="showMenu"
-    >
+    <div v-bind:class="['menu', statusMenuPosition == 'right' ? 'menu-right' : 'menu-left']">
       <menu class="menu-options">
         <menuitem
           class="menu-option menu-option-disponibil"
@@ -67,15 +64,15 @@ import A from "../../../../constants/actions";
 import Status from "../../../../contracts/status";
 import UpdateResourceStatus from "../../../../contracts/edit/updateResourceStatus";
 import WebsocketSend from "../../../../contracts/websocketSend";
+import ResourceStatus from '../../../../constants/resourceStatus';
 
 export default {
   name: "StatusSelectionMenu",
   props: ["statusMenuPosition", "resource"],
   data: () => {
     return {
+      showMissionMenu : false,
       showMissionMenuPosition: "right",
-      showMenu: true,
-      showMissionMenu: false,
       key: "",
       description: "",
       crew: []
@@ -87,57 +84,53 @@ export default {
     },
     buildFormattedCrewList() {
       let formattedCrew = this.resource.captain;
-      for (var i = 0; i < this.resource.crew.length; i++) {
-        formattedCrew = formattedCrew + "\n" + this.resource.crew[i];
-      }
-
+      formattedCrew = formattedCrew + "\n" + this.resource.crew.join('\n')
       return formattedCrew;
     }
   },
   methods: {
-    openMissionMenu: function() {
-      this.showMissionMenu = true;
-    },
     toggleMissionMenu: function() {
       this.showMissionMenu = !this.showMissionMenu;
     },
     closeMissionMenu: function() {
       this.showMissionMenu = false;
     },
-    closeMenu: function() {
-      this.showMenu = false;
+    closeStatusMenu: function() {
+      this.$store.dispatch(A.CLOSE_STATUS_MENU);
     },
     setStatusToDisponibil: function() {
       this.closeMissionMenu();
-      this.closeMenu();
+      this.closeStatusMenu();
+
       this.$store.dispatch(
         A.WEBSOCKET_SEND,
         new WebsocketSend(
           "updateStatus",
           new UpdateResourceStatus(
             this.resource.plateNumber,
-            new Status("AVAILABLE", null, null, null)
+            new Status(ResourceStatus.AVAILABLE, null, null, null)
           )
         )
       );
     },
     setStatusToIndisponibil: function() {
       this.closeMissionMenu();
-      this.closeMenu();
+      this.closeStatusMenu();
       this.$store.dispatch(
         A.WEBSOCKET_SEND,
         new WebsocketSend(
           "updateStatus",
           new UpdateResourceStatus(
             this.resource.plateNumber,
-            new Status("UNAVAILABLE", null, null, null)
+            new Status(ResourceStatus.UNAVAILABLE, null, null, null)
           )
         )
       );
     },
     confirmMission: function() {
       this.closeMissionMenu();
-      this.closeMenu();
+      this.closeStatusMenu();
+
       let crewList = this.crew.split("\n");
       const captain = crewList[0];
       crewList = crewList.slice();
@@ -148,7 +141,7 @@ export default {
           "updateStatus",
           new UpdateResourceStatus(
             this.resource.plateNumber,
-            new Status("IN_MISSION", this.key, this.description, crewList)
+            new Status(ResourceStatus.IN_MISSION, this.key, this.description, crewList)
           )
         )
       );

@@ -17,4 +17,6 @@ export default {
   INIT_UNITS: 'initUnits',
   UNIT_UPDATED: 'unitUpdated',
   CHANGE_ACTIVE_TAB: 'changeActiveTab',
+  OPEN_STATUS_MENU : 'openStatusMenu',
+  CLOSE_STATUS_MENU : 'closeStatusMenu'
 };
