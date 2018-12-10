@@ -35,6 +35,7 @@ import StatusSelectionMenu from "./StatusSelectionMenu.vue";
 import ClickOutside from "vue-click-outside";
 import Resource from "./Resource.vue";
 import A from "../../../../constants/actions";
+import ResourceStatus from '../../../../constants/resourceStatus.js';
 
 export default {
   name: "ResourceSummary",
@@ -44,15 +45,25 @@ export default {
       statusMenuPosition: "right"
     };
   },
-  components: {
-    StatusSelectionMenu,
-    Resource
-  },
   computed: {
+    crewSize() {
+      let crewSize = 0;
+      if (this.resource.status.status === ResourceStatus.IN_MISSION) {
+        crewSize = this.resource.status.crew ? this.resource.status.crew.length : 0;
+      } else {
+        crewSize = this.resource.crew ? this.resource.crew.length + 1 : 1;
+      }
+
+      return crewSize;
+    },
     isStatusMenuVisible() {
       return this.$store.state.principalStore.statusMenuIsOpen &&
         this.$store.state.principalStore.activeStatusMenuId === this.resource.plateNumber;
     }
+  },
+  components: {
+    StatusSelectionMenu,
+    Resource
   },
   methods: {
     mouseClick: function() {

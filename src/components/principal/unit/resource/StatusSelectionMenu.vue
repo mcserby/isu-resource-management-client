@@ -28,7 +28,7 @@
               </div>
               <div class="form-group">
                 <label class="form-label" for="crew">Echipaj:</label>
-                <textarea required v-model="crew" class="form-control" id="crew" rows="3"/>
+                <textarea required v-model="crew" class="form-control" id="crew" rows="3" v-text="buildFormattedCrewList"></textarea>
               </div>
             </div>
             <div class="modal-footer">
@@ -36,6 +36,7 @@
                 type="button"
                 class="btn custom-button custom-status-selection-button"
                 @click="confirmMission"
+                :disabled="isSetStatusToMissionDisabled"
               >Confirmă misiunea</button>
             </div>
           </div>
@@ -63,10 +64,11 @@ import A from "../../../../constants/actions";
 import Status from "../../../../contracts/status";
 import UpdateResourceStatus from "../../../../contracts/edit/updateResourceStatus";
 import WebsocketSend from "../../../../contracts/websocketSend";
+import ResourceStatus from '../../../../constants/resourceStatus';
 
 export default {
   name: "StatusSelectionMenu",
-  props: ["statusMenuPosition", "plateNumber"],
+  props: ["statusMenuPosition", "resource"],
   data: () => {
     return {
       showMissionMenu : false,
@@ -75,6 +77,16 @@ export default {
       description: "",
       crew: []
     };
+  },
+  computed: {
+    isSetStatusToMissionDisabled() {
+      return this.key === "" || this.description === "" || this.crew === "";
+    },
+    buildFormattedCrewList() {
+      let formattedCrew = this.resource.captain;
+      formattedCrew = formattedCrew + "\n" + this.resource.crew.join('\n')
+      return formattedCrew;
+    }
   },
   methods: {
     toggleMissionMenu: function() {
@@ -95,8 +107,8 @@ export default {
         new WebsocketSend(
           "updateStatus",
           new UpdateResourceStatus(
-            this.plateNumber,
-            new Status("AVAILABLE", null, null, null)
+            this.resource.plateNumber,
+            new Status(ResourceStatus.AVAILABLE, null, null, null)
           )
         )
       );
@@ -109,8 +121,8 @@ export default {
         new WebsocketSend(
           "updateStatus",
           new UpdateResourceStatus(
-            this.plateNumber,
-            new Status("UNAVAILABLE", null, null, null)
+            this.resource.plateNumber,
+            new Status(ResourceStatus.UNAVAILABLE, null, null, null)
           )
         )
       );
@@ -128,8 +140,8 @@ export default {
         new WebsocketSend(
           "updateStatus",
           new UpdateResourceStatus(
-            this.plateNumber,
-            new Status("IN_MISSION", this.key, this.description, crewList)
+            this.resource.plateNumber,
+            new Status(ResourceStatus.IN_MISSION, this.key, this.description, crewList)
           )
         )
       );
