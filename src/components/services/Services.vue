@@ -5,16 +5,10 @@
       <button class="btn custom-service-button delete-button" @click="deleteServices()">
         <span class="service-button-font-size">Șterge toate datele</span>
       </button>
-
+      
       <button class="btn custom-service-button add-button" @click="addService()">
         <span class="service-button-font-size">Adaugă date</span>
       </button>
-
-      <div class="last-updated">
-        <span>
-          <b>{{ services.lastUpdate | moment("DD.MM.YYYY, HH:mm:ss") }}</b>
-        </span>
-      </div>
     </div>
     <div class="services">
       <div class="services-header">
@@ -27,7 +21,12 @@
         <Service :service="service" :rowNr="index"></Service>
       </div>
     </div>
-    <ConfirmationDialogServices v-if="displayConfirmationDialog"></ConfirmationDialogServices>
+    <ConfirmationDialog
+      v-if="displayConfirmationDialog"
+      :text="confirmationDialogText"
+      @confirm="onConfirm"
+      @cancel="onCancel"
+    ></ConfirmationDialog>
   </div>
 </template>
 
@@ -37,18 +36,20 @@ import A from "../../constants/services/actions";
 import WSA from "../../constants/actions";
 import WebsocketSubscribe from "../../contracts/websocketSubscribe";
 import WebsocketSend from "../../contracts/websocketSend";
-import ConfirmationDialogServices from './form/ConfirmationDialogServices.vue';
+import ConfirmationDialog from "../common/ConfirmationDialog.vue";
 
 export default {
   name: "Services",
   components: {
     Service,
-    ConfirmationDialogServices
+    ConfirmationDialog
   },
   data: () => {
     return {
+      confirmationDialogText:
+        "Sunteți sigur că doriți să ștergeți toate datele ?",
       displayConfirmationDialog: false
-    }
+    };
   },
   computed: {
     services() {
@@ -73,16 +74,20 @@ export default {
   },
   methods: {
     deleteServices() {
-     displayConfirmationDialog: true
+      this.displayConfirmationDialog = true;
     },
-    deleteServices() {
+    addService() {},
+    onConfirm() {
       this.$store.dispatch(A.CLEAR_ALL_SERVICES);
       this.$store.dispatch(
         WSA.WEBSOCKET_SEND,
         new WebsocketSend("deleteAllServices", "")
       );
+      this.displayConfirmationDialog = false;
     },
-    addService() {}
+    onCancel() {
+      this.displayConfirmationDialog = false;
+    }
   }
 };
 </script>
