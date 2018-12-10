@@ -5,7 +5,7 @@
       <button class="btn custom-service-button delete-button" @click="deleteServices()">
         <span class="service-button-font-size">Șterge toate datele</span>
       </button>
-      
+
       <button class="btn custom-service-button add-button" @click="addService()">
         <span class="service-button-font-size">Adaugă date</span>
       </button>
@@ -27,6 +27,7 @@
         <Service :service="service" :rowNr="index"></Service>
       </div>
     </div>
+    <ConfirmationDialogServices v-if="displayConfirmationDialog"></ConfirmationDialogServices>
   </div>
 </template>
 
@@ -36,11 +37,18 @@ import A from "../../constants/services/actions";
 import WSA from "../../constants/actions";
 import WebsocketSubscribe from "../../contracts/websocketSubscribe";
 import WebsocketSend from "../../contracts/websocketSend";
+import ConfirmationDialogServices from './form/ConfirmationDialogServices.vue';
 
 export default {
   name: "Services",
   components: {
-    Service
+    Service,
+    ConfirmationDialogServices
+  },
+  data: () => {
+    return {
+      displayConfirmationDialog: false
+    }
   },
   computed: {
     services() {
@@ -64,6 +72,9 @@ export default {
     );
   },
   methods: {
+    deleteServices() {
+     displayConfirmationDialog: true
+    },
     deleteServices() {
       this.$store.dispatch(A.CLEAR_ALL_SERVICES);
       this.$store.dispatch(
