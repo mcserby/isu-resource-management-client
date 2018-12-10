@@ -75,7 +75,7 @@ export default {
       showMissionMenuPosition: "right",
       key: "",
       description: "",
-      crew: []
+      crew: ""
     };
   },
   computed: {
@@ -149,6 +149,9 @@ export default {
   },
   directives: {
     ClickOutside
+  },
+  created () {
+    this.crew = [this.resource.captain].concat(this.resource.crew).join('\n')
   }
 };
 </script>
