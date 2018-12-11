@@ -5,6 +5,20 @@ import Tab from '../../contracts/tab';
 import ResourceType from '../../constants/resourceType';
 import Resource from '../../contracts/resource';
 
+
+function sortResource (r1, r2) {
+  let res = state.statuses[r2.status.status] - state.statuses[r1.status.status]
+  if (res === 0) {
+    if (r1.vehicleType > r2.vehicleType) {
+      return 1
+    } else if (r2.vehicleType === r1.vehicleType) {
+      return 0
+    } else return -1
+  } else {
+    return res
+  }
+}
+
 const tabs = [
   new Tab('Tehnică de primă intervenție', ResourceType.FIRST_INTERVENTION),
   new Tab('Alte tipuri de tehnică', ResourceType.OTHER),
@@ -76,10 +90,12 @@ const mutations = {
   [M.INIT_UNITS](state, units) {
     state.units.splice(0, state.units.length);
     state.units = units;
+    units.forEach(u => u.resources.sort((r1, r2) => sortResource(r1, r2)))
   },
   [M.UNIT_UPDATED](state, unit) {
     let updatedUnit = state.units.find(u => u.name === unit.name);
     if (updatedUnit) {
+      unit.resources.sort((r1, r2) => sortResource(r1, r2))
       Vue.set(updatedUnit, 'resources', unit.resources);
       Vue.set(updatedUnit, 'lastUpdate', unit.lastUpdate);
     }
