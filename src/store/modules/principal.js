@@ -8,8 +8,8 @@ import Resource from '../../contracts/resource';
 
 
 function sortResource (r1, r2) {
-  let statuses = {[ResourceStatus.IN_MISSION]: 2, [ResourceStatus.AVAILABLE]: 1, [ResourceStatus.UNAVAILABLE] : 0}
-  return statuses[r2.status.status] === statuses[r1.status.status] ? r1.vehicleType.localeCompare(r2.vehicleType) : statuses[r2.status.status] - statuses[r1.status.status];
+
+  return state.statuses[r2.status.status] === state.statuses[r1.status.status] ? r1.vehicleType.localeCompare(r2.vehicleType) : state.statuses[r2.status.status] - state.statuses[r1.status.status];
 }
 
 const tabs = [
@@ -29,6 +29,7 @@ const state = {
   resourceDialogIsOpen: false,
   confirmationDialogIsOpen: false,
   resourceViewDialogIsOpen: false,
+  statuses: {[ResourceStatus.IN_MISSION]: 2, [ResourceStatus.AVAILABLE]: 1, [ResourceStatus.UNAVAILABLE] : 0}
 }
 
 const actions = {
