@@ -62,6 +62,8 @@
 
   import A from '../../../../constants/actions';
   import Resource from '../../../../contracts/resource';
+  import Status from '../../../../contracts/status';
+  import ResourceStatus from '../../../../constants/resourceStatus';
   import UnlockSubUnitRequest from '../../../../contracts/edit/unlockSubUnitRequest';
   import WebsocketSend from '../../../../contracts/websocketSend';
   import UpdateSubUnitRequest from "../../../../contracts/edit/updateSubUnitRequest";
@@ -110,7 +112,8 @@
         crewList = crewList.slice();
         crewList.shift();
         console.log(this.resourceType);
-        this.$store.dispatch(A.ADD_RESOURCE, new Resource(this.name, this.plateNumber, this.identificationNumber, captain, crewList, 'AVAILABLE_IN_GARAGE', this.resourceType));
+        this.$store.dispatch(A.ADD_RESOURCE, new Resource(this.name, this.plateNumber, this.identificationNumber, captain, crewList,
+        new Status(ResourceStatus.AVAILABLE, null, null, null), this.resourceType));
       },
       clearFormValues(){
         this.validationPerformedAtLeastOnce = false;

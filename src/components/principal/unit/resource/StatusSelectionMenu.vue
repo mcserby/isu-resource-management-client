@@ -28,7 +28,7 @@
               </div>
               <div class="form-group">
                 <label class="form-label" for="crew">Echipaj:</label>
-                <textarea required v-model="crew" class="form-control" id="crew" rows="3" v-text="buildFormattedCrewList"></textarea>
+                <textarea required v-model="crew" class="form-control" id="crew" rows="3"></textarea>
               </div>
             </div>
             <div class="modal-footer">
@@ -81,11 +81,6 @@ export default {
   computed: {
     isSetStatusToMissionDisabled() {
       return this.key === "" || this.description === "" || this.crew === "";
-    },
-    buildFormattedCrewList() {
-      let formattedCrew = this.resource.captain;
-      formattedCrew = formattedCrew + "\n" + this.resource.crew.join('\n')
-      return formattedCrew;
     }
   },
   methods: {
