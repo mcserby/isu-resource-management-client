@@ -3,20 +3,13 @@ import M from '../../constants/mutations'
 import Vue from 'vue'
 import Tab from '../../contracts/tab';
 import ResourceType from '../../constants/resourceType';
+import ResourceStatus from '../../constants/resourceStatus';
 import Resource from '../../contracts/resource';
 
 
 function sortResource (r1, r2) {
-  let res = state.statuses[r2.status.status] - state.statuses[r1.status.status]
-  if (res === 0) {
-    if (r1.vehicleType > r2.vehicleType) {
-      return 1
-    } else if (r2.vehicleType === r1.vehicleType) {
-      return 0
-    } else return -1
-  } else {
-    return res
-  }
+  let statuses = {[ResourceStatus.IN_MISSION]: 2, [ResourceStatus.AVAILABLE]: 1, [ResourceStatus.UNAVAILABLE] : 0}
+  return statuses[r2.status.status] === statuses[r1.status.status] ? r1.vehicleType.localeCompare(r2.vehicleType) : statuses[r2.status.status] - statuses[r1.status.status];
 }
 
 const tabs = [
@@ -36,7 +29,6 @@ const state = {
   resourceDialogIsOpen: false,
   confirmationDialogIsOpen: false,
   resourceViewDialogIsOpen: false,
-  statuses: {'IN_MISSION': 2, 'AVAILABLE': 1, 'UNAVAILABLE': 0}
 }
 
 const actions = {
