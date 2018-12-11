@@ -1,15 +1,14 @@
 import A from "../../constants/services/actions";
 import M from "../../constants/services/mutations";
-import Vue from "vue";
-import Service from "../../contracts/services/service";
 
 const state = {
-  services: []
+  services: [],
+  lastUpdate: ""
 };
 
 const actions = {
-  [A.INIT_SERVICES]({ commit }, services) {
-    commit(M.INIT_SERVICES, services);
+  [A.INIT_SERVICES]({ commit }, servicesUpdate) {
+    commit(M.INIT_SERVICES, servicesUpdate);
   },
   [A.CLEAR_ALL_SERVICES]({ commit }) {
     commit(M.CLEAR_ALL_SERVICES);
@@ -17,9 +16,10 @@ const actions = {
 };
 
 const mutations = {
-  [M.INIT_SERVICES](state, services) {
+  [M.INIT_SERVICES](state, servicesUpdate) {
     state.services.splice(0, state.services.length);
-    state.services = services;
+    state.services = servicesUpdate.services;
+    state.lastUpdate = servicesUpdate.lastUpdate;
   },
   [M.CLEAR_ALL_SERVICES](state) {
     state.services = [];

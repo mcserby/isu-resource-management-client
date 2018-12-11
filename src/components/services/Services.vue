@@ -2,13 +2,27 @@
   <div>
     <div class="services-title">Modul Servicii</div>
     <div class="services-buttons">
-      <button class="btn custom-service-button delete-button" @click="deleteServices()">
+      <button
+        class="btn custom-service-button delete-button"
+        @click="deleteServices()"
+        :disabled="noServicesAvailable"
+      >
         <span class="service-button-font-size">Șterge toate datele</span>
       </button>
       
       <button class="btn custom-service-button add-button" @click="addService()">
         <span class="service-button-font-size">Adaugă date</span>
       </button>
+    </div>
+    <div class="last-updated-services" v-if="noServicesAvailable">
+      <span>
+        <b>Nu exista date.</b>
+      </span>
+    </div>
+    <div class="last-updated-services" v-if="servicesAvailable">
+      <span>
+        <b>Ultima actualizare: {{ lastUpdate | moment("DD.MM.YYYY, HH:mm:ss") }}.</b>
+      </span>
     </div>
     <div class="services">
       <div class="services-header">
@@ -25,9 +39,14 @@
       v-if="displayConfirmationDialog"
       :text="confirmationDialogText"
       @confirm="onConfirm"
-      @cancel="onCancel"
+      @cancel="onCancelDeletion"
     ></ConfirmationDialog>
-    <AddServiceForm v-if="displayAddServiceForm"></AddServiceForm>
+    <AddServiceForm
+      v-if="displayAddServiceForm"
+      @cancel="onCancelAdding"
+      @saveAndClose="onSaveAndClose"
+      @saveAndAddAnother="onSaveAndAddAnother"
+    ></AddServiceForm>
   </div>
 </template>
 
@@ -39,6 +58,10 @@ import WebsocketSubscribe from "../../contracts/websocketSubscribe";
 import WebsocketSend from "../../contracts/websocketSend";
 import ConfirmationDialog from "../common/ConfirmationDialog.vue";
 import AddServiceForm from "./form/AddServiceForm.vue";
+import AddServiceRequest from "../../contracts/services/addServiceRequest.js";
+import ServicesUpdatedNotification from "../../contracts/services/servicesUpdatedNotification.js";
+import Vue from "vue";
+Vue.use(require("vue-moment"));
 
 export default {
   name: "Services",
@@ -58,6 +81,15 @@ export default {
   computed: {
     services() {
       return this.$store.state.servicesStore.services;
+    },
+    lastUpdate() {
+      return this.$store.state.servicesStore.lastUpdate;
+    },
+    noServicesAvailable() {
+      return this.$store.state.servicesStore.services.length == 0;
+    },
+    servicesAvailable() {
+      return this.$store.state.servicesStore.services.length > 0;
     }
   },
   mounted: function() {
@@ -65,7 +97,10 @@ export default {
     const self = this;
     let onServicesReceived = function(response) {
       let r = JSON.parse(response.body);
-      self.$store.dispatch(A.INIT_SERVICES, r.services);
+      self.$store.dispatch(
+        A.INIT_SERVICES,
+        new ServicesUpdatedNotification(r.services, r.lastUpdate)
+      );
     };
     let onError = function(error) {
       console.err(error);
@@ -91,8 +126,43 @@ export default {
       );
       this.displayConfirmationDialog = false;
     },
-    onCancel() {
+    onCancelDeletion() {
       this.displayConfirmationDialog = false;
+    },
+    onCancelAdding() {
+      this.displayAddServiceForm = false;
+    },
+    onSaveAndAddAnother(service) {
+      this.displayAddServiceForm = false;
+      this.$store.dispatch(
+        WSA.WEBSOCKET_SEND,
+        new WebsocketSend(
+          "addService",
+          new AddServiceRequest(
+            service.name,
+            service.title,
+            service.role,
+            service.contact
+          )
+        )
+      );
+
+      this.displayAddServiceForm = true;
+    },
+    onSaveAndClose(service) {
+      this.$store.dispatch(
+        WSA.WEBSOCKET_SEND,
+        new WebsocketSend(
+          "addService",
+          new AddServiceRequest(
+            service.name,
+            service.title,
+            service.role,
+            service.contact
+          )
+        )
+      );
+      this.displayAddServiceForm = false;
     }
   }
 };

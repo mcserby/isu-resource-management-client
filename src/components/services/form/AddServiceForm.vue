@@ -12,18 +12,12 @@
               <input type="text" required v-model="name" class="form-control" id="name">
             </div>
             <div class="form-group">
-              <label class="form-label" for="role">Grad</label>
-              <input type="text" required v-model="role" class="form-control" id="role">
+              <label class="form-label" for="title">Grad</label>
+              <input type="text" required v-model="title" class="form-control" id="title">
             </div>
             <div class="form-group">
-              <label class="form-label" for="functionPlayed">Funcție</label>
-              <input
-                type="text"
-                required
-                v-model="functionPlayed"
-                class="form-control"
-                id="functionPlayed"
-              >
+              <label class="form-label" for="role">Funcție</label>
+              <input type="text" required v-model="role" class="form-control" id="role">
             </div>
             <div class="form-group">
               <label class="form-label" for="contact">Contact</label>
@@ -51,23 +45,44 @@
   </div>
 </template>
 <script>
+import Service from "../../../contracts/services/service.js";
 
 export default {
   name: "AddServiceForm",
   data: () => {
     return {
       name: "",
+      title: "",
       role: "",
-      functionPlayed: "",
       contact: ""
     };
   },
-  computed: {},
+  computed: {
+    saveDisabled() {
+      return this.name == "" ||
+        this.title == "" ||
+        this.role == "" ||
+        this.contact == "";
+    }
+  },
   mounted() {},
   methods: {
-    saveAndAddAnother() {},
-    saveAndClose() {},
-    cancel() {}
+    saveAndAddAnother() {
+      this.$emit(
+        "saveAndAddAnother",
+        new Service("", this.name, this.role, this.functionPlayed, this.contact)
+      );
+      this.name = this.role = this.title = this.contact = "";
+    },
+    saveAndClose() {
+      this.$emit(
+        "saveAndClose",
+        new Service("", this.name, this.title, this.role, this.contact)
+      );
+    },
+    cancel() {
+      this.$emit("cancel");
+    }
   }
 };
 </script>
