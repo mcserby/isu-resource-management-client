@@ -8,8 +8,8 @@ import Resource from '../../contracts/resource';
 
 
 function sortResource (r1, r2) {
-
-  return state.statuses[r2.status.status] === state.statuses[r1.status.status] ? r1.vehicleType.localeCompare(r2.vehicleType) : state.statuses[r2.status.status] - state.statuses[r1.status.status];
+  return state.statuses[r2.status.status] === state.statuses[r1.status.status] ? r1.vehicleType.localeCompare(r2.vehicleType) :
+    state.statuses[r2.status.status] - state.statuses[r1.status.status];
 }
 
 const tabs = [
