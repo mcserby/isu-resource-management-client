@@ -35,7 +35,8 @@ const state = {
   activeResource: null,
   resourceDialogIsOpen: false,
   confirmationDialogIsOpen: false,
-  resourceViewDialogIsOpen: false
+  resourceViewDialogIsOpen: false,
+  statuses: {'IN_MISSION': 2, 'AVAILABLE': 1, 'UNAVAILABLE': 0}
 }
 
 const actions = {
