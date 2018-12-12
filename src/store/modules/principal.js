@@ -3,7 +3,14 @@ import M from '../../constants/mutations'
 import Vue from 'vue'
 import Tab from '../../contracts/tab';
 import ResourceType from '../../constants/resourceType';
+import ResourceStatus from '../../constants/resourceStatus';
 import Resource from '../../contracts/resource';
+
+
+function sortResource (r1, r2) {
+  return state.statuses[r2.status.status] === state.statuses[r1.status.status] ? r1.vehicleType.localeCompare(r2.vehicleType) :
+    state.statuses[r2.status.status] - state.statuses[r1.status.status];
+}
 
 const tabs = [
   new Tab('Tehnică de primă intervenție', ResourceType.FIRST_INTERVENTION),
@@ -21,7 +28,8 @@ const state = {
   activeResource: null,
   resourceDialogIsOpen: false,
   confirmationDialogIsOpen: false,
-  resourceViewDialogIsOpen: false
+  resourceViewDialogIsOpen: false,
+  statuses: {[ResourceStatus.IN_MISSION]: 2, [ResourceStatus.AVAILABLE]: 1, [ResourceStatus.UNAVAILABLE] : 0}
 }
 
 const actions = {
@@ -76,10 +84,12 @@ const mutations = {
   [M.INIT_UNITS](state, units) {
     state.units.splice(0, state.units.length);
     state.units = units;
+    units.forEach(u => u.resources.sort((r1, r2) => sortResource(r1, r2)))
   },
   [M.UNIT_UPDATED](state, unit) {
     let updatedUnit = state.units.find(u => u.name === unit.name);
     if (updatedUnit) {
+      unit.resources.sort((r1, r2) => sortResource(r1, r2))
       Vue.set(updatedUnit, 'resources', unit.resources);
       Vue.set(updatedUnit, 'lastUpdate', unit.lastUpdate);
     }
