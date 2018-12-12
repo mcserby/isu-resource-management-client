@@ -11,6 +11,19 @@
   width: 100%;
 }
 
+.tab{
+  background-color: #bae1f2;
+  border-right : 1px solid;
+}
+
+.tab-text{
+  color: #186181;
+  font-size: 20px;
+  font: Arial;
+  font-weight: bold;
+
+}
+
 .unit-wrapper, .unit-buttons-wrapper{
 
 }

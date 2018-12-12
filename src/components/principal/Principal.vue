@@ -2,12 +2,9 @@
   <div class="principal app-sa">
     <PrincipalHeader></PrincipalHeader>
     <ul class="nav nav-tabs">
-      <li class="nav-item" v-for="tab in tabs">
-        <template class="nav-item">
-          <a
-            :class="tabClass(tab.name)"
-            @click="changeTab(tab)"
-          >
+      <li class="tab" v-for="tab in tabs">
+        <template>
+          <a :class="tabClass(tab.name)" class="tab-text" @click="changeTab(tab)">
             {{tab.name}}
           </a>
         </template>
