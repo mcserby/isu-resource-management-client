@@ -17,7 +17,7 @@
 }
 
 .tab-text{
-  color: #186181;
+  color: #186181 !important;
   font-size: 20px;
   font: Arial;
   font-weight: bold;
