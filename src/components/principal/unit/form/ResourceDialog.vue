@@ -4,7 +4,7 @@
       <div class="modal-dialog modal-dialog-centered add-resource-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Tehnică de prima intervenție</h5>
+            <h5 class="modal-title" v-model="activeTab.name"/>
             <button type="button" class="btn close-button" @click="cancel">X</button>
           </div>
           <div class="modal-body">
@@ -102,6 +102,10 @@ export default {
       }
     }
   },
+  computed: {
+    activeTab () {
+      return this.$store.state.principalStore.activeTab
+    },
 
   components: {
     Resource

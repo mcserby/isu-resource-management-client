@@ -1,0 +1,29 @@
+.equipment-type-summary {
+  grid-column: 2 / span 2;
+  grid-row: 2 / span 2;
+  font-size: small;
+  padding-right: 20%;
+  font-weight: 600;
+}
+
+.equipment-usable-summary {
+  grid-column: 2 / span 2;
+  grid-row: 3 / span 2;
+  font-size: small;
+  padding-right: 20%;
+  font-weight: 600;
+}
+
+.equipment-unusable-summary {
+  grid-column: 3 / span 2;
+  grid-row: 2 / span 2;
+  font-size: x-large;
+  grid-gap: 100px;
+}
+
+.equipment-reserves-summary {
+  grid-column: 3 / span 2;
+  grid-row: 2 / span 2;
+  font-size: x-large;
+  grid-gap: 100px;
+}
