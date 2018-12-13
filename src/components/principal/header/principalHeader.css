@@ -1,13 +1,24 @@
 .search-bar-wrapper {
-  margin-left: 231px;
-  margin-right: 231px;
+  grid-row: 2 / span 1;
+  grid-column: 1 / span 3;
+  width: 75%;
 }
 
 .principal-header {
-  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(4, 50px);
+}
+
+.other-modules-wrapper {
+  grid-row: 2 / span 3;
+  grid-column: 9 / span 2;
+  font-size: larger;
 }
 
 .principal-title {
+  grid-row: 2 / span 1;
+  grid-column: 4 / span 4;
   font-size: 3em;
   font-weight: bold;
   color: #F74356;
@@ -15,3 +26,9 @@
   text-align: center;
   padding-top: 5px;
 }
+
+/* custom menu link properties class used to override or add new properties */
+.menu-link-custom-properties {
+  width: 50% !important;
+}
+

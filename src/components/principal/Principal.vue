@@ -4,7 +4,7 @@
     <ul class="nav nav-tabs">
       <li class="nav-item" v-for="tab in tabs">
         <template class="nav-item">
-          <a :class="tabClass(tab.name)" @click="changeTab(tab)">{{tab.name}}</a>
+          <a :class="tabClass(tab.name)" class="tab-text" @click="changeTab(tab)">{{tab.name}}</a>
         </template>
       </li>
     </ul>
