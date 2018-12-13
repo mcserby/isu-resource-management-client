@@ -1,0 +1,98 @@
+.services-title {
+  font-size: 3em;
+  font-weight: bold;
+  color: #f74356;
+  text-shadow: 4px 4px 4px #000000;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.services {
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 10px;
+}
+
+.services-header {
+  display: grid;
+  position: relative;
+  text-align: left;
+  font-size: x-large;
+  font-weight: 500;
+  color: #cde6f2;
+  background-color: #186181;
+  grid-auto-columns: 1fr;
+}
+
+.service-header-name {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
+  font-size: x-large;
+}
+
+.service-header-title {
+  grid-column: 2 / span 1;
+  grid-row: 1 / span 1;
+  font-size: x-large;
+}
+
+.service-header-role {
+  grid-column: 3 / span 1;
+  grid-row: 1 / span 1;
+  font-size: x-large;
+}
+
+.service-header-contact {
+  grid-column: 4 / span 1;
+  grid-row: 1 / span 1;
+  font-size: x-large;
+}
+
+.services-buttons {
+  width: 200px;
+  margin-left: 5%;
+  margin-top: 50px;
+  display: grid;
+}
+
+.button-font-size {
+  font-size: smaller;
+}
+
+.custom-service-button {
+  color: #bae1f2;
+  background-color: #186181;
+
+  font-size: 20px;
+  font: Arial;
+  font-weight: bold;
+
+  border-radius: 8px;
+  border-size: 0px;
+  box-shadow: 10px 0px 14px -7px;
+
+  padding: 10px;
+  margin: 5px;
+  width: 200px;
+  text-align: center;
+}
+
+.custom-service-button:hover:enabled {
+  color: #186181;
+  background-color: #eaf6fb;
+}
+
+.delete-button {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
+}
+
+.add-button {
+  grid-column: 2 / span 1;
+  grid-row: 1 / span 1;
+}
+
+.last-updated-services{
+  margin-left: 5%;
+  margin-top: 10px;
+}
