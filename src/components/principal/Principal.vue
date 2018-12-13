@@ -25,7 +25,8 @@
       @cancel="onCancel"
     ></ConfirmationDialog>
     <ResourceDialog v-if="displayViewResourceDialog" :resource="activeResource" :unit="activeUnit"></ResourceDialog>
-    <AddResourceForm v-if="displayResourceForm"></AddResourceForm>
+    <AddResourceForm v-if="displayResourceForm" ></AddResourceForm>
+    <AddEquipmentForm v-if="displayEquipmentForm" ></AddEquipmentForm>
   </div>
 </template>
 
@@ -41,6 +42,15 @@ import ResourceDialog from "./unit/form/ResourceDialog";
 import PrincipalHeader from "./header/PrincipalHeader.vue";
 import UpdateSubUnitRequest from "../../contracts/edit/updateSubUnitRequest";
 import UnlockSubUnitRequest from "../../contracts/edit/unlockSubUnitRequest";
+import Unit from './unit/Unit.vue';
+import ConfirmationDialog from './unit/form/ConfirmationDialog.vue';
+import AddResourceForm from './unit/form/AddResourceForm.vue';
+import AddEquipmentForm from './unit/form/AddEquipmentForm.vue';
+import A from '../../constants/actions';
+import WebsocketSubscribe from '../../contracts/websocketSubscribe';
+import UnitButtons from './unit/buttons/UnitButtons.vue';
+import ResourceDialog from './unit/form/ResourceDialog'
+import PrincipalHeader from './header/PrincipalHeader.vue';
 
 export default {
   name: "Principal",
@@ -50,6 +60,7 @@ export default {
     Unit,
     ConfirmationDialog,
     AddResourceForm,
+    AddEquipmentForm,
     UnitButtons
   },
   computed: {
@@ -70,6 +81,9 @@ export default {
     },
     displayResourceForm() {
       return this.$store.state.principalStore.resourceDialogIsOpen;
+    },
+    displayEquipmentForm() {
+      return this.$store.state.principalStore.equipmentDialogIsOpen;
     },
     displayConfirmationDialog() {
       return this.$store.state.principalStore.confirmationDialogIsOpen;

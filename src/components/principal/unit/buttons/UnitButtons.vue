@@ -34,6 +34,7 @@
       },
       addResources() {
         this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('lockSubUnit', new LockSubUnitRequest(this.unit.name)));
+        // this.$store.state.principalStore.activeUnit.
         this.$store.dispatch(A.OPEN_ADD_RESOURCE_DIALOG, this.unit.name);
       }
     },

@@ -105,7 +105,8 @@ export default {
   computed: {
     activeTab () {
       return this.$store.state.principalStore.activeTab
-    },
+    }
+  },
 
   components: {
     Resource
@@ -114,7 +115,7 @@ export default {
   created() {
     this.parseCrewMembers();
   }
-};
+}
 </script>
 
 <style src="./addResourceForm.css"></style>

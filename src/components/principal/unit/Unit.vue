@@ -32,6 +32,9 @@
       },
       filteredResources(){
         return this.unit.resources.filter(r => r.type === this.resourceType);
+      },
+      filteredEquipment(){
+        return this.unit.equipment.filter(r => r.resourceType === this.resourceType);
       }
     }
   }

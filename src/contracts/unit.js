@@ -1,12 +1,12 @@
 // Unit contract
 
 class Unit {
-  constructor(name, resources, lastUpdate, equipments) {
+  constructor(name, resources, lastUpdate, equipment) {
     this.name = name;
     this.resources = resources;
-    this.equipments = equipments;
     this.isLocked = false;
     this.lastUpdate = lastUpdate;
+    this.equipment = equipment;
   }
 }
 

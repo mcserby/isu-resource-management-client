@@ -1,7 +1,7 @@
 // Resource contract
 
 class Equipment {
-  constructor(equipmentId, equipmentType, operational, standby, nonoperational, resourceType) {
+  constructor(equipmentId, equipmentType, usable, reserves, unusable, resourceType) {
     this.equipmentId = equipmentId;
     this.equipmentType = equipmentType;
     this.usable = usable;

@@ -1,11 +1,8 @@
 <template>
-  <div
-    v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']"
-  >
     <div
-      v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']"
-      v-on:click="mouseClick"
-    >
+      v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']">
+      <!--v-on:click="mouseClick"-->
+
       <div class="equipment-type-summary">
         <div class="equipment-element-container">{{equipment.equipmentType}}</div>
       </div>
@@ -22,11 +19,12 @@
 </template>
 
 <script>
-  import Equipment from '../../../../contracts/equipment.js';
+
 
   export default {
-    name: 'EquipmentSummary'
-    props: ["equipment"],
+    name: 'EquipmentSummary',
+    props: ["equipment", "rowNr"]
+  }
 
 </script>
 
