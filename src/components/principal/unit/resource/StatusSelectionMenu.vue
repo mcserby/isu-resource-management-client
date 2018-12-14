@@ -64,14 +64,14 @@ import A from "../../../../constants/actions";
 import Status from "../../../../contracts/status";
 import UpdateResourceStatus from "../../../../contracts/edit/updateResourceStatus";
 import WebsocketSend from "../../../../contracts/websocketSend";
-import ResourceStatus from '../../../../constants/resourceStatus';
+import ResourceStatus from "../../../../constants/resourceStatus";
 
 export default {
   name: "StatusSelectionMenu",
   props: ["statusMenuPosition", "resource"],
   data: () => {
     return {
-      showMissionMenu : false,
+      showMissionMenu: false,
       showMissionMenuPosition: "right",
       key: "",
       description: "",
@@ -125,14 +125,22 @@ export default {
     confirmMission: function() {
       this.closeMissionMenu();
       this.closeStatusMenu();
-      let crewList = this.crew.split("\n");
+      let crewList = this.crew.trim().split("\n");
+      crewList = crewList.filter(function(el) {
+        return el != null && el.trim()!='';
+      });
       this.$store.dispatch(
         A.WEBSOCKET_SEND,
         new WebsocketSend(
           "updateStatus",
           new UpdateResourceStatus(
             this.resource.plateNumber,
-            new Status(ResourceStatus.IN_MISSION, this.key, this.description, crewList)
+            new Status(
+              ResourceStatus.IN_MISSION,
+              this.key,
+              this.description,
+              crewList
+            )
           )
         )
       );
@@ -141,8 +149,8 @@ export default {
   directives: {
     ClickOutside
   },
-  created () {
-    this.crew = [this.resource.captain].concat(this.resource.crew).join('\n')
+  created() {
+    this.crew = [this.resource.captain].concat(this.resource.crew).join("\n");
   }
 };
 </script>
