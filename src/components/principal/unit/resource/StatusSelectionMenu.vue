@@ -80,7 +80,7 @@ export default {
   },
   computed: {
     isSetStatusToMissionDisabled() {
-      return this.key === "" || this.description === "" || this.crew === "";
+      return this.key.trim() === "" || this.description.trim() === "" || this.crew.trim() === "";
     }
   },
   methods: {
@@ -127,7 +127,7 @@ export default {
       this.closeStatusMenu();
       let crewList = this.crew.trim().split("\n");
       crewList = crewList.filter(function(el) {
-        return el != null && el.trim()!='';
+        return el != null && el.trim() != "";
       });
       this.$store.dispatch(
         A.WEBSOCKET_SEND,
