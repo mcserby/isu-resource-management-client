@@ -9,7 +9,7 @@
                     <div class="modal-body">
                       <div class="form-group">
                         <label class="form-label" for="name">Tip</label>
-                        <input type="text"  minlength="1" required v-model="name" @input="validateFields()" class="form-control" id="name" aria-describedby="nameHelp" placeholder="tip">
+                        <input type="text" minlength="1" required v-model="name" @input="validateFields()" class="form-control" id="name" aria-describedby="nameHelp" placeholder="tip">
                       </div>
                       <div class="form-group">
                         <label class="form-label" for="plateNumber">Număr de înmatriculare</label>
@@ -131,8 +131,8 @@
       validateFields() {
         this.validationPerformedAtLeastOnce = true;
         this.errors.splice(0, this.errors.length);
-        if(this.name.length < 3){
-          this.errors.push("Numele trebuie să aibă cel puțin 3 caractere");
+        if(this.name.length === 0){
+          this.errors.push("Tipul trebuie sa contina cel putin un caracter.");
         }
         if(this.plateNumber.length < 5){
           this.errors.push("Numărul de înmatriculare trebuie să aibă cel puțin 5 caractere");
