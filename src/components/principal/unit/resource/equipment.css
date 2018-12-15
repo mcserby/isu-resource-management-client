@@ -1,0 +1,31 @@
+.equipment-type-summary {
+  grid-column: 3 / span 7;
+  grid-row: 1 / span 5;
+  font-size: large;
+  font-weight: 600;
+}
+
+.equipment-usable-summary {
+  grid-column: 1 / span 7;
+  grid-row: 5 / span 5;
+  font-size: large;
+  padding-right: 20%;
+  color: #1c7430;
+}
+
+.equipment-reserves-summary {
+  grid-column: 3 / span 7;
+  grid-row: 5 / span 5;
+  font-size: large;
+  color: #062c33;
+}
+
+
+.equipment-unusable-summary {
+  grid-column: 6 / span 7;
+  grid-row: 5 / span 5;
+  font-size: large;
+  color: #F74356;
+
+}
+

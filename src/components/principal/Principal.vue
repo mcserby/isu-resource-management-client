@@ -25,7 +25,9 @@
       @cancel="onCancel"
     ></ConfirmationDialog>
     <ResourceDialog v-if="displayViewResourceDialog" :resource="activeResource" :unit="activeUnit"></ResourceDialog>
-    <AddResourceForm v-if="displayResourceForm"></AddResourceForm>
+    <EquipmentDialog v-if="displayEquipmentForm" :equipment="activeEquipment" :unit="activeUnit"></EquipmentDialog>
+    <AddResourceForm v-if="displayResourceForm" ></AddResourceForm>
+    <AddEquipmentForm v-if="displayAddEquipmentForm" ></AddEquipmentForm>
   </div>
 </template>
 
@@ -41,15 +43,19 @@ import ResourceDialog from "./unit/form/ResourceDialog";
 import PrincipalHeader from "./header/PrincipalHeader.vue";
 import UpdateSubUnitRequest from "../../contracts/edit/updateSubUnitRequest";
 import UnlockSubUnitRequest from "../../contracts/edit/unlockSubUnitRequest";
+import AddEquipmentForm from './unit/form/AddEquipmentForm.vue';
+import EquipmentDialog from './unit/form/EquipmentDialog'
 
 export default {
   name: "Principal",
   components: {
+    EquipmentDialog,
     PrincipalHeader,
     ResourceDialog,
     Unit,
     ConfirmationDialog,
     AddResourceForm,
+    AddEquipmentForm,
     UnitButtons
   },
   computed: {
@@ -68,8 +74,17 @@ export default {
     activeResource() {
       return this.$store.state.principalStore.activeResource;
     },
+    activeEquipment() {
+      return this.$store.state.principalStore.activeEquipment;
+    },
     displayResourceForm() {
       return this.$store.state.principalStore.resourceDialogIsOpen;
+    },
+    displayEquipmentForm() {
+      return this.$store.state.principalStore.equipmentDialogIsOpen;
+    },
+    displayAddEquipmentForm() {
+      return this.$store.state.principalStore.addEquipmentDialogIsOpen;
     },
     displayConfirmationDialog() {
       return this.$store.state.principalStore.confirmationDialogIsOpen;

@@ -19,8 +19,8 @@
   text-align: left;
   font-size: x-large;
   font-weight: 500;
-  color: #cde6f2;
-  background-color: #186181;
+  color: #f2f2f2;
+  background-color: #616161;
   grid-auto-columns: 1fr;
 }
 
@@ -60,14 +60,14 @@
 }
 
 .custom-service-button {
-  color: #bae1f2;
-  background-color: #186181;
+  color: #f2f2f2;
+  background-color: #4682b4;
 
   font-size: 20px;
   font: Arial;
   font-weight: bold;
 
-  border-radius: 8px;
+  border-radius: 1px;
   border-size: 0px;
   box-shadow: 10px 0px 14px -7px;
 
@@ -78,8 +78,8 @@
 }
 
 .custom-service-button:hover:enabled {
-  color: #186181;
-  background-color: #eaf6fb;
+  color: #f2f2f2;
+  background-color: #2b506e;
 }
 
 .delete-button {
@@ -95,4 +95,5 @@
 .last-updated-services{
   margin-left: 5%;
   margin-top: 10px;
+  color: #616161;
 }
