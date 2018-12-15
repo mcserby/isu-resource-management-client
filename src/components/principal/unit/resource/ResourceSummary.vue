@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     mouseClick: function() {
-      this.$store.dispatch(A.OPEN_VIEW_RESOURCE_DIALOG, this.resource);
+      this.$emit('mouseClick', this.resource);
     },
     showStatusMenu: function(event) {
       this.statusMenuPosition =

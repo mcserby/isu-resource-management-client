@@ -19,4 +19,6 @@ export default {
   CHANGE_ACTIVE_TAB: 'changeActiveTab',
   OPEN_STATUS_MENU : 'openStatusMenu',
   CLOSE_STATUS_MENU : 'closeStatusMenu',
+  DELETE_RESOURCE: 'deleteResource',
+  UPDATE_RESOURCE: 'updateResource',
 };
