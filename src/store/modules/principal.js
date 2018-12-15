@@ -103,9 +103,9 @@ const mutations = {
     let unit = state.units.find(u => u.name === unitName)
     if (unit) {
       let currentResourceType = state.activeTab.resourceType;
-      let updatedUnitResources = unit.resources.filter(r => r.type != currentResourceType);
+      let updatedUnitResources = unit.resources.filter(r => r.type !== currentResourceType);
       Vue.set(unit, 'resources', updatedUnitResources)
-      let updatedUnitEquipments = unit.equipment.filter(r => r.type != currentResourceType);
+      let updatedUnitEquipments = unit.equipment.filter(r => r.resourceType !== currentResourceType);
       Vue.set(unit, 'equipment', updatedUnitEquipments)
     }
   },
