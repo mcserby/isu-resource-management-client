@@ -157,7 +157,7 @@ const mutations = {
   [M.OPEN_ADD_RESOURCE_DIALOG](state, unitName) {
     let unit = state.units.find(u => u.name === unitName);
     if (unit) {
-      state.activeUnit = unit;
+      state.activeUnit = JSON.parse(JSON.stringify(unit));
       if (ResourceType.EQUIPMENT === state.activeTab.resourceType) {
         state.addEquipmentDialogIsOpen = true;
       } else {
