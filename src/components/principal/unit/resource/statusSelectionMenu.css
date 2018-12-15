@@ -30,15 +30,18 @@
   margin-left: 0;
   margin-right: 0;
   text-indent: 10%;
+  color: #f2f2f2;
+  font-weight: bold;
   padding-inline-end: 10%;
 }
 
 .menu-option-disponibil {
-  background-color: #9eea8d;
+  background-color: #00897b;
+
 }
 
 .menu-option-disponibil:hover {
-   background-color: #226513
+   background-color: #004d45
 }
 
 .menu-option-misiune {
@@ -46,15 +49,15 @@
 }
 
 .menu-option-misiune:hover {
-  background-color: #710510
+  background-color: #930614;
 }
 
 .menu-option-indisponibil {
-  background-color: #dfe7ec;
+  background-color: #ffcc00;
 }
 
 .menu-option-indisponibil:hover {
-  background-color: #2f424f;
+  background-color: #997a00;
 }
 
 .mission-selection-dialog-container {
