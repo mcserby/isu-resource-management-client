@@ -43,15 +43,7 @@ import ResourceDialog from "./unit/form/ResourceDialog";
 import PrincipalHeader from "./header/PrincipalHeader.vue";
 import UpdateSubUnitRequest from "../../contracts/edit/updateSubUnitRequest";
 import UnlockSubUnitRequest from "../../contracts/edit/unlockSubUnitRequest";
-import Unit from './unit/Unit.vue';
-import ConfirmationDialog from './unit/form/ConfirmationDialog.vue';
-import AddResourceForm from './unit/form/AddResourceForm.vue';
 import AddEquipmentForm from './unit/form/AddEquipmentForm.vue';
-import A from '../../constants/actions';
-import WebsocketSubscribe from '../../contracts/websocketSubscribe';
-import UnitButtons from './unit/buttons/UnitButtons.vue';
-import ResourceDialog from './unit/form/ResourceDialog'
-import PrincipalHeader from './header/PrincipalHeader.vue';
 import EquipmentDialog from './unit/form/EquipmentDialog'
 
 export default {

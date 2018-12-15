@@ -111,7 +111,7 @@
         this.updateUnit();
       },
       addEquipment() {
-        this.$store.dispatch(A.ADD_RESOURCE, new Equipment(window.crypto.getRandomValues(new Uint32Array(4)).join('-'), this.equipmentType, this.usable, this.unusable, this.reserves, this.resourceType));
+        this.$store.dispatch(A.ADD_RESOURCE, new Equipment(window.crypto.getRandomValues(new Uint32Array(4)).join('-'), this.equipmentType, this.usable, this.reserves, this.unusable, this.resourceType));
       },
       clearFormValues(){
         this.validationPerformedAtLeastOnce = false;
