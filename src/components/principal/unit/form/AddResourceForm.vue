@@ -116,7 +116,6 @@
       },
       cancel(){
         this.closeAddResourceDialog();
-        this.updateUnit();
       },
       addNewResource() {
         this.clearFormValues();

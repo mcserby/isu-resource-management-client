@@ -1,7 +1,7 @@
 .unit-header {
   font-size: x-large;
   font-weight: 800;
-  font: Arial;
+  font-family: Arial;
   color: #f2f2f2;
   background: #616161;
   text-align:center;
@@ -17,7 +17,7 @@
   background-color: #4682b4;
 
   font-size: 20px;
-  font: Arial;
+  font-family: Arial;
   font-weight: bold;
 
   border-radius: 1px;
