@@ -5,6 +5,7 @@ import Tab from '../../contracts/tab';
 import ResourceType from '../../constants/resourceType';
 import ResourceStatus from '../../constants/resourceStatus';
 import Resource from '../../contracts/resource';
+import Equipment from '../../contracts/equipment';
 
 
 function sortResource (r1, r2) {
@@ -26,7 +27,10 @@ const state = {
   activeStatusMenuId : null,
   statusMenuIsOpen : false,
   activeResource: null,
+  activeEquipment: null,
   resourceDialogIsOpen: false,
+  equipmentDialogIsOpen: false,
+  addEquipmentDialogIsOpen: false,
   confirmationDialogIsOpen: false,
   resourceViewDialogIsOpen: false,
   statuses: {[ResourceStatus.IN_MISSION]: 2, [ResourceStatus.AVAILABLE]: 1, [ResourceStatus.UNAVAILABLE] : 0}
@@ -91,6 +95,7 @@ const mutations = {
     if (updatedUnit) {
       unit.resources.sort((r1, r2) => sortResource(r1, r2))
       Vue.set(updatedUnit, 'resources', unit.resources);
+      Vue.set(updatedUnit, 'equipment', unit.equipment);
       Vue.set(updatedUnit, 'lastUpdate', unit.lastUpdate);
     }
   },
@@ -98,8 +103,10 @@ const mutations = {
     let unit = state.units.find(u => u.name === unitName)
     if (unit) {
       let currentResourceType = state.activeTab.resourceType;
-      let updatedUnitResources = unit.resources.filter(r => r.type != currentResourceType);
+      let updatedUnitResources = unit.resources.filter(r => r.type !== currentResourceType);
       Vue.set(unit, 'resources', updatedUnitResources)
+      let updatedUnitEquipments = unit.equipment.filter(r => r.resourceType !== currentResourceType);
+      Vue.set(unit, 'equipment', updatedUnitEquipments)
     }
   },
   [M.OPEN_CONFIRMATION_DIALOG](state, unitName) {
@@ -114,32 +121,57 @@ const mutations = {
   },
   [M.OPEN_VIEW_RESOURCE_DIALOG](state, resource) {
     for (let unit of state.units) {
-      let res = unit.resources.find(r => r === resource)
-      if (res) {
-        state.activeUnit = unit;
-        state.activeResource = resource;
-        state.resourceViewDialogIsOpen = true;
+      if (ResourceType.EQUIPMENT === state.activeTab.resourceType) {
+        let equipment = unit.equipment.find(r => r === resource)
+        if (equipment) {
+          state.activeUnit = unit;
+          state.activeEquipment = resource;
+          state.equipmentDialogIsOpen = true;
+        }
+      } else {
+        let res = unit.resources.find(r => r === resource)
+        if (res) {
+          state.activeUnit = unit;
+          state.activeResource = resource;
+          state.resourceViewDialogIsOpen = true;
+        }
       }
     }
   },
   [M.CLOSE_VIEW_RESOURCE_DIALOG](state) {
-    state.resourceViewDialogIsOpen = false;
+    if (ResourceType.EQUIPMENT === state.activeTab.resourceType) {
+      state.equipmentDialogIsOpen = false;
+    } else {
+      state.resourceViewDialogIsOpen = false;
+    }
   },
   [M.CLOSE_CONFIRMATION_DIALOG](state) {
-    state.confirmationDialogIsOpen = false;
+      state.confirmationDialogIsOpen = false;
   },
   [M.OPEN_ADD_RESOURCE_DIALOG](state, unitName) {
     let unit = state.units.find(u => u.name === unitName);
     if (unit) {
       state.activeUnit = unit;
-      state.resourceDialogIsOpen = true;
+      if (ResourceType.EQUIPMENT === state.activeTab.resourceType) {
+        state.addEquipmentDialogIsOpen = true;
+      } else {
+        state.resourceDialogIsOpen = true;
+      }
     }
   },
   [M.CLOSE_ADD_RESOURCE_DIALOG](state) {
-    state.resourceDialogIsOpen = false;
+    if (ResourceType.EQUIPMENT === state.activeTab.resourceType) {
+      state.addEquipmentDialogIsOpen = false;
+    } else {
+      state.resourceDialogIsOpen = false;
+    }
   },
   [M.ADD_RESOURCE](state, resource) {
-    state.activeUnit.resources.push(resource);
+    if (ResourceType.EQUIPMENT === state.activeTab.resourceType) {
+      state.activeUnit.equipment.push(resource);
+    } else {
+      state.activeUnit.resources.push(resource);
+    }
   },
   [M.LOCK_UNIT](state, unitName) {
     let unit = state.units.find(u => u.name === unitName);

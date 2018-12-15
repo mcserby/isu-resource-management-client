@@ -22,6 +22,7 @@
   import WebsocketSend from '../../../../contracts/websocketSend';
   import LockSubUnitRequest from '../../../../contracts/edit/lockSubUnitRequest';
   import UpdateSubUnitRequest from "../../../../contracts/edit/updateSubUnitRequest";
+  import ResourceType from '../../../../constants/resourceType';
 
   export default {
     name: 'UnitButtons',
@@ -40,8 +41,13 @@
     computed: {
       isShiftExchangeNotAllowed() {
         let currentResourceType = this.$store.state.principalStore.activeTab.resourceType;
-        let currentResources = this.unit.resources.filter(r => r.type == currentResourceType);
-        return (currentResources.length === 0 ||this.unit.isLocked === true );
+        if (currentResourceType !== ResourceType.EQUIPMENT) {
+          let currentResources = this.unit.resources.filter(r => r.type == currentResourceType);
+          return (currentResources.length === 0 || this.unit.isLocked === true);
+        } else {
+          let currentEquipments = this.unit.equipment.filter(r => r.resourceType == currentResourceType);
+          return (currentEquipments.length === 0 || this.unit.isLocked === true);
+        }
       },
       isUnitLocked() {
         return Boolean(this.unit.isLocked);
