@@ -8,7 +8,7 @@
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label class="form-label" for="equipmentType">Tipul echipamentului</label>
+              <label class="form-label" for="equipmentType">Tip echipament</label>
               <input type="text"  minlength="1" required v-model="equipmentType" class="form-control" id="equipmentType" aria-describedby="nameHelp" @input="validateFields()" placeholder="tip">
             </div>
             <div class="form-group">
@@ -35,7 +35,7 @@
               @click="saveAndAddAnother"
               :disabled="saveDisabled"
             >
-              Salvează și adaugă un nou echipament
+              Salvează și adaugă un echipament
             </button>
             <button
               type="button"
@@ -77,6 +77,12 @@
         reserves: 0,
         validationPerformedAtLeastOnce: false,
       }
+    },
+    components: {
+      Equipment,
+      UnlockSubUnitRequest,
+      WebsocketSend,
+      UpdateSubUnitRequest
     },
     computed: {
       saveDisabled() {

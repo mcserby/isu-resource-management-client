@@ -4,7 +4,7 @@
       <div class="modal-dialog modal-dialog-centered add-resource-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" v-model="activeTab.name"/>
+            <h5 class="modal-title">{{activeTab.name}}</h5>
             <button type="button" class="btn close-button" @click="cancel">X</button>
           </div>
           <div class="modal-body">
@@ -77,8 +77,10 @@
 </template>
 
 <script>
-import A from "../../../../constants/actions";
-import Resource from "../resource/Resource.vue";
+import A from '../../../../constants/actions';
+// import Resource from "../resource/Resource.vue";
+import Resource from '../../../../contracts/resource';
+// import Equipment from '../../../../contracts/equipment';
 import ResourceStatus from "../../../../constants/resourceStatus.js";
 
 export default {

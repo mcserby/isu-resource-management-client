@@ -6,7 +6,7 @@
     <div v-for="(resource,index) in filteredResources" v-bind:key="resource.plateNumber">
       <ResourceSummary :resource="resource" :rowNr="index"></ResourceSummary>
     </div>
-    <div v-for="(equipment,index) in filteredResources" v-bind:key="equipment.equipmentId">
+    <div v-for="(equipment,index) in filteredEquipment" v-bind:key="equipment.equipmentId">
       <EquipmentSummary :equipment="equipment" :rowNr="index"></EquipmentSummary>
     </div>
   </div>

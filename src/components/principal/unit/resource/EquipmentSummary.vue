@@ -1,7 +1,7 @@
 <template>
     <div
-      v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']">
-      <!--v-on:click="mouseClick"-->
+      v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']"
+      v-on:click="mouseClick">
 
       <div class="equipment-type-summary">
         <div class="equipment-element-container">{{equipment.equipmentType}}</div>
@@ -20,10 +20,16 @@
 
 <script>
 
+  import A from "../../../../constants/actions";
 
   export default {
     name: 'EquipmentSummary',
-    props: ["equipment", "rowNr"]
+    props: ["equipment", "rowNr"],
+    methods: {
+      mouseClick: function () {
+        this.$store.dispatch(A.OPEN_VIEW_RESOURCE_DIALOG, this.equipment);
+      }
+    }
   }
 
 </script>

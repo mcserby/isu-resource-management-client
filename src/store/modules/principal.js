@@ -30,6 +30,7 @@ const state = {
   activeEquipment: null,
   resourceDialogIsOpen: false,
   equipmentDialogIsOpen: false,
+  addEquipmentDialogIsOpen: false,
   confirmationDialogIsOpen: false,
   resourceViewDialogIsOpen: false,
   statuses: {[ResourceStatus.IN_MISSION]: 2, [ResourceStatus.AVAILABLE]: 1, [ResourceStatus.UNAVAILABLE] : 0}
@@ -145,18 +146,14 @@ const mutations = {
     }
   },
   [M.CLOSE_CONFIRMATION_DIALOG](state) {
-    if (ResourceType.EQUIPMENT === state.activeTab.resourceType) {
-      state.equipmentDialogIsOpen = false;
-    } else {
       state.confirmationDialogIsOpen = false;
-    }
   },
   [M.OPEN_ADD_RESOURCE_DIALOG](state, unitName) {
     let unit = state.units.find(u => u.name === unitName);
     if (unit) {
       state.activeUnit = unit;
       if (ResourceType.EQUIPMENT === state.activeTab.resourceType) {
-        state.equipmentDialogIsOpen = true;
+        state.addEquipmentDialogIsOpen = true;
       } else {
         state.resourceDialogIsOpen = true;
       }
@@ -164,7 +161,7 @@ const mutations = {
   },
   [M.CLOSE_ADD_RESOURCE_DIALOG](state) {
     if (ResourceType.EQUIPMENT === state.activeTab.resourceType) {
-      state.equipmentDialogIsOpen = false;
+      state.addEquipmentDialogIsOpen = false;
     } else {
       state.resourceDialogIsOpen = false;
     }

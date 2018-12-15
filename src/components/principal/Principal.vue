@@ -25,8 +25,9 @@
       @cancel="onCancel"
     ></ConfirmationDialog>
     <ResourceDialog v-if="displayViewResourceDialog" :resource="activeResource" :unit="activeUnit"></ResourceDialog>
+    <EquipmentDialog v-if="displayEquipmentForm" :equipment="activeEquipment" :unit="activeUnit"></EquipmentDialog>
     <AddResourceForm v-if="displayResourceForm" ></AddResourceForm>
-    <AddEquipmentForm v-if="displayEquipmentForm" ></AddEquipmentForm>
+    <AddEquipmentForm v-if="displayAddEquipmentForm" ></AddEquipmentForm>
   </div>
 </template>
 
@@ -51,10 +52,12 @@ import WebsocketSubscribe from '../../contracts/websocketSubscribe';
 import UnitButtons from './unit/buttons/UnitButtons.vue';
 import ResourceDialog from './unit/form/ResourceDialog'
 import PrincipalHeader from './header/PrincipalHeader.vue';
+import EquipmentDialog from './unit/form/EquipmentDialog'
 
 export default {
   name: "Principal",
   components: {
+    EquipmentDialog,
     PrincipalHeader,
     ResourceDialog,
     Unit,
@@ -79,11 +82,17 @@ export default {
     activeResource() {
       return this.$store.state.principalStore.activeResource;
     },
+    activeEquipment() {
+      return this.$store.state.principalStore.activeEquipment;
+    },
     displayResourceForm() {
       return this.$store.state.principalStore.resourceDialogIsOpen;
     },
     displayEquipmentForm() {
       return this.$store.state.principalStore.equipmentDialogIsOpen;
+    },
+    displayAddEquipmentForm() {
+      return this.$store.state.principalStore.addEquipmentDialogIsOpen;
     },
     displayConfirmationDialog() {
       return this.$store.state.principalStore.confirmationDialogIsOpen;
