@@ -10,11 +10,11 @@
 }
 
 .odd {
-  background-color: #cde6f2;
+  background-color: #e9f8fc;
 }
 
 .even {
-  background-color: #a6dbf2;
+  background-color: #e9f8fc;
 }
 
 .resource-name {
@@ -80,7 +80,7 @@
 
 .resource-element-container {
   margin: 0px;
-  color: #186181;
+  color: #616161;
 }
 
 .resource-container {
@@ -92,13 +92,13 @@
 
 .last-updated {
   text-align: center;
-  color: #186181;
+  color: #616161;
   overflow: hidden;
 }
 
 .resource {
-  background-color: #d8d8d8;
-  border: 2px solid #5eb5e89e;
+  background-color: #d2f0f9;
+  border: 2px solid #5eb5e8;
 }
 
 .fade-enter-active,
@@ -110,7 +110,7 @@
 }
 
 .status-available {
-  background-color: #9eea8d;
+  background-color: #00897b;
   grid-row: 1 / span 4;
   grid-column: 1 / span 1;
 }
@@ -122,7 +122,7 @@
 }
 
 .status-unavailable {
-  background-color: #dfe7ec;
+  background-color: #ffcc00;
   grid-row: 1 / span 4;
   grid-column: 1 / span 1;
 }

@@ -1,9 +1,11 @@
 .dialogContainer {
     position: fixed;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: #d2f0f9;
     z-index: 30;
     width: 100%;
     height: 100%;
+    font-weight:bold;
+    color: #616161;
 }
 
 .dialog {
@@ -17,8 +19,8 @@
 .custom-close-button {
  width: 5%;
  justify-content: right;
- background-color: #186181;
- color: #cde9f5;
+ background-color: #F74356;
+ color: #f2f2f2;
  padding: 5px;
  font-size: medium
 }
@@ -28,7 +30,7 @@
 }
 
 .modal-content {
-  background: #cde9f5;
+  background: #d2f0f9;
 }
 
 .modal-footer {
@@ -44,14 +46,14 @@
 }
 
 .custom-button {
-  color: #bae1f2;
-  background-color: #186181;
+  color: #f2f2f2;
+  background-color: #4682b4;
 
   font-size: 20px;
   font: Arial;
   font-weight: bold;
 
-  border-radius: 8px;
+  border-radius: 1px;
   border-size: 0px;
   box-shadow: 10px 0px 14px -7px;
 
@@ -59,8 +61,12 @@
   margin: 5px;
   width: 100%;
 }
+.custom-button:hover:enabled  {
+  color: #f2f2f2;
+  background-color: #2b506e;
+}
 
-.custom-button:hover:enabled {
-  color: #186181;
-  background-color: #eaf6fb;
+.custom-close-button:hover:enabled{
+  color: #f2f2f2;
+  background-color: #930614;
 }

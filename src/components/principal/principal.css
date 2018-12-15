@@ -5,19 +5,19 @@
 .units-container, .unit-buttons-container {
   display: inline-grid;
   grid-template-columns: repeat( auto-fit, minmax(40px, 1fr) );
-  background-color: #bae1f2;
+  background-color: #f2f2f2;
   padding: 10px;
   grid-gap: 5px;
   width: 100%;
 }
 
 .tab{
-  background-color: #bae1f2;
+  background-color: #f2f2f2;
   border-right : 1px solid;
 }
 
 .tab-text{
-  color: #186181 !important;
+  color: #616161 !important;
   font-size: 20px;
   font: Arial;
   font-weight: bold;

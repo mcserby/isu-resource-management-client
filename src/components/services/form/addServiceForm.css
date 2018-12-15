@@ -1,9 +1,10 @@
 .dialogContainer {
     position: fixed;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: #d2f0f9;
     z-index: 30;
     width: 100%;
     height: 100%;
+    font-weight:bold;
 }
 
 .dialog {
@@ -15,19 +16,20 @@
 }
 
 .error {
-  color: darkred;
+  color: #F74356;
 }
 
 .form-label {
-  color: #186181;
+  color: #4682b4;
 }
 
 .modal-title {
-  color: #186181;
+  color: #616161;
+  font-weight: bold;
 }
 
 .modal-content {
-  background: #cde9f5;
+  background: #d2f0f9;
 }
 
 
@@ -36,14 +38,14 @@
 }
 
 .custom-button {
-  color: #bae1f2;
-  background-color: #186181;
+  color: #f2f2f2;
+  background-color: #4682b4;
 
   font-size: 20px;
   font: Arial;
   font-weight: bold;
 
-  border-radius: 8px;
+  border-radius: 1px;
   border-size: 0px;
   box-shadow: 10px 0px 14px -7px;
 
@@ -53,6 +55,6 @@
 }
 
 .custom-button:hover:enabled {
-  color: #186181;
-  background-color: #eaf6fb;
+  color: #f2f2f2;
+  background-color: #2b506e;
 }
