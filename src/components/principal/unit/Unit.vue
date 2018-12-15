@@ -4,7 +4,7 @@
       {{unit.name}}
     </div>
     <div v-for="(resource,index) in filteredResources" v-bind:key="resource.plateNumber">
-      <ResourceSummary :resource="resource" :rowNr="index"></ResourceSummary>
+      <ResourceSummary :resource="resource" :rowNr="index" @mouseClick="onResourceClick($event)"></ResourceSummary>
     </div>
     <div v-for="(equipment,index) in filteredEquipment" v-bind:key="equipment.equipmentId">
       <EquipmentSummary :equipment="equipment" :rowNr="index"></EquipmentSummary>
@@ -15,6 +15,7 @@
 <script>
 
   import ResourceSummary from './resource/ResourceSummary.vue';
+  import A from '../../../constants/actions';
   import EquipmentSummary from './resource/EquipmentSummary.vue';
   import Vue from 'vue';
 
@@ -24,7 +25,8 @@
     name: 'Unit',
     props: ['unit'],
     components: {
-      ResourceSummary, EquipmentSummary
+      ResourceSummary,
+      EquipmentSummary
     },
     computed: {
       resourceType() {
@@ -35,6 +37,11 @@
       },
       filteredEquipment(){
         return this.unit.equipment.filter(r => r.resourceType === this.resourceType);
+      }
+    },
+    methods: {
+      onResourceClick(resource){
+        this.$store.dispatch(A.OPEN_VIEW_RESOURCE_DIALOG, resource);
       }
     }
   }

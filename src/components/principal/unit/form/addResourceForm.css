@@ -31,3 +31,43 @@
 .modal-content {
   background: #d2f0f9;
 }
+
+.body-wrapper {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(8, [col] 12.5% ) ;
+  grid-template-rows: repeat(1, [row] auto  );
+}
+
+.resource-browser-list {
+  grid-column: col 1 / span 3;
+  grid-row: row ;
+}
+
+.resource-editor {
+  grid-column: col 4 / span 4 ;
+  grid-row: row ;
+}
+
+.resource-browser-resource-summary {
+  display: grid;
+  grid-template-columns: repeat(8, [col] 12.5% ) ;
+  grid-template-rows: repeat(1, [row] auto  );
+}
+
+.resource-summary-card {
+  grid-column: col / span 5;
+  grid-row: row ;
+}
+
+.delete-resource {
+  grid-column: col 7 / span 1;
+  grid-row: row ;
+}
+
+.delete-resource > button {
+  margin-top: 13px;
+}
+
+.errors {
+}

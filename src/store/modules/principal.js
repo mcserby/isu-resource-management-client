@@ -81,7 +81,13 @@ const actions = {
   },
   [A.CLOSE_STATUS_MENU] ({commit}) {
     commit(M.CLOSE_STATUS_MENU)
-  }
+  },
+  [A.DELETE_RESOURCE] ({commit}, resource) {
+    commit(M.DELETE_RESOURCE, resource)
+  },
+  [A.UPDATE_RESOURCE] ({commit}, resource) {
+    commit(M.UPDATE_RESOURCE, resource)
+  },
 }
 
 const mutations = {
@@ -172,6 +178,14 @@ const mutations = {
     } else {
       state.activeUnit.resources.push(resource);
     }
+  },
+  [M.DELETE_RESOURCE](state, resource) {
+    const resourceIndex = state.activeUnit.resources.findIndex(r => r.plateNumber === resource.plateNumber);
+    state.activeUnit.resources.splice(resourceIndex, 1);
+  },
+  [M.UPDATE_RESOURCE](state, resource) {
+    const resourceIndex = state.activeUnit.resources.findIndex(r => r.plateNumber === resource.plateNumber);
+    state.activeUnit.resources.splice(resourceIndex, 1, resource);
   },
   [M.LOCK_UNIT](state, unitName) {
     let unit = state.units.find(u => u.name === unitName);
