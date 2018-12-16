@@ -100,7 +100,7 @@ export default {
   data: () => {
     return {
       crewMembers: "",
-      resourceStatus: {[ResourceStatus.IN_MISSION]: 'ÎN MISIUNE', [ResourceStatus.AVAILABLE]:'DISPONIBIL', [ResourceStatus.UNAVAILABLE]: 'INDISPONIBIL'}
+      resourceStatus: {[ResourceStatus.IN_MISSION]: 'MISIUNE', [ResourceStatus.AVAILABLE]:'DISPONIBIL', [ResourceStatus.UNAVAILABLE]: 'INDISPONIBIL'}
     };
   },
   methods: {
