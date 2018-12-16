@@ -20,6 +20,17 @@
               >
             </div>
             <div class="form-group">
+              <label class="form-label" for="resourceState">Stare:</label>
+              <input
+                type="text"
+                v-model="resourceStatus[resource.status.status]"
+                class="form-control"
+                id="resourceState"
+                readonly="true"
+                placeholder="Tip autospecială"
+              >
+            </div>
+            <div class="form-group">
               <label class="form-label" for="name">Tip autospecială</label>
               <input
                 type="text"
@@ -88,7 +99,8 @@ export default {
   props: ["resource", "unit"],
   data: () => {
     return {
-      crewMembers: ""
+      crewMembers: "",
+      resourceStatus: {[ResourceStatus.IN_MISSION]: 'ÎN MISIUNE', [ResourceStatus.AVAILABLE]:'DISPONIBIL', [ResourceStatus.UNAVAILABLE]: 'INDISPONIBIL'}
     };
   },
   methods: {
