@@ -11,6 +11,17 @@
   width: 100%;
 }
 
+.units-container {
+  max-height: -moz-calc(100vh - 450px);
+  /* WebKit */
+  max-height: -webkit-calc(100vh - 450px);
+  /* Opera */
+  max-height: -o-calc(100vh - 450px);
+  /* Standard */
+  max-height: calc(100vh - 450px);
+  overflow: scroll;
+}
+
 .tab{
   background-color: #f2f2f2;
   border-right : 1px solid;
