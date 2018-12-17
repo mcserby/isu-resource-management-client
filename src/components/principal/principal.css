@@ -2,7 +2,8 @@
   width: 100%;
   position: relative;
 }
-.units-container, .unit-buttons-container {
+
+.unit-buttons-container {
   display: inline-grid;
   grid-template-columns: repeat( auto-fit, minmax(40px, 1fr) );
   background-color: #f2f2f2;
@@ -11,14 +12,28 @@
   width: 100%;
 }
 
-.units-container {
-  max-height: -moz-calc(100vh - 450px);
-  /* WebKit */
-  max-height: -webkit-calc(100vh - 450px);
-  /* Opera */
-  max-height: -o-calc(100vh - 450px);
-  /* Standard */
-  max-height: calc(100vh - 450px);
+.unit-header-wrapper {
+  display: inline-grid;
+  grid-template-columns: repeat( auto-fit, minmax(40px, 1fr) );
+  background-color: #f2f2f2;
+  padding: 10px;
+  grid-gap: 5px;
+  width: 100%;
+  grid-row: 1 / span 1;
+}
+
+.unit-wrapper-wrapper {
+  display: inline-grid;
+  grid-template-columns: repeat( auto-fit, minmax(40px, 1fr) );
+  background-color: #f2f2f2;
+  padding: 0 10px 10px 10px;
+  grid-gap: 5px;
+  width: 100%;
+  grid-row: 2 / span 1;
+  max-height: -moz-calc(100vh - 500px);
+  max-height: -webkit-calc(100vh - 500px);
+  max-height: -o-calc(100vh - 500px);
+  max-height: calc(100vh - 500px);
   overflow: scroll;
 }
 

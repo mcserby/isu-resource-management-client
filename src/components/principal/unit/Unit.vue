@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="unit-header">
+<!--    <div class="unit-header">
       {{unit.name}}
-    </div>
+    </div>-->
     <div v-for="(resource,index) in filteredResources" v-bind:key="resource.plateNumber">
       <ResourceSummary :resource="resource" :rowNr="index" @mouseClick="onResourceClick($event)"></ResourceSummary>
     </div>

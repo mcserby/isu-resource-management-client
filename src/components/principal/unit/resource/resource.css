@@ -1,7 +1,6 @@
 .resource-wrapper {
   display: inline-grid;
   :create ;
-  margin: 4px;
   position: relative;
   margin-right: 5px;
   text-align: center;

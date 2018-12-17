@@ -9,8 +9,17 @@
       </li>
     </ul>
     <div class="units-container">
-      <div class="unit-wrapper" v-for="unit in units" v-bind:key="unit.name">
-        <Unit :unit="unit"></Unit>
+      <div class="unit-header-wrapper">
+        <div  v-for="unit in units" v-bind:key="unit.name">
+          <div class="unit-header">
+            {{unit.name}}
+          </div>
+        </div>
+      </div>
+      <div class="unit-wrapper-wrapper">
+        <div class="unit-wrapper" v-for="unit in units" v-bind:key="unit.name">
+          <Unit :unit="unit"></Unit>
+        </div>
       </div>
     </div>
     <div class="unit-buttons-container">
