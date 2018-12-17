@@ -21,6 +21,7 @@
 
 .form-label {
   color: #4682b4;
+  font-weight: bold;
 }
 
 .modal-title {
@@ -53,6 +54,20 @@
   display: grid;
   grid-template-columns: repeat(8, [col] 12.5% ) ;
   grid-template-rows: repeat(1, [row] auto  );
+}
+
+.close-button-custom {
+ width: 5%;
+ justify-content: right;
+ background-color: #F74356;
+ color: #f2f2f2;
+ padding: 5px;
+ font-size: medium
+}
+
+.close-button-custom:hover:enabled{
+  color: #f2f2f2;
+  background-color: #930614;
 }
 
 .resource-summary-card {
