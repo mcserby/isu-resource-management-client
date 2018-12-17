@@ -8,7 +8,7 @@
             <i class="fas fa-search h4 text-body"></i>
           </div>
           <div class="col">
-            <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search">
+            <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="caută">
           </div>
           <div class="col-auto">
             <button class="btn btn-lg  custom-button " type="submit">Caută</button>
@@ -16,8 +16,7 @@
         </div>
       </form>
     </div>
-    <div class = "other-modules-wrapper">
-
+    <div class="other-modules-wrapper">
       <div>
         <router-link class="btn menu-link-custom-properties menu-link" role="button" to="/services">Modul Servicii</router-link>
       </div>

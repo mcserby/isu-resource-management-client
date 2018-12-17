@@ -1,6 +1,16 @@
 <template>
   <div>
-    <div class="services-title">Modul Servicii</div>
+    <div class="services-header-menu">
+      <div class="services-title">Modul Servicii</div>
+      <div class="services-other-modules-wrapper">
+        <div>
+          <router-link class="btn menu-link-custom-properties menu-link" role="button" to="/principal">Modul Principal</router-link>
+        </div>
+        <div>
+          <router-link class="btn menu-link-custom-properties menu-link" role="button" to="/uat">Modul UAT</router-link>
+        </div>
+      </div>
+    </div>
     <div class="services-buttons">
       <button
         class="btn custom-service-button delete-button"
@@ -9,7 +19,7 @@
       >
         <span class="service-button-font-size">Șterge toate datele</span>
       </button>
-      
+
       <button class="btn custom-service-button add-button" @click="addService()">
         <span class="service-button-font-size">Adaugă date</span>
       </button>

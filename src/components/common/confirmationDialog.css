@@ -1,32 +1,23 @@
 .dialogContainer {
-    position: fixed;
-    background-color: #d2f0f9;
-    z-index: 30;
-    width: 100%;
-    height: 100%;
-    font-weight:bold;
-    color: #616161;
+  position: fixed;
+  background-color: #d2f0f9;
+  z-index: 30;
+  width: 100%;
+  height: 100%;
+  font-weight: bold;
+  color: #616161;
 }
 
 .dialog {
-    display: block;
+  display: block;
 }
 
 .confirmation-dialog {
   max-width: 796px;
 }
 
-.custom-close-button {
- width: 5%;
- justify-content: right;
- background-color: #F74356;
- color: #f2f2f2;
- padding: 5px;
- font-size: medium
-}
-
 .modal-body {
- text-align:center;
+  text-align: center;
 }
 
 .modal-content {
@@ -34,15 +25,15 @@
 }
 
 .modal-footer {
- justify-content: center;
+  justify-content: center;
 }
 
 .custom-dialog-button {
- width: 20%;
+  width: 20%;
 }
 
 .button-font-size {
-  font-size:smaller;
+  font-size: smaller;
 }
 
 .custom-button {
@@ -50,7 +41,7 @@
   background-color: #4682b4;
 
   font-size: 20px;
-  font: Arial;
+  font-family: Arial;
   font-weight: bold;
 
   border-radius: 1px;
@@ -61,12 +52,9 @@
   margin: 5px;
   width: 100%;
 }
-.custom-button:hover:enabled  {
+
+.custom-button:hover:enabled {
   color: #f2f2f2;
   background-color: #2b506e;
 }
 
-.custom-close-button:hover:enabled{
-  color: #f2f2f2;
-  background-color: #930614;
-}

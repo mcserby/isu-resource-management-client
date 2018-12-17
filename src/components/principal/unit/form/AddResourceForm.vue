@@ -5,6 +5,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">{{title}}</h5>
+                        <button type="button" class="btn custom-close-button" @click="cancel()">X</button>
                     </div>
                     <div class="modal-body body-wrapper">
                       <div class="resource-browser-list">
@@ -13,17 +14,19 @@
                             <ResourceSummary :resource="resource" :rowNr="rowColor(resource)" @mouseClick="onResourceClick($event)"></ResourceSummary>
                           </div>
                           <div class="delete-resource">
-                            <button type="button" class="btn close-button" @click="deleteResource(resource)">X</button>
+                            <button type="button" class="btn custom-close-button" @click="deleteResource(resource)">X</button>
                           </div>
                         </div>
-                        <div>
-                          <button type="button" class="btn close-button" @click="addNewResource()">Add new resource</button>
+                        <div class="resource-browser-resource-summary">
+                          <div class="add-resource-button-wrapper">
+                            <button type="button" class="btn custom-button" @click="addNewResource()">Adaugă o resursă</button>
+                          </div>
                         </div>
                       </div>
                       <div class="resource-editor">
                         <div class="form-group">
                           <label class="form-label" for="vehicleType">Tip</label>
-                          <input type="text" minlength="1" required v-model="vehicleType" @input="updateResource()" class="form-control" id="vehicleType" aria-describedby="nameHelp" placeholder="tip">
+                          <input type="text" minlength="1" required v-model="vehicleType" @input="updateResource()" class="form-control" id="vehicleType" aria-describedby="nameHelp" placeholder="Tip">
                         </div>
                         <div class="form-group">
                           <label class="form-label" for="plateNumber">Număr de înmatriculare</label>
@@ -91,11 +94,12 @@
         crew: '',
         validationPerformedAtLeastOnce: false,
         selectedResourceId: null,
+        justMounted: true,
       }
     },
     computed: {
       saveDisabled() {
-        return (this.selectedResourceId) && (this.errors.length !== 0 || !this.validationPerformedAtLeastOnce);
+        return (this.justMounted) || ((this.selectedResourceId) && (this.errors.length !== 0 || !this.validationPerformedAtLeastOnce));
       },
       resourceType() {
         return this.$store.state.principalStore.activeTab.resourceType;
@@ -123,11 +127,10 @@
         this.$store.dispatch(A.ADD_RESOURCE, this.constructResource());
       },
       constructResource(){
-        let crewList = this.crew.split('\n');
+        let crewList = this.crew.split(/[\n,]/);
         const captain = crewList[0];
         crewList = crewList.slice();
         crewList.shift();
-        console.log(this.resourceType);
         this.selectedResourceId = this.plateNumber;
         return new Resource(this.vehicleType, this.plateNumber, this.identificationNumber, captain, crewList,
           new Status(ResourceStatus.AVAILABLE, null, null, null), this.resourceType);
@@ -146,6 +149,7 @@
         this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('updateSubUnit', new UpdateSubUnitRequest(this.$store.state.principalStore.activeUnit)));
       },
       updateResource() {
+        this.justMounted = false;
         const resource = this.constructResource();
         this.validateFields();
         this.$store.dispatch(A.UPDATE_RESOURCE, resource);
@@ -158,6 +162,9 @@
         }
         if(this.plateNumber.length < 5){
           this.errors.push("Numărul de înmatriculare trebuie să aibă cel puțin 5 caractere");
+        }
+        if(this.identificationNumber.length < 1){
+          this.errors.push("Numarul de identificare trebuie să aibă cel puțin 5 caractere");
         }
         if(this.crew.length < 3){
           this.errors.push("Echipajul trebuie să conțină cel puțin un nume pe prima linie");
@@ -185,6 +192,7 @@
       },
       deleteResource(resource) {
         this.selectedResourceId = null;
+        this.clearFormValues();
         this.$store.dispatch(A.DELETE_RESOURCE, resource);
       }
     },

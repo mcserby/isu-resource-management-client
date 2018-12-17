@@ -75,6 +75,12 @@
   grid-row: row ;
 }
 
+.add-resource-button-wrapper {
+  grid-column: col / span 7;
+  grid-row: row ;
+}
+
+
 .delete-resource {
   grid-column: col 7 / span 1;
   grid-row: row ;
