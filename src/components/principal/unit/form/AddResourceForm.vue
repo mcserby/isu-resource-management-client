@@ -164,7 +164,7 @@
           this.errors.push("Numărul de înmatriculare trebuie să aibă cel puțin 5 caractere");
         }
         if(this.identificationNumber.length < 1){
-          this.errors.push("Numarul de identificare trebuie să aibă cel puțin 5 caractere");
+          this.errors.push("Numarul de identificare trebuie să aibă cel puțin 1 caracter");
         }
         if(this.crew.length < 3){
           this.errors.push("Echipajul trebuie să conțină cel puțin un nume pe prima linie");
