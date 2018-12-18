@@ -1,7 +1,7 @@
 <template>
   <div class="dialogContainer" style="display: block">
     <div class="dialog modal" role="dialog">
-      <div class="modal-dialog modal-dialog-centered add-resource-dialog" role="document">
+      <div class="modal-dialog modal-dialog-centered add-service-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Adaugă serviciu</h5>

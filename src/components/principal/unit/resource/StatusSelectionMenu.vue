@@ -1,7 +1,7 @@
 <template>
   <div v-click-outside="closeStatusMenu">
     <div
-      v-bind:class="['mission-selection-dialog-container', statusMenuPosition == 'right' ? 'mission-selection-dialog-container-right' : 'mission-selection-dialog-container-left']"
+      v-bind:class="['mission-selection-dialog-container']"
       v-if="showMissionMenu"
       style="display: block"
     >
@@ -10,6 +10,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h4 class="modal-title">Introduceți detalii despre misiune</h4>
+              <button type="button" class="btn custom-close-button" @click="toggleMissionMenu">X</button>
             </div>
             <div class="modal-body status-dialog-content">
               <div class="form-group">
@@ -43,7 +44,7 @@
         </div>
       </div>
     </div>
-    <div v-bind:class="['menu', statusMenuPosition == 'right' ? 'menu-right' : 'menu-left']">
+    <div v-bind:class="['menu', statusMenuXPosition == 'right' ? 'menu-right' : 'menu-left', statusMenuYPosition == 'down' ? 'menu-down' : 'menu-up']">
       <menu class="menu-options">
         <menuitem
           class="menu-option menu-option-disponibil"
@@ -68,11 +69,12 @@ import ResourceStatus from "../../../../constants/resourceStatus";
 
 export default {
   name: "StatusSelectionMenu",
-  props: ["statusMenuPosition", "resource"],
+  props: ["statusMenuXPosition", "statusMenuYPosition", "resource"],
   data: () => {
     return {
       showMissionMenu: false,
-      showMissionMenuPosition: "right",
+      showMissionMenuXPosition: "right",
+      showMissionMenuYPosition: "down",
       key: "",
       description: "",
       crew: ""
@@ -81,7 +83,7 @@ export default {
   computed: {
     isSetStatusToMissionDisabled() {
       return this.key.trim() === "" || this.description.trim() === "" || this.crew.trim() === "";
-    }
+    },
   },
   methods: {
     toggleMissionMenu: function() {
