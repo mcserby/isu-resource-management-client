@@ -15,6 +15,13 @@
   left: 100px;
 }
 
+.menu-down {
+  top: -111px;
+}
+
+.menu-up {
+}
+
 
 .menu-options {
   align-items: flex-start;
@@ -61,29 +68,23 @@
 }
 
 .mission-selection-dialog-container {
-    position: absolute;
+/*    position: absolute;
     z-index: 30;
     height: 600px;
     width: 500px;
-    top: 0px;
+    top: 0px;*/
 }
 
-.mission-selection-dialog-container-left {
+/*.mission-selection-dialog-container-left {
   left: -550px;
 }
 
 .mission-selection-dialog-container-right {
   left: 300px;
-}
-
+}*/
 
 .mission-status-dialog {
-  display: block;
-  position: absolute;
-  height: 600px;
-  width: 500px;
-  top: -100px;
-  left: 0px;
+  top: 100px;
 }
 
 .status-dialog-content {

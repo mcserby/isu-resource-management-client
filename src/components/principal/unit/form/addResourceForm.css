@@ -24,15 +24,6 @@
   font-weight: bold;
 }
 
-.modal-title {
-  color: #616161;
-  font-weight: bold;
-}
-
-.modal-content {
-  background: #d2f0f9;
-}
-
 .body-wrapper {
   display: grid;
   grid-gap: 10px;

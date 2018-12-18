@@ -23,7 +23,8 @@
       </div>
     </div>
     <StatusSelectionMenu
-      :statusMenuPosition="statusMenuPosition"
+      :statusMenuXPosition="statusMenuXPosition"
+      :statusMenuYPosition="statusMenuYPosition"
       :resource="resource"
       v-if="isStatusMenuVisible"
     />
@@ -42,7 +43,8 @@ export default {
   props: ["resource", "rowNr"],
   data: () => {
     return {
-      statusMenuPosition: "right"
+      statusMenuXPosition: "right",
+      statusMenuYPosition: "down"
     };
   },
   components: {
@@ -70,8 +72,10 @@ export default {
       this.$emit('mouseClick', this.resource);
     },
     showStatusMenu: function(event) {
-      this.statusMenuPosition =
+      this.statusMenuYPosition =
         event.clientX > window.innerWidth / 2 ? "left" : "right";
+      this.statusMenuYPosition =
+        event.clientY > window.innerHeight / 2 ? "down" : "up";
       //TODO Use unique id instead of plateNumber when available on backend.
       this.$store.dispatch(A.OPEN_STATUS_MENU, this.resource.plateNumber);
     }
