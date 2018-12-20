@@ -189,15 +189,16 @@ const mutations = {
   [M.LOCK_UNIT](state, lockResponse) {
     let unit = state.lockUnits.find(u => u.name === lockResponse.subUnitName);
     if (unit) {
-      Vue.set(unit, 'resourceTypes', lockResponse.featureTypes);
+      Vue.set(unit, 'resourceTypes', lockResponse.lockedResourceTypes);
     } else {
       state.lockUnits.push(new LockUnit(lockResponse.subUnitName, lockResponse.lockedResourceTypes));
     }
   },
   [M.UNLOCK_UNIT](state, unlockResponse) {
     let unit = state.lockUnits.find(u => u.name === unlockResponse.subUnitName);
+    const resourceTypes = unit.resourceTypes.filter(r => unlockResponse.lockedResourceTypes.indexOf(r) === -1);
     if (unit) {
-      Vue.set(unit, 'resourceTypes', unlockResponse.lockedResourceTypes);
+      Vue.set(unit, 'resourceTypes', resourceTypes);
     }
   },
   [M.CHANGE_ACTIVE_TAB](state, tab) {

@@ -166,6 +166,9 @@ export default {
     let onUnitsReceived = function(response) {
       let r = JSON.parse(response.body);
       self.$store.dispatch(A.INIT_UNITS, r.subUnitsList);
+      if(r.lockedSubUnits){
+        r.lockedSubUnits.forEach(lsu =>  self.$store.dispatch(A.LOCK_UNIT, lsu));
+      }
     };
 
     let onLockSubUnitReceived = function(response) {
