@@ -77,6 +77,9 @@ export default {
     activeTab() {
       return this.$store.state.principalStore.activeTab;
     },
+    resourceType() {
+      return this.$store.state.principalStore.activeTab.resourceType;
+    },
     activeUnit() {
       return this.$store.state.principalStore.activeUnit;
     },
@@ -137,7 +140,8 @@ export default {
         new WebsocketSend(
           "unlockSubUnit",
           new UnlockSubUnitRequest(
-            this.$store.state.principalStore.activeUnit.name
+            this.$store.state.principalStore.activeUnit.name,
+            [this.resourceType]
           )
         )
       );
@@ -148,7 +152,8 @@ export default {
         new WebsocketSend(
           "unlockSubUnit",
           new UnlockSubUnitRequest(
-            this.$store.state.principalStore.activeUnit.name
+            this.$store.state.principalStore.activeUnit.name,
+            [this.resourceType]
           )
         )
       );
@@ -161,21 +166,23 @@ export default {
     let onUnitsReceived = function(response) {
       let r = JSON.parse(response.body);
       self.$store.dispatch(A.INIT_UNITS, r.subUnitsList);
+      if(r.lockedSubUnits){
+        r.lockedSubUnits.forEach(lsu =>  self.$store.dispatch(A.LOCK_UNIT, lsu));
+      }
     };
 
     let onLockSubUnitReceived = function(response) {
       let r = JSON.parse(response.body);
-      self.$store.dispatch(A.LOCK_UNIT, r.subUnitName);
+      self.$store.dispatch(A.LOCK_UNIT, r);
     };
 
     let onUnLockSubUnitReceived = function(response) {
       let r = JSON.parse(response.body);
-      self.$store.dispatch(A.UNLOCK_UNIT, r.subUnitName);
+      self.$store.dispatch(A.UNLOCK_UNIT, r);
     };
 
     let onUnitUpdated = function(response) {
       let r = JSON.parse(response.body);
-
       self.$store.dispatch(A.UNIT_UPDATED, r.subUnit);
     };
 

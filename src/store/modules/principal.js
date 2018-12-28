@@ -4,9 +4,7 @@ import Vue from 'vue'
 import Tab from '../../contracts/tab';
 import ResourceType from '../../constants/resourceType';
 import ResourceStatus from '../../constants/resourceStatus';
-import Resource from '../../contracts/resource';
-import Equipment from '../../contracts/equipment';
-
+import LockUnit from '../../contracts/edit/lockUnit';
 
 function sortResource (r1, r2) {
   return state.statuses[r2.status.status] === state.statuses[r1.status.status] ? r1.vehicleType.localeCompare(r2.vehicleType) :
@@ -33,7 +31,8 @@ const state = {
   addEquipmentDialogIsOpen: false,
   confirmationDialogIsOpen: false,
   resourceViewDialogIsOpen: false,
-  statuses: {[ResourceStatus.IN_MISSION]: 2, [ResourceStatus.AVAILABLE]: 1, [ResourceStatus.UNAVAILABLE] : 0}
+  statuses: {[ResourceStatus.IN_MISSION]: 2, [ResourceStatus.AVAILABLE]: 1, [ResourceStatus.UNAVAILABLE] : 0},
+  lockUnits: [],
 }
 
 const actions = {
@@ -180,23 +179,26 @@ const mutations = {
     }
   },
   [M.DELETE_RESOURCE](state, resource) {
-    const resourceIndex = state.activeUnit.resources.findIndex(r => r.plateNumber === resource.plateNumber);
+    const resourceIndex = state.activeUnit.resources.findIndex(r => r.id === resource.id);
     state.activeUnit.resources.splice(resourceIndex, 1);
   },
   [M.UPDATE_RESOURCE](state, resource) {
-    const resourceIndex = state.activeUnit.resources.findIndex(r => r.plateNumber === resource.plateNumber);
+    const resourceIndex = state.activeUnit.resources.findIndex(r => r.id === resource.id);
     state.activeUnit.resources.splice(resourceIndex, 1, resource);
   },
-  [M.LOCK_UNIT](state, unitName) {
-    let unit = state.units.find(u => u.name === unitName);
+  [M.LOCK_UNIT](state, lockResponse) {
+    let unit = state.lockUnits.find(u => u.name === lockResponse.subUnitName);
     if (unit) {
-      Vue.set(unit, 'isLocked', true);
+      Vue.set(unit, 'resourceTypes', lockResponse.lockedResourceTypes);
+    } else {
+      state.lockUnits.push(new LockUnit(lockResponse.subUnitName, lockResponse.lockedResourceTypes));
     }
   },
-  [M.UNLOCK_UNIT](state, unitName) {
-    let unit = state.units.find(u => u.name === unitName);
+  [M.UNLOCK_UNIT](state, unlockResponse) {
+    let unit = state.lockUnits.find(u => u.name === unlockResponse.subUnitName);
+    const resourceTypes = unit.resourceTypes.filter(r => unlockResponse.lockedResourceTypes.indexOf(r) === -1);
     if (unit) {
-      Vue.set(unit, 'isLocked', false);
+      Vue.set(unit, 'resourceTypes', resourceTypes);
     }
   },
   [M.CHANGE_ACTIVE_TAB](state, tab) {

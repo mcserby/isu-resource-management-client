@@ -80,9 +80,6 @@
     },
     components: {
       Equipment,
-      UnlockSubUnitRequest,
-      WebsocketSend,
-      UpdateSubUnitRequest
     },
     computed: {
       saveDisabled() {
@@ -119,7 +116,7 @@
         this.errors = [];
       },
       closeAddResourceDialog(){
-        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('unlockSubUnit', new UnlockSubUnitRequest(this.$store.state.principalStore.activeUnit.name)));
+        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('unlockSubUnit', new UnlockSubUnitRequest(this.$store.state.principalStore.activeUnit.name, this.resourceType)));
         this.$store.dispatch(A.CLOSE_ADD_RESOURCE_DIALOG);
       },
       updateUnit(){

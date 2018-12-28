@@ -30,27 +30,34 @@
     components: {},
     methods: {
       shiftExchange() {
-        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('lockSubUnit', new LockSubUnitRequest(this.unit.name)));
+        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('lockSubUnit', new LockSubUnitRequest(this.unit.name, this.resourceType)));
         this.$store.dispatch(A.OPEN_CONFIRMATION_DIALOG, this.unit.name);
       },
       addResources() {
-        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('lockSubUnit', new LockSubUnitRequest(this.unit.name)));
+        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('lockSubUnit', new LockSubUnitRequest(this.unit.name, this.resourceType)));
         this.$store.dispatch(A.OPEN_ADD_RESOURCE_DIALOG, this.unit.name);
       }
     },
     computed: {
+      resourceType() {
+        return this.$store.state.principalStore.activeTab.resourceType;
+      },
       isShiftExchangeNotAllowed() {
-        let currentResourceType = this.$store.state.principalStore.activeTab.resourceType;
+        let currentResourceType = this.resourceType;
         if (currentResourceType !== ResourceType.EQUIPMENT) {
-          let currentResources = this.unit.resources.filter(r => r.type == currentResourceType);
-          return (currentResources.length === 0 || this.unit.isLocked === true);
+          let currentResources = this.unit.resources.filter(r => r.type === currentResourceType);
+          return (currentResources.length === 0 || this.isUnitLocked);
         } else {
-          let currentEquipments = this.unit.equipment.filter(r => r.resourceType == currentResourceType);
-          return (currentEquipments.length === 0 || this.unit.isLocked === true);
+          let currentEquipments = this.unit.equipment.filter(r => r.resourceType === currentResourceType);
+          return (currentEquipments.length === 0 || this.isUnitLocked);
         }
       },
       isUnitLocked() {
-        return Boolean(this.unit.isLocked);
+        const lockUnit = this.$store.state.principalStore.lockUnits.find(u => u.name === this.unit.name);
+        if(lockUnit && lockUnit.resourceTypes){
+          return Boolean(lockUnit.resourceTypes.find(ft => ft === this.resourceType));
+        }
+        return false;
       }
     }
   }

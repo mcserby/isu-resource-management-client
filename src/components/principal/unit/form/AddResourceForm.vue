@@ -9,7 +9,7 @@
                     </div>
                     <div class="modal-body body-wrapper">
                       <div class="resource-browser-list">
-                        <div class="resource-browser-resource-summary" v-for="(resource) in filteredResources" v-bind:key="resource.plateNumber">
+                        <div class="resource-browser-resource-summary" v-for="(resource) in filteredResources" v-bind:key="resource.id">
                           <div class="resource-summary-card">
                             <ResourceSummary :resource="resource" :rowNr="rowColor(resource)" @mouseClick="onResourceClick($event)"></ResourceSummary>
                           </div>
@@ -19,7 +19,7 @@
                         </div>
                         <div class="resource-browser-resource-summary">
                           <div class="add-resource-button-wrapper">
-                            <button type="button" class="btn custom-button" @click="addNewResource()">Adaugă o resursă</button>
+                            <button type="button" class="btn custom-button" @click="addNewResource()" :disabled="addNewResourceDisabled()">Adaugă o resursă</button>
                           </div>
                         </div>
                       </div>
@@ -107,12 +107,17 @@
       filteredResources(){
         return this.$store.state.principalStore.activeUnit.resources.filter(r => r.type === this.resourceType);
       },
+      existingLicencePlates() {
+        return [].concat.apply([], this.$store.state.principalStore.units.map(u => u.resources.map(r => r.plateNumber)));
+      },
       title() {
         return this.$store.state.principalStore.activeTab.name + ': ' + this.$store.state.principalStore.activeUnit.name;
       }
-
     },
     methods: {
+      addNewResourceDisabled() {
+        return (!this.justMounted) && (this.errors.length !== 0 || !this.validationPerformedAtLeastOnce);
+      },
       saveAndClose(){
         this.clearFormValues();
         this.closeAddResourceDialog();
@@ -122,16 +127,17 @@
         this.closeAddResourceDialog();
       },
       addNewResource() {
+        this.justMounted = false;
         this.clearFormValues();
-        this.selectedResourceId = this.plateNumber;
-        this.$store.dispatch(A.ADD_RESOURCE, this.constructResource());
+        const resource = this.constructResource();
+        this.selectedResourceId = resource.id;
+        this.$store.dispatch(A.ADD_RESOURCE, resource);
       },
       constructResource(){
         let crewList = this.crew.split(/[\n,]/);
         const captain = crewList[0];
         crewList = crewList.slice();
         crewList.shift();
-        this.selectedResourceId = this.plateNumber;
         return new Resource(this.vehicleType, this.plateNumber, this.identificationNumber, captain, crewList,
           new Status(ResourceStatus.AVAILABLE, null, null, null), this.resourceType);
       },
@@ -141,7 +147,7 @@
         this.errors = [];
       },
       closeAddResourceDialog(){
-        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('unlockSubUnit', new UnlockSubUnitRequest(this.$store.state.principalStore.activeUnit.name)));
+        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('unlockSubUnit', new UnlockSubUnitRequest(this.$store.state.principalStore.activeUnit.name, this.resourceType)));
         this.$store.dispatch(A.CLOSE_ADD_RESOURCE_DIALOG);
       },
       updateUnit(){
@@ -150,9 +156,12 @@
       },
       updateResource() {
         this.justMounted = false;
-        const resource = this.constructResource();
         this.validateFields();
-        this.$store.dispatch(A.UPDATE_RESOURCE, resource);
+        if(this.errors.length === 0){
+          let resource = this.constructResource();
+          resource.id = this.selectedResourceId;
+          this.$store.dispatch(A.UPDATE_RESOURCE, resource);
+        }
       },
       validateFields() {
         this.validationPerformedAtLeastOnce = true;
@@ -160,8 +169,13 @@
         if(this.vehicleType.length === 0){
           this.errors.push("Tipul trebuie sa contina cel putin un caracter.");
         }
+        const currentPlateNumbers = this.$store.state.principalStore.activeUnit.resources.filter(r => r.id !== this.selectedResourceId).map(r => r.plateNumber);
+        const licencePlates = this.existingLicencePlates.concat(currentPlateNumbers);
+        console.log(licencePlates);
         if(this.plateNumber.length < 5){
           this.errors.push("Numărul de înmatriculare trebuie să aibă cel puțin 5 caractere");
+        } else if(licencePlates.find(pn => pn === this.plateNumber)){
+          this.errors.push("Numărul de înmatriculare trebuie să fie unic");
         }
         if(this.identificationNumber.length < 1){
           this.errors.push("Numarul de identificare trebuie să aibă cel puțin 1 caracter");
@@ -171,7 +185,7 @@
         }
       },
       onResourceClick(resource) {
-        this.selectedResourceId = resource.plateNumber;
+        this.selectedResourceId = resource.id;
         this.setEditorFields(resource);
         console.log("clicked", resource);
       },
@@ -182,10 +196,10 @@
         this.identificationNumber = resource.identificationNumber;
         this.crew = resource.captain + '\n' + resource.crew;
         this.validationPerformedAtLeastOnce = false;
-        this.selectedResourceId = resource.plateNumber;
+        this.selectedResourceId = resource.id;
       },
       rowColor(resource) {
-        if(resource.plateNumber === this.selectedResourceId){
+        if(resource.id === this.selectedResourceId){
           return 1;
         }
         return 0;

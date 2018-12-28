@@ -1,6 +1,7 @@
 class SubUnitLockedNotification {
-  constructor(subUnitName) {
+  constructor(subUnitName, resourceTypes) {
     this.subUnitName = subUnitName;
+    this.resourceTypes = resourceTypes;
   }
 }
 
