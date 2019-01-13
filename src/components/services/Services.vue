@@ -1,6 +1,21 @@
 <template>
   <div>
     <div class="services-header-menu">
+      <div class="services-search-bar-wrapper">
+      <form>
+        <div class="row no-gutters align-items-center">
+          <div class="col-auto">
+            <i class="fas fa-search h4 text-body"></i>
+          </div>
+          <div class="col">
+            <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Caută după nume și prenume">
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-lg  custom-button " type="submit">Caută</button>
+          </div>
+        </div>
+      </form>
+    </div>
       <div class="services-title">Modul Servicii</div>
       <div class="services-other-modules-wrapper">
         <div>
