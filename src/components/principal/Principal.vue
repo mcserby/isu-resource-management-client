@@ -1,6 +1,10 @@
 <template>
   <div class="principal app-sa">
     <PrincipalHeader></PrincipalHeader>
+    <button class="btn custom-button" @click="generateReport()">
+      <span class="button-font-size">Generează Raport</span>
+    </button>
+
     <ul class="nav nav-tabs">
       <li class="nav-item" v-for="tab in tabs">
         <template class="nav-item">
@@ -10,10 +14,8 @@
     </ul>
     <div class="units-container">
       <div class="unit-header-wrapper">
-        <div  v-for="unit in units" v-bind:key="unit.name">
-          <div class="unit-header">
-            {{unit.name}}
-          </div>
+        <div v-for="unit in units" v-bind:key="unit.name">
+          <div class="unit-header">{{unit.name}}</div>
         </div>
       </div>
       <div class="unit-wrapper-wrapper">
@@ -35,8 +37,8 @@
     ></ConfirmationDialog>
     <ResourceDialog v-if="displayViewResourceDialog" :resource="activeResource" :unit="activeUnit"></ResourceDialog>
     <EquipmentDialog v-if="displayEquipmentForm" :equipment="activeEquipment" :unit="activeUnit"></EquipmentDialog>
-    <AddResourceForm v-if="displayResourceForm" ></AddResourceForm>
-    <AddEquipmentForm v-if="displayAddEquipmentForm" ></AddEquipmentForm>
+    <AddResourceForm v-if="displayResourceForm"></AddResourceForm>
+    <AddEquipmentForm v-if="displayAddEquipmentForm"></AddEquipmentForm>
   </div>
 </template>
 
@@ -52,8 +54,9 @@ import ResourceDialog from "./unit/form/ResourceDialog";
 import PrincipalHeader from "./header/PrincipalHeader.vue";
 import UpdateSubUnitRequest from "../../contracts/edit/updateSubUnitRequest";
 import UnlockSubUnitRequest from "../../contracts/edit/unlockSubUnitRequest";
-import AddEquipmentForm from './unit/form/AddEquipmentForm.vue';
-import EquipmentDialog from './unit/form/EquipmentDialog'
+import AddEquipmentForm from "./unit/form/AddEquipmentForm.vue";
+import EquipmentDialog from "./unit/form/EquipmentDialog";
+import LockSubUnitRequest from "../../contracts/edit/lockSubUnitRequest";
 
 export default {
   name: "Principal",
@@ -158,6 +161,12 @@ export default {
         )
       );
       this.$store.dispatch(A.CLOSE_CONFIRMATION_DIALOG);
+    },
+    generateReport() {
+      this.$store.dispatch(
+        A.WEBSOCKET_SEND,
+        new WebsocketSend("getEquipmentReport", new UnlockSubUnitRequest("", ""))
+      );
     }
   },
   mounted: function() {
@@ -166,8 +175,8 @@ export default {
     let onUnitsReceived = function(response) {
       let r = JSON.parse(response.body);
       self.$store.dispatch(A.INIT_UNITS, r.subUnitsList);
-      if(r.lockedSubUnits){
-        r.lockedSubUnits.forEach(lsu =>  self.$store.dispatch(A.LOCK_UNIT, lsu));
+      if (r.lockedSubUnits) {
+        r.lockedSubUnits.forEach(lsu => self.$store.dispatch(A.LOCK_UNIT, lsu));
       }
     };
 
@@ -188,6 +197,11 @@ export default {
 
     let onError = function(error) {
       console.err(error);
+    };
+
+    let onReportReceived = function(response) {
+      console.log("received response:", response.body);
+      self.$store.dispatch(A.SHOW_PDF_FILE, response.body);
     };
 
     this.$store.dispatch(
@@ -213,6 +227,10 @@ export default {
     this.$store.dispatch(
       A.WEBSOCKET_SUBSCRIBE,
       new WebsocketSubscribe("unitUpdatedNotification", onUnitUpdated, onError)
+    );
+    this.$store.dispatch(
+      A.WEBSOCKET_SUBSCRIBE,
+      new WebsocketSubscribe("equipmentReport", onReportReceived, onError)
     );
   }
 };
