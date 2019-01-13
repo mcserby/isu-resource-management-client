@@ -63,10 +63,10 @@ export default {
   },
   computed: {
     saveDisabled() {
-      return this.name.trim() == "" ||
-        this.title.trim() == "" ||
-        this.role.trim() == "" ||
-        this.contact.trim() == "";
+      return this.name == "" ||
+        this.title == "" ||
+        this.role == "" ||
+        this.contact == "";
     }
   },
   mounted() {},
