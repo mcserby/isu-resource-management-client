@@ -1,7 +1,7 @@
 <template>
   <div class="principal app-sa">
     <PrincipalHeader></PrincipalHeader>
-    <button class="btn custom-button" @click="generateReport()">
+    <button class="btn generate-button" @click="generateReport()">
       <span class="button-font-size">Generează Raport</span>
     </button>
 
