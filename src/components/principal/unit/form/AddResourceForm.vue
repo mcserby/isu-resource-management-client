@@ -116,7 +116,7 @@
     },
     methods: {
       addNewResourceDisabled() {
-        return (!this.justMounted) && (this.errors.length !== 0 || !this.validationPerformedAtLeastOnce);
+        return (!this.justMounted) && ((this.selectedResourceId) && (this.errors.length !== 0 || !this.validationPerformedAtLeastOnce));
       },
       saveAndClose(){
         this.clearFormValues();
@@ -206,6 +206,7 @@
       },
       deleteResource(resource) {
         this.selectedResourceId = null;
+        this.errors = [];
         this.clearFormValues();
         this.$store.dispatch(A.DELETE_RESOURCE, resource);
       }
