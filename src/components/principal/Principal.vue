@@ -141,7 +141,7 @@ export default {
           "unlockSubUnit",
           new UnlockSubUnitRequest(
             this.$store.state.principalStore.activeUnit.name,
-            [this.resourceType]
+            this.resourceType
           )
         )
       );
@@ -153,7 +153,7 @@ export default {
           "unlockSubUnit",
           new UnlockSubUnitRequest(
             this.$store.state.principalStore.activeUnit.name,
-            [this.resourceType]
+            this.resourceType
           )
         )
       );
