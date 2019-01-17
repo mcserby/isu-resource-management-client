@@ -1,6 +1,9 @@
 <template>
   <div v-bind:class="['services-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']">
     <div v-bind:class="['services-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']">
+      <div class="service-rowNr">
+        <div class="service-element-container">{{rowNr + 1}}</div>
+      </div>
       <div class="service-name">
         <div class="service-element-container">{{service.name}}</div>
       </div>
