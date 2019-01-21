@@ -30,7 +30,7 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="usable">Operațional</label>
-              <div class="flex-container">
+              <div class="equipment-number-container">
                 <button class="btn increment-button" @click="sub('usable')">-</button>
                 <input type="number" class="form-control" v-model="equipment.usable" id="usable">
                 <button class="btn increment-button" @click="add('usable')">+</button>
@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="reserves">Rezervă</label>
-              <div class="flex-container">
+              <div class="equipment-number-container">
                 <button class="btn increment-button" @click="sub('reserves')">-</button>
                 <input type="number" class="form-control" v-model="equipment.reserves" id="reserves">
                 <button class="btn increment-button" @click="add('reserves')">+</button>
@@ -46,7 +46,7 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="unusable">Neoperațional</label>
-              <div class="flex-container">
+              <div class="equipment-number-container">
                 <button class="btn increment-button" @click="sub('unusable')">-</button>
                 <input type="number" class="form-control" v-model="equipment.unusable" id="unusable">
                 <button class="btn increment-button" @click="add('unusable')">+</button>
