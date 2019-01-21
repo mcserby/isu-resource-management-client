@@ -87,10 +87,7 @@ const actions = {
   },
   [A.UPDATE_RESOURCE] ({commit}, resource) {
     commit(M.UPDATE_RESOURCE, resource)
-  },
-  [A.UPDATE_EQUIPMENT] ({commit}, equipment) {
-    commit(M.UPDATE_EQUIPMENT, equipment)
-  },
+  }
 }
 
 const mutations = {
@@ -99,6 +96,7 @@ const mutations = {
     state.units = units;
     state.units.forEach(u => u.resources.sort((r1, r2) => sortResource(r1, r2)));
     state.units.forEach(u => u.resources.forEach(r => r.id = r.id || Utils.createUUID()));
+    state.units.forEach(u => u.equipment.forEach(e => e.equipmentId = e.equipmentId || Utils.createUUID()));
   },
   [M.UNIT_UPDATED](state, unit) {
     let updatedUnit = state.units.find(u => u.name === unit.name);
@@ -216,15 +214,7 @@ const mutations = {
   },
   [M.CLOSE_STATUS_MENU](state) {
     state.statusMenuIsOpen = false;
-  },
-  [M.UPDATE_EQUIPMENT](state, equipment) {
-    //var updatedUnit = state.units.filter(u => u.equipment && u.equipment.equipmentId === equipment.equipmentId);
-    var updatedUnit = state.units.filter(function(u){
-      console.log(u.equipment[0].equipmentId);
-    });
-
-    console.log('a');
-  },
+  }
 }
 
 const getters = {}

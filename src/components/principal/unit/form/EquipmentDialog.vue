@@ -54,7 +54,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn custom-button" @click="cancel">Salveaza si inchide</button>
+            <button type="button" class="btn custom-button" @click="saveAndClose">Salveaza si inchide</button>
           </div>
         </div>
       </div>
@@ -65,19 +65,30 @@
 <script>
   import A from "../../../../constants/actions";
   import Equipment from '../../../../contracts/equipment';
+  import WebsocketSend from '../../../../contracts/websocketSend';
+  import UpdateSubUnitRequest from '../../../../contracts/edit/updateSubUnitRequest';
 
   export default {
     name: "EquipmentDialog",
     props: ["equipment", "unit"],
-    data: function () {
+    data: () => {
       return {
-        equipment: this.equipment,
+        initialUsable : 0,
+        initialReserves : 0,
+        initialUnusable : 0
       }
     },
     methods: {
+      saveAndClose: function () {
+        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('updateSubUnit', new UpdateSubUnitRequest(this.$store.state.principalStore.activeUnit)));
+        this.$store.dispatch(A.CLOSE_VIEW_RESOURCE_DIALOG);
+      },
+
       cancel: function () {
         this.$store.dispatch(A.CLOSE_VIEW_RESOURCE_DIALOG);
-        this.$store.dispatch(A.UPDATE_EQUIPMENT, this.equipment);
+        this.equipment.usable = this.initialUsable;
+        this.equipment.reserves = this.initialReserves;
+        this.equipment.unusable = this.initialUnusable;
       },
 
       add: function (property) {
@@ -93,6 +104,13 @@
           return this.$store.state.principalStore.activeTab
         }
       },
+    mounted: function() {
+      this.initialUsable = this.equipment.usable;
+      this.initialReserves = this.equipment.reserves;
+      this.initialUnusable = this.equipment.unusable;
+
+    },
+
 
       components: {
         Equipment
