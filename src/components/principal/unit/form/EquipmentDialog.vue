@@ -30,42 +30,31 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="usable">Operațional</label>
-              <input
-                type="text"
-                minlength="5"
-                class="form-control"
-                id="usable"
-                v-model="equipment.usable"
-                readonly="true"
-              >
+              <div class="flex-container">
+                <button class="btn increment-button" @click="sub('usable')">-</button>
+                <input type="number" class="form-control" v-model="equipment.usable" id="usable">
+                <button class="btn increment-button" @click="add('usable')">+</button>
+              </div>
             </div>
             <div class="form-group">
               <label class="form-label" for="reserves">Rezervă</label>
-              <input
-                minlength="2"
-                type="text"
-                class="form-control"
-                id="reserves"
-                placeholder="Număr de identificare"
-                v-model="equipment.reserves"
-                readonly="true"
-              >
+              <div class="flex-container">
+                <button class="btn increment-button" @click="sub('reserves')">-</button>
+                <input type="number" class="form-control" v-model="equipment.reserves" id="reserves">
+                <button class="btn increment-button" @click="add('reserves')">+</button>
+              </div>
             </div>
             <div class="form-group">
               <label class="form-label" for="unusable">Neoperațional</label>
-              <input
-                minlength="2"
-                type="text"
-                class="form-control"
-                id="unusable"
-                rows="3"
-                readonly="true"
-                v-model="equipment.unusable"
-              >
+              <div class="flex-container">
+                <button class="btn increment-button" @click="sub('unusable')">-</button>
+                <input type="number" class="form-control" v-model="equipment.unusable" id="unusable">
+                <button class="btn increment-button" @click="add('unusable')">+</button>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn custom-button" @click="cancel">Închide</button>
+            <button type="button" class="btn custom-button" @click="cancel">Salveaza si inchide</button>
           </div>
         </div>
       </div>
@@ -80,9 +69,23 @@
   export default {
     name: "EquipmentDialog",
     props: ["equipment", "unit"],
+    data: function () {
+      return {
+        equipment: this.equipment,
+      }
+    },
     methods: {
       cancel: function () {
         this.$store.dispatch(A.CLOSE_VIEW_RESOURCE_DIALOG);
+        this.$store.dispatch(A.UPDATE_EQUIPMENT, this.equipment);
+      },
+
+      add: function (property) {
+        this.equipment[property]++;
+      },
+
+      sub: function (property) {
+        this.equipment[property]--;
       }
     },
       computed: {
@@ -99,3 +102,4 @@
 </script>
 
 <style src="./addResourceForm.css"></style>
+<style src="./equipmentDialog.css"></style>

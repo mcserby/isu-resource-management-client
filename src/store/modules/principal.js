@@ -87,6 +87,9 @@ const actions = {
   [A.UPDATE_RESOURCE] ({commit}, resource) {
     commit(M.UPDATE_RESOURCE, resource)
   },
+  [A.UPDATE_EQUIPMENT] ({commit}, equipment) {
+    commit(M.UPDATE_EQUIPMENT, equipment)
+  },
 }
 
 const mutations = {
@@ -210,7 +213,15 @@ const mutations = {
   },
   [M.CLOSE_STATUS_MENU](state) {
     state.statusMenuIsOpen = false;
-  }
+  },
+  [M.UPDATE_EQUIPMENT](state, equipment) {
+    //var updatedUnit = state.units.filter(u => u.equipment && u.equipment.equipmentId === equipment.equipmentId);
+    var updatedUnit = state.units.filter(function(u){
+      console.log(u.equipment[0].equipmentId);
+    });
+
+    console.log('a');
+  },
 }
 
 const getters = {}

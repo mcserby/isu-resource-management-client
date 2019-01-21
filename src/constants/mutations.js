@@ -21,4 +21,5 @@ export default {
   CLOSE_STATUS_MENU : 'closeStatusMenu',
   DELETE_RESOURCE: 'deleteResource',
   UPDATE_RESOURCE: 'updateResource',
+  UPDATE_EQUIPMENT: 'updateEquipment',
 };
