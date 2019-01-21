@@ -5,6 +5,7 @@ import Tab from '../../contracts/tab';
 import ResourceType from '../../constants/resourceType';
 import ResourceStatus from '../../constants/resourceStatus';
 import LockUnit from '../../contracts/edit/lockUnit';
+import Utils from '../../services/utils';
 
 function sortResource (r1, r2) {
   return state.statuses[r2.status.status] === state.statuses[r1.status.status] ? r1.vehicleType.localeCompare(r2.vehicleType) :
@@ -96,12 +97,14 @@ const mutations = {
   [M.INIT_UNITS](state, units) {
     state.units.splice(0, state.units.length);
     state.units = units;
-    units.forEach(u => u.resources.sort((r1, r2) => sortResource(r1, r2)))
+    state.units.forEach(u => u.resources.sort((r1, r2) => sortResource(r1, r2)));
+    state.units.forEach(u => u.resources.forEach(r => r.id = r.id || Utils.createUUID()));
   },
   [M.UNIT_UPDATED](state, unit) {
     let updatedUnit = state.units.find(u => u.name === unit.name);
     if (updatedUnit) {
-      unit.resources.sort((r1, r2) => sortResource(r1, r2))
+      unit.resources.sort((r1, r2) => sortResource(r1, r2));
+      unit.resources.forEach(r => r.id = r.id || Utils.createUUID());
       Vue.set(updatedUnit, 'resources', unit.resources);
       Vue.set(updatedUnit, 'equipment', unit.equipment);
       Vue.set(updatedUnit, 'lastUpdate', unit.lastUpdate);
