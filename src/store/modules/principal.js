@@ -34,6 +34,7 @@ const state = {
   resourceViewDialogIsOpen: false,
   statuses: {[ResourceStatus.IN_MISSION]: 2, [ResourceStatus.AVAILABLE]: 1, [ResourceStatus.UNAVAILABLE] : 0},
   lockUnits: [],
+  searchText: '',
 }
 
 const actions = {
@@ -87,6 +88,9 @@ const actions = {
   },
   [A.UPDATE_RESOURCE] ({commit}, resource) {
     commit(M.UPDATE_RESOURCE, resource)
+  },
+  [A.APPLY_FILTER] ({commit}, searchText) {
+    commit(M.APPLY_FILTER, searchText)
   },
 }
 
@@ -213,6 +217,9 @@ const mutations = {
   },
   [M.CLOSE_STATUS_MENU](state) {
     state.statusMenuIsOpen = false;
+  },
+  [M.APPLY_FILTER](state, searchText) {
+    state.searchText = searchText;
   }
 }
 

@@ -8,7 +8,7 @@
             <i class="fas fa-search h4 text-body"></i>
           </div>
           <div class="col">
-            <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="caută">
+            <input class="form-control form-control-lg form-control-borderless"  v-model="searchText"  @input="updateSearch()" type="search" placeholder="caută">
           </div>
           <div class="col-auto">
             <button class="btn btn-lg  custom-button " type="submit">Caută</button>
@@ -16,6 +16,7 @@
         </div>
       </form>
     </div>
+    <div v-if="searchText !== ''" class="filter-activated">Filtru activ!</div>
     <div class="other-modules-wrapper">
       <div>
         <router-link class="btn menu-link-custom-properties menu-link" role="button" to="/services">Modul Servicii</router-link>
@@ -28,14 +29,26 @@
 </template>
 
 <script>
+  import A from '../../../constants/actions';
+
   export default {
     name: 'PrincipalHeader',
     components: {},
+    data: () => {
+      return {
+        searchText: '',
+      }
+    },
     computed: {
       activeTab() {
         return this.$store.state.principalStore.activeTab
       },
-    }
+    },
+    methods: {
+      updateSearch(){
+        this.$store.dispatch(A.APPLY_FILTER, this.searchText);
+      }
+    },
   }
 </script>
 

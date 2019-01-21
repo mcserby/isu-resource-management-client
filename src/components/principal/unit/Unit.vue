@@ -33,7 +33,13 @@
         return this.$store.state.principalStore.activeTab.resourceType;
       },
       filteredResources(){
-        return this.unit.resources.filter(r => r.type === this.resourceType);
+        const searchText = this.$store.state.principalStore.searchText;
+        let resources = this.unit.resources.filter(r => r.type === this.resourceType);
+        if(searchText === ''){
+          return resources;
+        }
+        let words = searchText.split(' ').filter(w => w.length > 0);
+        return resources.filter(r => words.some(w => r.status && r.status.key && r.status.key.indexOf(w) !== -1));
       },
       filteredEquipment(){
         return this.unit.equipment.filter(r => r.resourceType === this.resourceType);
