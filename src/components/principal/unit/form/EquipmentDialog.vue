@@ -31,25 +31,25 @@
             <div class="form-group">
               <label class="form-label" for="usable">Operațional</label>
               <div class="equipment-number-container">
-                <button class="btn increment-button" @click="sub('usable')">-</button>
+                <button class="btn plus-minus-button" @click="sub('usable')">-</button>
                 <input type="number" class="form-control" v-model="equipment.usable" id="usable">
-                <button class="btn increment-button" @click="add('usable')">+</button>
+                <button class="btn plus-minus-button" @click="add('usable')">+</button>
               </div>
             </div>
             <div class="form-group">
               <label class="form-label" for="reserves">Rezervă</label>
               <div class="equipment-number-container">
-                <button class="btn increment-button" @click="sub('reserves')">-</button>
+                <button class="btn plus-minus-button" @click="sub('reserves')">-</button>
                 <input type="number" class="form-control" v-model="equipment.reserves" id="reserves">
-                <button class="btn increment-button" @click="add('reserves')">+</button>
+                <button class="btn plus-minus-button" @click="add('reserves')">+</button>
               </div>
             </div>
             <div class="form-group">
               <label class="form-label" for="unusable">Neoperațional</label>
               <div class="equipment-number-container">
-                <button class="btn increment-button" @click="sub('unusable')">-</button>
+                <button class="btn plus-minus-button" @click="sub('unusable')">-</button>
                 <input type="number" class="form-control" v-model="equipment.unusable" id="unusable">
-                <button class="btn increment-button" @click="add('unusable')">+</button>
+                <button class="btn plus-minus-button" @click="add('unusable')">+</button>
               </div>
             </div>
           </div>
@@ -96,7 +96,9 @@
       },
 
       sub: function (property) {
-        this.equipment[property]--;
+        if(this.equipment[property] > 0) {
+          this.equipment[property]--;
+        }
       }
     },
       computed: {

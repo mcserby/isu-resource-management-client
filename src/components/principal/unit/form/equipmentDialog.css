@@ -13,7 +13,7 @@ input[type=number]::-webkit-outer-spin-button {
   flex-wrap: nowrap;
 }
 
-.increment-button{
+.plus-minus-button{
   color: #f2f2f2;
   background-color: #4682b4;
 
