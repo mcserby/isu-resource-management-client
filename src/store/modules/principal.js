@@ -87,7 +87,7 @@ const actions = {
   },
   [A.UPDATE_RESOURCE] ({commit}, resource) {
     commit(M.UPDATE_RESOURCE, resource)
-  },
+  }
 }
 
 const mutations = {
@@ -96,6 +96,7 @@ const mutations = {
     state.units = units;
     state.units.forEach(u => u.resources.sort((r1, r2) => sortResource(r1, r2)));
     state.units.forEach(u => u.resources.forEach(r => r.id = r.id || Utils.createUUID()));
+    state.units.forEach(u => u.equipment.forEach(e => e.equipmentId = e.equipmentId || Utils.createUUID()));
   },
   [M.UNIT_UPDATED](state, unit) {
     let updatedUnit = state.units.find(u => u.name === unit.name);
