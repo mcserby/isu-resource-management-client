@@ -187,12 +187,23 @@ const mutations = {
     }
   },
   [M.DELETE_RESOURCE](state, resource) {
-    const resourceIndex = state.activeUnit.resources.findIndex(r => r.id === resource.id);
-    state.activeUnit.resources.splice(resourceIndex, 1);
+    if (ResourceType.EQUIPMENT === state.activeTab.resourceType) {
+      const resourceIndex = state.activeUnit.equipment.findIndex(r => r.id === resource.id);
+      state.activeUnit.equipment.splice(resourceIndex, 1);
+    } else {
+      const resourceIndex = state.activeUnit.resources.findIndex(r => r.id === resource.id);
+      state.activeUnit.resources.splice(resourceIndex, 1);
+    }
+
   },
   [M.UPDATE_RESOURCE](state, resource) {
-    const resourceIndex = state.activeUnit.resources.findIndex(r => r.id === resource.id);
-    state.activeUnit.resources.splice(resourceIndex, 1, resource);
+    if (ResourceType.EQUIPMENT === state.activeTab.resourceType) {
+      const resourceIndex = state.activeUnit.equipment.findIndex(r => r.id === resource.id);
+      state.activeUnit.equipment.splice(resourceIndex, 1, resource);
+    } else {
+      const resourceIndex = state.activeUnit.resources.findIndex(r => r.id === resource.id);
+      state.activeUnit.resources.push(resourceIndex, 1, resource);
+    }
   },
   [M.LOCK_UNIT](state, lockResponse) {
     let unit = state.lockUnits.find(u => u.name === lockResponse.subUnitName);
