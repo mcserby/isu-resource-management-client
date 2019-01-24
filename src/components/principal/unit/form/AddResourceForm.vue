@@ -96,11 +96,12 @@
         validationPerformedAtLeastOnce: false,
         selectedResourceId: null,
         justMounted: true,
+        changesPerformed: false,
       }
     },
     computed: {
       saveDisabled() {
-        return (this.justMounted) || ((this.selectedResourceId) && (this.errors.length !== 0 || !this.validationPerformedAtLeastOnce));
+        return !this.changesPerformed;
       },
       resourceType() {
         return this.$store.state.principalStore.activeTab.resourceType;
@@ -117,7 +118,10 @@
     },
     methods: {
       addNewResourceDisabled() {
-        return (!this.justMounted) && ((this.selectedResourceId) && (this.errors.length !== 0 || !this.validationPerformedAtLeastOnce));
+        return this.currentEditingResourceIsInvalid();
+      },
+      currentEditingResourceIsInvalid(){
+        return (this.selectedResourceId) && (this.errors.length !== 0 && this.validationPerformedAtLeastOnce);
       },
       saveAndClose(){
         this.clearFormValues();
@@ -132,7 +136,10 @@
         this.clearFormValues();
         const resource = this.constructResource(Utils.createUUID());
         this.selectedResourceId = resource.id;
+        this.setEditorFields(resource);
+        this.validateFields();
         this.$store.dispatch(A.ADD_RESOURCE, resource);
+        this.changesPerformed = true;
       },
       constructResource(id){
         let crewList = this.crew.split(/[\n,]/).filter(c => c.length !== 0);
@@ -161,6 +168,7 @@
         if(this.errors.length === 0){
           let resource = this.constructResource(this.selectedResourceId);
           this.$store.dispatch(A.UPDATE_RESOURCE, resource);
+          this.changesPerformed = true;
         }
       },
       validateFields() {
@@ -185,7 +193,6 @@
       },
       onResourceClick(resource) {
         this.setEditorFields(resource);
-        console.log("selected resource:", JSON.stringify(resource));
       },
       setEditorFields(resource){
         this.errors = [];
@@ -203,10 +210,12 @@
         return 0;
       },
       deleteResource(resource) {
-        this.selectedResourceId = null;
         this.errors = [];
+        this.justMounted = false;
+        this.selectedResourceId = this.filteredResources.length === 0? null : this.filteredResources[0].id;
         this.clearFormValues();
         this.$store.dispatch(A.DELETE_RESOURCE, resource);
+        this.changesPerformed = true;
       }
     },
   }
