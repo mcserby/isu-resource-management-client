@@ -1,9 +1,9 @@
 body {
   height: 100vh;
+  background: #d2f0f9;
 }
 
 .app-sa {
-  background: #d2f0f9;
   height: 100%;
 }
 
