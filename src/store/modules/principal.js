@@ -188,10 +188,10 @@ const mutations = {
   },
   [M.DELETE_RESOURCE](state, resource) {
     if (ResourceType.EQUIPMENT === state.activeTab.resourceType) {
-      const resourceIndex = state.activeUnit.equipment.findIndex(r => r.id === resource.id);
+      let resourceIndex = state.activeUnit.equipment.findIndex(r => r.id === resource.id);
       state.activeUnit.equipment.splice(resourceIndex, 1);
     } else {
-      const resourceIndex = state.activeUnit.resources.findIndex(r => r.id === resource.id);
+      let resourceIndex = state.activeUnit.resources.findIndex(r => r.id === resource.id);
       state.activeUnit.resources.splice(resourceIndex, 1);
     }
 

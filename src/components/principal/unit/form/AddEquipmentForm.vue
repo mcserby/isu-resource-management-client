@@ -88,7 +88,7 @@
         unusable: 0,
         reserves: 0,
         validationPerformedAtLeastOnce: false,
-        justMounted: false
+        unitModified: false
       }
     },
     components: {
@@ -109,27 +109,21 @@
     },
     methods: {
       saveDisabled() {
-        return this.errors.length !== 0 || !this.validationPerformedAtLeastOnce;
+        return !this.unitModified;
       },
       addNewResourceDisabled() {
-        return (!this.justMounted) && (this.errors.length !== 0 || !this.validationPerformedAtLeastOnce);
+        return (this.errors.length !== 0 || !this.validationPerformedAtLeastOnce);
       },
 
       addNewEquipment() {
-        this.justMounted = false;
-        const equipment = this.constructEquipment();
-        this.selectedResourceId = equipment.id;
-        this.$store.dispatch(A.ADD_RESOURCE, equipment);
-      },
-      saveAndAddAnother(){
+        this.unitModified = true;
         this.addEquipment();
         this.clearFormValues();
       },
       saveAndClose(){
-        this.addEquipment();
         this.clearFormValues();
-        this.closeAddResourceDialog();
         this.updateUnit();
+        this.closeAddResourceDialog();
       },
       cancel(){
         this.closeAddResourceDialog();
@@ -191,17 +185,18 @@
 
       deleteResource(resource) {
         this.selectedResourceId = null;
+        this.unitModified = true;
         this.clearFormValues();
         this.$store.dispatch(A.DELETE_RESOURCE, resource);
       },
 
       updateEquipment() {
-        this.justMounted = false;
         this.validateFields();
         if(this.errors.length === 0){
-          let equipment = this.constructEquipment();
           if (this.selectedResourceId) {
+            let equipment = this.constructEquipment();
             equipment.id = this.selectedResourceId;
+            this.unitModified = true;
             this.$store.dispatch(A.UPDATE_RESOURCE, equipment);
           }
         }
