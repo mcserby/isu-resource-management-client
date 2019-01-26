@@ -1,6 +1,6 @@
 <template>
   <div
-    v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even']"
+    v-bind:class="['resource-wrapper', rowNr % 2 == 0 ? 'odd' : 'even', this.isResourceInMission ? 'status-in-mission-wrapper ':'']"
     @contextmenu.prevent="showStatusMenu"
   >
     <div
@@ -8,13 +8,13 @@
       v-on:click="mouseClick"
     >
       <div
-        v-bind:class="['status', resource.status.status == 'AVAILABLE' ? 'status-available' : resource.status.status == 'IN_MISSION'? 'status-in-mission':'status-unavailable' ]"
+        v-bind:class="['status', this.isResourceAvailable ? 'status-available' : this.isResourceInMission ? 'status-in-mission':'status-unavailable' ]"
       ></div>
       <div class="resource-name-summary">
         <div class="resource-element-container">{{resource.vehicleType}}</div>
       </div>
       <div class="resource-identification-number-summary">
-        <div class="resource-element-container">{{resource.identificationNumber}}</div>
+        <div v-bind:class="['resource-element-container', this.isResourceInMission ? 'status-in-mission-identification-number' : '']">{{resource.identificationNumber}}</div>
       </div>
       <div class="resource-crew-number-summary">
         <div
@@ -65,6 +65,14 @@ export default {
     isStatusMenuVisible() {
       return this.$store.state.principalStore.statusMenuIsOpen &&
         this.$store.state.principalStore.activeStatusMenuId === this.resource.plateNumber;
+    },
+
+    isResourceInMission(){
+      return this.resource.status.status === ResourceStatus.IN_MISSION;
+    },
+
+    isResourceAvailable(){
+      return this.resource.status.status === ResourceStatus.AVAILABLE;
     }
   },
   methods: {
