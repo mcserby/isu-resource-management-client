@@ -202,7 +202,7 @@ const mutations = {
       state.activeUnit.equipment.splice(resourceIndex, 1, resource);
     } else {
       const resourceIndex = state.activeUnit.resources.findIndex(r => r.id === resource.id);
-      state.activeUnit.resources.push(resourceIndex, 1, resource);
+      state.activeUnit.resources.splice(resourceIndex, 1, resource);
     }
   },
   [M.LOCK_UNIT](state, lockResponse) {

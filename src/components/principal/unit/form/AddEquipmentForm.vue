@@ -127,7 +127,6 @@
       },
       cancel(){
         this.closeAddResourceDialog();
-        // this.updateUnit();
       },
       addEquipment() {
         this.$store.dispatch(A.ADD_RESOURCE, this.constructEquipment());
@@ -142,7 +141,6 @@
         this.unusable = 0;
         this.reserves = 0;
         this.errors = [];
-        this.justMounted = true;
       },
       closeAddResourceDialog(){
         this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('unlockSubUnit', new UnlockSubUnitRequest(this.$store.state.principalStore.activeUnit.name, this.equipmentType)));
