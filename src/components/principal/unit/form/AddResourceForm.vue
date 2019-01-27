@@ -11,7 +11,7 @@
                       <div class="resource-browser-list">
                         <div class="resource-browser-resource-summary" v-for="(resource) in filteredResources" v-bind:key="resource.id">
                           <div class="resource-summary-card">
-                            <ResourceSummary :resource="resource" :rowNr="rowColor(resource)" @mouseClick="onResourceClick($event)"></ResourceSummary>
+                            <ResourceSummary :resource="resource" :rowNr="rowColor(resource)" @mouseClick="onResourceClick(resource)"></ResourceSummary>
                           </div>
                           <div class="delete-resource">
                             <button type="button" class="btn custom-close-button" @click="deleteResource(resource)">X</button>
@@ -79,6 +79,7 @@
   import WebsocketSend from '../../../../contracts/websocketSend';
   import UpdateSubUnitRequest from "../../../../contracts/edit/updateSubUnitRequest";
   import ResourceSummary from '../resource/ResourceSummary.vue';
+  import Utils from '../../../../services/utils';
 
   export default {
     name: 'AddResourceForm',
@@ -95,11 +96,12 @@
         validationPerformedAtLeastOnce: false,
         selectedResourceId: null,
         justMounted: true,
+        changesPerformed: false,
       }
     },
     computed: {
       saveDisabled() {
-        return (this.justMounted) || ((this.selectedResourceId) && (this.errors.length !== 0 || !this.validationPerformedAtLeastOnce));
+        return !this.changesPerformed;
       },
       resourceType() {
         return this.$store.state.principalStore.activeTab.resourceType;
@@ -107,8 +109,8 @@
       filteredResources(){
         return this.$store.state.principalStore.activeUnit.resources.filter(r => r.type === this.resourceType);
       },
-      existingLicencePlates() {
-        return [].concat.apply([], this.$store.state.principalStore.units.map(u => u.resources.map(r => r.plateNumber)));
+      existingLicencePlatesInOtherUnits() {
+        return [].concat.apply([], this.$store.state.principalStore.units.filter(u => u.name !== this.$store.state.principalStore.activeUnit.name).map(u => u.resources.map(r => r.plateNumber)));
       },
       title() {
         return this.$store.state.principalStore.activeTab.name + ': ' + this.$store.state.principalStore.activeUnit.name;
@@ -116,7 +118,10 @@
     },
     methods: {
       addNewResourceDisabled() {
-        return (!this.justMounted) && (this.errors.length !== 0 || !this.validationPerformedAtLeastOnce);
+        return this.currentEditingResourceIsInvalid();
+      },
+      currentEditingResourceIsInvalid(){
+        return (this.selectedResourceId) && (this.errors.length !== 0 && this.validationPerformedAtLeastOnce);
       },
       saveAndClose(){
         this.clearFormValues();
@@ -129,16 +134,19 @@
       addNewResource() {
         this.justMounted = false;
         this.clearFormValues();
-        const resource = this.constructResource();
+        const resource = this.constructResource(Utils.createUUID());
         this.selectedResourceId = resource.id;
+        this.setEditorFields(resource);
+        this.validateFields();
         this.$store.dispatch(A.ADD_RESOURCE, resource);
+        this.changesPerformed = true;
       },
-      constructResource(){
-        let crewList = this.crew.split(/[\n,]/);
+      constructResource(id){
+        let crewList = this.crew.split(/[\n,]/).filter(c => c.length !== 0);
         const captain = crewList[0];
         crewList = crewList.slice();
         crewList.shift();
-        return new Resource(this.vehicleType, this.plateNumber, this.identificationNumber, captain, crewList,
+        return new Resource(id, this.vehicleType, this.plateNumber, this.identificationNumber, captain, crewList,
           new Status(ResourceStatus.AVAILABLE, null, null, null), this.resourceType);
       },
       clearFormValues(){
@@ -151,16 +159,16 @@
         this.$store.dispatch(A.CLOSE_ADD_RESOURCE_DIALOG);
       },
       updateUnit(){
-        console.log('updateUnit', this.$store.state.principalStore.activeUnit);
+        console.log('updateUnit', JSON.stringify(this.$store.state.principalStore.activeUnit));
         this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('updateSubUnit', new UpdateSubUnitRequest(this.$store.state.principalStore.activeUnit)));
       },
       updateResource() {
         this.justMounted = false;
         this.validateFields();
         if(this.errors.length === 0){
-          let resource = this.constructResource();
-          resource.id = this.selectedResourceId;
+          let resource = this.constructResource(this.selectedResourceId);
           this.$store.dispatch(A.UPDATE_RESOURCE, resource);
+          this.changesPerformed = true;
         }
       },
       validateFields() {
@@ -170,8 +178,7 @@
           this.errors.push("Tipul trebuie sa contina cel putin un caracter.");
         }
         const currentPlateNumbers = this.$store.state.principalStore.activeUnit.resources.filter(r => r.id !== this.selectedResourceId).map(r => r.plateNumber);
-        const licencePlates = this.existingLicencePlates.concat(currentPlateNumbers);
-        console.log(licencePlates);
+        const licencePlates = this.existingLicencePlatesInOtherUnits.concat(currentPlateNumbers);
         if(this.plateNumber.length < 5){
           this.errors.push("Numărul de înmatriculare trebuie să aibă cel puțin 5 caractere");
         } else if(licencePlates.find(pn => pn === this.plateNumber)){
@@ -185,9 +192,7 @@
         }
       },
       onResourceClick(resource) {
-        this.selectedResourceId = resource.id;
         this.setEditorFields(resource);
-        console.log("clicked", resource);
       },
       setEditorFields(resource){
         this.errors = [];
@@ -205,9 +210,12 @@
         return 0;
       },
       deleteResource(resource) {
-        this.selectedResourceId = null;
+        this.errors = [];
+        this.justMounted = false;
+        this.selectedResourceId = this.filteredResources.length === 0? null : this.filteredResources[0].id;
         this.clearFormValues();
         this.$store.dispatch(A.DELETE_RESOURCE, resource);
+        this.changesPerformed = true;
       }
     },
   }

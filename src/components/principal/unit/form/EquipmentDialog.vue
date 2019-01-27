@@ -30,42 +30,31 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="usable">Operațional</label>
-              <input
-                type="text"
-                minlength="5"
-                class="form-control"
-                id="usable"
-                v-model="equipment.usable"
-                readonly="true"
-              >
+              <div class="equipment-number-container">
+                <button class="btn plus-minus-button" @click="sub('usable')">-</button>
+                <input type="number" class="form-control" v-model="equipment.usable" id="usable">
+                <button class="btn plus-minus-button" @click="add('usable')">+</button>
+              </div>
             </div>
             <div class="form-group">
               <label class="form-label" for="reserves">Rezervă</label>
-              <input
-                minlength="2"
-                type="text"
-                class="form-control"
-                id="reserves"
-                placeholder="Număr de identificare"
-                v-model="equipment.reserves"
-                readonly="true"
-              >
+              <div class="equipment-number-container">
+                <button class="btn plus-minus-button" @click="sub('reserves')">-</button>
+                <input type="number" class="form-control" v-model="equipment.reserves" id="reserves">
+                <button class="btn plus-minus-button" @click="add('reserves')">+</button>
+              </div>
             </div>
             <div class="form-group">
               <label class="form-label" for="unusable">Neoperațional</label>
-              <input
-                minlength="2"
-                type="text"
-                class="form-control"
-                id="unusable"
-                rows="3"
-                readonly="true"
-                v-model="equipment.unusable"
-              >
+              <div class="equipment-number-container">
+                <button class="btn plus-minus-button" @click="sub('unusable')">-</button>
+                <input type="number" class="form-control" v-model="equipment.unusable" id="unusable">
+                <button class="btn plus-minus-button" @click="add('unusable')">+</button>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn custom-button" @click="cancel">Închide</button>
+            <button type="button" class="btn custom-button" @click="saveAndClose">Salveaza si inchide</button>
           </div>
         </div>
       </div>
@@ -76,13 +65,40 @@
 <script>
   import A from "../../../../constants/actions";
   import Equipment from '../../../../contracts/equipment';
+  import WebsocketSend from '../../../../contracts/websocketSend';
+  import UpdateSubUnitRequest from '../../../../contracts/edit/updateSubUnitRequest';
 
   export default {
     name: "EquipmentDialog",
     props: ["equipment", "unit"],
+    data: () => {
+      return {
+        initialUsable : 0,
+        initialReserves : 0,
+        initialUnusable : 0
+      }
+    },
     methods: {
+      saveAndClose: function () {
+        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('updateSubUnit', new UpdateSubUnitRequest(this.$store.state.principalStore.activeUnit)));
+        this.$store.dispatch(A.CLOSE_VIEW_RESOURCE_DIALOG);
+      },
+
       cancel: function () {
         this.$store.dispatch(A.CLOSE_VIEW_RESOURCE_DIALOG);
+        this.equipment.usable = this.initialUsable;
+        this.equipment.reserves = this.initialReserves;
+        this.equipment.unusable = this.initialUnusable;
+      },
+
+      add: function (property) {
+        this.equipment[property]++;
+      },
+
+      sub: function (property) {
+        if(this.equipment[property] > 0) {
+          this.equipment[property]--;
+        }
       }
     },
       computed: {
@@ -90,6 +106,13 @@
           return this.$store.state.principalStore.activeTab
         }
       },
+    mounted: function() {
+      this.initialUsable = this.equipment.usable;
+      this.initialReserves = this.equipment.reserves;
+      this.initialUnusable = this.equipment.unusable;
+
+    },
+
 
       components: {
         Equipment
@@ -99,3 +122,4 @@
 </script>
 
 <style src="./addResourceForm.css"></style>
+<style src="./equipmentDialog.css"></style>

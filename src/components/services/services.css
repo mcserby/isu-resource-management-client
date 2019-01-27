@@ -32,26 +32,32 @@
   grid-auto-columns: 1fr;
 }
 
-.service-header-name {
+.service-header-rowNr {
   grid-column: 1 / span 1;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
-.service-header-title {
+.service-header-name {
   grid-column: 2 / span 1;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
-.service-header-role {
+.service-header-title {
   grid-column: 3 / span 1;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
-.service-header-contact {
+.service-header-role {
   grid-column: 4 / span 1;
+  grid-row: 1 / span 1;
+  font-size: x-large;
+}
+
+.service-header-contact {
+  grid-column: 5 / span 1;
   grid-row: 1 / span 1;
   font-size: x-large;
 }

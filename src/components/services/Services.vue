@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div>
     <div class="services-header-menu">
       <div class="services-title">Modul Servicii</div>
@@ -36,6 +36,7 @@
     </div>
     <div class="services">
       <div class="services-header">
+	<div class="service-header-rowNr">Nr</div>
         <div class="service-header-name">Nume și Prenume</div>
         <div class="service-header-title">Grad</div>
         <div class="service-header-role">Funcție</div>
