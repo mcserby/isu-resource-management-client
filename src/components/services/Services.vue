@@ -8,7 +8,7 @@
             <i class="fas fa-search h4 text-body"></i>
           </div>
           <div class="col">
-            <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Caută după nume și prenume">
+            <input class="form-control form-control-lg form-control-borderless" v-model="searchText"  @input="updateSearch()" type="search" placeholder="Caută după nume și prenume">
           </div>
           <div class="col-auto">
             <button class="btn btn-lg  custom-button " type="submit">Caută</button>
@@ -16,7 +16,8 @@
         </div>
       </form>
     </div>
-      <div class="services-title">Modul Servicii</div>
+    <div v-if="searchText !== ''" class="filter-activated">Filtru activ!</div>
+    <div class="services-title">Modul Servicii</div>
       <div class="services-other-modules-wrapper">
         <div>
           <router-link class="btn menu-link-custom-properties menu-link" role="button" to="/principal">Modul Principal</router-link>
@@ -56,7 +57,7 @@
         <div class="service-header-role">Funcție</div>
         <div class="service-header-contact">Contact</div>
       </div>
-      <div v-for="(service,index) in services" v-bind:key="service.id">
+      <div v-for="(service,index) in filteredServices" v-bind:key="service.id">
         <Service :service="service" :rowNr="index"></Service>
       </div>
     </div>
@@ -100,13 +101,22 @@ export default {
       confirmationDialogText:
         "Sunteți sigur că doriți să ștergeți toate datele ?",
       displayConfirmationDialog: false,
-      displayAddServiceForm: false
+      displayAddServiceForm: false,
+      searchText: ''
     };
   },
   computed: {
     services() {
       return this.$store.state.servicesStore.services;
     },
+    filteredServices(){
+        const searchText = this.$store.state.servicesStore.searchText.toLowerCase();
+        if(searchText === ''){
+          return this.services;
+        }
+        let words = searchText.split(' ').filter(w => w.length > 0);
+        return this.services.filter(s => words.every(w => s.name && s.name.toLowerCase().indexOf(w) !== -1));
+      },
     lastUpdate() {
       return this.$store.state.servicesStore.lastUpdate;
     },
@@ -188,7 +198,10 @@ export default {
         )
       );
       this.displayAddServiceForm = false;
-    }
+    },
+    updateSearch(){
+  		this.$store.dispatch(A.APPLY_FILTER, this.searchText);
+  	},
   }
 };
 </script>
