@@ -94,7 +94,7 @@ const actions = {
   },
   [A.SHOW_PDF_FILE]({ commit }, response) {
     commit(M.SHOW_PDF_FILE, response);
-  },
+  }
 };
 
 const mutations = {
@@ -247,7 +247,7 @@ const mutations = {
     const data = window.URL.createObjectURL(newBlob);
     var link = document.createElement("a");
     link.href = data;
-    link.download = "file.pdf";
+    link.download = "Report.xlsx";
     link.click();
   }
 };
