@@ -1,0 +1,60 @@
+.dialogContainer {
+    position: fixed;
+    background-color: #d2f0f9;
+    z-index: 30;
+    width: 100%;
+    height: 100%;
+    font-weight:bold;
+}
+
+.dialog {
+    display: block;
+}
+
+.add-service-dialog {
+  max-width: 820px;
+}
+
+.error {
+  color: #F74356;
+}
+
+.form-label {
+  color: #4682b4;
+}
+
+.modal-title {
+  color: #616161;
+  font-weight: bold;
+}
+
+.modal-content {
+  background: #d2f0f9;
+}
+
+
+.button-font-size {
+  font-size:smaller;
+}
+
+.custom-button {
+  color: #f2f2f2;
+  background-color: #4682b4;
+
+  font-size: 20px;
+  font-family: Arial;
+  font-weight: bold;
+
+  border-radius: 1px;
+  border-size: 0px;
+  box-shadow: 10px 0px 14px -7px;
+
+  padding: 10px;
+  margin: 5px;
+  width: 100%;
+}
+
+.custom-button:hover:enabled {
+  color: #f2f2f2;
+  background-color: #2b506e;
+}

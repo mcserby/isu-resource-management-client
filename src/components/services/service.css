@@ -15,13 +15,13 @@
 }
 
 .service-rowNr {
-  grid-column: 1/ span 1;
+  grid-column: 1 / span 1;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
 .service-name {
-  grid-column: 2/ span 1;
+  grid-column: 2 / span 1;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
@@ -42,4 +42,33 @@
   grid-column: 5 / span 1;
   grid-row: 1 / span 1;
   font-size: x-large;
+}
+
+.service-actions {
+  grid-column: 6 / span 1;
+  grid-row: 1 / span 1;
+  font-size: x-large;
+}
+
+.edit-delete-button {
+  color: #f2f2f2;
+  background-color: #4682b4;
+
+  font-size: 20px;
+  font-family: Arial;
+  font-weight: bold;
+
+  border-radius: 1px;
+  border-size: 0px;
+  box-shadow: 10px 0px 14px -7px;
+
+  padding: 10px;
+  margin: 5px;
+  width: 150px;
+  text-align: center;
+}
+
+.edit-delete-button:hover:enabled {
+  color: #f2f2f2;
+  background-color: #2b506e;
 }

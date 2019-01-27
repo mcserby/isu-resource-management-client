@@ -10,10 +10,8 @@
     </ul>
     <div class="units-container">
       <div class="unit-header-wrapper">
-        <div  v-for="unit in units" v-bind:key="unit.name">
-          <div class="unit-header">
-            {{unit.name}}
-          </div>
+        <div v-for="unit in units" v-bind:key="unit.name">
+          <div class="unit-header">{{unit.name}}</div>
         </div>
       </div>
       <div class="unit-wrapper-wrapper">
@@ -29,14 +27,15 @@
     </div>
     <ConfirmationDialog
       v-if="displayConfirmationDialog"
+      :title="confirmationDialogTitle"
       :text="confirmationDialogText"
       @confirm="onConfirm"
       @cancel="onCancel"
     ></ConfirmationDialog>
     <ResourceDialog v-if="displayViewResourceDialog" :resource="activeResource" :unit="activeUnit"></ResourceDialog>
     <EquipmentDialog v-if="displayEquipmentForm" :equipment="activeEquipment" :unit="activeUnit"></EquipmentDialog>
-    <AddResourceForm v-if="displayResourceForm" ></AddResourceForm>
-    <AddEquipmentForm v-if="displayAddEquipmentForm" ></AddEquipmentForm>
+    <AddResourceForm v-if="displayResourceForm"></AddResourceForm>
+    <AddEquipmentForm v-if="displayAddEquipmentForm"></AddEquipmentForm>
   </div>
 </template>
 
@@ -52,8 +51,8 @@ import ResourceDialog from "./unit/form/ResourceDialog";
 import PrincipalHeader from "./header/PrincipalHeader.vue";
 import UpdateSubUnitRequest from "../../contracts/edit/updateSubUnitRequest";
 import UnlockSubUnitRequest from "../../contracts/edit/unlockSubUnitRequest";
-import AddEquipmentForm from './unit/form/AddEquipmentForm.vue';
-import EquipmentDialog from './unit/form/EquipmentDialog'
+import AddEquipmentForm from "./unit/form/AddEquipmentForm.vue";
+import EquipmentDialog from "./unit/form/EquipmentDialog";
 
 export default {
   name: "Principal",
@@ -66,6 +65,11 @@ export default {
     AddResourceForm,
     AddEquipmentForm,
     UnitButtons
+  },
+  data: () => {
+    return {
+      confirmationDialogTitle: "Schimb de tură"
+    };
   },
   computed: {
     units() {
@@ -166,8 +170,8 @@ export default {
     let onUnitsReceived = function(response) {
       let r = JSON.parse(response.body);
       self.$store.dispatch(A.INIT_UNITS, r.subUnitsList);
-      if(r.lockedSubUnits){
-        r.lockedSubUnits.forEach(lsu =>  self.$store.dispatch(A.LOCK_UNIT, lsu));
+      if (r.lockedSubUnits) {
+        r.lockedSubUnits.forEach(lsu => self.$store.dispatch(A.LOCK_UNIT, lsu));
       }
     };
 
