@@ -3,7 +3,8 @@ import M from "../../constants/services/mutations";
 
 const state = {
   services: [],
-  lastUpdate: ""
+  lastUpdate: "",
+  searchText: ''
 };
 
 const actions = {
@@ -12,6 +13,9 @@ const actions = {
   },
   [A.CLEAR_ALL_SERVICES]({ commit }) {
     commit(M.CLEAR_ALL_SERVICES);
+  },
+  [A.APPLY_FILTER] ({commit}, searchText) {
+    commit(M.APPLY_FILTER, searchText)
   }
 };
 
@@ -23,6 +27,9 @@ const mutations = {
   },
   [M.CLEAR_ALL_SERVICES](state) {
     state.services = [];
+  },
+  [M.APPLY_FILTER](state, searchText) {
+    state.searchText = searchText;
   }
 };
 

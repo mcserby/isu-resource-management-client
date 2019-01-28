@@ -1,13 +1,37 @@
 ﻿<template>
   <div>
     <div class="services-header-menu">
-      <div class="services-title">Modul Servicii</div>
+      <div class="services-search-bar-wrapper">
+      <form>
+        <div class="row no-gutters align-items-center">
+          <div class="col-auto">
+            <i class="fas fa-search h4 text-body"></i>
+          </div>
+          <div class="col">
+            <input class="form-control form-control-lg form-control-borderless" v-model="searchText"  @input="updateSearch()" type="search" placeholder="Caută după nume și prenume">
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-lg  custom-button " type="submit">Caută</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div v-if="searchText !== ''" class="filter-activated">Filtru activ!</div>
+    <div class="services-title">Modul Servicii</div>
       <div class="services-other-modules-wrapper">
         <div>
-          <router-link class="btn menu-link-custom-properties menu-link" role="button" to="/principal">Modul Principal</router-link>
+          <router-link
+            class="btn menu-link-custom-properties menu-link"
+            role="button"
+            to="/principal"
+          >Modul Principal</router-link>
         </div>
         <div>
-          <router-link class="btn menu-link-custom-properties menu-link" role="button" to="/uat">Modul UAT</router-link>
+          <router-link
+            class="btn menu-link-custom-properties menu-link"
+            role="button"
+            to="/uat"
+          >Modul UAT</router-link>
         </div>
       </div>
     </div>
@@ -36,19 +60,20 @@
     </div>
     <div class="services">
       <div class="services-header">
-		<div class="service-header-rowNr">Nr</div>
         <div class="service-header-name">Nume și Prenume</div>
         <div class="service-header-title">Grad</div>
         <div class="service-header-role">Funcție</div>
         <div class="service-header-contact">Contact</div>
+        <div class="service-header-actions">Acțiuni</div>
       </div>
-      <div v-for="(service,index) in services" v-bind:key="service.id">
+      <div v-for="(service,index) in filteredServices" v-bind:key="service.id">
         <Service :service="service" :rowNr="index"></Service>
       </div>
     </div>
     <ConfirmationDialog
       v-if="displayConfirmationDialog"
       :text="confirmationDialogText"
+      :title="confirmationDialogTitle"
       @confirm="onConfirm"
       @cancel="onCancelDeletion"
     ></ConfirmationDialog>
@@ -83,21 +108,31 @@ export default {
   },
   data: () => {
     return {
+      confirmationDialogTitle: "Schimb de tură",
       confirmationDialogText:
-        "Sunteți sigur că doriți să ștergeți toate datele ?",
+        "Sunteți sigur că doriți să ștergeți toate datele",
       displayConfirmationDialog: false,
-      displayAddServiceForm: false
+      displayAddServiceForm: false,
+      searchText: ''
     };
   },
   computed: {
     services() {
       return this.$store.state.servicesStore.services;
     },
+    filteredServices(){
+        const searchText = this.$store.state.servicesStore.searchText.toLowerCase();
+        if(searchText === ''){
+          return this.services;
+        }
+        let words = searchText.split(' ').filter(w => w.length > 0);
+        return this.services.filter(s => words.every(w => s.name && s.name.toLowerCase().indexOf(w) !== -1));
+      },
     lastUpdate() {
       return this.$store.state.servicesStore.lastUpdate;
     },
     noServicesAvailable() {
-      return this.$store.state.servicesStore.services.length == 0;
+      return this.$store.state.servicesStore.services.length === 0;
     },
     servicesAvailable() {
       return this.$store.state.servicesStore.services.length > 0;
@@ -174,7 +209,10 @@ export default {
         )
       );
       this.displayAddServiceForm = false;
-    }
+    },
+    updateSearch(){
+  		this.$store.dispatch(A.APPLY_FILTER, this.searchText);
+  	},
   }
 };
 </script>

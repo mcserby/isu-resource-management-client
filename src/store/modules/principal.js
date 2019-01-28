@@ -237,10 +237,10 @@ const mutations = {
   },
   [M.APPLY_FILTER](state, searchText) {
     state.searchText = searchText;
-  }
- [M.SHOW_PDF_FILE](state, response) {
+  },
+  [M.SHOW_PDF_FILE](state, response) {
     // create the blob object with content-type "application/pdf"
-    var newBlob = new Blob([b64toBlob(response)], { type: "application/pdf" });
+    let newBlob = new Blob([b64toBlob(response)], { type: "application/pdf" });
 
     // IE doesn't allow using a blob object directly as link href
     // instead it is necessary to use msSaveOrOpenBlob
@@ -252,34 +252,34 @@ const mutations = {
     // For other browsers:
     // Create a link pointing to the ObjectURL containing the blob.
     const data = window.URL.createObjectURL(newBlob);
-    var link = document.createElement("a");
+    let link = document.createElement("a");
     link.href = data;
     link.download = "Report.xlsx";
     link.click();
-  }
+  },
 };
 
 function b64toBlob(b64Data, contentType, sliceSize) {
   contentType = contentType || "";
   sliceSize = sliceSize || 512;
 
-  var byteCharacters = atob(b64Data);
-  var byteArrays = [];
+  let byteCharacters = atob(b64Data);
+  let byteArrays = [];
 
-  for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-    var slice = byteCharacters.slice(offset, offset + sliceSize);
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    let slice = byteCharacters.slice(offset, offset + sliceSize);
 
-    var byteNumbers = new Array(slice.length);
-    for (var i = 0; i < slice.length; i++) {
+    let byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
       byteNumbers[i] = slice.charCodeAt(i);
     }
 
-    var byteArray = new Uint8Array(byteNumbers);
+    let byteArray = new Uint8Array(byteNumbers);
 
     byteArrays.push(byteArray);
   }
 
-  var blob = new Blob(byteArrays, { type: contentType });
+  let blob = new Blob(byteArrays, { type: contentType });
   return blob;
 }
 
