@@ -89,8 +89,8 @@ const actions = {
   [A.UPDATE_RESOURCE] ({commit}, resource) {
     commit(M.UPDATE_RESOURCE, resource)
   },
-  [A.APPLY_FILTER] ({commit}, searchText) {
-    commit(M.APPLY_FILTER, searchText)
+  [A.APPLY_RESOURCE_FILTER] ({commit}, searchText) {
+    commit(M.APPLY_RESOURCE_FILTER, searchText)
   },
   [A.SHOW_PDF_FILE]({ commit }, response) {
     commit(M.SHOW_PDF_FILE, response);
@@ -235,7 +235,7 @@ const mutations = {
   [M.CLOSE_STATUS_MENU](state) {
     state.statusMenuIsOpen = false;
   },
-  [M.APPLY_FILTER](state, searchText) {
+  [M.APPLY_RESOURCE_FILTER](state, searchText) {
     state.searchText = searchText;
   },
   [M.SHOW_PDF_FILE](state, response) {
