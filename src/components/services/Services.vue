@@ -126,12 +126,12 @@ export default {
       return this.$store.state.servicesStore.services;
     },
     filteredServices(){
-        const searchText = this.$store.state.servicesStore.searchText.toLowerCase();
+        const searchText = this.removeAccents(this.$store.state.servicesStore.searchText.toLowerCase());
         if(searchText === ''){
           return this.services;
         }
         let words = searchText.split(' ').filter(w => w.length > 0);
-        return this.services.filter(s => words.every(w => s.name && s.name.toLowerCase().indexOf(w) !== -1));
+        return this.services.filter(s => words.every(w => s.name && this.removeAccents(s.name.toLowerCase()).indexOf(w) !== -1));
       },
     lastUpdate() {
       return this.$store.state.servicesStore.lastUpdate;
@@ -214,6 +214,9 @@ export default {
       );
       this.displayAddServiceForm = false;
     },
+    removeAccents(text){
+      return text.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    }
   }
 };
 </script>

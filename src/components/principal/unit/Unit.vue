@@ -30,7 +30,7 @@
         return this.$store.state.principalStore.activeTab.resourceType;
       },
       filteredResources(){
-        const searchText = this.$store.state.principalStore.searchText;
+        const searchText = this.removeAccents(this.$store.state.principalStore.searchText.toLowerCase());
         let resources = this.unit.resources.filter(r => r.type === this.resourceType);
         if(searchText === ''){
           return resources;
