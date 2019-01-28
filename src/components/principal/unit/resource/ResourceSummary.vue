@@ -40,10 +40,9 @@ import ResourceStatus from '../../../../constants/resourceStatus.js';
 
 export default {
   name: "ResourceSummary",
-  props: ["resource"],
+  props: ["resource", "rowNr"],
   data: () => {
     return {
-      rowNr: 0,
       statusMenuXPosition: "right",
       statusMenuYPosition: "down"
     };

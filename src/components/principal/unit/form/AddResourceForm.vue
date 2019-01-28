@@ -11,7 +11,7 @@
                       <div class="resource-browser-list">
                         <div class="resource-browser-resource-summary" v-for="(resource) in filteredResources" v-bind:key="resource.id">
                           <div class="resource-summary-card">
-                            <ResourceSummary :resource="resource" @mouseClick="onResourceClick(resource)"></ResourceSummary>
+                            <ResourceSummary :resource="resource" :rowNr="rowColor(resource)" @mouseClick="onResourceClick(resource)"></ResourceSummary>
                           </div>
                           <div class="delete-resource">
                             <button type="button" class="btn custom-close-button" @click="deleteResource(resource)">X</button>
@@ -143,7 +143,7 @@
       },
       constructResource(id){
         let crewList = this.crew.split(/[\n,]/).filter(c => c.length !== 0);
-        const captain = crewList[0];
+        const captain = crewList[0] || '';
         crewList = crewList.slice();
         crewList.shift();
         return new Resource(id, this.vehicleType, this.plateNumber, this.identificationNumber, captain, crewList,
