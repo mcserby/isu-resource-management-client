@@ -8,7 +8,7 @@
             <i class="fas fa-search h4 text-body"></i>
           </div>
           <div class="col">
-            <input class="form-control form-control-lg form-control-borderless" v-model="searchText"  @input="updateSearch()" type="search" placeholder="Caută după nume și prenume">
+            <input class="form-control form-control-lg form-control-borderless" v-model="searchText" type="search" placeholder="Caută după nume și prenume">
           </div>
           <div class="col-auto">
             <button class="btn btn-lg  custom-button " type="submit">Caută</button>
@@ -101,7 +101,7 @@
 
 <script>
 import Service from "./Service.vue";
-import A from "../../constants/services/actions";
+import A from "../../constants/actions";
 import WSA from "../../constants/actions";
 import WebsocketSubscribe from "../../contracts/websocketSubscribe";
 import WebsocketSend from "../../contracts/websocketSend";
@@ -133,10 +133,17 @@ export default {
         "Sunteți sigur că doriți să ștergeți serviciul",
       displayConfirmationDialog: false,
       displayAddServiceForm: false,
-      searchText: ''
     };
   },
   computed: {
+    searchText: {
+      get () {
+        return this.$store.state.servicesStore.searchText;
+      },
+      set (value) {
+        this.$store.dispatch(A.APPLY_SERVICE_FILTER, value);
+      },
+    },
     services() {
       return this.$store.state.servicesStore.services;
     },
@@ -147,12 +154,12 @@ export default {
       return this.$store.state.servicesStore.isDeleteServiceDialogOpen;
     },
     filteredServices(){
-        const searchText = this.$store.state.servicesStore.searchText.toLowerCase();
+        const searchText = this.removeAccents(this.$store.state.servicesStore.searchText.toLowerCase());
         if(searchText === ''){
           return this.services;
         }
         let words = searchText.split(' ').filter(w => w.length > 0);
-        return this.services.filter(s => words.every(w => s.name && s.name.toLowerCase().indexOf(w) !== -1));
+        return this.services.filter(s => words.every(w => s.name && this.removeAccents(s.name.toLowerCase()).indexOf(w) !== -1));
       },
     lastUpdate() {
       return this.$store.state.servicesStore.lastUpdate;
@@ -179,7 +186,7 @@ export default {
     };
 
     this.$store.dispatch(
-      WSA.WEBSOCKET_SUBSCRIBE,
+      A.WEBSOCKET_SUBSCRIBE,
       new WebsocketSubscribe("services", onServicesReceived, onError)
     );
   },
@@ -193,7 +200,7 @@ export default {
     onConfirm() {
       this.$store.dispatch(A.CLEAR_ALL_SERVICES);
       this.$store.dispatch(
-        WSA.WEBSOCKET_SEND,
+        A.WEBSOCKET_SEND,
         new WebsocketSend("deleteAllServices", "")
       );
       this.displayConfirmationDialog = false;
@@ -207,7 +214,7 @@ export default {
     onSaveAndAddAnother(service) {
       this.displayAddServiceForm = false;
       this.$store.dispatch(
-        WSA.WEBSOCKET_SEND,
+        A.WEBSOCKET_SEND,
         new WebsocketSend(
           "addService",
           new AddServiceRequest(
@@ -218,7 +225,6 @@ export default {
           )
         )
       );
-
       this.displayAddServiceForm = true;
     },
     onSaveAndClose(service) {
@@ -236,9 +242,9 @@ export default {
       );
       this.displayAddServiceForm = false;
     },
-    updateSearch(){
-  		this.$store.dispatch(A.APPLY_FILTER, this.searchText);
-  	},
+    removeAccents(text){
+      return text.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    },
     onCancelServiceEdit() {
       this.$store.dispatch(A.CLOSE_EDIT_SERVICE_DIALOG);
     },

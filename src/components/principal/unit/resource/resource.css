@@ -130,7 +130,7 @@
 }
 
 .status-unavailable {
-  background-color: #ffcc00;
+  background-color: #616161;
   grid-row: 1 / span 4;
   grid-column: 1 / span 1;
 }

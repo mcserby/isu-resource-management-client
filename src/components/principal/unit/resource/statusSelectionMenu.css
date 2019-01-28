@@ -60,11 +60,11 @@
 }
 
 .menu-option-indisponibil {
-  background-color: #ffcc00;
+  background-color: #616161;
 }
 
 .menu-option-indisponibil:hover {
-  background-color: #997a00;
+  background-color: #3b3b3b;
 }
 
 .mission-selection-dialog-container {
