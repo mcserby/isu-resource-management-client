@@ -11,7 +11,7 @@
                       <div class="resource-browser-list">
                         <div class="resource-browser-resource-summary" v-for="(resource) in filteredResources" v-bind:key="resource.id">
                           <div class="resource-summary-card">
-                            <ResourceSummary :resource="resource" :rowNr="rowColor(resource)" @mouseClick="onResourceClick(resource)"></ResourceSummary>
+                            <ResourceSummary :resource="resource" @mouseClick="onResourceClick(resource)"></ResourceSummary>
                           </div>
                           <div class="delete-resource">
                             <button type="button" class="btn custom-close-button" @click="deleteResource(resource)">X</button>

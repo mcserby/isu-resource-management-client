@@ -1,10 +1,7 @@
 <template>
   <div>
-<!--    <div class="unit-header">
-      {{unit.name}}
-    </div>-->
     <div v-for="(resource,index) in filteredResources" v-bind:key="resource.id">
-      <ResourceSummary :resource="resource" :rowNr="index" @mouseClick="onResourceClick($event)"></ResourceSummary>
+      <ResourceSummary :resource="resource" @mouseClick="onResourceClick($event)"></ResourceSummary>
     </div>
     <div v-for="(equipment,index) in filteredEquipment" v-bind:key="equipment.equipmentId">
       <EquipmentSummary :equipment="equipment" :rowNr="index"></EquipmentSummary>
