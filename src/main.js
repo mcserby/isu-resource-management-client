@@ -5,8 +5,11 @@ import App from './App.vue';
 import store from './store';
 import router from './router';
 import 'bootstrap/dist/css/bootstrap.min.css';
+//import VueMoment from 'vue-moment';
 
 Vue.config.productionTip = false;
+
+//Vue.use(VueMoment);
 
 /* eslint-disable no-new */
 new Vue({

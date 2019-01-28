@@ -143,7 +143,7 @@
       },
       constructResource(id){
         let crewList = this.crew.split(/[\n,]/).filter(c => c.length !== 0);
-        const captain = crewList[0];
+        const captain = crewList[0] || '';
         crewList = crewList.slice();
         crewList.shift();
         return new Resource(id, this.vehicleType, this.plateNumber, this.identificationNumber, captain, crewList,

@@ -21,6 +21,9 @@ export default {
   CLOSE_STATUS_MENU: 'closeStatusMenu',
   DELETE_RESOURCE: 'deleteResource',
   UPDATE_RESOURCE: 'updateResource',
-  APPLY_FILTER: 'applyFilter',
+  APPLY_RESOURCE_FILTER: 'applyResourceFilter',
+  APPLY_SERVICE_FILTER: 'applyServiceFilter',
   SHOW_PDF_FILE: 'showPdfFile',
+  INIT_SERVICES: 'initServices',
+  CLEAR_ALL_SERVICES: 'clearAllService',
 };

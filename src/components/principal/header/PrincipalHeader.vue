@@ -8,7 +8,7 @@
             <i class="fas fa-search h4 text-body"></i>
           </div>
           <div class="col">
-            <input class="form-control form-control-lg form-control-borderless"  v-model="searchText"  @input="updateSearch()" type="search" placeholder="caută">
+            <input class="form-control form-control-lg form-control-borderless"  v-model="searchText" type="search" placeholder="caută">
           </div>
           <div class="col-auto">
             <button class="btn btn-lg  custom-button " type="submit">Caută</button>
@@ -34,20 +34,18 @@
   export default {
     name: 'PrincipalHeader',
     components: {},
-    data: () => {
-      return {
-        searchText: '',
-      }
-    },
     computed: {
+      searchText: {
+        get () {
+          return this.$store.state.principalStore.searchText;
+        },
+        set (value) {
+          this.$store.dispatch(A.APPLY_RESOURCE_FILTER, value);
+        },
+      },
       activeTab() {
         return this.$store.state.principalStore.activeTab
       },
-    },
-    methods: {
-      updateSearch(){
-        this.$store.dispatch(A.APPLY_FILTER, this.searchText);
-      }
     },
   }
 </script>

@@ -1,13 +1,10 @@
 <template>
   <div>
-<!--    <div class="unit-header">
-      {{unit.name}}
-    </div>-->
     <div v-for="(resource,index) in filteredResources" v-bind:key="resource.id">
-      <ResourceSummary :resource="resource" :rowNr="index" @mouseClick="onResourceClick($event)"></ResourceSummary>
+      <ResourceSummary :resource="resource" :rowNr="0" @mouseClick="onResourceClick($event)"></ResourceSummary>
     </div>
     <div v-for="(equipment,index) in filteredEquipment" v-bind:key="equipment.equipmentId">
-      <EquipmentSummary :equipment="equipment" :rowNr="index"></EquipmentSummary>
+      <EquipmentSummary :equipment="equipment" :rowNr="0"></EquipmentSummary>
     </div>
   </div>
 </template>
@@ -33,7 +30,7 @@
         return this.$store.state.principalStore.activeTab.resourceType;
       },
       filteredResources(){
-        const searchText = this.$store.state.principalStore.searchText;
+        const searchText = this.removeAccents(this.$store.state.principalStore.searchText.toLowerCase());
         let resources = this.unit.resources.filter(r => r.type === this.resourceType);
         if(searchText === ''){
           return resources;
