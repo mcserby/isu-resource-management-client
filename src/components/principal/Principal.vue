@@ -4,7 +4,6 @@
     <button class="btn generate-button" @click="generateReport()">
       <span class="button-font-size">Generează Raport</span>
     </button>
-
     <ul class="nav nav-tabs">
       <li class="nav-item" v-for="tab in tabs">
         <template class="nav-item">
@@ -31,6 +30,7 @@
     </div>
     <ConfirmationDialog
       v-if="displayConfirmationDialog"
+      :title="confirmationDialogTitle"
       :text="confirmationDialogText"
       @confirm="onConfirm"
       @cancel="onCancel"
@@ -69,6 +69,11 @@ export default {
     AddResourceForm,
     AddEquipmentForm,
     UnitButtons
+  },
+  data: () => {
+    return {
+      confirmationDialogTitle: "Schimb de tură"
+    };
   },
   computed: {
     units() {

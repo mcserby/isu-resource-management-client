@@ -20,10 +20,18 @@
     <div class="services-title">Modul Servicii</div>
       <div class="services-other-modules-wrapper">
         <div>
-          <router-link class="btn menu-link-custom-properties menu-link" role="button" to="/principal">Modul Principal</router-link>
+          <router-link
+            class="btn menu-link-custom-properties menu-link"
+            role="button"
+            to="/principal"
+          >Modul Principal</router-link>
         </div>
         <div>
-          <router-link class="btn menu-link-custom-properties menu-link" role="button" to="/uat">Modul UAT</router-link>
+          <router-link
+            class="btn menu-link-custom-properties menu-link"
+            role="button"
+            to="/uat"
+          >Modul UAT</router-link>
         </div>
       </div>
     </div>
@@ -56,6 +64,7 @@
         <div class="service-header-title">Grad</div>
         <div class="service-header-role">Funcție</div>
         <div class="service-header-contact">Contact</div>
+        <div class="service-header-actions">Acțiuni</div>
       </div>
       <div v-for="(service,index) in filteredServices" v-bind:key="service.id">
         <Service :service="service" :rowNr="index"></Service>
@@ -64,6 +73,7 @@
     <ConfirmationDialog
       v-if="displayConfirmationDialog"
       :text="confirmationDialogText"
+      :title="confirmationDialogTitle"
       @confirm="onConfirm"
       @cancel="onCancelDeletion"
     ></ConfirmationDialog>
@@ -98,8 +108,9 @@ export default {
   },
   data: () => {
     return {
+      confirmationDialogTitle: "Schimb de tură",
       confirmationDialogText:
-        "Sunteți sigur că doriți să ștergeți toate datele ?",
+        "Sunteți sigur că doriți să ștergeți toate datele",
       displayConfirmationDialog: false,
       displayAddServiceForm: false,
       searchText: ''
