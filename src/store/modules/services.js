@@ -5,6 +5,10 @@ const state = {
   services: [],
   lastUpdate: "",
   searchText: '',
+  isEditServiceDialogOpen: false,
+  isDeleteServiceDialogOpen: false,
+  service: null,
+
 };
 
 const actions = {
@@ -16,6 +20,21 @@ const actions = {
   },
   [A.APPLY_SERVICE_FILTER] ({commit}, searchText) {
     commit(M.APPLY_SERVICE_FILTER, searchText)
+  },
+  [A.OPEN_DELETE_SERVICE_DIALOG] ({commit}) {
+    commit(M.OPEN_DELETE_SERVICE_DIALOG)
+  },
+  [A.OPEN_EDIT_SERVICE_DIALOG] ({commit}) {
+    commit(M.OPEN_EDIT_SERVICE_DIALOG)
+  },
+  [A.CLOSE_DELETE_SERVICE_DIALOG] ({commit}) {
+    commit(M.CLOSE_DELETE_SERVICE_DIALOG)
+  },
+  [A.CLOSE_EDIT_SERVICE_DIALOG] ({commit}) {
+    commit(M.CLOSE_EDIT_SERVICE_DIALOG)
+  },
+  [A.SET_SERVICE] ({commit}, service) {
+    commit(M.SET_SERVICE, service)
   }
 };
 
@@ -30,7 +49,22 @@ const mutations = {
   },
   [M.APPLY_SERVICE_FILTER](state, searchText) {
     state.searchText = searchText;
-  }
+  },
+  [M.OPEN_DELETE_SERVICE_DIALOG](state) {
+    state.isDeleteServiceDialogOpen = true;
+  },
+  [M.OPEN_EDIT_SERVICE_DIALOG](state) {
+    state.isEditServiceDialogOpen = true;
+  },
+  [M.CLOSE_DELETE_SERVICE_DIALOG](state) {
+    state.isDeleteServiceDialogOpen = false;
+  },
+  [M.CLOSE_EDIT_SERVICE_DIALOG](state) {
+    state.isEditServiceDialogOpen = false;
+  },
+  [M.SET_SERVICE](state, service) {
+    state.service = service;
+  },
 };
 
 const getters = {};
