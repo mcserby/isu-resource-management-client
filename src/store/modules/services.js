@@ -1,5 +1,5 @@
-import A from "../../constants/services/actions";
-import M from "../../constants/services/mutations";
+import A from "../../constants/actions";
+import M from "../../constants/mutations";
 
 const state = {
   services: [],

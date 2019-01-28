@@ -112,8 +112,6 @@ import ServicesUpdatedNotification from "../../contracts/services/servicesUpdate
 import EditServiceForm from "./form/EditServiceForm.vue";
 import DeleteServiceRequest from "../../contracts/services/deleteServiceRequest.js";
 import UpdateServiceRequest from "../../contracts/services/updateServiceRequest.js";
-import Vue from "vue";
-Vue.use(require("vue-moment"));
 
 export default {
   name: "Services",

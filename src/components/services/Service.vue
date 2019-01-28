@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import A from "../../constants/services/actions";
+import A from "../../constants/actions";
 
 export default {
   name: "Service",
