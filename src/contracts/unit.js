@@ -1,11 +1,20 @@
 // Unit contract
 
 class Unit {
-  constructor(name, resources, lastUpdate, equipment) {
+  constructor(
+    name,
+    resources,
+    equipment,
+    lastUpdateFirstInterventionResource,
+    lastUpdateOtherResource,
+    lastUpdateEquipment
+  ) {
     this.name = name;
     this.resources = resources;
-    this.lastUpdate = lastUpdate;
-    if (equipment){
+    this.lastUpdateFirstInterventionResource = lastUpdateFirstInterventionResource;
+    this.lastUpdateOtherResource = lastUpdateOtherResource;
+    this.lastUpdateEquipment = lastUpdateEquipment;
+    if (equipment) {
       this.equipment = equipment;
     } else {
       this.equipment = [];
@@ -14,4 +23,3 @@ class Unit {
 }
 
 export default Unit;
-

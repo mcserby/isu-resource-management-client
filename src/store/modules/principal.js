@@ -109,7 +109,9 @@ const mutations = {
       unit.resources.forEach(r => r.id = r.id || Utils.createUUID());
       Vue.set(updatedUnit, 'resources', unit.resources);
       Vue.set(updatedUnit, 'equipment', unit.equipment);
-      Vue.set(updatedUnit, 'lastUpdate', unit.lastUpdate);
+      Vue.set(updatedUnit, 'lastUpdateFirstInterventionResource', unit.lastUpdateFirstInterventionResource);
+      Vue.set(updatedUnit, 'lastUpdateOtherResource', unit.lastUpdateOtherResource);
+      Vue.set(updatedUnit, 'lastUpdateEquipment', unit.lastUpdateEquipment);
     }
   },
   [M.CLEAR_UNIT_RESOURCES](state, unitName) {
