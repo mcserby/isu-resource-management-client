@@ -22,4 +22,5 @@ export default {
   DELETE_RESOURCE: 'deleteResource',
   UPDATE_RESOURCE: 'updateResource',
   APPLY_FILTER: 'applyFilter',
+  SHOW_PDF_FILE: 'showPdfFile',
 };

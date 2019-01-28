@@ -21,5 +21,6 @@ export default {
   CLOSE_STATUS_MENU : 'closeStatusMenu',
   DELETE_RESOURCE: 'deleteResource',
   UPDATE_RESOURCE: 'updateResource',
+  SHOW_PDF_FILE: 'showPdfFile',
   APPLY_FILTER: 'applyFilter',
 };
