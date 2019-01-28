@@ -69,6 +69,19 @@
       <div v-for="(service,index) in filteredServices" v-bind:key="service.id">
         <Service :service="service" :rowNr="index"></Service>
       </div>
+      <ConfirmationDialog
+        v-if="isDeleteServiceDialogOpen"
+        :title="deleteServiceConfirmationTitle"
+        :text="deleteServiceConfirmationText"
+        @confirm="onConfirmServiceDeletion"
+        @cancel="onCancelServiceDeletion"
+      ></ConfirmationDialog>
+      <EditServiceForm
+        v-if="isEditServiceDialogOpen"
+        :service="this.$store.state.servicesStore.service"
+        @confirm="onConfirmServiceEdit"
+        @cancel="onCancelServiceEdit"
+      ></EditServiceForm>
     </div>
     <ConfirmationDialog
       v-if="displayConfirmationDialog"
@@ -96,6 +109,9 @@ import ConfirmationDialog from "../common/ConfirmationDialog.vue";
 import AddServiceForm from "./form/AddServiceForm.vue";
 import AddServiceRequest from "../../contracts/services/addServiceRequest.js";
 import ServicesUpdatedNotification from "../../contracts/services/servicesUpdatedNotification.js";
+import EditServiceForm from "./form/EditServiceForm.vue";
+import DeleteServiceRequest from "../../contracts/services/deleteServiceRequest.js";
+import UpdateServiceRequest from "../../contracts/services/updateServiceRequest.js";
 import Vue from "vue";
 Vue.use(require("vue-moment"));
 
@@ -104,13 +120,17 @@ export default {
   components: {
     Service,
     ConfirmationDialog,
-    AddServiceForm
+    AddServiceForm,
+    EditServiceForm
   },
   data: () => {
     return {
       confirmationDialogTitle: "Schimb de tură",
       confirmationDialogText:
         "Sunteți sigur că doriți să ștergeți toate datele",
+      deleteServiceConfirmationTitle: "Ștergere serviciu",
+      deleteServiceConfirmationText:
+        "Sunteți sigur că doriți să ștergeți serviciul",
       displayConfirmationDialog: false,
       displayAddServiceForm: false,
       searchText: ''
@@ -119,6 +139,12 @@ export default {
   computed: {
     services() {
       return this.$store.state.servicesStore.services;
+    },
+    isEditServiceDialogOpen() {
+      return this.$store.state.servicesStore.isEditServiceDialogOpen;
+    },
+    isDeleteServiceDialogOpen() {
+      return this.$store.state.servicesStore.isDeleteServiceDialogOpen;
     },
     filteredServices(){
         const searchText = this.$store.state.servicesStore.searchText.toLowerCase();
@@ -213,6 +239,32 @@ export default {
     updateSearch(){
   		this.$store.dispatch(A.APPLY_FILTER, this.searchText);
   	},
+    onCancelServiceEdit() {
+      this.$store.dispatch(A.CLOSE_EDIT_SERVICE_DIALOG);
+    },
+    onCancelServiceDeletion() {
+      this.$store.dispatch(A.CLOSE_DELETE_SERVICE_DIALOG);
+    },
+    onConfirmServiceDeletion() {
+      this.$store.dispatch(
+        WSA.WEBSOCKET_SEND,
+        new WebsocketSend(
+          "deleteService",
+          new DeleteServiceRequest(this.$store.state.servicesStore.service.id)
+        )
+      );
+      this.$store.dispatch(A.CLOSE_DELETE_SERVICE_DIALOG);
+    },
+    onConfirmServiceEdit(updatedService) {
+      this.$store.dispatch(
+        WSA.WEBSOCKET_SEND,
+        new WebsocketSend(
+          "updateService",
+          new UpdateServiceRequest(updatedService)
+        )
+      );
+      this.$store.dispatch(A.CLOSE_EDIT_SERVICE_DIALOG);
+    }
   }
 };
 </script>
