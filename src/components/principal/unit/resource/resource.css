@@ -118,6 +118,15 @@
   background-color: #F74356;
   grid-row: 1 / span 4;
   grid-column: 1 / span 1;
+  margin-left: -1px;
+}
+
+.status-in-mission-wrapper {
+  border : 3px #F74356 solid;
+}
+
+.status-in-mission-identification-number{
+  color: #F74356;
 }
 
 .status-unavailable {
