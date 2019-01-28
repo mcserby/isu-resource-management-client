@@ -8,10 +8,6 @@
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label class="form-label" for="rowNr">Nr</label>
-              <input type="text" required v-model="rowNr" class="form-control" id="rowNr">
-            </div>
-            <div class="form-group">
               <label class="form-label" for="name">Nume si Prenume</label>
               <input type="text" required v-model="name" class="form-control" id="name">
             </div>
@@ -63,10 +59,10 @@ export default {
   },
   computed: {
     saveDisabled() {
-      return this.name == "" ||
-        this.title == "" ||
-        this.role == "" ||
-        this.contact == "";
+      return this.name.trim() == "" ||
+        this.title.trim() == "" ||
+        this.role.trim() == "" ||
+        this.contact.trim() == "";
     }
   },
   mounted() {},
@@ -74,7 +70,7 @@ export default {
     saveAndAddAnother() {
       this.$emit(
         "saveAndAddAnother",
-        new Service("", this.name, this.role, this.functionPlayed, this.contact)
+        new Service("", this.name, this.title, this.role, this.contact)
       );
       this.name = this.role = this.title = this.contact = "";
     },
