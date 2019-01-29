@@ -9,7 +9,7 @@
           <div class="modal-body body-wrapper">
             <div class="resource-browser-list">
               <div class="resource-browser-resource-summary" v-for="(equipment) in filteredEquipment"
-                   v-bind:key="equipment.equipmentId" v-on:click="onResourceClick(equipment)">
+                   v-bind:key="equipment.id" v-on:click="onResourceClick(equipment)">
                 <div class="resource-summary-card">
                   <EquipmentSummary :equipment="equipment" :rowNr="rowColor(equipment)"></EquipmentSummary>
                 </div>
@@ -158,7 +158,7 @@
       },
 
       onResourceClick(equipment) {
-        this.selectedResourceId = equipment.equipmentId;
+        this.selectedResourceId = equipment.id;
         this.setEditorFields(equipment);
       },
       validateFields() {
@@ -196,7 +196,7 @@
         this.validateFields();
       },
       rowColor(equipment) {
-        if (equipment.equipmentId === this.selectedResourceId) {
+        if (equipment.id === this.selectedResourceId) {
           return 1;
         }
         return 0;
