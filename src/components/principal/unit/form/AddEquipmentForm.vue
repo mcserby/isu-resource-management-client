@@ -166,19 +166,19 @@
         this.errors.splice(0, this.errors.length);
 
         if (this.equipmentType.length < 1) {
-          this.errors.push("Tipul echipamentului e obligatoriu");
+          this.errors.push("Tipul echipamentului e obligatoriu pozitiv");
         }
 
         if (this.isInteger(this.usable)) {
-          this.errors.push("Operațional nu este un număr întreg");
+          this.errors.push("Operațional nu este un număr întreg pozitiv");
         }
 
         if (this.isInteger(this.reserves)) {
-          this.errors.push("Rezervă nu este un număr întreg");
+          this.errors.push("Rezervă nu este un număr întreg pozitiv");
         }
 
         if (this.isInteger(this.unusable)) {
-          this.errors.push("Neoperational nu este un număr întreg");
+          this.errors.push("Neoperational nu este un număr întreg pozitiv");
         }
 
       },
@@ -225,7 +225,7 @@
       },
 
       isInteger(input) {
-        return  this.containExponent(input) || !Number.isInteger(Number.parseFloat(input));
+        return  input < 0 || this.containExponent(input) || !Number.isInteger(Number.parseFloat(input));
       }
 
     },
