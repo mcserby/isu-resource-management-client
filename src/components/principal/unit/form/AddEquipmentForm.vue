@@ -8,7 +8,8 @@
           </div>
           <div class="modal-body body-wrapper">
             <div class="resource-browser-list">
-              <div class="resource-browser-resource-summary" v-for="(equipment) in filteredEquipment" v-bind:key="equipment.equipmentId" v-on:click="onResourceClick(equipment)">
+              <div class="resource-browser-resource-summary" v-for="(equipment) in filteredEquipment"
+                   v-bind:key="equipment.equipmentId" v-on:click="onResourceClick(equipment)">
                 <div class="resource-summary-card">
                   <EquipmentSummary :equipment="equipment" :rowNr="rowColor(equipment)"></EquipmentSummary>
                 </div>
@@ -18,7 +19,9 @@
               </div>
               <div class="resource-browser-resource-summary">
                 <div class="add-resource-button-wrapper">
-                  <button type="button" class="btn custom-button" @click="addNewEquipment()" :disabled="addNewResourceDisabled()">Adaugă echipament</button>
+                  <button type="button" class="btn custom-button" @click="addNewEquipment()"
+                          :disabled="addNewResourceDisabled()">Adaugă echipament
+                  </button>
                 </div>
               </div>
             </div>
@@ -26,19 +29,23 @@
             <div class="resource-editor">
               <div class="form-group">
                 <label class="form-label" for="equipmentType">Tip</label>
-                <input type="text" minlength="1" required v-model="equipmentType" @input="updateEquipment()" class="form-control" id="equipmentType" aria-describedby="nameHelp" placeholder="Tip">
+                <input type="text" minlength="1" required v-model="equipmentType" @input="updateEquipment()"
+                       class="form-control" id="equipmentType" aria-describedby="nameHelp" placeholder="Tip">
               </div>
               <div class="form-group">
                 <label class="form-label" for="usable">Operațional</label>
-                <input type="number" required v-model="usable" @input="updateEquipment()" class="form-control" id="usable">
+                <input type="number" required v-model="usable" @input="updateEquipment()" class="form-control"
+                       id="usable">
               </div>
               <div class="form-group">
                 <label class="form-label" for="reserves">Rezervă</label>
-                <input type="number" required v-model="reserves" @input="updateEquipment()" class="form-control" id="reserves">
+                <input type="number" required v-model="reserves" @input="updateEquipment()" class="form-control"
+                       id="reserves">
               </div>
               <div class="form-group">
                 <label class="form-label" for="unusable">Neoperațional</label>
-                <input type="number" required v-model="unusable" @input="updateEquipment()" class="form-control"  id="unusable"/>
+                <input type="number" required v-model="unusable" @input="updateEquipment()" class="form-control"
+                       id="unusable"/>
               </div>
               <div class="errors">
                 <div v-for="error in errors" v-bind:key="error">
@@ -100,11 +107,11 @@
       resourceType() {
         return this.$store.state.principalStore.activeTab.resourceType;
       },
-      filteredEquipment(){
+      filteredEquipment() {
         return this.$store.state.principalStore.activeUnit.equipment.filter(r => r.resourceType === this.resourceType);
       }
     },
-    mounted(){
+    mounted() {
       this.validateFields();
     },
     methods: {
@@ -120,12 +127,12 @@
         this.addEquipment();
         this.clearFormValues();
       },
-      saveAndClose(){
+      saveAndClose() {
         this.clearFormValues();
         this.updateUnit();
         this.closeAddResourceDialog();
       },
-      cancel(){
+      cancel() {
         this.closeAddResourceDialog();
       },
       addEquipment() {
@@ -134,7 +141,7 @@
       constructEquipment() {
         return new Equipment(window.crypto.getRandomValues(new Uint32Array(4)).join('-'), this.equipmentType, this.usable, this.reserves, this.unusable, this.resourceType)
       },
-      clearFormValues(){
+      clearFormValues() {
         this.validationPerformedAtLeastOnce = false;
         this.equipmentType = '';
         this.usable = 0;
@@ -142,11 +149,11 @@
         this.reserves = 0;
         this.errors = [];
       },
-      closeAddResourceDialog(){
+      closeAddResourceDialog() {
         this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('unlockSubUnit', new UnlockSubUnitRequest(this.$store.state.principalStore.activeUnit.name, this.resourceType)));
         this.$store.dispatch(A.CLOSE_ADD_RESOURCE_DIALOG);
       },
-      updateUnit(){
+      updateUnit() {
         this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('updateSubUnit', new UpdateSubUnitRequest(this.$store.state.principalStore.activeUnit)));
       },
 
@@ -154,15 +161,29 @@
         this.selectedResourceId = equipment.equipmentId;
         this.setEditorFields(equipment);
       },
-      validateFields () {
+      validateFields() {
         this.validationPerformedAtLeastOnce = true;
         this.errors.splice(0, this.errors.length);
-        if(this.equipmentType.length < 1){
+
+        if (this.equipmentType.length < 1) {
           this.errors.push("Tipul echipamentului e obligatoriu");
         }
 
+        if (this.isInteger(this.usable)) {
+          this.errors.push("Operațional nu este un număr întreg");
+        }
+
+        if (this.isInteger(this.reserves)) {
+          this.errors.push("Rezervă nu este un număr întreg");
+        }
+
+        if (this.isInteger(this.unusable)) {
+          this.errors.push("Neoperational nu este un număr întreg");
+        }
+
       },
-      setEditorFields(equipment){
+
+      setEditorFields(equipment) {
         this.errors = [];
         this.equipmentType = equipment.equipmentType;
         this.usable = equipment.usable;
@@ -175,7 +196,7 @@
         this.validateFields();
       },
       rowColor(equipment) {
-        if(equipment.equipmentId === this.selectedResourceId){
+        if (equipment.equipmentId === this.selectedResourceId) {
           return 1;
         }
         return 0;
@@ -190,15 +211,23 @@
 
       updateEquipment() {
         this.validateFields();
-        if(this.errors.length === 0){
-          if (this.selectedResourceId) {
-            let equipment = this.constructEquipment();
-            equipment.id = this.selectedResourceId;
-            this.unitModified = true;
-            this.$store.dispatch(A.UPDATE_RESOURCE, equipment);
-          }
+
+        if (this.errors.length === 0 && this.selectedResourceId) {
+          let equipment = this.constructEquipment();
+          equipment.id = this.selectedResourceId;
+          this.unitModified = true;
+          this.$store.dispatch(A.UPDATE_RESOURCE, equipment);
         }
       },
+
+      containExponent(input) {
+        return input.toString().includes('e');
+      },
+
+      isInteger(input) {
+        return  this.containExponent(input) || !Number.isInteger(Number.parseFloat(input));
+      }
+
     },
   }
 </script>
