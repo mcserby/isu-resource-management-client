@@ -4,6 +4,21 @@ import SockJS from 'sockjs-client'
 import Stomp from 'webstomp-client'
 import AppConfig from '../../config/appConfig'
 
+
+function stompConnect(){
+  const socket = new SockJS(AppConfig.server.websocketUrl)
+  state.websocketStompClient = Stomp.over(socket)
+  state.websocketStompClient.connect({'id': 'sub-1'}, response => {
+    console.log(response)
+    state.connected = true
+  }, error => {
+    console.log(error)
+    state.connectionError = error
+    state.connected = false
+    setTimeout(stompConnect(), 1000);
+  })
+}
+
 const state = {
   websocketStompClient: null,
   connectionError: null,
@@ -28,21 +43,12 @@ const actions = {
 const mutations = {
   [M.WEBSOCKET_CONNECT] (state) {
     if (!state.connected) {
-      const socket = new SockJS(AppConfig.server.websocketUrl)
-      state.websocketStompClient = Stomp.over(socket)
-      state.websocketStompClient.connect({'id': 'sub-1'}, response => {
-        console.log(response)
-        state.connected = true
-      }, error => {
-        console.log(error)
-        state.connectionError = error
-        state.connected = false
-      })
+      stompConnect()
     }
   },
   [M.WEBSOCKET_DISCONNECT] (state) {
     if (state.websocketStompClient) {
-      state.websocketStompClient.disconnect();
+      state.websocketStompClient.disconnect()
     }
     state.connected = false;
   },
@@ -51,10 +57,10 @@ const mutations = {
         if(state.websocketStompClient && state.connected === true){
           state.websocketStompClient.subscribe('/topic/' + websocketSubscribe.topicName,
             websocketSubscribe.successCallbackFunction,
-            websocketSubscribe.errorCallbackFunction);
-            clearInterval(sendSubscribe);
+            websocketSubscribe.errorCallbackFunction)
+            clearInterval(sendSubscribe)
         } else {
-          console.log('Not connected to websocket yet!!!');
+          console.log('Not connected to websocket yet!!!')
         }
       }, 100);
 
