@@ -9,7 +9,7 @@
           <div class="modal-body body-wrapper">
             <div class="resource-browser-list">
               <div class="resource-browser-resource-summary" v-for="(equipment) in filteredEquipment"
-                   v-bind:key="equipment.equipmentId" v-on:click="onResourceClick(equipment)">
+                   v-bind:key="equipment.id" v-on:click="onResourceClick(equipment)">
                 <div class="resource-summary-card">
                   <EquipmentSummary :equipment="equipment" :rowNr="rowColor(equipment)"></EquipmentSummary>
                 </div>
@@ -158,7 +158,7 @@
       },
 
       onResourceClick(equipment) {
-        this.selectedResourceId = equipment.equipmentId;
+        this.selectedResourceId = equipment.id;
         this.setEditorFields(equipment);
       },
       validateFields() {
@@ -166,19 +166,19 @@
         this.errors.splice(0, this.errors.length);
 
         if (this.equipmentType.length < 1) {
-          this.errors.push("Tipul echipamentului e obligatoriu");
+          this.errors.push("Tipul echipamentului e obligatoriu pozitiv");
         }
 
         if (this.isInteger(this.usable)) {
-          this.errors.push("Operațional nu este un număr întreg");
+          this.errors.push("Operațional nu este un număr întreg pozitiv");
         }
 
         if (this.isInteger(this.reserves)) {
-          this.errors.push("Rezervă nu este un număr întreg");
+          this.errors.push("Rezervă nu este un număr întreg pozitiv");
         }
 
         if (this.isInteger(this.unusable)) {
-          this.errors.push("Neoperational nu este un număr întreg");
+          this.errors.push("Neoperational nu este un număr întreg pozitiv");
         }
 
       },
@@ -196,7 +196,7 @@
         this.validateFields();
       },
       rowColor(equipment) {
-        if (equipment.equipmentId === this.selectedResourceId) {
+        if (equipment.id === this.selectedResourceId) {
           return 1;
         }
         return 0;
@@ -225,7 +225,7 @@
       },
 
       isInteger(input) {
-        return  this.containExponent(input) || !Number.isInteger(Number.parseFloat(input));
+        return  input < 0 || this.containExponent(input) || !Number.isInteger(Number.parseFloat(input));
       }
 
     },
