@@ -21,11 +21,6 @@ body {
   background-color: #930614;
 }
 
-/* custom menu link properties class used to override or add new properties */
-.menu-link-custom-properties {
-  width: 50% !important;
-}
-
 .menu-wrapper {
   display: flex;
   flex-direction: column;
@@ -34,28 +29,6 @@ body {
   text-align: center;
   min-height: 100vh;
   padding-bottom: 30vh;
-}
-
-.menu-link {
-  color: #f2f2f2;
-  background-color: #4682b4;
-
-  font-size: 20px;
-  font-family: Arial;
-  font-weight: bold;
-
-  border-radius: 8px;
-  border: 0px;
-  box-shadow: 10px 0px 14px -7px;
-
-  padding: 10px;
-  margin: 5px;
-  width: 30%;
-}
-
-.menu-link:hover:enabled {
-  color: #f2f2f2;
-  background-color: #2b506e;
 }
 
 .modal-title {

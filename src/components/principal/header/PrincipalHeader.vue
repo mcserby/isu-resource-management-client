@@ -1,6 +1,6 @@
 <template>
   <div class="principal-header">
-    <div class="principal-title">{{activeTab.name}}</div>
+    <div class="principal-title">ISU TaskForce</div>
     <div class="search-bar-wrapper">
       <form>
         <div class="row no-gutters align-items-center">
@@ -15,36 +15,52 @@
     </div>
     <div v-if="searchText !== ''" class="filter-activated">Filtru activ!</div>
     <div class="other-modules-wrapper">
-      <div>
-        <router-link class="btn menu-link-custom-properties menu-link" role="button" to="/services">Modul Servicii</router-link>
+      <div class="service-button">
+        <router-link class="btn custom-button" role="button" to="/services">Servicii</router-link>
       </div>
-      <div>
-        <router-link class="btn menu-link-custom-properties menu-link" role="button" to="/uat">Modul UAT</router-link>
+      <div class="uat-button">
+        <router-link class="btn custom-button" role="button" to="/uat">UAT</router-link>
+      </div>
+      <div class="report-button">
+        <button class="btn custom-button" role="button" @click="generateReport()">Raport</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import A from '../../../constants/actions';
+import A from "../../../constants/actions";
+import WebsocketSend from "../../../contracts/websocketSend";
+import UnlockSubUnitRequest from "../../../contracts/edit/unlockSubUnitRequest";
 
-  export default {
-    name: 'PrincipalHeader',
-    components: {},
-    computed: {
-      searchText: {
-        get () {
-          return this.$store.state.principalStore.searchText;
-        },
-        set (value) {
-          this.$store.dispatch(A.APPLY_RESOURCE_FILTER, value);
-        },
+export default {
+  name: "PrincipalHeader",
+  components: {},
+  computed: {
+    searchText: {
+      get() {
+        return this.$store.state.principalStore.searchText;
       },
-      activeTab() {
-        return this.$store.state.principalStore.activeTab
-      },
+      set(value) {
+        this.$store.dispatch(A.APPLY_RESOURCE_FILTER, value);
+      }
     },
+    activeTab() {
+      return this.$store.state.principalStore.activeTab;
+    }
+  },
+  methods: {
+    generateReport() {
+      this.$store.dispatch(
+        A.WEBSOCKET_SEND,
+        new WebsocketSend(
+          "getEquipmentReport",
+          new UnlockSubUnitRequest("", "")
+        )
+      );
+    }
   }
+};
 </script>
 
 <style src="./principalHeader.css"></style>

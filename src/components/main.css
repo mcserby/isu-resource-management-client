@@ -6,3 +6,25 @@
   color: #F74356;
   text-shadow: 4px 4px 4px #000000;
 }
+
+.custom-button {
+  color: #f2f2f2;
+  background-color: #4682b4;
+
+  font-size: 20px;
+  font-family: Arial;
+  font-weight: bold;
+
+  border-radius: 1px;
+  border-size: 0px;
+  box-shadow: 10px 0px 14px -7px;
+
+  padding: 10px;
+  margin: 5px;
+  width: 100%;
+}
+
+.custom-button:hover:enabled {
+  color: #f2f2f2;
+  background-color: #2b506e;
+}

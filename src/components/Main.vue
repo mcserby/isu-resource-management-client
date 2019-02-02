@@ -4,9 +4,9 @@
       <div id="headline">
         ISU EasyManage
       </div>
-      <router-link class="btn menu-link" role="button" to="/principal">Modul Principal</router-link>
-      <router-link class="btn menu-link" role="button" to="/services">Modul Servicii</router-link>
-      <router-link class="btn menu-link" role="button" to="/uat">Modul UAT</router-link>
+      <router-link class="btn custom-button" role="button" to="/principal">Principal</router-link>
+      <router-link class="btn custom-button" role="button" to="/services">Servicii</router-link>
+      <router-link class="btn custom-button" role="button" to="/uat">UAT</router-link>
     </div>
   </div>
 </template>
