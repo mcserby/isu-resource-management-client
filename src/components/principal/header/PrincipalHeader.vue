@@ -8,10 +8,7 @@
             <i class="fas fa-search h4 text-body"></i>
           </div>
           <div class="col">
-            <input class="form-control form-control-lg form-control-borderless"  v-model="searchText" type="search" placeholder="caută">
-          </div>
-          <div class="col-auto">
-            <button class="btn btn-lg  custom-button " type="submit">Caută</button>
+            <input class="form-control form-control-lg form-control-borderless"  v-model="searchText" type="search" placeholder="Caută după cheia misiunii">
           </div>
         </div>
       </form>
