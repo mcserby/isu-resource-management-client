@@ -21,11 +21,11 @@
       <div v-if="searchText !== ''" class="filter-activated">Filtru activ!</div>
       <div class="services-title">ISU TaskForce</div>
       <div class="services-other-modules-wrapper">
-        <div>
-          <router-link class="btn custom-button principal-button" role="button" to="/principal">Principal</router-link>
+        <div class="principal-button">
+          <router-link class="btn custom-button" role="button" to="/principal">Principal</router-link>
         </div>
-        <div>
-          <router-link class="btn custom-button uat-button" role="button" to="/uat">UAT</router-link>
+        <div class="uat-button">
+          <router-link class="btn custom-button" role="button" to="/uat">UAT</router-link>
         </div>
         <div class="report-button">
           <button class="btn custom-button" role="button" @click="generateReport()">Raport</button>
@@ -296,3 +296,4 @@ export default {
 </script>
 
 <style src="./services.css"></style>
+<style src="../main.css"></style>
