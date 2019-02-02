@@ -36,7 +36,7 @@
           return resources;
         }
         let words = searchText.split(' ').filter(w => w.length > 0);
-        return resources.filter(r => words.some(w => r.status && r.status.key && this.removeAccents(r.status.key).indexOf(w) !== -1));
+        return resources.filter(r => words.every(w => r.status && r.status.key && this.removeAccents(r.status.key.toLowerCase()).indexOf(w) !== -1));
       },
       filteredEquipment(){
         return this.unit.equipment.filter(r => r.resourceType === this.resourceType);
