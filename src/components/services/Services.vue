@@ -2,22 +2,24 @@
   <div>
     <div class="services-header-menu">
       <div class="services-search-bar-wrapper">
-      <form>
-        <div class="row no-gutters align-items-center">
-          <div class="col-auto">
-            <i class="fas fa-search h4 text-body"></i>
+        <form>
+          <div class="row no-gutters align-items-center">
+            <div class="col-auto">
+              <i class="fas fa-search h4 text-body"></i>
+            </div>
+            <div class="col">
+              <input
+                class="form-control form-control-lg form-control-borderless"
+                v-model="searchText"
+                type="search"
+                placeholder="Caută după nume, prenume sau funcție"
+              >
+            </div>
           </div>
-          <div class="col">
-            <input class="form-control form-control-lg form-control-borderless" v-model="searchText" type="search" placeholder="Caută după nume și prenume">
-          </div>
-          <div class="col-auto">
-            <button class="btn btn-lg  custom-button " type="submit">Caută</button>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div v-if="searchText !== ''" class="filter-activated">Filtru activ!</div>
-    <div class="services-title">Modul Servicii</div>
+        </form>
+      </div>
+      <div v-if="searchText !== ''" class="filter-activated">Filtru activ!</div>
+      <div class="services-title">Modul Servicii</div>
       <div class="services-other-modules-wrapper">
         <div>
           <router-link
@@ -43,7 +45,7 @@
       >
         <span class="service-button-font-size">Șterge toate datele</span>
       </button>
-
+      
       <button class="btn custom-service-button add-button" @click="addService()">
         <span class="service-button-font-size">Adaugă date</span>
       </button>
@@ -60,7 +62,7 @@
     </div>
     <div class="services">
       <div class="services-header">
-         <div class="service-header-rowNr">Nr.</div>
+        <div class="service-header-rowNr">Nr.</div>
         <div class="service-header-name">Nume și Prenume</div>
         <div class="service-header-title">Grad</div>
         <div class="service-header-role">Funcție</div>
@@ -131,17 +133,17 @@ export default {
       deleteServiceConfirmationText:
         "Sunteți sigur că doriți să ștergeți serviciul",
       displayConfirmationDialog: false,
-      displayAddServiceForm: false,
+      displayAddServiceForm: false
     };
   },
   computed: {
     searchText: {
-      get () {
+      get() {
         return this.$store.state.servicesStore.searchText;
       },
-      set (value) {
+      set(value) {
         this.$store.dispatch(A.APPLY_SERVICE_FILTER, value);
-      },
+      }
     },
     services() {
       return this.$store.state.servicesStore.services;
@@ -152,14 +154,38 @@ export default {
     isDeleteServiceDialogOpen() {
       return this.$store.state.servicesStore.isDeleteServiceDialogOpen;
     },
-    filteredServices(){
-        const searchText = this.removeAccents(this.$store.state.servicesStore.searchText.toLowerCase());
-        if(searchText === ''){
-          return this.services;
-        }
-        let words = searchText.split(' ').filter(w => w.length > 0);
-        return this.services.filter(s => words.every(w => s.name && this.removeAccents(s.name.toLowerCase()).indexOf(w) !== -1));
-      },
+    filteredServices() {
+      const searchText = this.removeAccents(
+        this.$store.state.servicesStore.searchText.toLowerCase()
+      );
+      if (searchText === "") {
+        return this.services;
+      }
+      let words = searchText.split(" ").filter(w => w.length > 0);
+      let filteredServicesByName = new Set(
+        this.services.filter(s =>
+          words.every(
+            w =>
+              s.name &&
+              this.removeAccents(s.name.toLowerCase()).indexOf(w) !== -1
+          )
+        )
+      );
+      let filteredServicesByFunction = new Set(
+        this.services.filter(s =>
+          words.every(
+            w =>
+              s.role &&
+              this.removeAccents(s.role.toLowerCase()).indexOf(w) !== -1
+          )
+        )
+      );
+      let allFilteredServices = new Set([
+        ...filteredServicesByName,
+        ...filteredServicesByFunction
+      ]);
+      return Array.from(allFilteredServices);
+    },
     lastUpdate() {
       return this.$store.state.servicesStore.lastUpdate;
     },
@@ -241,8 +267,8 @@ export default {
       );
       this.displayAddServiceForm = false;
     },
-    removeAccents(text){
-      return text.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    removeAccents(text) {
+      return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     },
     onCancelServiceEdit() {
       this.$store.dispatch(A.CLOSE_EDIT_SERVICE_DIALOG);

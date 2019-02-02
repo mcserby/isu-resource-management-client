@@ -1,7 +1,7 @@
 .services-search-bar-wrapper {
   grid-row: 2 / span 1;
   grid-column: 1 / span 3;
-  width: 75%;
+  width: 80%;
 }
 
 .services-title {
@@ -139,4 +139,5 @@
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(2, 50px);
+  margin-left: 5%;
 }
