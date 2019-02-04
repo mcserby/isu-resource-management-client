@@ -1,9 +1,6 @@
 <template>
   <div class="principal app-sa">
     <PrincipalHeader></PrincipalHeader>
-    <button class="btn generate-button" @click="generateReport()">
-      <span class="button-font-size">Generează Raport</span>
-    </button>
     <ul class="nav nav-tabs">
       <li class="nav-item" v-for="tab in tabs">
         <template class="nav-item">
@@ -167,12 +164,6 @@ export default {
       );
       this.$store.dispatch(A.CLOSE_CONFIRMATION_DIALOG);
     },
-    generateReport() {
-      this.$store.dispatch(
-        A.WEBSOCKET_SEND,
-        new WebsocketSend("getEquipmentReport", new UnlockSubUnitRequest("", ""))
-      );
-    }
   },
   mounted: function() {
     console.log("Principal.vue mounted");

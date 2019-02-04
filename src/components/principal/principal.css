@@ -30,10 +30,10 @@
   grid-gap: 5px;
   width: 100%;
   grid-row: 2 / span 1;
-  max-height: -moz-calc(100vh - 500px);
-  max-height: -webkit-calc(100vh - 500px);
-  max-height: -o-calc(100vh - 500px);
-  max-height: calc(100vh - 500px);
+  max-height: -moz-calc(100vh - 450px);
+  max-height: -webkit-calc(100vh - 450px);
+  max-height: -o-calc(100vh - 450px);
+  max-height: calc(100vh - 450px);
   overflow: scroll;
   min-height: 180px;
 }
