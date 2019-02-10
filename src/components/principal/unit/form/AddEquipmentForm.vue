@@ -112,20 +112,23 @@
       }
     },
     mounted() {
-      this.validateFields();
+      if (this.filteredEquipment.length !== 0) {
+        this.setEditorFields(this.filteredEquipment[0])
+      }
     },
     methods: {
       saveDisabled() {
         return !this.unitModified;
       },
       addNewResourceDisabled() {
-        return (this.errors.length !== 0 || !this.validationPerformedAtLeastOnce);
+        return this.errors.length !== 0;
       },
 
       addNewEquipment() {
         this.unitModified = true;
-        this.addEquipment();
+        this.addEmptyEquipment();
         this.clearFormValues();
+        this.validateFields();
       },
       saveAndClose() {
         this.clearFormValues();
@@ -135,11 +138,16 @@
       cancel() {
         this.closeAddResourceDialog();
       },
-      addEquipment() {
-        this.$store.dispatch(A.ADD_RESOURCE, this.constructEquipment());
+      addEmptyEquipment() {
+        let equipment = this.constructEmptyEquipment();
+        this.selectedResourceId = equipment.id;
+        this.$store.dispatch(A.ADD_RESOURCE, this.constructEmptyEquipment());
       },
       constructEquipment() {
         return new Equipment(window.crypto.getRandomValues(new Uint32Array(4)).join('-'), this.equipmentType, this.usable, this.reserves, this.unusable, this.resourceType)
+      },
+      constructEmptyEquipment() {
+        return new Equipment(window.crypto.getRandomValues(new Uint32Array(4)).join('-'), '', 0, 0, 0, this.resourceType)
       },
       clearFormValues() {
         this.validationPerformedAtLeastOnce = false;
