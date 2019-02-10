@@ -21,6 +21,9 @@
       <div class="uat-button">
         <router-link class="btn custom-button" role="button" to="/uat">UAT</router-link>
       </div>
+      <div class="management-button">
+        <router-link class="btn custom-button" role="button" to="/management">Management</router-link>
+      </div>
       <div class="report-button">
         <button class="btn custom-button" role="button" @click="generateReport()">Raport</button>
       </div>

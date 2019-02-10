@@ -1,0 +1,17 @@
+.unit-name-list-section {
+  width: 150px;
+  margin: 0 auto 100px;
+}
+
+.unit-name-list-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.unit-name-element {
+  grid-column: 1 / span 2;
+}
+
+.delete-sub-unit {
+  grid-column:  3 / span 1;
+}

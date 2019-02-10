@@ -4,20 +4,20 @@ import Main from '../components/Main.vue';
 import Services from '../components/services/Services.vue';
 import Uat from '../components/uat/Uat.vue';
 import Principal from '../components/principal/Principal.vue';
+import Management from '../components/management/Management.vue';
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'Main',
-      component: Main
-    },
-    {
       path: '/principal',
       name: 'Principal',
       component: Principal
+    },
+    {
+      path: '/',
+      redirect: 'principal'
     },
     {
       path: '/services',
@@ -28,6 +28,11 @@ export default new Router({
       path: '/uat',
       name: 'UAT',
       component: Uat
+    },
+    {
+      path: '/management',
+      name: 'Management',
+      component: Management
     }
   ]
 })

@@ -168,13 +168,6 @@ export default {
   mounted: function() {
     console.log("Principal.vue mounted");
     const self = this;
-    let onUnitsReceived = function(response) {
-      let r = JSON.parse(response.body);
-      self.$store.dispatch(A.INIT_UNITS, r.subUnitsList);
-      if (r.lockedSubUnits) {
-        r.lockedSubUnits.forEach(lsu => self.$store.dispatch(A.LOCK_UNIT, lsu));
-      }
-    };
 
     let onLockSubUnitReceived = function(response) {
       let r = JSON.parse(response.body);
@@ -186,11 +179,6 @@ export default {
       self.$store.dispatch(A.UNLOCK_UNIT, r);
     };
 
-    let onUnitUpdated = function(response) {
-      let r = JSON.parse(response.body);
-      self.$store.dispatch(A.UNIT_UPDATED, r.subUnit);
-    };
-
     let onError = function(error) {
       console.err(error);
     };
@@ -200,10 +188,6 @@ export default {
       self.$store.dispatch(A.SHOW_PDF_FILE, response.body);
     };
 
-    this.$store.dispatch(
-      A.WEBSOCKET_SUBSCRIBE,
-      new WebsocketSubscribe("subunits", onUnitsReceived, onError)
-    );
     this.$store.dispatch(
       A.WEBSOCKET_SUBSCRIBE,
       new WebsocketSubscribe(
@@ -219,10 +203,6 @@ export default {
         onUnLockSubUnitReceived,
         onError
       )
-    );
-    this.$store.dispatch(
-      A.WEBSOCKET_SUBSCRIBE,
-      new WebsocketSubscribe("unitUpdatedNotification", onUnitUpdated, onError)
     );
     this.$store.dispatch(
       A.WEBSOCKET_SUBSCRIBE,
