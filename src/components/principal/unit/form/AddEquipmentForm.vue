@@ -4,7 +4,8 @@
       <div class="modal-dialog modal-dialog-centered add-resource-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Adaugă echipament</h5>
+            <h5 class="modal-title">{{title}}</h5>
+            <button type="button" class="btn custom-close-button" @click="cancel()">X</button>
           </div>
           <div class="modal-body body-wrapper">
             <div class="resource-browser-list">
@@ -109,6 +110,9 @@
       },
       filteredEquipment() {
         return this.$store.state.principalStore.activeUnit.equipment.filter(r => r.resourceType === this.resourceType);
+      },
+      title() {
+        return this.$store.state.principalStore.activeTab.name + ': ' + this.$store.state.principalStore.activeUnit.name;
       }
     },
     mounted() {
@@ -121,7 +125,7 @@
         return !this.unitModified;
       },
       addNewResourceDisabled() {
-        return this.errors.length !== 0;
+        return (this.selectedResourceId) && (this.errors.length !== 0 && this.validationPerformedAtLeastOnce);
       },
 
       addNewEquipment() {
@@ -211,15 +215,15 @@
       },
 
       deleteResource(resource) {
-        if (this.selectedResourceId === resource.id && this.filteredEquipment.length > 1) {
-          this.selectedResourceId = this.filteredEquipment[0];
+        this.unitModified = true;
+        this.$store.dispatch(A.DELETE_RESOURCE, resource);
+        if (this.selectedResourceId === resource.id && this.filteredEquipment.length > 0) {
+          this.selectedResourceId = this.filteredEquipment[0].id;
           this.setEditorFields(this.filteredEquipment[0]);
-        } else {
+        } else if (this.filteredEquipment.length === 0){
           this.selectedResourceId = null;
           this.clearFormValues();
         }
-        this.unitModified = true;
-        this.$store.dispatch(A.DELETE_RESOURCE, resource);
       },
 
       updateEquipment() {
