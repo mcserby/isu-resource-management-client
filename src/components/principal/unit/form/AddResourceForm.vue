@@ -116,6 +116,11 @@
         return this.$store.state.principalStore.activeTab.name + ': ' + this.$store.state.principalStore.activeUnit.name;
       }
     },
+    mounted() {
+      if (this.filteredResources.length !== 0) {
+        this.setEditorFields(this.filteredResources[0])
+      }
+    },
     methods: {
       addNewResourceDisabled() {
         return this.currentEditingResourceIsInvalid();
@@ -212,10 +217,16 @@
       deleteResource(resource) {
         this.errors = [];
         this.justMounted = false;
-        this.selectedResourceId = this.filteredResources.length === 0? null : this.filteredResources[0].id;
         this.clearFormValues();
         this.$store.dispatch(A.DELETE_RESOURCE, resource);
         this.changesPerformed = true;
+        if (this.selectedResourceId === resource.id && this.filteredResources.length > 0) {
+          this.selectedResourceId = this.filteredResources[0].id;
+          this.setEditorFields(this.filteredResources[0]);
+        } else if (this.filteredResources.length === 0){
+          this.selectedResourceId = null;
+          this.clearFormValues();
+        }
       }
     },
   }
