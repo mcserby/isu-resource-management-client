@@ -27,6 +27,9 @@
         <div class="uat-button">
           <router-link class="btn custom-button" role="button" to="/uat">UAT</router-link>
         </div>
+        <div class="management-button">
+          <router-link class="btn custom-button" role="button" to="/management">Management</router-link>
+        </div>
         <div class="report-button">
           <button class="btn custom-button" role="button" @click="generateReport()">Raport</button>
         </div>
@@ -40,7 +43,7 @@
       >
         <span class="service-button-font-size">Șterge toate datele</span>
       </button>
-      
+
       <button class="btn custom-service-button add-button" @click="addService()">
         <span class="service-button-font-size">Adaugă date</span>
       </button>
