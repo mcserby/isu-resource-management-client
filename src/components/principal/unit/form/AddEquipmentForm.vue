@@ -9,8 +9,8 @@
           <div class="modal-body body-wrapper">
             <div class="resource-browser-list">
               <div class="resource-browser-resource-summary" v-for="(equipment) in filteredEquipment"
-                   v-bind:key="equipment.id" v-on:click="onResourceClick(equipment)">
-                <div class="resource-summary-card">
+                   v-bind:key="equipment.id" >
+                <div class="resource-summary-card" @click="onResourceClick(equipment)">
                   <EquipmentSummary :equipment="equipment" :rowNr="rowColor(equipment)"></EquipmentSummary>
                 </div>
                 <div class="delete-resource">
@@ -211,9 +211,14 @@
       },
 
       deleteResource(resource) {
-        this.selectedResourceId = null;
+        if (this.selectedResourceId === resource.id && this.filteredEquipment.length > 1) {
+          this.selectedResourceId = this.filteredEquipment[0];
+          this.setEditorFields(this.filteredEquipment[0]);
+        } else {
+          this.selectedResourceId = null;
+          this.clearFormValues();
+        }
         this.unitModified = true;
-        this.clearFormValues();
         this.$store.dispatch(A.DELETE_RESOURCE, resource);
       },
 
