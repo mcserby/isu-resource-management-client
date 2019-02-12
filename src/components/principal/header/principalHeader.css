@@ -38,7 +38,7 @@
 }
 
 .uat-button {
-  grid-row:2 / span 1;
+  grid-row: 2 / span 1;
   grid-column: 1 / span 1;
   width: 90%;
   height: 90%;
@@ -50,7 +50,12 @@
   width: 90%;
   height: 90%;
 }
-
+.management-button {
+  grid-row: 2 / span 1;
+  grid-column: 2 / span 1;
+  width: 90%;
+  height: 90%;
+}
 .principal-title {
   grid-row: 1 / span 1;
   grid-column: 4 / span 4;
