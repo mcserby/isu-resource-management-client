@@ -91,6 +91,7 @@
         errors: [],
         vehicleType: '',
         plateNumber: '',
+        status: new Status(ResourceStatus.AVAILABLE, null, null, null),
         identificationNumber: '',
         crew: '',
         validationPerformedAtLeastOnce: false,
@@ -152,11 +153,12 @@
         crewList = crewList.slice();
         crewList.shift();
         return new Resource(id, this.vehicleType, this.plateNumber, this.identificationNumber, captain, crewList,
-          new Status(ResourceStatus.AVAILABLE, null, null, null), this.resourceType);
+          this.status, this.resourceType);
       },
       clearFormValues(){
         this.validationPerformedAtLeastOnce = false;
         this.vehicleType = this.plateNumber = this.identificationNumber = this.crew = '';
+        this.status = new Status(ResourceStatus.AVAILABLE, null, null, null);
         this.errors = [];
       },
       closeAddResourceDialog(){
@@ -204,6 +206,7 @@
         this.vehicleType = resource.vehicleType;
         this.plateNumber = resource.plateNumber;
         this.identificationNumber = resource.identificationNumber;
+        this.status = resource.status;
         this.crew = resource.captain + '\n' + resource.crew;
         this.validationPerformedAtLeastOnce = false;
         this.selectedResourceId = resource.id;

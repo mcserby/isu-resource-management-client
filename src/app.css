@@ -1,10 +1,11 @@
 body {
-  height: 100vh;
   background: #d2f0f9 !important;
 }
 
 .app-sa {
   height: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .custom-close-button {
