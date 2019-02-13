@@ -43,6 +43,11 @@
                       <goal>npm</goal>
                     </goals>
                     <phase>generate-resources</phase>
+                    <!--prevents using default configuration file in home folder from other installation-->
+                    <configuration>
+                      <arguments>--userconfig ${project.basedir}/.npmrc
+                                   install</arguments>
+                    </configuration>
                   </execution>
 
                   <execution>
