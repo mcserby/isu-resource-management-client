@@ -1,6 +1,6 @@
 <template>
   <div class="principal-header">
-    <div class="principal-title">ISU TaskForce</div>
+    <div class="principal-title">ISU EasyManage</div>
     <div class="search-bar-wrapper">
       <form>
         <div class="row no-gutters align-items-center">
