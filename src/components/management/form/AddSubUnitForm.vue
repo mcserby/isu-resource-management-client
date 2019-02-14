@@ -1,7 +1,7 @@
 <template>
   <div class="dialogContainer" style="display: block">
     <div class="dialog modal" role="dialog" style="display: block">
-      <div class="modal-dialog modal-dialog-centered add-service-dialog" role="document">
+      <div class="modal-dialog modal-dialog-centered add-subunit-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Adaugă subunitate</h5>
@@ -15,15 +15,15 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="btn custom-button"
+              class="custom-button btn"
               @click="saveAndAddAnother"
             >Salvează și adaugă o nouă subunitate</button>
             <button
               type="button"
-              class="btn custom-button"
+              class="custom-button btn"
               @click="saveAndClose"
             >Salvează și închide</button>
-            <button type="button" class="btn custom-button" @click="cancel">Închide fără a salva</button>
+            <button type="button" class="custom-button btn" @click="cancel">Închide fără a salva</button>
           </div>
         </div>
       </div>

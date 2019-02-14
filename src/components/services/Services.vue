@@ -22,29 +22,29 @@
       <div class="services-title">ISU EasyManage - Servicii</div>
       <div class="services-other-modules-wrapper">
         <div class="principal-button">
-          <router-link class="btn custom-button" role="button" to="/principal">Principal</router-link>
+          <router-link class="custom-button btn" role="button" to="/principal">Principal</router-link>
         </div>
         <div class="uat-button">
-          <router-link class="btn custom-button" role="button" to="/uat">UAT</router-link>
+          <router-link class="custom-button btn" role="button" to="/uat">UAT</router-link>
         </div>
         <div class="management-button">
-          <router-link class="btn custom-button" role="button" to="/management">Management</router-link>
+          <router-link class="custom-button btn" role="button" to="/management">Management</router-link>
         </div>
         <div class="report-button">
-          <button class="btn custom-button" role="button" @click="generateReport()">Raport</button>
+          <button class="custom-button btn" role="button" @click="generateReport()">Raport</button>
         </div>
       </div>
     </div>
     <div class="services-buttons">
       <button
-        class="btn custom-service-button delete-button"
+        class="custom-service-button delete-button btn"
         @click="deleteServices()"
         :disabled="noServicesAvailable"
       >
         <span class="service-button-font-size">Șterge toate datele</span>
       </button>
 
-      <button class="btn custom-service-button add-button" @click="addService()">
+      <button class="custom-service-button add-button btn" @click="addService()">
         <span class="service-button-font-size">Adaugă date</span>
       </button>
     </div>

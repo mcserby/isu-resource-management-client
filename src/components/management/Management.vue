@@ -18,7 +18,7 @@
     <div>
       <button
         type="button"
-        class="btn custom-button"
+        class="custom-button btn"
         @click="openAddNewSubUnitForm()"
       >Adaugă o subunitate</button>
     </div>

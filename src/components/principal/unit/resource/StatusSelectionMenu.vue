@@ -35,7 +35,7 @@
             <div class="modal-footer">
               <button
                 type="button"
-                class="btn custom-button custom-status-selection-button"
+                class="custom-status-selection-button custom-button btn"
                 @click="confirmMission"
                 :disabled="isSetStatusToMissionDisabled"
               >Confirmă misiunea</button>

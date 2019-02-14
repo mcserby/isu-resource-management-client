@@ -1,11 +1,11 @@
-.services-search-bar-wrapper {
+.app-sa .services-search-bar-wrapper {
   margin-left: 5px;
   grid-row: 2 / span 1;
   grid-column: 1 / span 4;
   width: 75%;
 }
 
-.services-title {
+.app-sa .services-title {
   grid-row: 1 / span 1;
   grid-column: 4 / span 4;
   font-size: 2em;
@@ -16,7 +16,7 @@
   padding-top: 35px;
 }
 
-.filter-activated {
+.app-sa .filter-activated {
   grid-row: 3 / span 1;
   grid-column: 1 / span 3;
   width: 75%;
@@ -28,41 +28,41 @@
   margin-left: 5px;
 }
 
-.services-other-modules-wrapper {
+.app-sa .services-other-modules-wrapper {
   grid-row: 2 / span 1;
   grid-column: 10 / span 1;
   display: grid;
   align-content: center;
 }
 
-.principal-button {
+.app-sa .principal-button {
   grid-row: 1 / span 1;
   grid-column: 1 / span 1;
   width: 90%;
   height: 90%;
 }
 
-.uat-button {
+.app-sa .uat-button {
   grid-row: 2 / span 1;
   grid-column: 1 / span 1;
   width: 90%;
   height: 90%;
 }
 
-.report-button {
+.app-sa .report-button {
   grid-row: 1 / span 1;
   grid-column: 2 / span 1;
   width: 90%;
   height: 90%;
 }
 
-.services {
+.app-sa .services {
   margin-left: 5px;
   margin-right: 5px;
   margin-top: 10px;
 }
 
-.services-header {
+.app-sa .services-header {
   display: grid;
   position: relative;
   text-align: left;
@@ -73,54 +73,54 @@
   grid-auto-columns: 1fr;
 }
 
-.service-header-rowNr {
+.app-sa .service-header-rowNr {
   grid-column: 1 / span 1;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
-.service-header-name {
+.app-sa .service-header-name {
   grid-column: 2 / span 2;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
-.service-header-title {
+.app-sa .service-header-title {
   grid-column: 7 / span 3;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
-.service-header-role {
+.app-sa .service-header-role {
   grid-column: 10 / span 3;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
-.service-header-contact {
+.app-sa .service-header-contact {
   grid-column: 13 / span 3;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
-.service-header-actions {
+.app-sa .service-header-actions {
   grid-column: 16 / span 2;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
-.services-buttons {
+.app-sa .services-buttons {
   margin-right: 5px;
   width: 200px;
   margin-top: 10px;
   display: grid;
 }
 
-.button-font-size {
+.app-sa .button-font-size {
   font-size: smaller;
 }
 
-.custom-service-button {
+.app-sa .custom-service-button {
   color: #f2f2f2;
   background-color: #4682b4;
 
@@ -138,28 +138,28 @@
   text-align: center;
 }
 
-.custom-service-button:hover:enabled {
+.app-sa .custom-service-button:hover:enabled {
   color: #f2f2f2;
   background-color: #2b506e;
 }
 
-.delete-button {
+.app-sa .delete-button {
   grid-column: 1 / span 1;
   grid-row: 1 / span 1;
 }
 
-.add-button {
+.app-sa .add-button {
   grid-column: 2 / span 1;
   grid-row: 1 / span 1;
 }
 
-.last-updated-services {
+.app-sa .last-updated-services {
   margin-left: 5px;
   margin-top: 10px;
   color: #616161;
 }
 
-.services-header-menu {
+.app-sa .services-header-menu {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(3, 50px);
