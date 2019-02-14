@@ -27,17 +27,17 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="btn custom-button"
+              class="custom-button btn"
               @click="saveAndAddAnother"
               :disabled="saveDisabled"
             >Salvează și adaugă un nou serviciu</button>
             <button
               type="button"
-              class="btn custom-button"
+              class="custom-button btn"
               @click="saveAndClose"
               :disabled="saveDisabled"
             >Salvează și închide</button>
-            <button type="button" class="btn custom-button" @click="cancel">Închide fără a salva</button>
+            <button type="button" class="custom-button btn" @click="cancel">Închide fără a salva</button>
           </div>
         </div>
       </div>

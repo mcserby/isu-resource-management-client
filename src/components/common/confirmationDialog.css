@@ -1,4 +1,4 @@
-.dialogContainer {
+.app-sa .dialogContainer {
   position: fixed;
   background-color: #d2f0f9;
   z-index: 30;
@@ -8,53 +8,32 @@
   color: #616161;
 }
 
-.dialog {
+.app-sa .dialog {
   display: block;
 }
 
-.confirmation-dialog {
+.app-sa .confirmation-dialog {
   max-width: 796px;
 }
 
-.modal-body {
+.app-sa .modal-body {
   text-align: center;
 }
 
-.modal-content {
+.app-sa .modal-content {
   background: #d2f0f9;
 }
 
-.modal-footer {
+.app-sa .modal-footer {
   justify-content: center;
 }
 
-.custom-dialog-button {
+.app-sa .custom-dialog-button {
   width: 20%;
 }
 
-.button-font-size {
+.app-sa .button-font-size {
   font-size: smaller;
 }
 
-.custom-button {
-  color: #f2f2f2;
-  background-color: #4682b4;
-
-  font-size: 20px;
-  font-family: Arial;
-  font-weight: bold;
-
-  border-radius: 1px;
-  border-size: 0px;
-  box-shadow: 10px 0px 14px -7px;
-
-  padding: 10px;
-  margin: 5px;
-  width: 100%;
-}
-
-.custom-button:hover:enabled {
-  color: #f2f2f2;
-  background-color: #2b506e;
-}
 

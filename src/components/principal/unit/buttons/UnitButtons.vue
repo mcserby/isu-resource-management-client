@@ -2,7 +2,7 @@
   <div class="unit-buttons">
     <div>
       <button
-        class="btn custom-button"
+        class="custom-button btn"
         :disabled="isShiftExchangeNotAllowed"
         @click="shiftExchange()"
       >
@@ -10,7 +10,7 @@
       </button>
     </div>
     <div>
-      <button class="btn custom-button" :disabled="isUnitLocked" @click="addResources()">
+      <button class="custom-button btn" :disabled="isUnitLocked" @click="addResources()">
         <span class="button-font-size">Actualizează</span>
       </button>
     </div>

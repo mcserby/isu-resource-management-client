@@ -4,10 +4,10 @@
       <div id="headline">
         ISU EasyManage
       </div>
-      <router-link class="btn custom-button" role="button" to="/principal">Principal</router-link>
-      <router-link class="btn custom-button" role="button" to="/services">Servicii</router-link>
-      <router-link class="btn custom-button" role="button" to="/uat">UAT</router-link>
-      <router-link class="btn custom-button" role="button" to="/management">Management</router-link>
+      <router-link class="custom-button btn" role="button" to="/principal">Principal</router-link>
+      <router-link class="custom-button btn" role="button" to="/services">Servicii</router-link>
+      <router-link class="custom-button btn" role="button" to="/uat">UAT</router-link>
+      <router-link class="custom-button btn" role="button" to="/management">Management</router-link>
     </div>
   </div>
 </template>

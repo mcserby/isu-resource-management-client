@@ -13,12 +13,12 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="btn custom-button custom-dialog-button"
+              class=" custom-dialog-button custom-button btn"
               @click="onConfirm"
             >Da</button>
             <button
               type="button"
-              class="btn custom-button custom-dialog-button"
+              class="custom-dialog-button custom-button btn"
               @click="onCancel"
             >Nu</button>
           </div>

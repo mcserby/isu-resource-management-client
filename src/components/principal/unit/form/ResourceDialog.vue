@@ -79,7 +79,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn custom-button" @click="cancel">Închide</button>
+            <button type="button" class="custom-button btn" @click="cancel">Închide</button>
           </div>
         </div>
       </div>

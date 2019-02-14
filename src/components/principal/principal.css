@@ -1,9 +1,9 @@
-.principal {
+.app-sa .principal {
   width: 100%;
   position: relative;
 }
 
-.unit-buttons-container {
+.app-sa .unit-buttons-container {
   display: inline-grid;
   grid-template-columns: repeat( auto-fit, minmax(40px, 1fr) );
   background-color: #f2f2f2;
@@ -12,7 +12,7 @@
   width: 100%;
 }
 
-.unit-header-wrapper {
+.app-sa .unit-header-wrapper {
   display: inline-grid;
   grid-template-columns: repeat( auto-fit, minmax(40px, 1fr) );
   background-color: #f2f2f2;
@@ -22,7 +22,7 @@
   grid-row: 1 / span 1;
 }
 
-.unit-wrapper-wrapper {
+.app-sa .unit-wrapper-wrapper {
   display: inline-grid;
   grid-template-columns: repeat( auto-fit, minmax(40px, 1fr) );
   background-color: #f2f2f2;
@@ -38,12 +38,12 @@
   min-height: 180px;
 }
 
-.tab{
+.app-sa .tab{
   background-color: #f2f2f2;
   border-right : 1px solid;
 }
 
-.tab-text{
+.app-sa .tab-text{
   color: #616161 !important;
   font-size: 20px;
   font-family: Arial;
@@ -64,7 +64,7 @@
 }
 
 
-.generate-button {
+.app-sa .generate-button {
   color: #f2f2f2;
   background-color: #4682b4;
 
@@ -82,7 +82,7 @@
   width: 10%;
 }
 
-.generate-button:hover:enabled {
+.app-sa .generate-button:hover:enabled {
   color: #f2f2f2;
   background-color: #2b506e;
 }

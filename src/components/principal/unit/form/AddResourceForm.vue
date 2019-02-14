@@ -19,7 +19,7 @@
                         </div>
                         <div class="resource-browser-resource-summary">
                           <div class="add-resource-button-wrapper">
-                            <button type="button" class="btn custom-button" @click="addNewResource()" :disabled="addNewResourceDisabled()">Adaugă o resursă</button>
+                            <button type="button" class="custom-button btn" @click="addNewResource()" :disabled="addNewResourceDisabled()">Adaugă o resursă</button>
                           </div>
                         </div>
                       </div>
@@ -50,7 +50,7 @@
                     <div class="modal-footer">
                       <button
                         type="button"
-                        class="btn custom-button"
+                        class="custom-button btn"
                         @click="saveAndClose"
                         :disabled="saveDisabled"
                       >
@@ -58,7 +58,7 @@
                       </button>
                       <button
                         type="button"
-                        class="btn custom-button"
+                        class="custom-button btn"
                         @click="cancel"
                       >
                         Anulează și închide

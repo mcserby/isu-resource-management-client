@@ -12,28 +12,6 @@
   font-size:smaller;
 }
 
-.custom-button {
-  color: #f2f2f2;
-  background-color: #4682b4;
-
-  font-size: 20px;
-  font-family: Arial;
-  font-weight: bold;
-
-  border-radius: 1px;
-  border-size: 2px;
-  box-shadow: 1px 0px 0px 0px;
-
-  padding: 10px;
-  margin: 5px;
-  width: 100%;
-}
-
-.custom-button:hover:enabled {
-  color: #f2f2f2;
-  background-color: #2b506e;
-}
-
 .unit-locked {
   background: repeating-linear-gradient(
     45deg,

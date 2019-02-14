@@ -33,12 +33,12 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="btn custom-button"
+              class="custom-button btn"
               @click="saveAndClose"
             >Salvează și închide</button>
             <button
               type="button"
-              class="btn custom-button"
+              class="custom-button btn"
               @click="closeWithoutSaving"
             >Închide fără a salva</button>
           </div>
