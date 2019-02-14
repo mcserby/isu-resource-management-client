@@ -145,7 +145,7 @@
         this.setEditorFields(resource);
         this.validateFields();
         this.$store.dispatch(A.ADD_RESOURCE, resource);
-        this.changesPerformed = true;
+        this.changesPerformed = false;
       },
       constructResource(id){
         let crewList = this.crew.split(/[\n,]/).filter(c => c.length !== 0);

@@ -129,7 +129,7 @@
       },
 
       addNewEquipment() {
-        this.unitModified = true;
+        this.unitModified = false;
         this.addEmptyEquipment();
         this.clearFormValues();
         this.validateFields();
