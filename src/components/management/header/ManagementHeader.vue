@@ -1,6 +1,6 @@
 <template>
   <div class="principal-header">
-    <div class="principal-title">ISU EasyManage</div>
+    <div class="principal-title">ISU EasyManage - Management</div>
     <div class="other-modules-wrapper">
       <div class="service-button">
         <router-link class="btn custom-button" role="button" to="/principal">Principal</router-link>

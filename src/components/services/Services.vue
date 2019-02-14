@@ -19,7 +19,7 @@
         </form>
       </div>
       <div v-if="searchText !== ''" class="filter-activated">Filtru activ!</div>
-      <div class="services-title">ISU EasyManage</div>
+      <div class="services-title">ISU EasyManage - Servicii</div>
       <div class="services-other-modules-wrapper">
         <div class="principal-button">
           <router-link class="btn custom-button" role="button" to="/principal">Principal</router-link>
