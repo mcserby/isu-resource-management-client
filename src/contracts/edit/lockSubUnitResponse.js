@@ -1,6 +1,6 @@
 class LockSubUnitResponse {
-  constructor(subUnitName, resourceTypes) {
-    this.subUnitName = subUnitName;
+  constructor(subUnitId, resourceTypes) {
+    this.subUnitId = subUnitId;
     this.resourceTypes = resourceTypes;
   }
 }

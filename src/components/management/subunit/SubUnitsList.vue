@@ -6,8 +6,8 @@
         class="unit-name-element item"
         v-for="name in unitNames"
         :key="name"
-        @click="selectSubUnit(name)"
-      >{{name}}</div>
+        @mousedown="selectSubUnit(name)"
+      > ||| {{name}}</div>
     </draggable>
   </div>
 </template>

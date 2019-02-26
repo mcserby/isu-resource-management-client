@@ -110,7 +110,7 @@
         return this.$store.state.principalStore.activeUnit.resources.filter(r => r.type === this.resourceType);
       },
       existingLicencePlatesInOtherUnits() {
-        return [].concat.apply([], this.$store.state.principalStore.units.filter(u => u.name !== this.$store.state.principalStore.activeUnit.name).map(u => u.resources.map(r => r.plateNumber)));
+        return [].concat.apply([], this.$store.state.principalStore.units.filter(u => u.id !== this.$store.state.principalStore.activeUnit.id).map(u => u.resources.map(r => r.plateNumber)));
       },
       title() {
         return this.$store.state.principalStore.activeTab.name + ': ' + this.$store.state.principalStore.activeUnit.name;
@@ -160,7 +160,7 @@
         this.errors = [];
       },
       closeAddResourceDialog(){
-        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('unlockSubUnit', new UnlockSubUnitRequest(this.$store.state.principalStore.activeUnit.name, this.resourceType)));
+        this.$store.dispatch(A.WEBSOCKET_SEND, new WebsocketSend('unlockSubUnit', new UnlockSubUnitRequest(this.$store.state.principalStore.activeUnit.id, this.resourceType)));
         this.$store.dispatch(A.CLOSE_ADD_RESOURCE_DIALOG);
       },
       updateUnit(){

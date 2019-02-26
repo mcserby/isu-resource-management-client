@@ -51,6 +51,8 @@ import FunctionsManagement from "./functions/FunctionsManagement.vue";
 import TrucksManagement from "./trucks/TrucksManagement.vue";
 import A from "../../constants/actions";
 import ManagedResourceType from "../../constants/managedResourceType";
+import DeleteFunctionRequest from "../../contracts/management/functions/DeleteFunctionRequest";
+import WebsocketSend from "../../contracts/websocketSend";
 
 export default {
   name: "Management",
@@ -80,7 +82,7 @@ export default {
         this.$store.state.managementStore.selectedResourceType === resourceType
           ? "resource-type-selected"
           : ""
-      ].join(" ");
+      ];
     },
     selectResourceType(resourceTypeToSelect) {
       this.$store.dispatch(
@@ -88,8 +90,36 @@ export default {
         resourceTypeToSelect
       );
     },
-    addResource() {},
-    deleteResource() {}
+    addResource() {
+      this.$store.dispatch(A.ADD_MANAGED_RESOURCE);
+    },
+    deleteResource() {
+      switch (this.$store.state.managementStore.selectedResourceType) {
+        case ManagedResourceType.SUBUNITS:
+          break;
+        case ManagedResourceType.FUNCTIONS:
+          this.deleteFunction();
+          break;
+        case ManagedResourceType.TRUCKS:
+          break;
+      }
+    },
+    deleteFunction() {
+      let functionId = this.$store.state.managementStore.selectedFunction.id;
+      if (functionId != null) {
+        this.$store.dispatch(
+          A.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "deleteFunction",
+            new DeleteFunctionRequest(functionId)
+          )
+        );
+      }
+      this.$store.dispatch(
+        A.DELETE_MANAGED_RESOURCE,
+        this.$store.state.managementStore.managedFunctions[0]
+      );
+    }
   },
   mounted: function() {
     console.log("ResourceManagement module mounted");

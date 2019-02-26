@@ -68,11 +68,11 @@ const actions = {
   [A.ADD_RESOURCE] ({commit}, resource) {
     commit(M.ADD_RESOURCE, resource)
   },
-  [A.LOCK_UNIT] ({commit}, unitName) {
-    commit(M.LOCK_UNIT, unitName)
+  [A.LOCK_UNIT] ({commit}, subUnit) {
+    commit(M.LOCK_UNIT, subUnit)
   },
-  [A.UNLOCK_UNIT] ({commit}, unitName) {
-    commit(M.UNLOCK_UNIT, unitName)
+  [A.UNLOCK_UNIT] ({commit}, subUnit) {
+    commit(M.UNLOCK_UNIT, subUnit)
   },
   [A.CHANGE_ACTIVE_TAB] ({commit}, tab) {
     commit(M.CHANGE_ACTIVE_TAB, tab)
@@ -106,10 +106,11 @@ const mutations = {
     state.units.forEach(u => u.equipment.forEach(e => e.id = e.id || Utils.createUUID()));
   },
   [M.UNIT_UPDATED](state, unit) {
-    let updatedUnit = state.units.find(u => u.name === unit.name);
+    let updatedUnit = state.units.find(u => u.id === unit.id);
     if (updatedUnit) {
       unit.resources.sort((r1, r2) => sortResource(r1, r2));
       unit.resources.forEach(r => r.id = r.id || Utils.createUUID());
+      Vue.set(updatedUnit, 'name', unit.name);
       Vue.set(updatedUnit, 'resources', unit.resources);
       Vue.set(updatedUnit, 'equipment', unit.equipment);
       Vue.set(updatedUnit, 'lastUpdateFirstInterventionResource', unit.lastUpdateFirstInterventionResource);
@@ -117,8 +118,8 @@ const mutations = {
       Vue.set(updatedUnit, 'lastUpdateEquipment', unit.lastUpdateEquipment);
     }
   },
-  [M.CLEAR_UNIT_RESOURCES](state, unitName) {
-    let unit = state.units.find(u => u.name === unitName)
+  [M.CLEAR_UNIT_RESOURCES](state, unitId) {
+    let unit = state.units.find(u => u.id === unitId)
     if (unit) {
       let currentResourceType = state.activeTab.resourceType;
       let updatedUnitResources = unit.resources.filter(r => r.type !== currentResourceType);
@@ -127,8 +128,8 @@ const mutations = {
       Vue.set(unit, 'equipment', updatedUnitEquipments)
     }
   },
-  [M.OPEN_CONFIRMATION_DIALOG](state, unitName) {
-    let unit = state.units.find(u => u.name === unitName);
+  [M.OPEN_CONFIRMATION_DIALOG](state, subUnitId) {
+    let unit = state.units.find(u => u.name === subUnitId);
     if (unit) {
       state.activeUnit = unit;
       state.confirmationDialogIsOpen = true;
@@ -166,8 +167,8 @@ const mutations = {
   [M.CLOSE_CONFIRMATION_DIALOG](state) {
       state.confirmationDialogIsOpen = false;
   },
-  [M.OPEN_ADD_RESOURCE_DIALOG](state, unitName) {
-    let unit = state.units.find(u => u.name === unitName);
+  [M.OPEN_ADD_RESOURCE_DIALOG](state, subUnitId) {
+    let unit = state.units.find(u => u.name === subUnitId);
     if (unit) {
       state.activeUnit = JSON.parse(JSON.stringify(unit));
       if (ResourceType.EQUIPMENT === state.activeTab.resourceType) {
@@ -210,17 +211,17 @@ const mutations = {
       state.activeUnit.resources.splice(resourceIndex, 1, resource);
     }
   },
-  [M.LOCK_UNIT](state, lockResponse) {
-    let unit = state.lockUnits.find(u => u.name === lockResponse.subUnitName);
+  [M.LOCK_UNIT](state, subUnit) {
+    let unit = state.lockUnits.find(u => u.id === subUnit.subUnitId);
     if (unit) {
-      Vue.set(unit, 'resourceTypes', lockResponse.lockedResourceTypes);
+      Vue.set(unit, 'resourceTypes', subUnit.lockedResourceTypes);
     } else {
-      state.lockUnits.push(new LockUnit(lockResponse.subUnitName, lockResponse.lockedResourceTypes));
+      state.lockUnits.push(new LockUnit(subUnit.subUnitId, subUnit.lockedResourceTypes));
     }
   },
-  [M.UNLOCK_UNIT](state, unlockResponse) {
-    let unit = state.lockUnits.find(u => u.name === unlockResponse.subUnitName);
-    const resourceTypes = unit.resourceTypes.filter(r => unlockResponse.lockedResourceTypes.indexOf(r) === -1);
+  [M.UNLOCK_UNIT](state, subUnit) {
+    let unit = state.lockUnits.find(u => u.id === subUnit.subUnitId);
+    const resourceTypes = unit.resourceTypes.filter(r => subUnit.lockedResourceTypes.indexOf(r) === -1);
     if (unit) {
       Vue.set(unit, 'resourceTypes', resourceTypes);
     }

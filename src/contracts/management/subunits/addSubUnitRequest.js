@@ -1,6 +1,6 @@
 class AddSubUnitRequest {
-  constructor(subunit) {
-    this.subUnit = subunit;
+  constructor(name) {
+    this.name = name;
   }
 }
 

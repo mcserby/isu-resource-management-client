@@ -13,6 +13,8 @@
 </template>
 <script>
 import UpdateFunctionRequest from "../../../contracts/management/functions/UpdateFunctionRequest";
+import AddFunctionRequest from "../../../contracts/management/functions/AddFunctionRequest";
+import DeleteFunctionRequest from "../../../contracts/management/functions/DeleteFunctionRequest";
 import A from "../../../constants/actions";
 import WebsocketSend from "../../../contracts/websocketSend";
 
@@ -20,7 +22,7 @@ export default {
   name: "AddFunctionForm",
   data: () => {
     return {
-      editedName: ""
+      editedName: null
     };
   },
   computed: {
@@ -40,18 +42,38 @@ export default {
     }
   },
   methods: {
+    isSaveDisabled() {
+      return this.editedName == null;
+    },
     saveFunction() {
-      this.$store.dispatch(
-        A.WEBSOCKET_SEND,
-        new WebsocketSend(
-          "updateFunction",
-          new UpdateFunctionRequest(
-            this.$store.state.managementStore.selectedFunction.id,
-            this.editedName
+      let functionId = this.$store.state.managementStore.selectedFunction.id;
+      if (functionId != null) {
+        this.$store.dispatch(
+          A.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "updateFunction",
+            new UpdateFunctionRequest(
+              functionId,
+              this.editedName == null
+                ? this.$store.state.managementStore.selectedFunction.name
+                : this.editedName
+            )
           )
-        )
-      );
-    }
+        );
+      } else {
+        this.$store.dispatch(
+          A.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "addFunction",
+            new AddFunctionRequest(
+              this.editedName == null
+                ? this.$store.state.managementStore.selectedFunction.name
+                : this.editedName
+            )
+          )
+        );
+      }
+    },
   }
 };
 </script>

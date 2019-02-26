@@ -1,6 +1,6 @@
 class LockUnit {
-  constructor(name, resourceTypes) {
-    this.name = name;
+  constructor(id, resourceTypes) {
+    this.id = id;
     this.resourceTypes = resourceTypes;
   }
 }

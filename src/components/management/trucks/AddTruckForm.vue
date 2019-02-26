@@ -6,11 +6,13 @@
       <label class="form-label" for="name">Numele lung</label>
       <input type="text" required v-model="longName" class="form-control" id="longName">
     </div>
-    <button type="button" class="btn custom-button add-truck-button" @click="save">Salvează</button>
+    <button type="button" class="btn custom-button add-truck-button" @click="saveTruck">Salvează</button>
   </div>
 </template>
 <script>
-import Unit from "../../../contracts/unit";
+import UpdateTruckRequest from "../../../contracts/management/trucks/updateTruckRequest";
+import A from "../../../constants/actions";
+import WebsocketSend from "../../../contracts/websocketSend";
 
 export default {
   name: "AddTruckForm",
@@ -46,15 +48,26 @@ export default {
   },
   data: () => {
     return {
-      editedShortName: "",
-      editedLongName: ""
+      editedShortName: null,
+      editedLongName: null
     };
   },
   methods: {
-    save() {
-      this.$emit(
-        "saveAndAddAnother",
-        new Unit(this.name, [], [], null, null, null)
+    saveTruck() {
+      this.$store.dispatch(
+        A.WEBSOCKET_SEND,
+        new WebsocketSend(
+          "updateTruck",
+          new UpdateTruckRequest(
+            this.$store.state.managementStore.selectedTruck.id,
+            this.editedShortName == null
+              ? this.$store.state.managementStore.selectedTruck.shortName
+              : this.editedShortName,
+            this.editedLongName === null
+              ? this.$store.state.managementStore.selectedTruck.longName
+              : this.editedLongName
+          )
+        )
       );
     }
   }

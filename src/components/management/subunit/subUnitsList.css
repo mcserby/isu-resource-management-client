@@ -1,6 +1,7 @@
 .unit-name-list-section {
   position: relative;
   display: grid;
+  padding-right: 20px;
 }
 
 .unit-name-element {

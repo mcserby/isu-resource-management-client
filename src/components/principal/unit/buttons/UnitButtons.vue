@@ -55,7 +55,7 @@
       },
       isUnitLocked() {
         const lockUnit = this.$store.state.principalStore.lockUnits.find(
-          u => u.name === this.unit.name
+          u => u.id === this.unit.id
         );
         if (lockUnit && lockUnit.resourceTypes) {
           return Boolean(
@@ -86,20 +86,20 @@
           A.WEBSOCKET_SEND,
           new WebsocketSend(
             "lockSubUnit",
-            new LockSubUnitRequest(this.unit.name, this.resourceType)
+            new LockSubUnitRequest(this.unit.id, this.resourceType)
           )
         );
-        this.$store.dispatch(A.OPEN_CONFIRMATION_DIALOG, this.unit.name);
+        this.$store.dispatch(A.OPEN_CONFIRMATION_DIALOG, this.unit.id);
       },
       addResources() {
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
             "lockSubUnit",
-            new LockSubUnitRequest(this.unit.name, this.resourceType)
+            new LockSubUnitRequest(this.unit.id, this.resourceType)
           )
         );
-        this.$store.dispatch(A.OPEN_ADD_RESOURCE_DIALOG, this.unit.name);
+        this.$store.dispatch(A.OPEN_ADD_RESOURCE_DIALOG, this.unit.id);
       }
     },
     filters: {

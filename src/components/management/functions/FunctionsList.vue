@@ -1,17 +1,13 @@
 <template>
   <div class="function-name-list-section">
-    <draggable
-      @change ="update"
-      class="function-name-list-container"
-      :list="managedFunctions"
-    >
+    <draggable @change="update" class="function-name-list-container" :list="managedFunctions">
       <div
         :class="getFunctionClass(managedFunction)"
         class="function-name-element item"
         v-for="managedFunction in managedFunctions"
         :key="managedFunction.id"
-        @click="selectFunction(managedFunction)"
-      >{{managedFunction.name}}</div>
+        @mousedown="selectFunction(managedFunction)"
+      > ||| {{managedFunction.name}}</div>
     </draggable>
   </div>
 </template>
@@ -35,21 +31,20 @@ export default {
       get() {
         return this.$store.state.managementStore.managedFunctions;
       },
-      set(value) {        
-      }
+      set(value) {}
     }
   },
   methods: {
-    update(managedFunction){
+    update(managedFunction) {
       this.$store.dispatch(
-          A.WEBSOCKET_SEND,
-          new WebsocketSend(
-            "updateFunctions",
-            new UpdateFunctionsRequest(
-              this.$store.state.managementStore.managedFunctions
-            )
+        A.WEBSOCKET_SEND,
+        new WebsocketSend(
+          "updateFunctions",
+          new UpdateFunctionsRequest(
+            this.$store.state.managementStore.managedFunctions
           )
-        );
+        )
+      );
     },
     selectFunction(managedFunction) {
       this.$store.dispatch(A.SELECT_MANAGED_FUNCTION, managedFunction);
