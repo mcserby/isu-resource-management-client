@@ -1,159 +1,99 @@
 <template>
   <div>
     <ManagementHeader></ManagementHeader>
-    <div class="unit-name-list-section">
-      <div class="unit-name-list-container" v-for="(name) in unitNames" v-bind:key="name">
-        <div class="unit-name-element">
-          <span>{{name}}</span>
-        </div>
-        <div class="delete-sub-unit">
-          <button type="button" class="btn custom-close-button" @click="triggerSubUnitDeletion(name)">X</button>
+    <div class="managed-resources-grid">
+      <div class="managed-resource-type">Tipul de resursă</div>
+      <div class="managed-resource-types">
+        <div class="resource-types">
+          <div
+            :class="getSelectedResourceClass(ManagedResourceType.SUBUNITS)"
+            class="resource-type resource-type-subunit"
+            @click="selectResourceType(ManagedResourceType.SUBUNITS)"
+          >Subunități</div>
+          <div
+            :class="getSelectedResourceClass(ManagedResourceType.FUNCTIONS)"
+            class="resource-type resource-type-function"
+            @click="selectResourceType(ManagedResourceType.FUNCTIONS)"
+          >Funcții</div>
+          <div
+            :class="getSelectedResourceClass(ManagedResourceType.TRUCKS)"
+            class="resource-type resource-type-auto"
+            @click="selectResourceType(ManagedResourceType.TRUCKS)"
+          >Tipuri de autospeciale</div>
         </div>
       </div>
+      <div class="managed-resources-list-buttons">
+        <button
+          type="button"
+          class="btn custom-resource-management-button add-resource-button"
+          @click="addResource"
+        >Adaugă</button>
+        <button
+          type="button"
+          class="btn custom-resource-management-button delete-resource-button"
+          @click="deleteResource"
+        >Șterge</button>
+      </div>
+      <div class="managed-resources-details">Editare resursă</div>
+      <div class="managed-resources">
+        <SubUnitsManagement v-if="isSelectedResource(ManagedResourceType.SUBUNITS)"></SubUnitsManagement>
+        <FunctionsManagement v-if="isSelectedResource(ManagedResourceType.FUNCTIONS)"></FunctionsManagement>
+        <TrucksManagement v-if="isSelectedResource(ManagedResourceType.TRUCKS)"></TrucksManagement>
+      </div>
     </div>
-    <div>
-        <button type="button" class="btn custom-button" @click="openAddNewSubUnitForm()">Adaugă o subunitate</button>
-    </div>
-    <ConfirmationDialog
-      v-if="displayConfirmationDialog"
-      :title="confirmationDialogTitle"
-      :text="confirmationDialogText"
-      @confirm="confirmDeletionOfSubUnit"
-      @cancel="onCancelDeletion"
-    ></ConfirmationDialog>
-    <AddSubUnitForm
-      v-if="displayAddSubUnitForm"
-      @cancel="onCancelAdding"
-      @saveAndClose="onSaveAndClose"
-      @saveAndAddAnother="onSaveAndAddAnother"
-    ></AddSubUnitForm>
   </div>
 </template>
 
 <script>
+import ManagementHeader from "./header/ManagementHeader.vue";
+import SubUnitsManagement from "./subunit/SubUnitsManagement.vue";
+import FunctionsManagement from "./functions/FunctionsManagement.vue";
+import TrucksManagement from "./trucks/TrucksManagement.vue";
+import A from "../../constants/actions";
+import ManagedResourceType from "../../constants/managedResourceType";
 
-  import Unit from '../principal/unit/Unit.vue';
-  import AddSubUnitForm from './form/AddSubUnitForm.vue';
-  import ConfirmationDialog from '../common/ConfirmationDialog.vue';
-  import A from '../../constants/actions';
-  import WebsocketSubscribe from "../../contracts/websocketSubscribe";
-  import WebsocketSend from "../../contracts/websocketSend";
-  import ManagementHeader from './header/ManagementHeader.vue';
-  import AddSubUnitRequest from '../../contracts/subunits/addSubUnitRequest';
-  import DeleteSubUnitRequest from '../../contracts/subunits/deleteSubUnitRequest';
-
-  export default {
-    name: "Management",
-    components: {
-      Unit,
-      AddSubUnitForm,
-      ConfirmationDialog,
-      ManagementHeader,
-    },
-    data: () => {
-      return {
-        title: "Managementul sub-unităților",
-        displayAddSubUnitForm: false,
-        displayConfirmationDialog: false,
-        confirmationDialogTitle: 'Ștergere subunitate',
-        confirmationDialogText: '',
-        currentUnitName: null,
-      };
-    },
-    computed: {
-      unitNames() {
-        return this.$store.state.principalStore.units.map(u => u.name);
-      },
-    },
-    methods: {
-      openAddNewSubUnitForm() {
-        this.displayAddSubUnitForm = true;
-      },
-      onCancelAdding() {
-        this.closeAddNewSubUnitForm();
-      },
-      onSaveAndClose(subunit) {
-        this.addSubUnit(subunit);
-        this.closeAddNewSubUnitForm();
-      },
-      onSaveAndAddAnother(subunit) {
-        this.addSubUnit(subunit);
-      },
-      closeAddNewSubUnitForm() {
-        this.displayAddSubUnitForm = false;
-      },
-      triggerSubUnitDeletion(subUnitName) {
-        this.currentUnitName = subUnitName;
-        this.openConfirmationDialog();
-      },
-      confirmDeletionOfSubUnit() {
-        this.closeConfirmationDialog();
-        this.deleteSubUnit(this.currentUnitName);
-      },
-      onCancelDeletion() {
-        this.closeConfirmationDialog();
-      },
-      openConfirmationDialog(){
-        this.displayConfirmationDialog = true;
-      },
-      closeConfirmationDialog(){
-        this.displayConfirmationDialog = false;
-      },
-      deleteSubUnit(unitName) {
-        this.$store.dispatch(
-          A.WEBSOCKET_SEND,
-          new WebsocketSend(
-            "deleteSubUnit",
-            new DeleteSubUnitRequest(unitName)
-          )
-        );
-      },
-      addSubUnit(subunit) {
-        this.$store.dispatch(
-          A.WEBSOCKET_SEND,
-          new WebsocketSend(
-            "addSubUnit",
-            new AddSubUnitRequest(subunit)
-          )
-        );
-      },
-    },
-    mounted: function() {
-      console.log("Management module mounted");
-      const self = this;
-
-      let onAddSubUnitResponse = function(response) {
-        let r = JSON.parse(response.body);
-        console.log(r);
-      };
-
-      let onDeleteSubUnitResponse = function(response) {
-        let r = JSON.parse(response.body);
-        console.log(r);
-      };
-
-      let onError = function(error) {
-        console.err(error);
-      };
-
-      this.$store.dispatch(
-        A.WEBSOCKET_SUBSCRIBE,
-        new WebsocketSubscribe(
-          "unitAddedNotification",
-          onAddSubUnitResponse,
-          onError
-        )
-      );
-      this.$store.dispatch(
-        A.WEBSOCKET_SUBSCRIBE,
-        new WebsocketSubscribe(
-          "unitDeletedNotification",
-          onDeleteSubUnitResponse,
-          onError
-        )
-      );
+export default {
+  name: "Management",
+  components: {
+    ManagementHeader,
+    FunctionsManagement,
+    SubUnitsManagement,
+    TrucksManagement
+  },
+  props: [],
+  data: () => {
+    return { ManagedResourceType: ManagedResourceType };
+  },
+  computed: {
+    selectedResourceType() {
+      return this.$store.state.managementStore.selectedResourceType;
     }
-  };
+  },
+  methods: {
+    isSelectedResource(resourceType) {
+      return (
+        this.$store.state.managementStore.selectedResourceType === resourceType
+      );
+    },
+    getSelectedResourceClass(resourceType) {
+      return [
+        this.$store.state.managementStore.selectedResourceType === resourceType
+          ? "resource-type-selected"
+          : ""
+      ].join(" ");
+    },
+    selectResourceType(resourceTypeToSelect) {
+      this.$store.dispatch(
+        A.SELECT_MANAGED_RESOURCE_TYPE,
+        resourceTypeToSelect
+      );
+    },
+    addResource() {},
+    deleteResource() {}
+  },
+  mounted: function() {
+    console.log("ResourceManagement module mounted");
+  }
+};
 </script>
-
 <style src="./management.css"></style>

@@ -21,33 +21,34 @@
 }
 
 .service-name {
-  grid-column: 2 / span 2;
+  grid-column: 2 / span 3;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
 .service-title {
-  grid-column: 7 / span 3;
+  grid-column: 5 / span 2;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
 .service-role {
-  grid-column: 10 / span 3;
+  grid-column: 8 / span 4;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
 .service-contact {
-  grid-column: 13 / span 3;
+  grid-column: 13 / span 5;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
 .service-actions {
-  grid-column: 16 / span 2;
+  grid-column: 18 / span 3;
   grid-row: 1 / span 1;
   font-size: x-large;
+  text-align: left;
 }
 
 .edit-delete-button {

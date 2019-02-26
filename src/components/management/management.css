@@ -1,17 +1,106 @@
-.unit-name-list-section {
-  width: 150px;
-  margin: 0 auto 100px;
-}
-
-.unit-name-list-container {
+.managed-resources-grid {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 20% 20% 60%;
+  padding: 30px;
 }
 
-.unit-name-element {
-  grid-column: 1 / span 2;
+.managed-resource-type {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
+  font-family: Arial;
+  color: #f2f2f2;
+  background-color: #616161;
+  text-align: left;
+  font-size: x-large;
+  font-weight: 500;
 }
 
-.delete-sub-unit {
-  grid-column:  3 / span 1;
+.managed-resource-types {
+  grid-column: 1 / span 1;
+  grid-row: 2 / span 1;
+  background-color: #f2f2f2;
+  min-height: 400px
+}
+
+.managed-resources-list-buttons {
+  grid-column: 2 / span 1;
+  grid-row: 1 / span 1;
+  color: #f2f2f2;
+  background-color: #616161;
+}
+
+.managed-resources-details {
+  grid-column: 3 / span 1;
+  grid-row: 1 / span 1;
+  font-family: Arial;
+  color: #f2f2f2;
+  background-color: #616161;
+  text-align: left;
+  font-size: x-large;
+  font-weight: 500;
+}
+
+.managed-resources {
+  grid-column: 2 / span 2;
+  grid-row: 2 / span 1;
+  background-color: #f2f2f2;
+  font-size: 20px;
+  font-family: Arial;
+  display: grid;
+}
+
+.add-resource-button {
+  width: 30%;
+}
+delete-resource-button {
+  width: 30%;
+}
+
+.resource-types {
+  display: grid;
+}
+
+.resource-type {
+  font-family: Arial;
+  text-align: left;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.resource-type-selected {
+  color: #f2f2f2;
+  background-color: #2b506e;
+}
+
+.resource-type-subunit {
+  grid-row: 1 / span 1;
+}
+
+.resource-type-function {
+  grid-row: 2 / span 1;
+}
+
+.resource-type-auto {
+  grid-row: 3 / span 1;
+}
+
+.custom-resource-management-button {
+  color: #f2f2f2;
+  background-color: #4682b4;
+
+  font-size: 20px;
+  font-family: Arial;
+  font-weight: bold;
+
+  border-radius: 1px;
+  border-size: 0px;
+
+  padding: 10px;
+  margin: 5px;
+  width: 30%;
+}
+
+.custom-resource-management-button:hover:enabled {
+  color: #f2f2f2;
+  background-color: #2b506e;
 }
