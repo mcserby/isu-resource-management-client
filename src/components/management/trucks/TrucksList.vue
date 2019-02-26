@@ -1,7 +1,17 @@
 <template>
   <div class="truck-name-list-section">
-    <draggable class="truck-name-list-container" v-model="unitNames" :options="{draggable:'.item'}">
-      <div class="truck-name-element item" v-for="name in unitNames" :key="name">{{name}}</div>
+    <draggable
+      class="truck-name-list-container"
+      v-model="managedTrucks"
+      :options="{draggable:'.item'}"
+    >
+      <div
+        :class="getTruckClass(truck)"
+        class="truck-name-element item"
+        @click="selectTruck(truck)"
+        v-for="truck in managedTrucks"
+        :key="truck.id"
+      >{{truck.shortName}}</div>
     </draggable>
   </div>
 </template>
@@ -23,11 +33,24 @@ export default {
     return {};
   },
   computed: {
-    unitNames() {
-      return [];
+    managedTrucks() {
+      return this.$store.state.managementStore.managedTrucks;
     }
   },
-  methods: {},
+  methods: {
+    selectTruck(managedTruck) {
+      this.$store.dispatch(A.SELECT_MANAGED_TRUCK, managedTruck);
+    },
+    getTruckClass(managedTruck) {
+      if (this.$store.state.managementStore.selectedTruck != null) {
+        return [
+          this.$store.state.managementStore.selectedTruck.id === managedTruck.id
+            ? "truck-name-element-selected "
+            : ""
+        ];
+      } else return "";
+    }
+  },
   mounted: function() {
     console.log("TrucksList module mounted");
   }

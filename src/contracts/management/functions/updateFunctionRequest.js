@@ -1,8 +1,9 @@
 // Function contract
 
 class UpdateFunctionRequest {
-  constructor(managedFunction) {
-    this.function = managedFunction;
+  constructor(id, name) {
+    this.id = id;
+    this.name = name;
   }
 }
 

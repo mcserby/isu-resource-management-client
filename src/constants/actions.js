@@ -35,5 +35,7 @@ export default {
   SELECT_MANAGED_RESOURCE_TYPE :"selectManagedResourceType",
   SELECT_MANAGED_SUBUNIT :"selectManagedSubUnit",
   SELECT_MANAGED_FUNCTION :"selectManagedFunction",
-  MANAGED_FUNCTIONS_RECEIVED:"managedFunctionsReceived"
+  MANAGED_FUNCTIONS_RECEIVED:"managedFunctionsReceived",
+  SELECT_MANAGED_TRUCK :"selectManagedTruck",
+  MANAGED_TRUCKS_RECEIVED:"managedTrucksReceived"
 };

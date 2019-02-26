@@ -9,7 +9,7 @@
   font-family: Arial;
 }
 
-.truck-name-element:hover {
+.truck-name-element-selected {
   color: #f2f2f2;
   background-color: #2b506e;
 }

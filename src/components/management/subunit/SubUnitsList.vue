@@ -45,10 +45,12 @@ export default {
   },
   mounted: function() {
     console.log("Management module mounted");
-    this.$store.dispatch(
-      A.SELECT_MANAGED_SUBUNIT,
-      this.$store.state.principalStore.units[0].name
-    );
+    if (this.$store.state.principalStore.units[0] != null) {
+      this.$store.dispatch(
+        A.SELECT_MANAGED_SUBUNIT,
+        this.$store.state.principalStore.units[0].name
+      );
+    }
   }
 };
 </script>

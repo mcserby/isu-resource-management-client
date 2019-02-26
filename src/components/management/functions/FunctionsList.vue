@@ -1,9 +1,9 @@
 <template>
   <div class="function-name-list-section">
     <draggable
+      @change ="update"
       class="function-name-list-container"
-      v-model="managedFunctions"
-      :options="{draggable:'.item'}"
+      :list="managedFunctions"
     >
       <div
         :class="getFunctionClass(managedFunction)"
@@ -18,7 +18,9 @@
 
 <script>
 import draggable from "vuedraggable";
+import UpdateFunctionsRequest from "../../../contracts/management/functions/UpdateFunctionsRequest";
 import A from "../../../constants/actions";
+import WebsocketSend from "../../../contracts/websocketSend";
 
 export default {
   name: "FunctionsList",
@@ -29,28 +31,42 @@ export default {
     return {};
   },
   computed: {
-    managedFunctions() {
-      return this.$store.state.managementStore.managedFunctions;
+    managedFunctions: {
+      get() {
+        return this.$store.state.managementStore.managedFunctions;
+      },
+      set(value) {        
+      }
     }
   },
   methods: {
+    update(managedFunction){
+      this.$store.dispatch(
+          A.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "updateFunctions",
+            new UpdateFunctionsRequest(
+              this.$store.state.managementStore.managedFunctions
+            )
+          )
+        );
+    },
     selectFunction(managedFunction) {
       this.$store.dispatch(A.SELECT_MANAGED_FUNCTION, managedFunction);
     },
     getFunctionClass(managedFunction) {
-      return [
-        this.$store.state.managementStore.selectedFunction.id === managedFunction.id
-          ? "function-name-element-selected "
-          : ""
-      ];
+      if (this.$store.state.managementStore.selectedFunction != null) {
+        return [
+          this.$store.state.managementStore.selectedFunction.id ===
+          managedFunction.id
+            ? "function-name-element-selected "
+            : ""
+        ];
+      } else return "";
     }
   },
   mounted: function() {
     console.log("FunctionsList module mounted");
-    this.$store.dispatch(
-      A.SELECT_MANAGED_FUNCTION,
-      this.$store.state.managementStore.managedFunctions[0]
-    );
   }
 };
 </script>
