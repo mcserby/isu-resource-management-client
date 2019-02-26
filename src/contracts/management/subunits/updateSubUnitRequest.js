@@ -5,4 +5,4 @@ class UpdateSubUnitRequest {
   }
 }
 
-export default AddSubUnitRequest;
+export default UpdateSubUnitRequest;

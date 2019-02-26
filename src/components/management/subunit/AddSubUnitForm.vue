@@ -9,25 +9,61 @@
 </template>
 <script>
 import Unit from "../../../contracts/unit";
+import UpdateSubUnitRequest from '../../../contracts/management/subunits/updateSubUnitRequest';
+import AddSubUnitRequest from '../../../contracts/management/subunits/addSubUnitRequest';
 
 export default {
   name: "AddSubUnitForm",
   data: () => {
-    return {};
+    return { editedName: "" };
   },
   computed: {
-    name() {
-      return this.$store.state.managementStore.selectedSubUnit;
+    name: {
+      // getter
+      get: function() {
+        if (this.$store.state.managementStore.selectedSubUnit != null) {
+          return this.$store.state.managementStore.selectedSubUnit.name;
+        } else {
+          return "";
+        }
+      },
+      // setter
+      set: function(newValue) {
+        this.editedName = newValue;
+      }
     }
   },
   methods: {
     save() {
-      this.$emit(
-        "saveAndAddAnother",
-        new Unit(this.name, [], [], null, null, null)
-      );
+      let subUnitId = this.$store.state.managementStore.selectedSubUnit.id;
+      if (subUnitId != null) {
+        this.$store.dispatch(
+          A.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "updateFunction",
+            new UpdateSubUnitRequest(
+              subUnitId,
+              this.editedName == null
+                ? this.$store.state.managementStore.selectedSubUnit.name
+                : this.editedName
+            )
+          )
+        );
+      } else {
+        this.$store.dispatch(
+          A.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "addFunction",
+            new AddSubUnitRequest(
+              this.editedName == null
+                ? this.$store.state.managementStore.selectedSubUnit.name
+                : this.editedName
+            )
+          )
+        );
+      }
+    },
     }
-  }
 };
 </script>
 <style src="./addSubUnitForm.css"></style>
