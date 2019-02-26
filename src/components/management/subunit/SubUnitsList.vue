@@ -1,56 +1,67 @@
 <template>
   <div class="unit-name-list-section">
-    <draggable class="unit-name-list-container" v-model="unitNames" :options="{draggable:'.item'}">
+    <draggable class="unit-name-list-container" @change="update" :list="managedSubUnits">
       <div
-        :class="getSubUnitClass(name)"
+        :class="getSubUnitClass(managedSubUnit)"
         class="unit-name-element item"
-        v-for="name in unitNames"
-        :key="name"
-        @mousedown="selectSubUnit(name)"
-      > ||| {{name}}</div>
+        v-for="managedSubUnit in managedSubUnits"
+        :key="managedSubUnit.id"
+        @mousedown="selectSubUnit(managedSubUnit)"
+      > ||| {{managedSubUnit.name}}</div>
     </draggable>
   </div>
 </template>
 
 <script>
-import Unit from "../../principal/unit/Unit.vue";
-import A from "../../../constants/actions";
 import draggable from "vuedraggable";
+//import UpdateSubUnitsRequest from "../../../contracts/management/subUnits/updateSubUnitsRequest";
+import A from "../../../constants/actions";
+import WebsocketSend from "../../../contracts/websocketSend";
 
 export default {
   name: "SubUnitsList",
   components: {
-    Unit,
     draggable
   },
   data: () => {
     return {};
   },
   computed: {
-    unitNames() {
-      return this.$store.state.principalStore.units.map(u => u.name);
+    managedSubUnits: {
+      get() {
+        return this.$store.state.managementStore.managedSubUnits;
+      },
+      set(value) {}
     }
   },
   methods: {
-    getSubUnitClass(subUnitName) {
-      return [
-        this.$store.state.managementStore.selectedSubUnit === subUnitName
-          ? "unit-name-element-selected"
-          : ""
-      ];
+     update(managedSubUnit) {
+      this.$store.dispatch(
+        A.WEBSOCKET_SEND,
+        new WebsocketSend(
+          "updateSubUnits",
+          new UpdateSubUnitsRequest(
+            this.$store.state.managementStore.managedSubUnit
+          )
+        )
+      );
     },
-    selectSubUnit(subUnitName) {
-      this.$store.dispatch(A.SELECT_MANAGED_SUBUNIT, subUnitName);
+    selectSubUnit(managedSubUnit) {
+      this.$store.dispatch(A.SELECT_MANAGED_SUBUNIT, managedSubUnit);
+    },
+    getSubUnitClass(managedSubUnit) {
+      if (this.$store.state.managementStore.selectedSubUnit != null) {
+        return [
+          this.$store.state.managementStore.selectedSubUnit.id ===
+          managedSubUnit.id
+            ? "unit-name-element-selected "
+            : ""
+        ];
+      } else return "";
     }
   },
   mounted: function() {
-    console.log("Management module mounted");
-    if (this.$store.state.principalStore.units[0] != null) {
-      this.$store.dispatch(
-        A.SELECT_MANAGED_SUBUNIT,
-        this.$store.state.principalStore.units[0].name
-      );
-    }
+    console.log("Management module mounted");  
   }
 };
 </script>
