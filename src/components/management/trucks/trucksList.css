@@ -1,0 +1,15 @@
+.truck-name-list-section {
+  position: relative;
+  display: grid;
+}
+
+.truck-name-element {
+  grid-column: 1 / span 1;
+  font-size: 20px;
+  font-family: Arial;
+}
+
+.truck-name-element:hover {
+  color: #f2f2f2;
+  background-color: #2b506e;
+}

@@ -1,0 +1,11 @@
+.truck-management-container {
+  display: grid;
+  grid-template-columns: 25% 75%;
+}
+.truck-list {
+  grid-column: 1 / span 1;
+}
+
+.add-truck-form {
+  grid-column: 2 / span 1;
+}

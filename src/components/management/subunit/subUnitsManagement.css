@@ -1,0 +1,11 @@
+.subunits-management-container {
+  display: grid;
+  grid-template-columns: 25% 75%;
+}
+.subunit-list {
+  grid-column: 1 / span 1;
+}
+
+.add-subunit-form {
+  grid-column: 2 / span 1;
+}

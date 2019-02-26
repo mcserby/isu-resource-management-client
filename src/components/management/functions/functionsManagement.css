@@ -1,0 +1,11 @@
+.functions-management-container {
+  display: grid;
+  grid-template-columns: 25% 75%;
+}
+.function-list {
+  grid-column: 1 / span 1;
+}
+
+.add-function-form {
+  grid-column: 2 / span 1;
+}
