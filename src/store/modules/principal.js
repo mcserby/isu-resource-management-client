@@ -72,20 +72,20 @@ const actions = {
   [A.ADD_RESOURCE]({ commit }, resource) {
     commit(M.ADD_RESOURCE, resource);
   },
-  [A.SHIFT_EXCHANGE_PENDING]({ commit }, unitName) {
-    commit(M.SHIFT_EXCHANGE_PENDING, unitName);
+  [A.SHIFT_EXCHANGE_PENDING]({ commit }, unitId) {
+    commit(M.SHIFT_EXCHANGE_PENDING, unitId);
   },
-  [A.UPDATE_RESOURCES_PENDING]({ commit }, unitName) {
-    commit(M.UPDATE_RESOURCES_PENDING, unitName);
+  [A.UPDATE_RESOURCES_PENDING]({ commit }, unitId) {
+    commit(M.UPDATE_RESOURCES_PENDING, unitId);
   },
   [A.LOCK_UNIT_RESPONSE_RECEIVED]({ commit }, response) {
     commit(M.LOCK_UNIT_RESPONSE_RECEIVED, response);
   },
-  [A.LOCK_UNIT]({ commit }, subUnit) {
-    commit(M.LOCK_UNIT, subUnit);
+  [A.LOCK_UNIT]({ commit }, unitId) {
+    commit(M.LOCK_UNIT, unitId);
   },
-  [A.UNLOCK_UNIT]({ commit }, subUnit) {
-    commit(M.UNLOCK_UNIT, subUnit);
+  [A.UNLOCK_UNIT]({ commit }, unitId) {
+    commit(M.UNLOCK_UNIT, unitId);
   },
   [A.CHANGE_ACTIVE_TAB]({ commit }, tab) {
     commit(M.CHANGE_ACTIVE_TAB, tab);
@@ -191,6 +191,17 @@ const mutations = {
   [M.CLOSE_CONFIRMATION_DIALOG](state) {
     state.confirmationDialogIsOpen = false;
   },
+  [M.OPEN_ADD_RESOURCE_DIALOG](state, unitId) {
+    let unit = state.units.find(u => u.id === unitId);
+    if (unit) {
+      state.activeUnit = JSON.parse(JSON.stringify(unit));
+      if (ResourceType.EQUIPMENT === state.activeTab.resourceType) {
+        state.addEquipmentDialogIsOpen = true;
+      } else {
+        state.resourceDialogIsOpen = true;
+      }
+    }
+  },
   [M.CLOSE_ADD_RESOURCE_DIALOG](state) {
     if (ResourceType.EQUIPMENT === state.activeTab.resourceType) {
       state.addEquipmentDialogIsOpen = false;
@@ -231,24 +242,24 @@ const mutations = {
       state.activeUnit.resources.splice(resourceIndex, 1, resource);
     }
   },
-  [M.SHIFT_EXCHANGE_PENDING](state, unitName) {
-    state.shiftExchangePendingUnit = unitName;
+  [M.SHIFT_EXCHANGE_PENDING](state, id) {
+    state.shiftExchangePendingUnit = id;
   },
-  [M.UPDATE_RESOURCES_PENDING](state, unitName) {
-    state.updateResourcePendingUnit = unitName;
+  [M.UPDATE_RESOURCES_PENDING](state, id) {
+    state.updateResourcePendingUnit = id;
   },
   [M.LOCK_UNIT_RESPONSE_RECEIVED](state, lockResponse) {
     if (lockResponse.statusCode === StatusCode.OK) {
       if (state.shiftExchangePendingUnit != null) {
         let unit = state.units.find(
-          u => u.name === state.shiftExchangePendingUnit
+          u => u.id === state.shiftExchangePendingUnit
         );
         if (unit) {
           state.activeUnit = unit;
           state.confirmationDialogIsOpen = true;
         }
       } else if (state.updateResourcePendingUnit != null) {
-        let unit = state.units.find(u => u.name === state.updateResourcePendingUnit);
+        let unit = state.units.find(u => u.id === state.updateResourcePendingUnit);
         if (unit) {
           state.activeUnit = JSON.parse(JSON.stringify(unit));
           if (ResourceType.EQUIPMENT === state.activeTab.resourceType) {
@@ -263,17 +274,17 @@ const mutations = {
     state.updateResourcePendingUnit = null;
   },
   [M.LOCK_UNIT](state, lockResponse) {
-    let unit = state.lockUnits.find(u => u.name === lockResponse.subUnitName);
+    let unit = state.lockUnits.find(u => u.id === lockResponse.subUnitId);
     if (unit) {
       Vue.set(unit, "resourceTypes", lockResponse.lockedResourceTypes);
     } else {
       state.lockUnits.push(
-        new LockUnit(lockResponse.subUnitName, lockResponse.lockedResourceTypes)
+        new LockUnit(lockResponse.subUnitId, lockResponse.lockedResourceTypes)
       );
     }
   },
   [M.UNLOCK_UNIT](state, unlockResponse) {
-    let unit = state.lockUnits.find(u => u.name === unlockResponse.subUnitName);
+    let unit = state.lockUnits.find(u => u.id === unlockResponse.subUnitId);
     const resourceTypes = unit.resourceTypes.filter(
       r => unlockResponse.lockedResourceTypes.indexOf(r) === -1
     );

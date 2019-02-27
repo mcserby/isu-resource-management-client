@@ -31,7 +31,7 @@ export default {
   OPEN_EDIT_SERVICE_DIALOG: 'openEditServiceDialog',
   CLOSE_DELETE_SERVICE_DIALOG: 'closeDeleteServiceDialog',
   CLOSE_EDIT_SERVICE_DIALOG: 'closeEditServiceDialog',
-  SET_SERVICE: 'setService'
+  SET_SERVICE: 'setService',
  // Resource Management section
   SELECT_MANAGED_RESOURCE_TYPE: "selectManagedResourceType",
   SELECT_MANAGED_SUBUNIT: "selectManagedSubUnit",
