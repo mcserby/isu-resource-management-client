@@ -1,8 +1,8 @@
-class UpdateSubUnitRequest {
+class UpdateSubUnitNameRquest {
   constructor(id, name) {
     this.id = id;
     this.name = name;
   }
 }
 
-export default UpdateSubUnitRequest;
+export default UpdateSubUnitNameRquest;

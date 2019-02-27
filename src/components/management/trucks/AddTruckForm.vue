@@ -11,6 +11,7 @@
 </template>
 <script>
 import UpdateTruckRequest from "../../../contracts/management/trucks/updateTruckRequest";
+import AddTruckRequest from "../../../contracts/management/trucks/addTruckRequest";
 import A from "../../../constants/actions";
 import WebsocketSend from "../../../contracts/websocketSend";
 
@@ -54,21 +55,39 @@ export default {
   },
   methods: {
     saveTruck() {
-      this.$store.dispatch(
-        A.WEBSOCKET_SEND,
-        new WebsocketSend(
-          "updateTruck",
-          new UpdateTruckRequest(
-            this.$store.state.managementStore.selectedTruck.id,
-            this.editedShortName == null
-              ? this.$store.state.managementStore.selectedTruck.shortName
-              : this.editedShortName,
-            this.editedLongName === null
-              ? this.$store.state.managementStore.selectedTruck.longName
-              : this.editedLongName
+      let truckId = this.$store.state.managementStore.selectedTruck.id;
+      if (truckId != null) {
+        this.$store.dispatch(
+          A.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "updateTruck",
+            new UpdateTruckRequest(
+              truckId,
+              this.editedShortName == null
+                ? this.$store.state.managementStore.selectedTruck.shortName
+                : this.editedShortName,
+              this.editedLongName === null
+                ? this.$store.state.managementStore.selectedTruck.longName
+                : this.editedLongName
+            )
           )
-        )
-      );
+        );
+      } else {
+        this.$store.dispatch(
+          A.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "addTruck",
+            new AddTruckRequest(
+              this.editedShortName == null
+                ? this.$store.state.managementStore.selectedTruck.shortName
+                : this.editedShortName,
+              this.editedLongName === null
+                ? this.$store.state.managementStore.selectedTruck.longName
+                : this.editedLongName
+            )
+          )
+        );
+      }
     }
   }
 };

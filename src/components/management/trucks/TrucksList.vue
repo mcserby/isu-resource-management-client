@@ -1,32 +1,27 @@
 <template>
   <div class="truck-name-list-section">
-    <draggable
-      class="truck-name-list-container"
-      v-model="managedTrucks"
-      :options="{draggable:'.item'}"
-    >
+    <div class="truck-name-list-container" :list="managedTrucks">
       <div
-        :class="getTruckClass(truck)"
+        :class="getTruckClass(managedTruck)"
         class="truck-name-element item"
-        @click="selectTruck(truck)"
-        v-for="truck in managedTrucks"
-        :key="truck.id"
-      >{{truck.shortName}}</div>
-    </draggable>
+        @mousedown="selectTruck(managedTruck)"
+        v-for="managedTruck in managedTrucks"
+        :key="managedTruck.id"
+      >{{managedTruck.shortName}}</div>
+    </div>
   </div>
 </template>
 
 <script>
-import Unit from "../../principal/unit/Unit.vue";
 import A from "../../../constants/actions";
 import WebsocketSubscribe from "../../../contracts/websocketSubscribe";
 import WebsocketSend from "../../../contracts/websocketSend";
 import draggable from "vuedraggable";
+import UpdateTrucksRequest from '../../../contracts/management/trucks/updateTruckRequest';
 
 export default {
   name: "TrucksList",
   components: {
-    Unit,
     draggable
   },
   data: () => {

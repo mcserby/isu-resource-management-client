@@ -9,13 +9,15 @@
 </template>
 <script>
 import Unit from "../../../contracts/unit";
-import UpdateSubUnitRequest from '../../../contracts/management/subunits/updateSubUnitRequest';
-import AddSubUnitRequest from '../../../contracts/management/subunits/addSubUnitRequest';
+import UpdateSubUnitNameRequest from "../../../contracts/management/subunits/updateSubUnitNameRequest";
+import AddSubUnitRequest from "../../../contracts/management/subunits/addSubUnitRequest";
+import A from "../../../constants/actions";
+import WebsocketSend from "../../../contracts/websocketSend";
 
 export default {
   name: "AddSubUnitForm",
   data: () => {
-    return { editedName: "" };
+    return { editedName: null };
   },
   computed: {
     name: {
@@ -34,14 +36,17 @@ export default {
     }
   },
   methods: {
+    isSaveDisabled() {
+      return this.editedName == null;
+    },
     save() {
       let subUnitId = this.$store.state.managementStore.selectedSubUnit.id;
       if (subUnitId != null) {
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
-            "updateFunction",
-            new UpdateSubUnitRequest(
+            "updateSubUnitName",
+            new UpdateSubUnitNameRequest(
               subUnitId,
               this.editedName == null
                 ? this.$store.state.managementStore.selectedSubUnit.name
@@ -53,7 +58,7 @@ export default {
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
-            "addFunction",
+            "addSubUnit",
             new AddSubUnitRequest(
               this.editedName == null
                 ? this.$store.state.managementStore.selectedSubUnit.name
@@ -62,8 +67,8 @@ export default {
           )
         );
       }
-    },
     }
+  }
 };
 </script>
 <style src="./addSubUnitForm.css"></style>

@@ -140,7 +140,7 @@ function deleteSubUnit() {
       state.managedSubUnits[state.managedSubUnits.length - 1]
     );
   }
-  state.selectedFunction = state.managedFunctions[0];
+  state.selectedSubUnit = state.managedSubUnits[0];
 }
 
 function deleteFunction() {

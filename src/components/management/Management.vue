@@ -52,6 +52,8 @@ import TrucksManagement from "./trucks/TrucksManagement.vue";
 import A from "../../constants/actions";
 import ManagedResourceType from "../../constants/managedResourceType";
 import DeleteFunctionRequest from "../../contracts/management/functions/DeleteFunctionRequest";
+import DeleteSubUnitRequest from "../../contracts/management/subunits/DeleteSubUnitRequest";
+import DeleteTruckRequest from "../../contracts/management/trucks/DeleteTruckRequest";
 import WebsocketSend from "../../contracts/websocketSend";
 
 export default {
@@ -96,11 +98,13 @@ export default {
     deleteResource() {
       switch (this.$store.state.managementStore.selectedResourceType) {
         case ManagedResourceType.SUBUNITS:
+          this.deleteSubUnit();
           break;
         case ManagedResourceType.FUNCTIONS:
           this.deleteFunction();
           break;
         case ManagedResourceType.TRUCKS:
+          this.deleteTruck();
           break;
       }
     },
@@ -118,6 +122,35 @@ export default {
       this.$store.dispatch(
         A.DELETE_MANAGED_RESOURCE,
         this.$store.state.managementStore.managedFunctions[0]
+      );
+    },
+    deleteSubUnit() {
+      let subUnitId = this.$store.state.managementStore.selectedSubUnit.id;
+      if (subUnitId != null) {
+        this.$store.dispatch(
+          A.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "deleteSubUnit",
+            new DeleteSubUnitRequest(subUnitId)
+          )
+        );
+      }
+      this.$store.dispatch(
+        A.DELETE_MANAGED_RESOURCE,
+        this.$store.state.managementStore.managedSubUnits[0]
+      );
+    },
+    deleteTruck() {
+      let truckId = this.$store.state.managementStore.selectedTruck.id;
+      if (truckId != null) {
+        this.$store.dispatch(
+          A.WEBSOCKET_SEND,
+          new WebsocketSend("deleteTruck", new DeleteTruckRequest(truckId))
+        );
+      }
+      this.$store.dispatch(
+        A.DELETE_MANAGED_RESOURCE,
+        this.$store.state.managementStore.managedTrucks[0]
       );
     }
   },

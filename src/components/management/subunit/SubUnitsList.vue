@@ -7,14 +7,14 @@
         v-for="managedSubUnit in managedSubUnits"
         :key="managedSubUnit.id"
         @mousedown="selectSubUnit(managedSubUnit)"
-      > ||| {{managedSubUnit.name}}</div>
+      >||| {{managedSubUnit.name}}</div>
     </draggable>
   </div>
 </template>
 
 <script>
 import draggable from "vuedraggable";
-//import UpdateSubUnitsRequest from "../../../contracts/management/subUnits/updateSubUnitsRequest";
+import UpdateSubUnitsOrderRequest from "../../../contracts/management/subUnits/updateSubUnitsOrderRequest";
 import A from "../../../constants/actions";
 import WebsocketSend from "../../../contracts/websocketSend";
 
@@ -35,13 +35,13 @@ export default {
     }
   },
   methods: {
-     update(managedSubUnit) {
+    update(managedSubUnit) {
       this.$store.dispatch(
         A.WEBSOCKET_SEND,
         new WebsocketSend(
-          "updateSubUnits",
-          new UpdateSubUnitsRequest(
-            this.$store.state.managementStore.managedSubUnit
+          "updateSubUnitsOrder",
+          new UpdateSubUnitsOrderRequest(
+            this.$store.state.managementStore.managedSubUnits.map(s => s.id)
           )
         )
       );
