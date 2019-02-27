@@ -27,9 +27,19 @@ export default {
   SHOW_PDF_FILE: "showPdfFile",
   INIT_SERVICES: "initServices",
   CLEAR_ALL_SERVICES: "clearAllService",
-  OPEN_DELETE_SERVICE_DIALOG: "openDeleteServiceDialog",
-  OPEN_EDIT_SERVICE_DIALOG: "openEditServiceDialog",
-  CLOSE_DELETE_SERVICE_DIALOG: "closeDeleteServiceDialog",
-  CLOSE_EDIT_SERVICE_DIALOG: "closeEditServiceDialog",
-  SET_SERVICE: "setService"
+  OPEN_DELETE_SERVICE_DIALOG: 'openDeleteServiceDialog',
+  OPEN_EDIT_SERVICE_DIALOG: 'openEditServiceDialog',
+  CLOSE_DELETE_SERVICE_DIALOG: 'closeDeleteServiceDialog',
+  CLOSE_EDIT_SERVICE_DIALOG: 'closeEditServiceDialog',
+  SET_SERVICE: 'setService',
+ // Resource Management section
+  SELECT_MANAGED_RESOURCE_TYPE: "selectManagedResourceType",
+  SELECT_MANAGED_SUBUNIT: "selectManagedSubUnit",
+  MANAGED_SUBUNITS_RECEIVED :"managedSubUnitsReceived",
+  SELECT_MANAGED_FUNCTION: "selectManagedFunction",
+  MANAGED_FUNCTIONS_RECEIVED: "managedFunctionsReceived",
+  SELECT_MANAGED_TRUCK: "selectManagedTruck",
+  MANAGED_TRUCKS_RECEIVED: "managedTrucksReceived",
+  ADD_MANAGED_RESOURCE: "addManagedResource",
+  DELETE_MANAGED_RESOURCE: "deleteManagedResource"
 };

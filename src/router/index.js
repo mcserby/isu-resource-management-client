@@ -1,38 +1,38 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Main from '../components/Main.vue';
-import Services from '../components/services/Services.vue';
-import Uat from '../components/uat/Uat.vue';
-import Principal from '../components/principal/Principal.vue';
-import Management from '../components/management/Management.vue';
+import Vue from "vue";
+import Router from "vue-router";
+import Main from "../components/Main.vue";
+import Services from "../components/services/Services.vue";
+import Uat from "../components/uat/Uat.vue";
+import Principal from "../components/principal/Principal.vue";
+import Management from "../components/management/Management.vue";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
     {
-      path: '/principal',
-      name: 'Principal',
+      path: "/principal",
+      name: "Principal",
       component: Principal
     },
     {
-      path: '/',
-      redirect: 'principal'
+      path: "/",
+      redirect: "principal"
     },
     {
-      path: '/services',
-      name: 'Services',
+      path: "/services",
+      name: "Services",
       component: Services
     },
     {
-      path: '/uat',
-      name: 'UAT',
+      path: "/uat",
+      name: "UAT",
       component: Uat
     },
     {
-      path: '/management',
-      name: 'Management',
+      path: "/management",
+      name: "Management",
       component: Management
     }
   ]
-})
+});

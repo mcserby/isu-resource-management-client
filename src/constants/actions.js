@@ -31,5 +31,15 @@ export default {
   OPEN_EDIT_SERVICE_DIALOG: "openEditServiceDialog",
   CLOSE_DELETE_SERVICE_DIALOG: "closeDeleteServiceDialog",
   CLOSE_EDIT_SERVICE_DIALOG: "closeEditServiceDialog",
-  SET_SERVICE: "setService"
+  SET_SERVICE: "setService",
+  // Resource Management section
+  SELECT_MANAGED_RESOURCE_TYPE :"selectManagedResourceType",
+  SELECT_MANAGED_SUBUNIT :"selectManagedSubUnit",
+  SELECT_MANAGED_FUNCTION :"selectManagedFunction",
+  MANAGED_SUBUNITS_RECEIVED :"managedSubUnitsReceived",
+  MANAGED_FUNCTIONS_RECEIVED:"managedFunctionsReceived",
+  SELECT_MANAGED_TRUCK :"selectManagedTruck",
+  MANAGED_TRUCKS_RECEIVED:"managedTrucksReceived",
+  ADD_MANAGED_RESOURCE:"addManagedResource",
+  DELETE_MANAGED_RESOURCE:"deleteManagedResource",
 };

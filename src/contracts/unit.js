@@ -2,6 +2,7 @@
 
 class Unit {
   constructor(
+    id,
     name,
     resources,
     equipment,
@@ -9,6 +10,7 @@ class Unit {
     lastUpdateOtherResource,
     lastUpdateEquipment
   ) {
+    this.id = id;
     this.name = name;
     this.resources = resources;
     this.lastUpdateFirstInterventionResource = lastUpdateFirstInterventionResource;

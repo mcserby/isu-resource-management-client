@@ -1,0 +1,5 @@
+export default {
+  SUBUNITS: "SUBUNITS",
+  FUNCTIONS: "FUNCTIONS",
+  TRUCKS: "TRUCKS"
+};

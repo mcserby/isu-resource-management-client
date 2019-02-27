@@ -10,18 +10,18 @@
     </ul>
     <div class="units-container">
       <div class="unit-header-wrapper">
-        <div v-for="unit in units" v-bind:key="unit.name">
+        <div v-for="unit in units" v-bind:key="unit.id">
           <div class="unit-header">{{unit.name}}</div>
         </div>
       </div>
       <div class="unit-wrapper-wrapper">
-        <div class="unit-wrapper" v-for="unit in units" v-bind:key="unit.name">
+        <div class="unit-wrapper" v-for="unit in units" v-bind:key="unit.id">
           <Unit :unit="unit"></Unit>
         </div>
       </div>
     </div>
     <div class="unit-buttons-container">
-      <div class="unit-buttons-wrapper" v-for="unit in units" v-bind:key="unit.name">
+      <div class="unit-buttons-wrapper" v-for="unit in units" v-bind:key="unit.id">
         <UnitButtons :unit="unit"></UnitButtons>
       </div>
     </div>
@@ -131,7 +131,7 @@ export default {
       this.$store.dispatch(A.CLOSE_CONFIRMATION_DIALOG);
       this.$store.dispatch(
         A.CLEAR_UNIT_RESOURCES,
-        this.$store.state.principalStore.activeUnit.name
+        this.$store.state.principalStore.activeUnit.id
       );
       this.$store.dispatch(
         A.WEBSOCKET_SEND,
@@ -145,7 +145,7 @@ export default {
         new WebsocketSend(
           "unlockSubUnit",
           new UnlockSubUnitRequest(
-            this.$store.state.principalStore.activeUnit.name,
+            this.$store.state.principalStore.activeUnit.id,
             this.resourceType
           )
         )
@@ -157,7 +157,7 @@ export default {
         new WebsocketSend(
           "unlockSubUnit",
           new UnlockSubUnitRequest(
-            this.$store.state.principalStore.activeUnit.name,
+            this.$store.state.principalStore.activeUnit.id,
             this.resourceType
           )
         )

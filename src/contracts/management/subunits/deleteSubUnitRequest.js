@@ -1,6 +1,6 @@
 class DeleteSubUnitRequest {
-  constructor(subUnitName) {
-    this.name = subUnitName;
+  constructor(id) {
+    this.id = id;
   }
 }
 

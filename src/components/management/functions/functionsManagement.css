@@ -1,0 +1,15 @@
+.functions-management-container {
+  display: grid;
+  grid-template-columns: 25% 75%;
+}
+.function-list {
+  grid-column: 1 / span 1;
+  padding-right: 20px;
+  max-height: 450px;
+  overflow: scroll;
+  min-height: 180px;
+}
+
+.add-function-form {
+  grid-column: 2 / span 1;
+}

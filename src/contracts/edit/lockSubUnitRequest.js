@@ -1,6 +1,6 @@
 class LockSubUnitRequest {
-  constructor(subUnitName, resourceType) {
-    this.subUnitName = subUnitName;
+  constructor(subUnitId, resourceType) {
+    this.subUnitId = subUnitId;
     this.resourceType = resourceType;
   }
 }
