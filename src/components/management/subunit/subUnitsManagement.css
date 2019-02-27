@@ -2,8 +2,11 @@
   display: grid;
   grid-template-columns: 25% 75%;
 }
-.subunit-list {
+.subunits-list {
   grid-column: 1 / span 1;
+  max-height: 450px;
+  overflow: scroll;
+  min-height: 180px;
 }
 
 .add-subunit-form {
