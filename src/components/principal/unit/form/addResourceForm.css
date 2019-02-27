@@ -1,4 +1,4 @@
-.dialogContainer {
+.app-sa .dialogContainer {
     position: fixed;
     background-color: #d2f0f9;
     z-index: 30;
@@ -7,49 +7,49 @@
     font-weight: bold;
 }
 
-.dialog {
+.app-sa .dialog {
     display: block;
 }
 
-.add-resource-dialog {
+.app-sa .add-resource-dialog {
   max-width: 796px;
 }
 
-.error {
+.app-sa .error {
   color: #F74356;
 }
 
-.form-label {
+.app-sa .form-label {
   color: #4682b4;
   font-weight: bold;
 }
 
-.body-wrapper {
+.app-sa .body-wrapper {
   display: grid;
   grid-gap: 10px;
   grid-template-columns: repeat(8, [col] 12.5% ) ;
   grid-template-rows: repeat(1, [row] auto  );
 }
 
-.resource-browser-list {
+.app-sa .resource-browser-list {
   grid-column: col 1 / span 3;
   grid-row: row ;
   max-height: 500px;
   overflow-y: scroll;
 }
 
-.resource-editor {
+.app-sa .resource-editor {
   grid-column: col 4 / span 4 ;
   grid-row: row ;
 }
 
-.resource-browser-resource-summary {
+.app-sa .resource-browser-resource-summary {
   display: grid;
   grid-template-columns: repeat(8, [col] 12.5% ) ;
   grid-template-rows: repeat(1, [row] auto  );
 }
 
-.close-button-custom {
+.app-sa .close-button-custom {
  width: 5%;
  justify-content: right;
  background-color: #F74356;
@@ -58,29 +58,29 @@
  font-size: medium
 }
 
-.close-button-custom:hover:enabled{
+.app-sa .close-button-custom:hover:enabled{
   color: #f2f2f2;
   background-color: #930614;
 }
 
-.resource-summary-card {
+.app-sa .resource-summary-card {
   grid-column: col / span 5;
   grid-row: row ;
 }
 
-.add-resource-button-wrapper {
+.app-sa .add-resource-button-wrapper {
   grid-column: col / span 7;
   grid-row: row ;
 }
 
 
-.delete-resource {
+.app-sa .delete-resource {
   grid-column: col 7 / span 1;
   grid-row: row ;
 }
 
-.delete-resource > button {
-  margin-top: 13px;
+.app-sa .delete-resource > button {
+  margin-top: 5px;
 }
 
 .errors {

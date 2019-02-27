@@ -1,12 +1,12 @@
 <template>
   <div class="principal-header">
-    <div class="principal-title">ISU TaskForce</div>
+    <div class="principal-title">ISU EasyManage - Management</div>
     <div class="other-modules-wrapper">
       <div class="service-button">
         <router-link class="btn custom-button" role="button" to="/principal">Principal</router-link>
       </div>
       <div class="uat-button">
-        <router-link class="btn custom-button" role="button" to="/servicii">Servicii</router-link>
+        <router-link class="btn custom-button" role="button" to="/services">Servicii</router-link>
       </div>
       <div class="management-button">
         <router-link class="btn custom-button" role="button" to="/uat">UAT</router-link>

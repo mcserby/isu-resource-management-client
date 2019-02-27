@@ -1,6 +1,6 @@
 <template>
     <div class="dialogContainer" style="display: block">
-        <div class="dialog modal" role="dialog">
+      <div class="dialog modal" role="dialog" style="display: block">
             <div class="modal-dialog modal-dialog-centered add-resource-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -19,7 +19,7 @@
                         </div>
                         <div class="resource-browser-resource-summary">
                           <div class="add-resource-button-wrapper">
-                            <button type="button" class="btn custom-button" @click="addNewResource()" :disabled="addNewResourceDisabled()">Adaugă o resursă</button>
+                            <button type="button" class="custom-button btn" @click="addNewResource()" :disabled="addNewResourceDisabled()">Adaugă o resursă</button>
                           </div>
                         </div>
                       </div>
@@ -50,7 +50,7 @@
                     <div class="modal-footer">
                       <button
                         type="button"
-                        class="btn custom-button"
+                        class="custom-button btn"
                         @click="saveAndClose"
                         :disabled="saveDisabled"
                       >
@@ -58,7 +58,7 @@
                       </button>
                       <button
                         type="button"
-                        class="btn custom-button"
+                        class="custom-button btn"
                         @click="cancel"
                       >
                         Anulează și închide
@@ -91,6 +91,7 @@
         errors: [],
         vehicleType: '',
         plateNumber: '',
+        status: new Status(ResourceStatus.AVAILABLE, null, null, null),
         identificationNumber: '',
         crew: '',
         validationPerformedAtLeastOnce: false,
@@ -144,7 +145,7 @@
         this.setEditorFields(resource);
         this.validateFields();
         this.$store.dispatch(A.ADD_RESOURCE, resource);
-        this.changesPerformed = true;
+        this.changesPerformed = false;
       },
       constructResource(id){
         let crewList = this.crew.split(/[\n,]/).filter(c => c.length !== 0);
@@ -152,11 +153,12 @@
         crewList = crewList.slice();
         crewList.shift();
         return new Resource(id, this.vehicleType, this.plateNumber, this.identificationNumber, captain, crewList,
-          new Status(ResourceStatus.AVAILABLE, null, null, null), this.resourceType);
+          this.status, this.resourceType);
       },
       clearFormValues(){
         this.validationPerformedAtLeastOnce = false;
         this.vehicleType = this.plateNumber = this.identificationNumber = this.crew = '';
+        this.status = new Status(ResourceStatus.AVAILABLE, null, null, null);
         this.errors = [];
       },
       closeAddResourceDialog(){
@@ -204,6 +206,7 @@
         this.vehicleType = resource.vehicleType;
         this.plateNumber = resource.plateNumber;
         this.identificationNumber = resource.identificationNumber;
+        this.status = resource.status;
         this.crew = resource.captain + '\n' + resource.crew;
         this.validationPerformedAtLeastOnce = false;
         this.selectedResourceId = resource.id;

@@ -1,6 +1,6 @@
 <template>
   <div class="dialogContainer" style="display: block">
-    <div class="dialog modal" role="dialog">
+    <div class="dialog modal" role="dialog" style="display: block">
       <div class="modal-dialog modal-dialog-centered add-resource-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -20,7 +20,7 @@
               </div>
               <div class="resource-browser-resource-summary">
                 <div class="add-resource-button-wrapper">
-                  <button type="button" class="btn custom-button" @click="addNewEquipment()"
+                  <button type="button" class="custom-button btn" @click="addNewEquipment()"
                           :disabled="addNewResourceDisabled()">Adaugă echipament
                   </button>
                 </div>
@@ -59,14 +59,14 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="btn custom-button"
+              class="custom-button btn"
               @click="saveAndClose()" :disabled="saveDisabled()"
             >
               Salvează și închide
             </button>
             <button
               type="button"
-              class="btn custom-button"
+              class="custom-button btn"
               @click="cancel"
             >
               Închide fără a salva
@@ -129,7 +129,7 @@
       },
 
       addNewEquipment() {
-        this.unitModified = true;
+        this.unitModified = false;
         this.addEmptyEquipment();
         this.clearFormValues();
         this.validateFields();

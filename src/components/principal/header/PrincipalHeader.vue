@@ -1,6 +1,6 @@
 <template>
   <div class="principal-header">
-    <div class="principal-title">ISU TaskForce</div>
+    <div class="principal-title">ISU EasyManage - Principal</div>
     <div class="search-bar-wrapper">
       <form>
         <div class="row no-gutters align-items-center">
@@ -16,16 +16,16 @@
     <div v-if="searchText !== ''" class="filter-activated">Filtru activ!</div>
     <div class="other-modules-wrapper">
       <div class="service-button">
-        <router-link class="btn custom-button" role="button" to="/services">Servicii</router-link>
+        <router-link class="custom-button btn" role="button" to="/services">Servicii</router-link>
       </div>
       <div class="uat-button">
-        <router-link class="btn custom-button" role="button" to="/uat">UAT</router-link>
+        <router-link class="custom-button btn" role="button" to="/uat">UAT</router-link>
       </div>
       <div class="management-button">
-        <router-link class="btn custom-button" role="button" to="/management">Management</router-link>
+        <router-link class="custom-button btn" role="button" to="/management">Management</router-link>
       </div>
       <div class="report-button">
-        <button class="btn custom-button" role="button" @click="generateReport()">Raport</button>
+        <button class="custom-button btn" role="button" @click="generateReport()">Raport</button>
       </div>
     </div>
   </div>

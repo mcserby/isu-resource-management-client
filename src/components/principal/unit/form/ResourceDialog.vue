@@ -1,6 +1,6 @@
 <template>
   <div class="resourceDialogContainer" style="display: block">
-    <div class="dialog modal" role="dialog">
+    <div class="dialog modal" role="dialog" style="display: block">
       <div class="modal-dialog modal-dialog-centered add-resource-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -79,7 +79,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn custom-button" @click="cancel">Închide</button>
+            <button type="button" class="custom-button btn" @click="cancel">Închide</button>
           </div>
         </div>
       </div>

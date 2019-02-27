@@ -1,6 +1,6 @@
 <template>
   <div class="dialogContainer" style="display: block">
-    <div class="dialog modal" role="dialog">
+    <div class="dialog modal" role="dialog" style="display: block">
       <div class="modal-dialog modal-dialog-centered confirmation-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -13,12 +13,12 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="btn custom-button custom-dialog-button"
+              class=" custom-dialog-button custom-button btn"
               @click="onConfirm"
             >Da</button>
             <button
               type="button"
-              class="btn custom-button custom-dialog-button"
+              class="custom-dialog-button custom-button btn"
               @click="onCancel"
             >Nu</button>
           </div>

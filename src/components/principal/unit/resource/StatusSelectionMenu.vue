@@ -5,7 +5,7 @@
       v-if="showMissionMenu"
       style="display: block"
     >
-      <div class="dialog modal mission-status-dialog" role="dialog">
+      <div class="dialog modal mission-status-dialog" role="dialog" style="display: block">
         <div class="modal-dialog mission-status-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -35,7 +35,7 @@
             <div class="modal-footer">
               <button
                 type="button"
-                class="btn custom-button custom-status-selection-button"
+                class="custom-status-selection-button custom-button btn"
                 @click="confirmMission"
                 :disabled="isSetStatusToMissionDisabled"
               >Confirmă misiunea</button>

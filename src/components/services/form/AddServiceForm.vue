@@ -1,6 +1,6 @@
 <template>
   <div class="dialogContainer" style="display: block">
-    <div class="dialog modal" role="dialog">
+    <div class="dialog modal" role="dialog" style="display: block">
       <div class="modal-dialog modal-dialog-centered add-service-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -27,17 +27,17 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="btn custom-button"
+              class="custom-button btn"
               @click="saveAndAddAnother"
               :disabled="saveDisabled"
             >Salvează și adaugă un nou serviciu</button>
             <button
               type="button"
-              class="btn custom-button"
+              class="custom-button btn"
               @click="saveAndClose"
               :disabled="saveDisabled"
             >Salvează și închide</button>
-            <button type="button" class="btn custom-button" @click="cancel">Închide fără a salva</button>
+            <button type="button" class="custom-button btn" @click="cancel">Închide fără a salva</button>
           </div>
         </div>
       </div>

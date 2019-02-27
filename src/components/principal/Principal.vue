@@ -163,11 +163,16 @@ export default {
         )
       );
       this.$store.dispatch(A.CLOSE_CONFIRMATION_DIALOG);
-    },
+    }
   },
   mounted: function() {
     console.log("Principal.vue mounted");
     const self = this;
+
+    let onLockSubUnitResponseReceived = function(response) {
+      let r = JSON.parse(response.body);
+      self.$store.dispatch(A.LOCK_UNIT_RESPONSE_RECEIVED, r);
+    };
 
     let onLockSubUnitReceived = function(response) {
       let r = JSON.parse(response.body);
@@ -193,6 +198,15 @@ export default {
       new WebsocketSubscribe(
         "lockSubUnitNotification",
         onLockSubUnitReceived,
+        onError
+      )
+    );
+
+    this.$store.dispatch(
+      A.WEBSOCKET_SUBSCRIBE_USER,
+      new WebsocketSubscribe(
+        "lockSubUnitResponse",
+        onLockSubUnitResponseReceived,
         onError
       )
     );

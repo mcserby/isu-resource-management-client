@@ -1,6 +1,6 @@
 <template>
   <div class="dialogContainer" style="display: block">
-    <div class="dialog modal" role="dialog">
+    <div class="dialog modal" role="dialog" style="display: block">
       <div class="modal-dialog modal-dialog-centered add-service-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -33,12 +33,12 @@
           <div class="modal-footer">
             <button
               type="button"
-              class="btn custom-button"
+              class="custom-button btn"
               @click="saveAndClose"
             >Salvează și închide</button>
             <button
               type="button"
-              class="btn custom-button"
+              class="custom-button btn"
               @click="closeWithoutSaving"
             >Închide fără a salva</button>
           </div>

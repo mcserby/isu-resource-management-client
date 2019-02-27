@@ -1,4 +1,4 @@
-.services-wrapper {
+.app-sa .services-wrapper {
   display: grid;
   position: relative;
   text-align: left;
@@ -6,52 +6,51 @@
   grid-auto-columns: 1fr;
 }
 
-.odd {
+.app-sa .odd {
   background-color: #e9f8fc;
 }
 
-.even {
+.app-sa .even {
   background-color: #bce9f6;
 }
 
-.service-rowNr {
+.app-sa .service-rowNr {
   grid-column: 1 / span 1;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
-.service-name {
-  grid-column: 2 / span 3;
+.app-sa .service-name {
+  grid-column: 2 / span 2;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
-.service-title {
-  grid-column: 5 / span 2;
+.app-sa .service-title {
+  grid-column: 7 / span 3;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
-.service-role {
-  grid-column: 8 / span 4;
+.app-sa .service-role {
+  grid-column: 10 / span 3;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
-.service-contact {
-  grid-column: 13 / span 5;
+.app-sa .service-contact {
+  grid-column: 13 / span 3;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
-.service-actions {
-  grid-column: 18 / span 3;
+.app-sa .service-actions {
+  grid-column: 16 / span 2;
   grid-row: 1 / span 1;
   font-size: x-large;
-  text-align: left;
 }
 
-.edit-delete-button {
+.app-sa .edit-delete-button {
   color: #f2f2f2;
   background-color: #4682b4;
 
@@ -69,7 +68,7 @@
   text-align: center;
 }
 
-.edit-delete-button:hover:enabled {
+.app-sa .edit-delete-button:hover:enabled {
   color: #f2f2f2;
   background-color: #2b506e;
 }
