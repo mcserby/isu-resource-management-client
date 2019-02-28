@@ -1,5 +1,6 @@
 export default {
   CLEAR_UNIT_RESOURCES: "clearUnitResources",
+  OPEN_CONFIRMATION_DIALOG: "openConfirmationDialog",
   CLOSE_CONFIRMATION_DIALOG: "closeConfirmationDialog",
   OPEN_VIEW_RESOURCE_DIALOG: "openViewResourceDialog",
   CLOSE_VIEW_RESOURCE_DIALOG: "closeViewResourceDialog",

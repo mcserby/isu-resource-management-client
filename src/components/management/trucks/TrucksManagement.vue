@@ -1,7 +1,7 @@
 <template>
   <div class="truck-management-container">
     <TrucksList class="truck-list"></TrucksList>
-    <AddTruckForm class="add-truck-form"></AddTruckForm>
+    <AddTruckForm class="add-truck-form" :key="getKey()"></AddTruckForm>
   </div>
 </template>
 
@@ -21,7 +21,11 @@ export default {
     return {};
   },
   computed: {},
-  methods: {},
+  methods: {
+    getKey() {
+      return this.$store.state.managementStore.selectedTruck.id;
+    }
+  },
   mounted: function() {
     console.log("TrucksManagement module mounted");
     const self = this;

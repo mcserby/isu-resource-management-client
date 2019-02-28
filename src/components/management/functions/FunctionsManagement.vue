@@ -1,7 +1,7 @@
 <template>
   <div class="functions-management-container">
     <FunctionsList class="function-list"></FunctionsList>
-    <AddFunctionForm class="add-function-form"></AddFunctionForm>
+    <AddFunctionForm class="add-function-form" :key="getKey()"></AddFunctionForm>
   </div>
 </template>
 
@@ -21,7 +21,11 @@ export default {
     return {};
   },
   computed: {},
-  methods: {},
+  methods: {
+    getKey() {
+      return this.$store.state.managementStore.selectedFunction.id;
+    }
+  },
   mounted: function() {
     console.log("FunctionsManagement module mounted");
     const self = this;

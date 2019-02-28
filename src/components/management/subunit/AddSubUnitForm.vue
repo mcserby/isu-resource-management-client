@@ -4,7 +4,12 @@
       <label class="form-label" for="name">Numele subunității</label>
       <input type="text" required v-model="name" class="form-control" id="name">
     </div>
-    <button type="button" class="btn custom-button add-subunit-button" @click="save">Salvează</button>
+    <button
+      type="button"
+      class="btn custom-button add-subunit-button"
+      @click="save"
+      :disabled="isSaveDisabled()"
+    >Salvează</button>
   </div>
 </template>
 <script>
@@ -23,10 +28,12 @@ export default {
     name: {
       // getter
       get: function() {
-        if (this.$store.state.managementStore.selectedSubUnit != null) {
+        if (this.editedName != null) {
+          return this.editedName;
+        } else if (this.$store.state.managementStore.selectedSubUnit != null) {
           return this.$store.state.managementStore.selectedSubUnit.name;
         } else {
-          return "";
+          return null;
         }
       },
       // setter
@@ -37,7 +44,7 @@ export default {
   },
   methods: {
     isSaveDisabled() {
-      return this.editedName == null;
+      return this.editedName == null || this.editedName === "";
     },
     save() {
       let subUnitId = this.$store.state.managementStore.selectedSubUnit.id;

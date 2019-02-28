@@ -6,7 +6,12 @@
       <label class="form-label" for="name">Numele lung</label>
       <input type="text" required v-model="longName" class="form-control" id="longName">
     </div>
-    <button type="button" class="btn custom-button add-truck-button" @click="saveTruck">Salvează</button>
+    <button
+      type="button"
+      class="btn custom-button add-truck-button"
+      @click="saveTruck"
+      :disabled="isSaveDisabled()"
+    >Salvează</button>
   </div>
 </template>
 <script>
@@ -21,10 +26,12 @@ export default {
     shortName: {
       // getter
       get: function() {
-        if (this.$store.state.managementStore.selectedTruck != null) {
+        if (this.editedShortName != null) {
+          return this.editedShortName;
+        } else if (this.$store.state.managementStore.selectedTruck != null) {
           return this.$store.state.managementStore.selectedTruck.shortName;
         } else {
-          return "";
+          return null;
         }
       },
       // setter
@@ -35,10 +42,12 @@ export default {
     longName: {
       // getter
       get: function() {
-        if (this.$store.state.managementStore.selectedTruck != null) {
+        if (this.editedLongName != null) {
+          return this.editedLongName;
+        } else if (this.$store.state.managementStore.selectedTruck != null) {
           return this.$store.state.managementStore.selectedTruck.longName;
         } else {
-          return "";
+          return null;
         }
       },
       // setter
@@ -54,6 +63,14 @@ export default {
     };
   },
   methods: {
+    isSaveDisabled() {
+      return !(
+        this.editedShortName != null &&
+        this.editedShortName != "" &&
+        this.editedLongName != null &&
+        this.editedLongName != ""
+      );
+    },
     saveTruck() {
       let truckId = this.$store.state.managementStore.selectedTruck.id;
       if (truckId != null) {
