@@ -58,6 +58,13 @@
         <b>Ultima actualizare: {{ lastUpdate | moment("DD.MM.YYYY, HH:mm:ss") }}.</b>
       </span>
     </div>
+    <ul class="nav nav-tabs">
+      <li class="nav-item" v-for="tab in tabs">
+        <template class="nav-item">
+          <a :class="tabClass(tab.name)" class="tab-text" @click="changeTab(tab)">{{tab.name}}</a>
+        </template>
+      </li>
+    </ul>
     <div class="services">
       <div class="services-header">
         <div class="service-header-rowNr">Nr.</div>
@@ -146,6 +153,12 @@ export default {
     services() {
       return this.$store.state.servicesStore.services;
     },
+    tabs() {
+      return this.$store.state.servicesStore.tabs;
+    },
+    activeTab() {
+      return this.$store.state.servicesStore.activeTab;
+    },
     isEditServiceDialogOpen() {
       return this.$store.state.servicesStore.isEditServiceDialogOpen;
     },
@@ -214,6 +227,16 @@ export default {
     );
   },
   methods: {
+    changeTab(tab) {
+      this.$store.dispatch(A.CHANGE_ACTIVE_TAB, tab);
+    },
+    tabClass: function(tabName) {
+      return [
+        "nav-link",
+        "btn",
+        tabName === this.activeTab.name ? "active" : ""
+      ].join(" ");
+    },
     deleteServices() {
       this.displayConfirmationDialog = true;
     },

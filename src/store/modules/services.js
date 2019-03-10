@@ -1,7 +1,16 @@
 import A from "../../constants/actions";
 import M from "../../constants/mutations";
+import ServicesTab from "../../contracts/servicesTab";
+import ServicesDay from "../../constants/servicesDay";
+
+const tabs = [
+  new ServicesTab("Azi", ServicesDay.TODAY),
+  new ServicesTab("Mâine", ServicesDay.TOMORROW)
+];
 
 const state = {
+  tabs: tabs,
+  activeTab: tabs[0],
   services: [],
   lastUpdate: "",
   searchText: '',
@@ -12,6 +21,9 @@ const state = {
 };
 
 const actions = {
+  [A.CHANGE_ACTIVE_TAB]({ commit }, tab) {
+    commit(M.CHANGE_ACTIVE_TAB, tab);
+  },
   [A.INIT_SERVICES]({ commit }, servicesUpdate) {
     commit(M.INIT_SERVICES, servicesUpdate);
   },
@@ -39,6 +51,9 @@ const actions = {
 };
 
 const mutations = {
+  [M.CHANGE_ACTIVE_TAB](state, tab) {
+    state.activeTab = tab;
+  },
   [M.INIT_SERVICES](state, servicesUpdate) {
     state.services.splice(0, state.services.length);
     state.services = servicesUpdate.services;
