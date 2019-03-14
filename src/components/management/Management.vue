@@ -48,6 +48,13 @@
       @confirm="onConfirm"
       @cancel="onCancel"
     ></ConfirmationDialog>
+    <ConfirmationDialog
+      v-if="showUnsavedChangesDialog"
+      :title="unsavedChangesTitle"
+      :text="unsavedChangesText"
+      @confirm="onConfirmUnsaved"
+      @cancel="onCancelUnsaved"
+    ></ConfirmationDialog>
   </div>
 </template>
 
@@ -77,7 +84,8 @@ export default {
   data: () => {
     return {
       ManagedResourceType: ManagedResourceType,
-      confirmationDialogTitle: "Ștergere resursă"
+      confirmationDialogTitle: "Ștergere resursă",
+      unsavedChangesTitle: "Modificări nesalvate"
     };
   },
   computed: {
@@ -91,6 +99,12 @@ export default {
     },
     displayConfirmationDialog() {
       return this.$store.state.principalStore.confirmationDialogIsOpen;
+    },
+    showUnsavedChangesDialog() {
+      return this.$store.state.managementStore.showUnsavedChangesDialog;
+    },
+    unsavedChangesText() {
+      return "Aveți modificări nesalvate. Sunteți sigur ca doriți să părăsiți pagina";
     }
   },
   methods: {
@@ -124,6 +138,13 @@ export default {
     },
     onCancel() {
       this.$store.dispatch(A.CLOSE_CONFIRMATION_DIALOG);
+    },
+    onConfirmUnsaved() {
+      this.$store.dispatch(A.CHANGES_REVERTED);
+      this.$store.dispatch(A.HIDE_UNSAVED_CHANGES_DIALOG);
+    },
+    onCancelUnsaved() {
+      this.$store.dispatch(A.HIDE_UNSAVED_CHANGES_DIALOG);
     },
     getResourceToDelete() {
       switch (this.$store.state.managementStore.selectedResourceType) {

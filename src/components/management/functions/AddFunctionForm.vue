@@ -46,17 +46,24 @@ export default {
   },
   methods: {
     isSaveDisabled() {
-      return this.editedName == null || this.editedName === "";
+      var isUnchanged = this.editedName == null || this.editedName === "";
+      if (!isUnchanged) {
+        this.$store.dispatch(A.SELECTED_RESOURCE_DATA_CHANGED);
+      }
+
+      return (
+        isUnchanged &&
+        this.$store.state.managementStore.hasNewlyCreatedResource === false
+      );
     },
     saveFunction() {
-      let functionId = this.$store.state.managementStore.selectedFunction.id;
-      if (functionId != null) {
+      if (this.$store.state.managementStore.hasNewlyCreatedResource === true) {
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
             "updateFunction",
             new UpdateFunctionRequest(
-              functionId,
+              this.$store.state.managementStore.selectedFunction.id,
               this.editedName == null
                 ? this.$store.state.managementStore.selectedFunction.name
                 : this.editedName
@@ -69,6 +76,7 @@ export default {
           new WebsocketSend(
             "addFunction",
             new AddFunctionRequest(
+              this.$store.state.managementStore.selectedFunction.id,
               this.editedName == null
                 ? this.$store.state.managementStore.selectedFunction.name
                 : this.editedName
@@ -76,6 +84,7 @@ export default {
           )
         );
       }
+      this.$store.dispatch(A.CHANGES_SAVED);
     }
   }
 };

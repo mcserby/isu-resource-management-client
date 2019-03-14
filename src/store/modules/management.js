@@ -4,15 +4,23 @@ import ManagedResourceType from "../../constants/managedResourceType";
 import Function from "../../contracts/management/functions/function";
 import Truck from "../../contracts/management/trucks/truck";
 import SubUnit from "../../contracts/management/subunits/subUnit.js";
+import Utils from "../../services/utils";
 
 const state = {
   managedSubUnits: [],
   managedFunctions: [],
   managedTrucks: [],
   selectedResourceType: ManagedResourceType.SUBUNITS,
+  nextSelectedResourceType: null,
   selectedSubUnit: null,
+  nextSelectedSubUnit: null,
   selectedFunction: null,
-  selectedTruck: null
+  nextSelectedFunction: null,
+  selectedTruck: null,
+  nextSelectedTruck: null,
+  hasNewlyCreatedResource: false,
+  hasUnsavedChanges: false,
+  showUnsavedChangesDialog: false
 };
 
 const actions = {
@@ -42,15 +50,40 @@ const actions = {
   },
   [A.DELETE_MANAGED_RESOURCE]({ commit }) {
     commit(M.DELETE_MANAGED_RESOURCE);
+  },
+  [A.CHANGES_SAVED]({ commit }) {
+    commit(M.CHANGES_SAVED);
+  },
+  [A.SELECTED_RESOURCE_DATA_CHANGED]({ commit }) {
+    commit(M.SELECTED_RESOURCE_DATA_CHANGED);
+  },
+  [A.CHANGES_REVERTED]({ commit }) {
+    commit(M.CHANGES_REVERTED);
+  },
+  [A.SHOW_UNSAVED_CHANGES_DIALOG]({ commit }) {
+    commit(M.SHOW_UNSAVED_CHANGES_DIALOG);
+  },
+  [A.HIDE_UNSAVED_CHANGES_DIALOG]({ commit }) {
+    commit(M.HIDE_UNSAVED_CHANGES_DIALOG);
   }
 };
 
 const mutations = {
   [M.SELECT_MANAGED_RESOURCE_TYPE](state, selectedResourceType) {
-    state.selectedResourceType = selectedResourceType;
+    if (state.hasUnsavedChanges === false) {
+      state.selectedResourceType = selectedResourceType;
+    } else {
+      state.showUnsavedChangesDialog = true;
+      state.nextSelectedResourceType = selectedResourceType;
+    }
   },
   [M.SELECT_MANAGED_SUBUNIT]({ commit }, name) {
-    state.selectedSubUnit = name;
+    if (state.hasUnsavedChanges === false) {
+      state.selectedSubUnit = name;
+    } else {
+      state.showUnsavedChangesDialog = true;
+      state.nextSelectedSubUnit = name;
+    }
   },
   [M.MANAGED_SUBUNITS_RECEIVED]({ commit }, subUnitsUpdatedNotification) {
     state.managedSubUnits = subUnitsUpdatedNotification.subUnitsList.map(
@@ -60,17 +93,27 @@ const mutations = {
       state.selectedSubUnit = state.managedSubUnits[0];
     }
   },
-  [M.SELECT_MANAGED_FUNCTION]({ commit }, managedFunction) {
-    state.selectedFunction = managedFunction;
+  [M.SELECT_MANAGED_FUNCTION]({ commit }, managedFunction) {  
+    if (state.hasUnsavedChanges === false) {
+      state.selectedFunction = managedFunction;
+    } else {
+      state.showUnsavedChangesDialog = true;
+      state.nextSelectedFunction = managedFunction;
+    }
   },
   [M.MANAGED_FUNCTIONS_RECEIVED]({ commit }, functionsUpdatedNotification) {
     state.managedFunctions = functionsUpdatedNotification.functions;
     if (state.selectedFunction === null) {
       state.selectedFunction = state.managedFunctions[0];
-    }
+    }    
   },
   [M.SELECT_MANAGED_TRUCK]({ commit }, managedTruck) {
-    state.selectedTruck = managedTruck;
+    if (state.hasUnsavedChanges === false) {
+      state.selectedTruck = managedTruck;
+    } else {
+      state.showUnsavedChangesDialog = true;
+      state.nextSelectedTruck = managedTruck;
+    }
   },
   [M.MANAGED_TRUCKS_RECEIVED]({ commit }, trucksUpdatedNotification) {
     state.managedTrucks = trucksUpdatedNotification.trucks;
@@ -79,30 +122,86 @@ const mutations = {
     }
   },
   [M.ADD_MANAGED_RESOURCE]({ commit }) {
-    switch (state.selectedResourceType) {
-      case ManagedResourceType.SUBUNITS:
-        addSubUnit();
-        break;
-      case ManagedResourceType.FUNCTIONS:
-        addFunction();
-        break;
-      case ManagedResourceType.TRUCKS:
-        addTruck();
-        break;
+    if (state.hasUnsavedChanges === false) {
+      switch (state.selectedResourceType) {
+        case ManagedResourceType.SUBUNITS:
+          addSubUnit();
+          break;
+        case ManagedResourceType.FUNCTIONS:
+          addFunction();
+          break;
+        case ManagedResourceType.TRUCKS:
+          addTruck();
+          break;
+      }
+
+      state.hasNewlyCreatedResource = true;
+      state.hasUnsavedChanges = true;
+    } else {
+      state.showUnsavedChangesDialog = true;
     }
   },
   [M.DELETE_MANAGED_RESOURCE]({ commit }) {
+    if (
+      state.hasNewlyCreatedResource === true ||
+      state.hasUnsavedChanges === true
+    ) {
+      state.hasNewlyCreatedResource = false;
+      state.hasUnsavedChanges = false;
+    }
+
+    deleteManagedResource();
+  },
+  [M.CHANGES_REVERTED]({ commit }) {
+    if (state.hasNewlyCreatedResource === true) {
+      deleteManagedResource();
+    }
+
+    state.hasNewlyCreatedResource = false;
+    state.hasUnsavedChanges = false;
     switch (state.selectedResourceType) {
       case ManagedResourceType.SUBUNITS:
-        deleteSubUnit();
+        if (state.nextSelectedSubUnit != null) {
+          state.selectedSubUnit = state.nextSelectedSubUnit;
+          state.nextSelectedSubUnit = null;
+        } else if (state.nextSelectedResourceType != null) {
+          state.selectedResourceType = state.nextSelectedResourceType;
+          state.nextSelectedResourceType = null;
+        }
+
         break;
       case ManagedResourceType.FUNCTIONS:
-        deleteFunction();
+        if (state.nextSelectedFunction != null) {
+          state.selectedFunction = state.nextSelectedFunction;
+          state.nextSelectedFunction = null;
+        } else if (state.nextSelectedResourceType != null) {
+          state.selectedResourceType = state.nextSelectedResourceType;
+          state.nextSelectedResourceType = null;
+        } 
         break;
       case ManagedResourceType.TRUCKS:
-        deleteTruck();
+        if (state.nextSelectedTruck != null) {
+          state.selectedTruck = state.nextSelectedTruck;
+          state.nextSelectedTruck = null;
+        } else if (state.nextSelectedResourceType != null) {
+          state.selectedResourceType = state.nextSelectedResourceType;
+          state.nextSelectedResourceType = null;
+        } 
         break;
     }
+  },
+  [M.CHANGES_SAVED]({ commit }) {
+    state.hasNewlyCreatedResource = false;
+    state.hasUnsavedChanges = false;
+  },
+  [M.SELECTED_RESOURCE_DATA_CHANGED]({ commit }) {
+    state.hasUnsavedChanges = true;
+  },
+  [M.SHOW_UNSAVED_CHANGES_DIALOG]({ commit }) {
+    state.showUnsavedChangesDialog = true;
+  },
+  [M.HIDE_UNSAVED_CHANGES_DIALOG]({ commit }) {
+    state.showUnsavedChangesDialog = false;
   }
 };
 const getters = {};
@@ -114,53 +213,55 @@ export default {
   mutations
 };
 
+function deleteManagedResource() {
+  switch (state.selectedResourceType) {
+    case ManagedResourceType.SUBUNITS:
+      deleteSubUnit();
+      break;
+    case ManagedResourceType.FUNCTIONS:
+      deleteFunction();
+      break;
+    case ManagedResourceType.TRUCKS:
+      deleteTruck();
+      break;
+  }
+}
+
 function addTruck() {
-  let newTruck = new Truck(null, "**Autospeciala nouă**", "");
+  let newTruck = new Truck(Utils.createUUID(), "**Autospeciala nouă**", "**Autospeciala nouă**");
   state.managedTrucks.push(newTruck);
   state.selectedTruck = newTruck;
 }
 
 function addFunction() {
-  let newFunction = new Function(null, "**Funcție nouă**");
+  let newFunction = new Function(Utils.createUUID(), "**Funcție nouă**");
   state.managedFunctions.push(newFunction);
   state.selectedFunction = newFunction;
 }
 
 function addSubUnit() {
-  let newSubUnit = new SubUnit(null, "**Subunitate nouă**");
+  let newSubUnit = new SubUnit(Utils.createUUID(), "**Subunitate nouă**");
   state.managedSubUnits.push(newSubUnit);
   state.selectedSubUnit = newSubUnit;
 }
 
 function deleteSubUnit() {
-  if (state.selectedSubUnit.id != null) {
-    state.managedSubUnits.pop(state.selectedSubUnit);
-  } else {
-    state.managedSubUnits.pop(
-      state.managedSubUnits[state.managedSubUnits.length - 1]
-    );
-  }
+  state.managedSubUnits.pop(
+    state.managedSubUnits.find(s => s.id === state.selectedSubUnit.id)
+  );
   state.selectedSubUnit = state.managedSubUnits[0];
 }
 
 function deleteFunction() {
-  if (state.selectedFunction.id != null) {
-    state.managedFunctions.pop(state.selectedFunction);
-  } else {
-    state.managedFunctions.pop(
-      state.managedFunctions[state.managedFunctions.length - 1]
-    );
-  }
+  state.managedFunctions.pop(
+    state.managedFunctions.find(f => f.id === state.selectedFunction.id)
+  );
   state.selectedFunction = state.managedFunctions[0];
 }
 
 function deleteTruck() {
-  if (state.selectedTruck.id != null) {
-    state.managedTrucks.pop(state.selectedTruck);
-  } else {
-    state.managedTrucks.pop(
-      state.managedTrucks[state.managedTrucks.length - 1]
-    );
-  }
+  state.managedTrucks.pop(
+    state.managedTrucks.find(t => t.id === state.selectedTruck.id)
+  );
   state.selectedTruck = state.managedTrucks[0];
 }

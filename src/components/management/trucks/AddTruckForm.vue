@@ -64,22 +64,30 @@ export default {
   },
   methods: {
     isSaveDisabled() {
-      return !(
+    var isChanged =
         this.editedShortName != null &&
         this.editedShortName != "" &&
         this.editedLongName != null &&
-        this.editedLongName != ""
+        this.editedLongName != "";
+
+      if (isChanged) {
+        this.$store.dispatch(A.SELECTED_RESOURCE_DATA_CHANGED);
+      }
+
+      
+      return (
+        (!isChanged) ||
+        (this.$store.state.managementStore.hasNewlyCreatedResource === false)
       );
     },
     saveTruck() {
-      let truckId = this.$store.state.managementStore.selectedTruck.id;
-      if (truckId != null) {
+      if (this.$store.state.managementStore.hasNewlyCreatedResource === true) {
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
             "updateTruck",
             new UpdateTruckRequest(
-              truckId,
+              this.$store.state.managementStore.selectedTruck.id,
               this.editedShortName == null
                 ? this.$store.state.managementStore.selectedTruck.shortName
                 : this.editedShortName,
@@ -95,6 +103,7 @@ export default {
           new WebsocketSend(
             "addTruck",
             new AddTruckRequest(
+              this.$store.state.managementStore.selectedTruck.id,
               this.editedShortName == null
                 ? this.$store.state.managementStore.selectedTruck.shortName
                 : this.editedShortName,
@@ -105,6 +114,7 @@ export default {
           )
         );
       }
+      this.$store.dispatch(A.CHANGES_SAVED);
     }
   }
 };

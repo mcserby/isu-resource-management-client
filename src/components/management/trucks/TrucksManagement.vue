@@ -11,6 +11,7 @@ import A from "../../../constants/actions";
 import TrucksList from "./TrucksList.vue";
 import AddTruckForm from "./AddTruckForm.vue";
 import WebsocketSubscribe from "../../../contracts/websocketSubscribe";
+import WebsocketUnsubscribe from "../../../contracts/websocketUnsubscribe";
 import WebsocketSend from "../../../contracts/websocketSend";
 import TrucksUpdatedNotification from "../../../contracts/management/trucks/trucksUpdatedNotification";
 
@@ -23,7 +24,9 @@ export default {
   computed: {},
   methods: {
     getKey() {
-      return this.$store.state.managementStore.selectedTruck.id;
+      if (this.$store.state.managementStore.selectedTruck != null) {
+        return this.$store.state.managementStore.selectedTruck.id;
+      }
     }
   },
   mounted: function() {
@@ -42,6 +45,12 @@ export default {
     this.$store.dispatch(
       A.WEBSOCKET_SUBSCRIBE,
       new WebsocketSubscribe("trucks", onTrucksReceived, onError)
+    );
+  },
+  beforeDestroy() {
+    this.$store.dispatch(
+      A.WEBSOCKET_UNSUBSCRIBE,
+      new WebsocketUnsubscribe("trucks")
     );
   }
 };

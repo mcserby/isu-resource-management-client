@@ -20,7 +20,9 @@ export default {
   computed: {},
   methods: {
     getKey() {
-      return this.$store.state.managementStore.selectedSubUnit.id;
+      if (this.$store.state.managementStore.selectedSubUnit != null) {
+        return this.$store.state.managementStore.selectedSubUnit.id;
+      }
     }
   },
   mounted: function() {

@@ -11,6 +11,7 @@ import A from "../../../constants/actions";
 import FunctionsList from "./FunctionsList.vue";
 import AddFunctionForm from "./AddFunctionForm.vue";
 import WebsocketSubscribe from "../../../contracts/websocketSubscribe";
+import WebsocketUnsubscribe from "../../../contracts/websocketUnsubscribe";
 import WebsocketSend from "../../../contracts/websocketSend";
 import FunctionsUpdatedNotification from "../../../contracts/management/functions/functionsUpdatedNotification";
 
@@ -23,7 +24,9 @@ export default {
   computed: {},
   methods: {
     getKey() {
-      return this.$store.state.managementStore.selectedFunction.id;
+      if (this.$store.state.managementStore.selectedFunction != null) {
+        return this.$store.state.managementStore.selectedFunction.id;
+      }
     }
   },
   mounted: function() {
@@ -42,6 +45,12 @@ export default {
     this.$store.dispatch(
       A.WEBSOCKET_SUBSCRIBE,
       new WebsocketSubscribe("functions", onFunctionsReceived, onError)
+    );
+  },
+  beforeDestroy() {
+    this.$store.dispatch(
+      A.WEBSOCKET_UNSUBSCRIBE,
+      new WebsocketUnsubscribe("functions")
     );
   }
 };

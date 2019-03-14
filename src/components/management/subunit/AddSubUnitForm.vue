@@ -44,17 +44,24 @@ export default {
   },
   methods: {
     isSaveDisabled() {
-      return this.editedName == null || this.editedName === "";
+      var isUnchanged = this.editedName == null || this.editedName === "";
+      if (!isUnchanged) {
+        this.$store.dispatch(A.SELECTED_RESOURCE_DATA_CHANGED);
+      }
+
+      return (
+        isUnchanged &&
+        this.$store.state.managementStore.hasNewlyCreatedResource === false
+      );
     },
     save() {
-      let subUnitId = this.$store.state.managementStore.selectedSubUnit.id;
-      if (subUnitId != null) {
+      if (this.$store.state.managementStore.hasNewlyCreatedResource === true) {
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
-            "updateSubUnitName",
-            new UpdateSubUnitNameRequest(
-              subUnitId,
+            "addSubUnit",
+            new AddSubUnitRequest(
+              this.$store.state.managementStore.selectedSubUnit.id,
               this.editedName == null
                 ? this.$store.state.managementStore.selectedSubUnit.name
                 : this.editedName
@@ -65,8 +72,9 @@ export default {
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
-            "addSubUnit",
-            new AddSubUnitRequest(
+            "updateSubUnitName",
+            new UpdateSubUnitNameRequest(
+              this.$store.state.managementStore.selectedSubUnit.id,
               this.editedName == null
                 ? this.$store.state.managementStore.selectedSubUnit.name
                 : this.editedName
@@ -74,6 +82,8 @@ export default {
           )
         );
       }
+
+      this.$store.dispatch(A.CHANGES_SAVED);
     }
   }
 };
