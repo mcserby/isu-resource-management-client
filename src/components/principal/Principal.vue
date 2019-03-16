@@ -11,7 +11,7 @@
     <div class="units-container">
       <div class="unit-header-wrapper">
         <div v-for="unit in units" v-bind:key="unit.id">
-          <div class="unit-header">{{unit.name}}</div>
+          <div class="unit-header">{{unit.id}}</div>
         </div>
       </div>
       <div class="unit-wrapper-wrapper">

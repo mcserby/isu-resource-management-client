@@ -19,7 +19,7 @@
                 placeholder="Detașament"
               >
             </div>
-            <div class="form-group">
+            <div v-if="!isReserve" class="form-group">
               <label class="form-label" for="resourceState">Stare:</label>
               <input
                 type="text"
@@ -29,6 +29,31 @@
                 readonly="true"
                 placeholder="Tip autospecială"
               >
+            </div>
+            <div v-if="isReserve" class="form-group">
+              <label class="form-label">Stare:</label>
+              <div class="status-radio-selector">
+                <div class="item-operational">
+                  <label class="form-label radio-inline" for="operational">Operațional:</label>
+                  <input
+                    type="radio"
+                    :value="operational"
+                    v-model="resource.status.status"
+                    id="operational"
+                    v-on:change="updateResourceStatus(resource.status.status)"
+                  >
+                </div>
+                <div class="item-non-operational">
+                  <label class="form-label radio-inline" for="nonoperational">Neoperațional:</label>
+                  <input
+                    type="radio"
+                    :value="nonoperational"
+                    v-model="resource.status.status"
+                    id="nonoperational"
+                    v-on:change="updateResourceStatus(resource.status.status)"
+                  >
+                </div>
+              </div>
             </div>
             <div class="form-group">
               <label class="form-label" for="name">Tip autospecială</label>
@@ -89,10 +114,12 @@
 
 <script>
 import A from '../../../../constants/actions';
-// import Resource from "../resource/Resource.vue";
 import Resource from '../../../../contracts/resource';
-// import Equipment from '../../../../contracts/equipment';
 import ResourceStatus from "../../../../constants/resourceStatus.js";
+import ResourceType from "../../../../constants/resourceType.js";
+import UpdateResourceStatus from "../../../../contracts/edit/updateResourceStatus";
+import WebsocketSend from "../../../../contracts/websocketSend";
+import Status from "../../../../contracts/status";
 
 export default {
   name: "ResourceDialog",
@@ -100,8 +127,29 @@ export default {
   data: () => {
     return {
       crewMembers: "",
-      resourceStatus: {[ResourceStatus.IN_MISSION]: 'MISIUNE', [ResourceStatus.AVAILABLE]:'DISPONIBIL', [ResourceStatus.UNAVAILABLE]: 'INDISPONIBIL'}
+      resourceStatus: {
+        [ResourceStatus.IN_MISSION]: 'MISIUNE',
+        [ResourceStatus.AVAILABLE]: 'DISPONIBIL',
+        [ResourceStatus.UNAVAILABLE]: 'INDISPONIBIL',
+        [ResourceStatus.OPERATIONAL]: 'OPERAȚIONAL',
+        [ResourceStatus.NONOPERATIONAL]: 'NEOPERAȚIONAL',
+      }
     };
+  },
+  computed: {
+    activeTab () {
+      return this.$store.state.principalStore.activeTab
+    },
+    isReserve() {
+      return this.resource.type === ResourceType.RESERVE;
+    },
+    operational() {
+      return ResourceStatus.OPERATIONAL;
+    },
+    nonoperational() {
+      return ResourceStatus.NONOPERATIONAL;
+    }
+
   },
   methods: {
     cancel: function() {
@@ -114,13 +162,21 @@ export default {
         this.crewMembers = this.resource.crew.join("\n");
         this.crewMembers = this.resource.captain + "\n" + this.crewMembers;
       }
+    },
+    updateResourceStatus(status) {
+      this.$store.dispatch(
+        A.WEBSOCKET_SEND,
+        new WebsocketSend(
+          "updateStatus",
+          new UpdateResourceStatus(
+            this.resource.plateNumber,
+            new Status(status, null, null, null)
+          )
+        )
+      );
     }
   },
-  computed: {
-    activeTab () {
-      return this.$store.state.principalStore.activeTab
-    }
-  },
+
 
   components: {
     Resource
