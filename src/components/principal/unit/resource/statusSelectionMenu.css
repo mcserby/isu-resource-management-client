@@ -4,7 +4,14 @@
   position: absolute;
   z-index: 1;
   top: 10%;
+}
+
+.menu-mission {
   width: 200px;
+}
+
+.menu-reserves {
+  width: 280px;
 }
 
 .menu-left {
@@ -65,6 +72,30 @@
 
 .menu-option-indisponibil:hover {
   background-color: #3b3b3b;
+}
+
+.menu-option-first-intervention {
+  background-color: #53b4ff;
+}
+
+.menu-option-first-intervention:hover{
+  background-color: #3e6dff;
+}
+
+.menu-option-other-resources {
+  background-color: #53b4ff;
+}
+
+.menu-option-other-resources:hover{
+  background-color: #3e6dff;
+}
+
+.menu-option-reserve {
+  background-color: #ffcc00;
+}
+
+.menu-option-reserve:hover {
+  background-color: #ffac00;
 }
 
 .mission-selection-dialog-container {

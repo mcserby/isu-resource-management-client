@@ -75,6 +75,7 @@
   import Resource from '../../../../contracts/resource';
   import Status from '../../../../contracts/status';
   import ResourceStatus from '../../../../constants/resourceStatus';
+  import ResourceType from "../../../../constants/resourceType";
   import UnlockSubUnitRequest from '../../../../contracts/edit/unlockSubUnitRequest';
   import WebsocketSend from '../../../../contracts/websocketSend';
   import UpdateSubUnitRequest from "../../../../contracts/edit/updateSubUnitRequest";
@@ -114,7 +115,7 @@
         return [].concat.apply([], this.$store.state.principalStore.units.filter(u => u.id !== this.$store.state.principalStore.activeUnit.id).map(u => u.resources.map(r => r.plateNumber)));
       },
       title() {
-        return this.$store.state.principalStore.activeTab.name + ': ' + this.$store.state.principalStore.activeUnit.name;
+        return this.$store.state.principalStore.activeTab.name + ': ' + this.$store.state.principalStore.activeUnit.id;
       }
     },
     mounted() {
@@ -152,6 +153,9 @@
         const captain = crewList[0] || '';
         crewList = crewList.slice();
         crewList.shift();
+        if(this.resourceType === ResourceType.RESERVE){
+          this.status.status = ResourceStatus.OPERATIONAL;
+        }
         return new Resource(id, this.vehicleType, this.plateNumber, this.identificationNumber, captain, crewList,
           this.status, this.resourceType);
       },
