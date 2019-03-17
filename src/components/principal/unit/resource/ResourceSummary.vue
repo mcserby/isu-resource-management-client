@@ -8,7 +8,7 @@
       v-on:click="mouseClick"
     >
       <div
-        v-bind:class="['status', this.isResourceAvailable ? 'status-available' : this.isResourceInMission ? 'status-in-mission':'status-unavailable' ]"
+        v-bind:class="['status', statusClass]"
       ></div>
       <div class="resource-name-summary">
         <div class="resource-element-container">{{resource.vehicleType}}</div>
@@ -27,7 +27,7 @@
       :statusMenuYPosition="statusMenuYPosition"
       :resource="resource"
       v-if="isStatusMenuVisible"
-    />
+    ></StatusSelectionMenu>
   </div>
 </template>
 
@@ -62,6 +62,16 @@ export default {
 
       return crewSize;
     },
+    statusClass(){
+      switch(this.resource.status.status){
+        case ResourceStatus.AVAILABLE: return 'status-available';
+        case ResourceStatus.IN_MISSION: return 'status-in-mission';
+        case ResourceStatus.UNAVAILABLE: return 'status-unavailable';
+        case ResourceStatus.NONOPERATIONAL: return 'status-non-operational';
+        case ResourceStatus.OPERATIONAL: return 'status-operational';
+      }
+      return 'status-available';
+    },
     isStatusMenuVisible() {
       return this.$store.state.principalStore.statusMenuIsOpen &&
         this.$store.state.principalStore.activeStatusMenuId === this.resource.plateNumber;
@@ -80,8 +90,8 @@ export default {
       this.$emit('mouseClick', this.resource);
     },
     showStatusMenu: function(event) {
-      this.statusMenuYPosition =
-        event.clientX > window.innerWidth / 2 ? "left" : "right";
+      this.statusMenuXPosition =
+        event.clientX > window.innerWidth - 280 ? "left" : "right";
       this.statusMenuYPosition =
         event.clientY > window.innerHeight / 2 ? "down" : "up";
       //TODO Use unique id instead of plateNumber when available on backend.

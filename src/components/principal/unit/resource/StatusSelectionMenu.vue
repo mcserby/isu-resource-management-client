@@ -25,7 +25,7 @@
                   class="form-control"
                   id="description"
                   rows="3"
-                />
+                ></textarea>
               </div>
               <div class="form-group">
                 <label class="form-label" for="crew">Echipaj:</label>
@@ -44,17 +44,29 @@
         </div>
       </div>
     </div>
-    <div v-bind:class="['menu', statusMenuXPosition == 'right' ? 'menu-right' : 'menu-left', statusMenuYPosition == 'down' ? 'menu-down' : 'menu-up']">
+    <div v-bind:class="['menu', isReserve? 'menu-reserves': 'menu-mission',  statusMenuXPosition == 'right' ? 'menu-right' : 'menu-left', statusMenuYPosition == 'down' ? 'menu-down' : 'menu-up']">
       <menu class="menu-options">
-        <menuitem
+        <menuitem v-if="isNotReserve"
           class="menu-option menu-option-disponibil"
           @click="setStatusToDisponibil()"
         >Disponibil</menuitem>
-        <menuitem class="menu-option menu-option-misiune" @click="toggleMissionMenu">Misiune</menuitem>
-        <menuitem
+        <menuitem v-if="isNotReserve" class="menu-option menu-option-misiune" @click="toggleMissionMenu">Misiune</menuitem>
+        <menuitem v-if="isNotReserve"
           class="menu-option menu-option-indisponibil"
           @click="setStatusToIndisponibil()"
         >Indisponibil</menuitem>
+        <menuitem v-if="isNotReserve"
+                  class="menu-option menu-option-reserve"
+                  @click="setResourceTypeToReserve()"
+        >Rezerve</menuitem>
+        <menuitem v-if="isReserve"
+                  class="menu-option menu-option-first-intervention"
+                  @click="setResourceTypeToFirstIntervention()"
+        >Primă intervenție</menuitem>
+        <menuitem v-if="isReserve"
+                  class="menu-option menu-option-other-resources"
+                  @click="setResourceTypeToOtherResource()"
+        >Alte Resurse</menuitem>
       </menu>
     </div>
   </div>
@@ -64,8 +76,10 @@ import ClickOutside from "vue-click-outside";
 import A from "../../../../constants/actions";
 import Status from "../../../../contracts/status";
 import UpdateResourceStatus from "../../../../contracts/edit/updateResourceStatus";
+import UpdateResourceType from "../../../../contracts/edit/updateResourceType";
 import WebsocketSend from "../../../../contracts/websocketSend";
 import ResourceStatus from "../../../../constants/resourceStatus";
+import ResourceType from "../../../../constants/resourceType";
 
 export default {
   name: "StatusSelectionMenu",
@@ -84,6 +98,13 @@ export default {
     isSetStatusToMissionDisabled() {
       return this.key.trim() === "" || this.description.trim() === "" || this.crew.trim() === "";
     },
+    isNotReserve() {
+      return this.resource.type !== ResourceType.RESERVE;
+    },
+    isReserve(){
+      return this.resource.type === ResourceType.RESERVE;
+    }
+
   },
   methods: {
     toggleMissionMenu: function() {
@@ -144,6 +165,45 @@ export default {
               crewList
             )
           )
+        )
+      );
+    },
+    setResourceTypeToFirstIntervention() {
+      this.closeMissionMenu();
+      this.closeStatusMenu();
+      this.$store.dispatch(
+        A.WEBSOCKET_SEND,
+        new WebsocketSend(
+          "updateResourceType",
+          new UpdateResourceType(
+            this.resource.plateNumber,
+            ResourceType.FIRST_INTERVENTION)
+          )
+        );
+    },
+    setResourceTypeToOtherResource() {
+      this.closeMissionMenu();
+      this.closeStatusMenu();
+      this.$store.dispatch(
+        A.WEBSOCKET_SEND,
+        new WebsocketSend(
+          "updateResourceType",
+          new UpdateResourceType(
+            this.resource.plateNumber,
+            ResourceType.OTHER)
+        )
+      );
+    },
+    setResourceTypeToReserve() {
+      this.closeMissionMenu();
+      this.closeStatusMenu();
+      this.$store.dispatch(
+        A.WEBSOCKET_SEND,
+        new WebsocketSend(
+          "updateResourceType",
+          new UpdateResourceType(
+            this.resource.plateNumber,
+            ResourceType.RESERVE)
         )
       );
     }

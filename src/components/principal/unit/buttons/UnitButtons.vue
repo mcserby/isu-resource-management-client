@@ -75,6 +75,9 @@ export default {
         case ResourceType.OTHER:
           lastUpdatedTimestamp = this.unit.lastUpdateOtherResource;
           break;
+        case ResourceType.RESERVE:
+          lastUpdatedTimestamp = this.unit.lastUpdateReserveResource;
+          break;
       }
       return lastUpdatedTimestamp;
     }

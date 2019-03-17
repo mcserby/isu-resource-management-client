@@ -19,7 +19,8 @@ function sortResource(r1, r2) {
 const tabs = [
   new Tab("Tehnică de primă intervenție", ResourceType.FIRST_INTERVENTION),
   new Tab("Alte tipuri de tehnică", ResourceType.OTHER),
-  new Tab("Echipamente", ResourceType.EQUIPMENT)
+  new Tab("Echipamente", ResourceType.EQUIPMENT),
+  new Tab("Rezerve", ResourceType.RESERVE),
 ];
 
 const state = {
@@ -256,7 +257,7 @@ const mutations = {
   },
   [M.LOCK_UNIT_RESPONSE_RECEIVED](state, lockResponse) {
     if (lockResponse.statusCode === StatusCode.OK) {
-      if (state.shiftExchangePendingUnit != null) {
+      if (state.shiftExchangePendingUnit) {
         let unit = state.units.find(
           u => u.id === state.shiftExchangePendingUnit
         );
@@ -264,7 +265,7 @@ const mutations = {
           state.activeUnit = unit;
           state.confirmationDialogIsOpen = true;
         }
-      } else if (state.updateResourcePendingUnit != null) {
+      } else if (state.updateResourcePendingUnit) {
         let unit = state.units.find(u => u.id === state.updateResourcePendingUnit);
         if (unit) {
           state.activeUnit = JSON.parse(JSON.stringify(unit));

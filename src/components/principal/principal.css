@@ -16,26 +16,31 @@
   display: inline-grid;
   grid-template-columns: repeat( auto-fit, minmax(40px, 1fr) );
   background-color: #f2f2f2;
-  padding: 10px;
+  padding: 10px 17px 10px 10px;
   grid-gap: 5px;
   width: 100%;
   grid-row: 1 / span 1;
+}
+
+.units-container {
+  height: calc(100vh - 339px);
+  height: -moz-calc(100vh - 339px);
+  height: -webkit-calc(100vh - 339px);
+  height: -o-calc(100vh - 339px);
 }
 
 .app-sa .unit-wrapper-wrapper {
   display: inline-grid;
   grid-template-columns: repeat( auto-fit, minmax(40px, 1fr) );
   background-color: #f2f2f2;
-  padding: 0 10px 10px 10px;
+  padding: 0 0px 10px 10px;
   grid-gap: 5px;
   width: 100%;
   grid-row: 2 / span 1;
-  max-height: -moz-calc(100vh - 450px);
-  max-height: -webkit-calc(100vh - 450px);
-  max-height: -o-calc(100vh - 450px);
-  max-height: calc(100vh - 450px);
-  overflow: scroll;
-  min-height: 180px;
+  max-height: 100%;
+  min-height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .app-sa .tab{
