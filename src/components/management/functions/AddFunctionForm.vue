@@ -58,11 +58,11 @@ export default {
     },
     saveFunction() {
       if (this.$store.state.managementStore.hasNewlyCreatedResource === true) {
-        this.$store.dispatch(
+         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
-            "updateFunction",
-            new UpdateFunctionRequest(
+            "addFunction",
+            new AddFunctionRequest(
               this.$store.state.managementStore.selectedFunction.id,
               this.editedName == null
                 ? this.$store.state.managementStore.selectedFunction.name
@@ -70,12 +70,12 @@ export default {
             )
           )
         );
-      } else {
+      } else {       
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
-            "addFunction",
-            new AddFunctionRequest(
+            "updateFunction",
+            new UpdateFunctionRequest(
               this.$store.state.managementStore.selectedFunction.id,
               this.editedName == null
                 ? this.$store.state.managementStore.selectedFunction.name

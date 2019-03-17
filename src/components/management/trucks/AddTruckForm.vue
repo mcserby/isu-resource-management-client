@@ -64,20 +64,17 @@ export default {
   },
   methods: {
     isSaveDisabled() {
-    var isChanged =
-        this.editedShortName != null &&
-        this.editedShortName != "" &&
-        this.editedLongName != null &&
-        this.editedLongName != "";
+      var isUnchanged =
+        (this.editedShortName == null || this.editedShortName === "") &&
+        (this.editedLongName == null || this.editedLongName === "");
 
-      if (isChanged) {
+      if (!isUnchanged) {
         this.$store.dispatch(A.SELECTED_RESOURCE_DATA_CHANGED);
       }
 
-      
       return (
-        (!isChanged) ||
-        (this.$store.state.managementStore.hasNewlyCreatedResource === false)
+        isUnchanged &&
+        this.$store.state.managementStore.hasNewlyCreatedResource === false
       );
     },
     saveTruck() {
@@ -85,8 +82,8 @@ export default {
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
-            "updateTruck",
-            new UpdateTruckRequest(
+            "addTruck",
+            new AddTruckRequest(
               this.$store.state.managementStore.selectedTruck.id,
               this.editedShortName == null
                 ? this.$store.state.managementStore.selectedTruck.shortName
@@ -101,8 +98,8 @@ export default {
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
-            "addTruck",
-            new AddTruckRequest(
+            "updateTruck",
+            new UpdateTruckRequest(
               this.$store.state.managementStore.selectedTruck.id,
               this.editedShortName == null
                 ? this.$store.state.managementStore.selectedTruck.shortName

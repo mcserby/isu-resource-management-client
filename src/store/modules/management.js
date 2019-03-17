@@ -80,6 +80,8 @@ const mutations = {
   [M.SELECT_MANAGED_SUBUNIT]({ commit }, name) {
     if (state.hasUnsavedChanges === false) {
       state.selectedSubUnit = name;
+      state.selectedFunction = null;
+      state.selectedTruck = null;
     } else {
       state.showUnsavedChangesDialog = true;
       state.nextSelectedSubUnit = name;
@@ -96,6 +98,8 @@ const mutations = {
   [M.SELECT_MANAGED_FUNCTION]({ commit }, managedFunction) {  
     if (state.hasUnsavedChanges === false) {
       state.selectedFunction = managedFunction;
+      state.selectedSubUnit = null;
+      state.selectedTruck = null;
     } else {
       state.showUnsavedChangesDialog = true;
       state.nextSelectedFunction = managedFunction;
@@ -110,6 +114,8 @@ const mutations = {
   [M.SELECT_MANAGED_TRUCK]({ commit }, managedTruck) {
     if (state.hasUnsavedChanges === false) {
       state.selectedTruck = managedTruck;
+      state.selectedSubUnit = null;
+      state.selectedFunction = null;
     } else {
       state.showUnsavedChangesDialog = true;
       state.nextSelectedTruck = managedTruck;
