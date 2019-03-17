@@ -4,7 +4,12 @@
       <label class="form-label" for="name">Numele subunității</label>
       <input type="text" required v-model="name" class="form-control" id="name">
     </div>
-    <button type="button" class="btn custom-button add-subunit-button" @click="save">Salvează</button>
+    <button
+      type="button"
+      class="btn custom-button add-subunit-button"
+      @click="save"
+      :disabled="isSaveDisabled()"
+    >Salvează</button>
   </div>
 </template>
 <script>
@@ -23,10 +28,12 @@ export default {
     name: {
       // getter
       get: function() {
-        if (this.$store.state.managementStore.selectedSubUnit != null) {
+        if (this.editedName != null) {
+          return this.editedName;
+        } else if (this.$store.state.managementStore.selectedSubUnit != null) {
           return this.$store.state.managementStore.selectedSubUnit.name;
         } else {
-          return "";
+          return null;
         }
       },
       // setter
@@ -37,17 +44,24 @@ export default {
   },
   methods: {
     isSaveDisabled() {
-      return this.editedName == null;
+      var isUnchanged = this.editedName == null || this.editedName === "";
+      if (!isUnchanged) {
+        this.$store.dispatch(A.SELECTED_RESOURCE_DATA_CHANGED);
+      }
+
+      return (
+        isUnchanged &&
+        this.$store.state.managementStore.hasNewlyCreatedResource === false
+      );
     },
     save() {
-      let subUnitId = this.$store.state.managementStore.selectedSubUnit.id;
-      if (subUnitId != null) {
+      if (this.$store.state.managementStore.hasNewlyCreatedResource === true) {
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
-            "updateSubUnitName",
-            new UpdateSubUnitNameRequest(
-              subUnitId,
+            "addSubUnit",
+            new AddSubUnitRequest(
+              this.$store.state.managementStore.selectedSubUnit.id,
               this.editedName == null
                 ? this.$store.state.managementStore.selectedSubUnit.name
                 : this.editedName
@@ -58,8 +72,9 @@ export default {
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
-            "addSubUnit",
-            new AddSubUnitRequest(
+            "updateSubUnitName",
+            new UpdateSubUnitNameRequest(
+              this.$store.state.managementStore.selectedSubUnit.id,
               this.editedName == null
                 ? this.$store.state.managementStore.selectedSubUnit.name
                 : this.editedName
@@ -67,6 +82,8 @@ export default {
           )
         );
       }
+
+      this.$store.dispatch(A.CHANGES_SAVED);
     }
   }
 };

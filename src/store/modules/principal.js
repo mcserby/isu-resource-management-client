@@ -58,6 +58,9 @@ const actions = {
   [A.CLEAR_UNIT_RESOURCES]({ commit }, unitId) {
     commit(M.CLEAR_UNIT_RESOURCES, unitId);
   },
+  [A.OPEN_CONFIRMATION_DIALOG]({ commit }) {
+    commit(M.OPEN_CONFIRMATION_DIALOG);
+  },
   [A.CLOSE_CONFIRMATION_DIALOG]({ commit }) {
     commit(M.CLOSE_CONFIRMATION_DIALOG);
   },
@@ -159,6 +162,9 @@ const mutations = {
       );
       Vue.set(unit, "equipment", updatedUnitEquipments);
     }
+  },
+  [M.OPEN_CONFIRMATION_DIALOG](state) {
+    state.confirmationDialogIsOpen = true;
   },
   [M.CLOSE_CONFIRMATION_DIALOG](state) {
     state.confirmationDialogIsOpen = false;

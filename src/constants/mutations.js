@@ -1,5 +1,6 @@
 export default {
   CLEAR_UNIT_RESOURCES: "clearUnitResources",
+  OPEN_CONFIRMATION_DIALOG: "openConfirmationDialog",
   CLOSE_CONFIRMATION_DIALOG: "closeConfirmationDialog",
   OPEN_VIEW_RESOURCE_DIALOG: "openViewResourceDialog",
   CLOSE_VIEW_RESOURCE_DIALOG: "closeViewResourceDialog",
@@ -8,6 +9,7 @@ export default {
   WEBSOCKET_CONNECT: "websocketConnect",
   WEBSOCKET_DISCONNECT: "websocketDisconnect",
   WEBSOCKET_SUBSCRIBE: "websocketSubscribe",
+  WEBSOCKET_UNSUBSCRIBE: "websocketUnsubscribe",
   WEBSOCKET_SUBSCRIBE_USER: "websocketSubscribeUser",
   WEBSOCKET_SEND: "websocketSend",
   LOCK_UNIT_RESPONSE_RECEIVED: "lockUnitResponseReceived",
@@ -41,5 +43,10 @@ export default {
   SELECT_MANAGED_TRUCK: "selectManagedTruck",
   MANAGED_TRUCKS_RECEIVED: "managedTrucksReceived",
   ADD_MANAGED_RESOURCE: "addManagedResource",
-  DELETE_MANAGED_RESOURCE: "deleteManagedResource"
+  DELETE_MANAGED_RESOURCE: "deleteManagedResource",
+  SELECTED_RESOURCE_DATA_CHANGED:"changesUnsaved",
+  CHANGES_SAVED:"changesSaved",
+  CHANGES_REVERTED: "changesReverted",
+  SHOW_UNSAVED_CHANGES_DIALOG: "showUnsavedChangesDialog",
+  HIDE_UNSAVED_CHANGES_DIALOG: "hideUnsavedChangesDialog"
 };

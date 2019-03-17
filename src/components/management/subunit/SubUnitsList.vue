@@ -61,7 +61,7 @@ export default {
     }
   },
   mounted: function() {
-    console.log("Management module mounted");  
+    console.log("Management module mounted");
   }
 };
 </script>

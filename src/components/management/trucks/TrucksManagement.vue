@@ -1,7 +1,7 @@
 <template>
   <div class="truck-management-container">
     <TrucksList class="truck-list"></TrucksList>
-    <AddTruckForm class="add-truck-form"></AddTruckForm>
+    <AddTruckForm class="add-truck-form" :key="getKey()"></AddTruckForm>
   </div>
 </template>
 
@@ -11,6 +11,7 @@ import A from "../../../constants/actions";
 import TrucksList from "./TrucksList.vue";
 import AddTruckForm from "./AddTruckForm.vue";
 import WebsocketSubscribe from "../../../contracts/websocketSubscribe";
+import WebsocketUnsubscribe from "../../../contracts/websocketUnsubscribe";
 import WebsocketSend from "../../../contracts/websocketSend";
 import TrucksUpdatedNotification from "../../../contracts/management/trucks/trucksUpdatedNotification";
 
@@ -21,7 +22,13 @@ export default {
     return {};
   },
   computed: {},
-  methods: {},
+  methods: {
+    getKey() {
+      if (this.$store.state.managementStore.selectedTruck != null) {
+        return this.$store.state.managementStore.selectedTruck.id;
+      }
+    }
+  },
   mounted: function() {
     console.log("TrucksManagement module mounted");
     const self = this;
@@ -38,6 +45,12 @@ export default {
     this.$store.dispatch(
       A.WEBSOCKET_SUBSCRIBE,
       new WebsocketSubscribe("trucks", onTrucksReceived, onError)
+    );
+  },
+  beforeDestroy() {
+    this.$store.dispatch(
+      A.WEBSOCKET_UNSUBSCRIBE,
+      new WebsocketUnsubscribe("trucks")
     );
   }
 };

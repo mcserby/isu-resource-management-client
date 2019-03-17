@@ -25,13 +25,13 @@
       <div class="managed-resources-list-buttons">
         <button
           type="button"
-          class="btn custom-resource-management-button add-resource-button"
+          class="btn custom-resource-management-button"
           @click="addResource"
         >Adaugă</button>
         <button
           type="button"
-          class="btn custom-resource-management-button delete-resource-button"
-          @click="deleteResource"
+          class="btn custom-resource-management-button"
+          @click="openConfirmationDialog"
         >Șterge</button>
       </div>
       <div class="managed-resources-details">Editare resursă</div>
@@ -41,6 +41,20 @@
         <TrucksManagement v-if="isSelectedResource(ManagedResourceType.TRUCKS)"></TrucksManagement>
       </div>
     </div>
+    <ConfirmationDialog
+      v-if="displayConfirmationDialog"
+      :title="confirmationDialogTitle"
+      :text="confirmationDialogText"
+      @confirm="onConfirm"
+      @cancel="onCancel"
+    ></ConfirmationDialog>
+    <ConfirmationDialog
+      v-if="showUnsavedChangesDialog"
+      :title="unsavedChangesTitle"
+      :text="unsavedChangesText"
+      @confirm="onConfirmUnsaved"
+      @cancel="onCancelUnsaved"
+    ></ConfirmationDialog>
   </div>
 </template>
 
@@ -55,6 +69,7 @@ import DeleteFunctionRequest from "../../contracts/management/functions/DeleteFu
 import DeleteSubUnitRequest from "../../contracts/management/subunits/DeleteSubUnitRequest";
 import DeleteTruckRequest from "../../contracts/management/trucks/DeleteTruckRequest";
 import WebsocketSend from "../../contracts/websocketSend";
+import ConfirmationDialog from "../common/ConfirmationDialog.vue";
 
 export default {
   name: "Management",
@@ -62,15 +77,34 @@ export default {
     ManagementHeader,
     FunctionsManagement,
     SubUnitsManagement,
-    TrucksManagement
+    TrucksManagement,
+    ConfirmationDialog
   },
   props: [],
   data: () => {
-    return { ManagedResourceType: ManagedResourceType };
+    return {
+      ManagedResourceType: ManagedResourceType,
+      confirmationDialogTitle: "Ștergere resursă",
+      unsavedChangesTitle: "Modificări nesalvate"
+    };
   },
   computed: {
     selectedResourceType() {
       return this.$store.state.managementStore.selectedResourceType;
+    },
+    confirmationDialogText() {
+      return (
+        "Sunteți sigur că doriți să ștergeți : " + this.getResourceToDelete()
+      );
+    },
+    displayConfirmationDialog() {
+      return this.$store.state.principalStore.confirmationDialogIsOpen;
+    },
+    showUnsavedChangesDialog() {
+      return this.$store.state.managementStore.showUnsavedChangesDialog;
+    },
+    unsavedChangesText() {
+      return "Aveți modificări nesalvate. Sunteți sigur ca doriți să părăsiți pagina";
     }
   },
   methods: {
@@ -94,6 +128,36 @@ export default {
     },
     addResource() {
       this.$store.dispatch(A.ADD_MANAGED_RESOURCE);
+    },
+    openConfirmationDialog() {
+      this.$store.dispatch(A.OPEN_CONFIRMATION_DIALOG);
+    },
+    onConfirm() {
+      this.deleteResource();
+      this.$store.dispatch(A.CLOSE_CONFIRMATION_DIALOG);
+    },
+    onCancel() {
+      this.$store.dispatch(A.CLOSE_CONFIRMATION_DIALOG);
+    },
+    onConfirmUnsaved() {
+      this.$store.dispatch(A.CHANGES_REVERTED);
+      this.$store.dispatch(A.HIDE_UNSAVED_CHANGES_DIALOG);
+    },
+    onCancelUnsaved() {
+      this.$store.dispatch(A.HIDE_UNSAVED_CHANGES_DIALOG);
+    },
+    getResourceToDelete() {
+      switch (this.$store.state.managementStore.selectedResourceType) {
+        case ManagedResourceType.SUBUNITS:
+          return this.$store.state.managementStore.selectedSubUnit.name;
+          break;
+        case ManagedResourceType.FUNCTIONS:
+          return this.$store.state.managementStore.selectedFunction.name;
+          break;
+        case ManagedResourceType.TRUCKS:
+          return this.$store.state.managementStore.selectedTruck.shortName;
+          break;
+      }
     },
     deleteResource() {
       switch (this.$store.state.managementStore.selectedResourceType) {

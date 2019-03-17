@@ -1,7 +1,7 @@
 <template>
   <div class="functions-management-container">
     <FunctionsList class="function-list"></FunctionsList>
-    <AddFunctionForm class="add-function-form"></AddFunctionForm>
+    <AddFunctionForm class="add-function-form" :key="getKey()"></AddFunctionForm>
   </div>
 </template>
 
@@ -11,6 +11,7 @@ import A from "../../../constants/actions";
 import FunctionsList from "./FunctionsList.vue";
 import AddFunctionForm from "./AddFunctionForm.vue";
 import WebsocketSubscribe from "../../../contracts/websocketSubscribe";
+import WebsocketUnsubscribe from "../../../contracts/websocketUnsubscribe";
 import WebsocketSend from "../../../contracts/websocketSend";
 import FunctionsUpdatedNotification from "../../../contracts/management/functions/functionsUpdatedNotification";
 
@@ -21,7 +22,13 @@ export default {
     return {};
   },
   computed: {},
-  methods: {},
+  methods: {
+    getKey() {
+      if (this.$store.state.managementStore.selectedFunction != null) {
+        return this.$store.state.managementStore.selectedFunction.id;
+      }
+    }
+  },
   mounted: function() {
     console.log("FunctionsManagement module mounted");
     const self = this;
@@ -38,6 +45,12 @@ export default {
     this.$store.dispatch(
       A.WEBSOCKET_SUBSCRIBE,
       new WebsocketSubscribe("functions", onFunctionsReceived, onError)
+    );
+  },
+  beforeDestroy() {
+    this.$store.dispatch(
+      A.WEBSOCKET_UNSUBSCRIBE,
+      new WebsocketUnsubscribe("functions")
     );
   }
 };

@@ -1,7 +1,7 @@
 <template>
   <div class="subunits-management-container">
     <SubUnitsList class="subunits-list"></SubUnitsList>
-    <AddSubUnitForm class="add-subunit-form"></AddSubUnitForm>
+    <AddSubUnitForm class="add-subunit-form" :key="getKey()"></AddSubUnitForm>
   </div>
 </template>
 
@@ -18,7 +18,13 @@ export default {
     return {};
   },
   computed: {},
-  methods: {},
+  methods: {
+    getKey() {
+      if (this.$store.state.managementStore.selectedSubUnit != null) {
+        return this.$store.state.managementStore.selectedSubUnit.id;
+      }
+    }
+  },
   mounted: function() {
     console.log("SubUnitsManagement module mounted");
   }

@@ -3,12 +3,13 @@
     <div class="form-group add-function-form">
       <label class="form-label" for="name">Numele funcției</label>
       <input type="text" required v-model="name" class="form-control" id="name">
+      <button
+        type="button"
+        class="btn custom-button add-function-button"
+        @click="saveFunction"
+        :disabled="isSaveDisabled()"
+      >Salvează</button>
     </div>
-    <button
-      type="button"
-      class="btn custom-button add-function-button"
-      @click="saveFunction"
-    >Salvează</button>
   </div>
 </template>
 <script>
@@ -29,10 +30,12 @@ export default {
     name: {
       // getter
       get: function() {
-        if (this.$store.state.managementStore.selectedFunction != null) {
+        if (this.editedName != null) {
+          return this.editedName;
+        } else if (this.$store.state.managementStore.selectedFunction != null) {
           return this.$store.state.managementStore.selectedFunction.name;
         } else {
-          return "";
+          return null;
         }
       },
       // setter
@@ -43,29 +46,37 @@ export default {
   },
   methods: {
     isSaveDisabled() {
-      return this.editedName == null;
+      var isUnchanged = this.editedName == null || this.editedName === "";
+      if (!isUnchanged) {
+        this.$store.dispatch(A.SELECTED_RESOURCE_DATA_CHANGED);
+      }
+
+      return (
+        isUnchanged &&
+        this.$store.state.managementStore.hasNewlyCreatedResource === false
+      );
     },
     saveFunction() {
-      let functionId = this.$store.state.managementStore.selectedFunction.id;
-      if (functionId != null) {
-        this.$store.dispatch(
+      if (this.$store.state.managementStore.hasNewlyCreatedResource === true) {
+         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
-            "updateFunction",
-            new UpdateFunctionRequest(
-              functionId,
+            "addFunction",
+            new AddFunctionRequest(
+              this.$store.state.managementStore.selectedFunction.id,
               this.editedName == null
                 ? this.$store.state.managementStore.selectedFunction.name
                 : this.editedName
             )
           )
         );
-      } else {
+      } else {       
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
-            "addFunction",
-            new AddFunctionRequest(
+            "updateFunction",
+            new UpdateFunctionRequest(
+              this.$store.state.managementStore.selectedFunction.id,
               this.editedName == null
                 ? this.$store.state.managementStore.selectedFunction.name
                 : this.editedName
@@ -73,7 +84,8 @@ export default {
           )
         );
       }
-    },
+      this.$store.dispatch(A.CHANGES_SAVED);
+    }
   }
 };
 </script>
