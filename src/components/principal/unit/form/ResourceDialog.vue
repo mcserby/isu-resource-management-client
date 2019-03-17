@@ -30,6 +30,17 @@
                 placeholder="Tip autospecială"
               >
             </div>
+            <div class="form-group" v-if="resourceStatus[resource.status.status] === 'MISIUNE'">
+              <label class="form-label" for="resourceState">Descriere:</label>
+              <textarea
+                type="textarea"
+                v-model="resource.status.description"
+                class="form-control"
+                id="resourceDescription"
+                rows="3"
+                readonly="true"
+              />
+            </div>
             <div class="form-group">
               <label class="form-label" for="name">Tip autospecială</label>
               <input
