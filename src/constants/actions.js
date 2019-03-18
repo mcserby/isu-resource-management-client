@@ -48,5 +48,6 @@ export default {
   CHANGES_SAVED: "changesSaved",
   CHANGES_REVERTED: "changesReverted",
   SHOW_UNSAVED_CHANGES_DIALOG: "showUnsavedChangesDialog",
-  HIDE_UNSAVED_CHANGES_DIALOG: "hideUnsavedChangesDialog"
+  HIDE_UNSAVED_CHANGES_DIALOG: "hideUnsavedChangesDialog",
+  MANAGEMENT_SUBUNIT_NAME_CHANGE: "managementSubunitNameChange",
 };

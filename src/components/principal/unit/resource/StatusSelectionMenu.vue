@@ -58,7 +58,7 @@
         <menuitem v-if="isNotReserve"
                   class="menu-option menu-option-reserve"
                   @click="setResourceTypeToReserve()"
-        >Rezerve</menuitem>
+        >Rezervă</menuitem>
         <menuitem v-if="isReserve"
                   class="menu-option menu-option-first-intervention"
                   @click="setResourceTypeToFirstIntervention()"

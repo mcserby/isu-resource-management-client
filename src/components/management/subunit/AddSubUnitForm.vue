@@ -8,7 +8,7 @@
       type="button"
       class="btn custom-button add-subunit-button"
       @click="save"
-      :disabled="isSaveDisabled()"
+      :disabled="saveDisabled"
     >Salvează</button>
   </div>
 </template>
@@ -28,32 +28,19 @@ export default {
     name: {
       // getter
       get: function() {
-        if (this.editedName != null) {
-          return this.editedName;
-        } else if (this.$store.state.managementStore.selectedSubUnit != null) {
-          return this.$store.state.managementStore.selectedSubUnit.name;
-        } else {
-          return null;
-        }
+        return this.editedName || this.$store.state.managementStore.selectedSubUnit.name;
       },
       // setter
       set: function(newValue) {
         this.editedName = newValue;
+        this.$store.dispatch(A.MANAGEMENT_SUBUNIT_NAME_CHANGE);
       }
-    }
+    },
+    saveDisabled(){
+      return !this.$store.state.managementStore.hasUnsavedChanges;
+    },
   },
   methods: {
-    isSaveDisabled() {
-      var isUnchanged = this.editedName == null || this.editedName === "";
-      if (!isUnchanged) {
-        this.$store.dispatch(A.SELECTED_RESOURCE_DATA_CHANGED);
-      }
-
-      return (
-        isUnchanged &&
-        this.$store.state.managementStore.hasNewlyCreatedResource === false
-      );
-    },
     save() {
       if (this.$store.state.managementStore.hasNewlyCreatedResource === true) {
         this.$store.dispatch(
@@ -62,7 +49,7 @@ export default {
             "addSubUnit",
             new AddSubUnitRequest(
               this.$store.state.managementStore.selectedSubUnit.id,
-              this.editedName == null
+              this.editedName === null
                 ? this.$store.state.managementStore.selectedSubUnit.name
                 : this.editedName
             )
@@ -75,14 +62,13 @@ export default {
             "updateSubUnitName",
             new UpdateSubUnitNameRequest(
               this.$store.state.managementStore.selectedSubUnit.id,
-              this.editedName == null
+              this.editedName === null
                 ? this.$store.state.managementStore.selectedSubUnit.name
                 : this.editedName
             )
           )
         );
       }
-
       this.$store.dispatch(A.CHANGES_SAVED);
     }
   }
