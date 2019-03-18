@@ -65,6 +65,9 @@ const actions = {
   },
   [A.HIDE_UNSAVED_CHANGES_DIALOG]({ commit }) {
     commit(M.HIDE_UNSAVED_CHANGES_DIALOG);
+  },
+  [A.MANAGEMENT_SUBUNIT_NAME_CHANGE]({ commit }) {
+    commit(M.MANAGEMENT_SUBUNIT_NAME_CHANGE);
   }
 };
 
@@ -95,7 +98,7 @@ const mutations = {
       state.selectedSubUnit = state.managedSubUnits[0];
     }
   },
-  [M.SELECT_MANAGED_FUNCTION]({ commit }, managedFunction) {  
+  [M.SELECT_MANAGED_FUNCTION]({ commit }, managedFunction) {
     if (state.hasUnsavedChanges === false) {
       state.selectedFunction = managedFunction;
       state.selectedSubUnit = null;
@@ -109,7 +112,7 @@ const mutations = {
     state.managedFunctions = functionsUpdatedNotification.functions;
     if (state.selectedFunction === null) {
       state.selectedFunction = state.managedFunctions[0];
-    }    
+    }
   },
   [M.SELECT_MANAGED_TRUCK]({ commit }, managedTruck) {
     if (state.hasUnsavedChanges === false) {
@@ -183,7 +186,7 @@ const mutations = {
         } else if (state.nextSelectedResourceType != null) {
           state.selectedResourceType = state.nextSelectedResourceType;
           state.nextSelectedResourceType = null;
-        } 
+        }
         break;
       case ManagedResourceType.TRUCKS:
         if (state.nextSelectedTruck != null) {
@@ -192,7 +195,7 @@ const mutations = {
         } else if (state.nextSelectedResourceType != null) {
           state.selectedResourceType = state.nextSelectedResourceType;
           state.nextSelectedResourceType = null;
-        } 
+        }
         break;
     }
   },
@@ -208,7 +211,10 @@ const mutations = {
   },
   [M.HIDE_UNSAVED_CHANGES_DIALOG]({ commit }) {
     state.showUnsavedChangesDialog = false;
-  }
+  },
+  [M.MANAGEMENT_SUBUNIT_NAME_CHANGE]({ commit }) {
+    state.hasUnsavedChanges = true;
+  },
 };
 const getters = {};
 
