@@ -30,7 +30,7 @@ body {
   background-color: #2b506e;
 }
 
-.custom-close-button {
+.app-sa .custom-close-button {
   width: 30px;
   justify-content: right;
   background-color: #F74356;
@@ -39,7 +39,7 @@ body {
   font-size: medium
 }
 
-.custom-close-button:hover:enabled {
+.app-sa .custom-close-button:hover:enabled {
   color: #f2f2f2;
   background-color: #930614;
 }
