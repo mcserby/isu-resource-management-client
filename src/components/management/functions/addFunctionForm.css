@@ -7,3 +7,8 @@
 .add-function-button{
   width: 200px;
 }
+
+.errors-add-function{
+  color: #F74356;
+  font-weight: bold;
+}

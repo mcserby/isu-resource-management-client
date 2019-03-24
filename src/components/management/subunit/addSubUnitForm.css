@@ -7,3 +7,8 @@
 .add-subunit-button{
   width: 200px;
 }
+
+.errors-add-subunit{
+  color: #F74356;
+  font-weight: bold;
+}

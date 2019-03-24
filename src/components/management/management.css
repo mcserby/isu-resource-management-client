@@ -52,7 +52,7 @@
 .add-resource-button {
   width: 30%;
 }
-delete-resource-button {
+.delete-resource-button {
   width: 30%;
 }
 
@@ -84,7 +84,7 @@ delete-resource-button {
   grid-row: 3 / span 1;
 }
 
-.custom-resource-management-button {
+.app-sa .custom-resource-management-button {
   color: #f2f2f2;
   background-color: #4682b4;
 
@@ -100,7 +100,7 @@ delete-resource-button {
   width: 30%;
 }
 
-.custom-resource-management-button:hover:enabled {
+.app-sa .custom-resource-management-button:hover:enabled {
   color: #f2f2f2;
   background-color: #2b506e;
 }

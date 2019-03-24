@@ -2,14 +2,26 @@
   <div>
     <div class="form-group add-function-form">
       <label class="form-label" for="name">Numele funcției</label>
-      <input type="text" required v-model="name" class="form-control" id="name">
-      <button
-        type="button"
-        class="btn custom-button add-function-button"
-        @click="saveFunction"
-        :disabled="isSaveDisabled()"
-      >Salvează</button>
+      <input
+        type="text"
+        required
+        v-model="name"
+        class="form-control"
+        id="name"
+        @input="validateFields()"
+      >
     </div>
+    <div class="errors-add-function" v-if="errors.length>0">
+      <div v-for="error in errors" v-bind:key="error">
+        <p class="error">{{error}}</p>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="btn custom-button add-function-button"
+      @click="saveFunction"
+      :disabled="isSaveDisabled()"
+    >Salvează</button>
   </div>
 </template>
 <script>
@@ -22,9 +34,7 @@ import WebsocketSend from "../../../contracts/websocketSend";
 export default {
   name: "AddFunctionForm",
   data: () => {
-    return {
-      editedName: null
-    };
+    return { errors: [], editedName: null };
   },
   computed: {
     name: {
@@ -41,24 +51,21 @@ export default {
       // setter
       set: function(newValue) {
         this.editedName = newValue;
+        this.$store.dispatch(A.SELECTED_RESOURCE_DATA_CHANGED);
       }
     }
   },
   methods: {
     isSaveDisabled() {
-      var isUnchanged = this.editedName == null || this.editedName === "";
-      if (!isUnchanged) {
-        this.$store.dispatch(A.SELECTED_RESOURCE_DATA_CHANGED);
-      }
-
       return (
-        isUnchanged &&
-        this.$store.state.managementStore.hasNewlyCreatedResource === false
+        !this.$store.state.managementStore.hasUnsavedChanges ||
+        (this.$store.state.managementStore.hasUnsavedChanges &&
+          this.isInvalidEditedName())
       );
     },
     saveFunction() {
       if (this.$store.state.managementStore.hasNewlyCreatedResource === true) {
-         this.$store.dispatch(
+        this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
             "addFunction",
@@ -70,7 +77,7 @@ export default {
             )
           )
         );
-      } else {       
+      } else {
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
@@ -85,6 +92,17 @@ export default {
         );
       }
       this.$store.dispatch(A.CHANGES_SAVED);
+    },
+    isInvalidEditedName() {
+      return this.editedName != null && this.editedName.trim().length === 0;
+    },
+    validateFields() {
+      this.errors.splice(0, this.errors.length);
+      if (this.isInvalidEditedName()) {
+        this.errors.push(
+          "Numele funcției trebuie să conțină cel puțin un caracter."
+        );
+      }
     }
   }
 };
