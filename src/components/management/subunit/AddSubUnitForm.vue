@@ -2,7 +2,21 @@
   <div>
     <div class="form-group add-subunit-form">
       <label class="form-label" for="name">Numele subunității</label>
-      <input type="text" required v-model="name" class="form-control" id="name">
+      <input
+        type="text"
+        minlength="1"
+        maxlength="10"
+        required
+        v-model="name"
+        class="form-control"
+        id="name"
+        @input="validateFields()"
+      >
+    </div>
+    <div class="errors-add-subunit" v-if="errors.length>0">
+      <div v-for="error in errors" v-bind:key="error">
+        <p class="error">{{error}}</p>
+      </div>
     </div>
     <button
       type="button"
@@ -22,13 +36,21 @@ import WebsocketSend from "../../../contracts/websocketSend";
 export default {
   name: "AddSubUnitForm",
   data: () => {
-    return { editedName: null };
+    return { errors: [], editedName: null };
   },
   computed: {
     name: {
       // getter
       get: function() {
-        return this.editedName || this.$store.state.managementStore.selectedSubUnit.name;
+        if (this.editedName === null) {
+          if (this.$store.state.managementStore.selectedSubUnit != null) {
+            return this.$store.state.managementStore.selectedSubUnit.name;
+          } else {
+            return this.editedName;
+          }
+        } else {
+          return this.editedName;
+        }
       },
       // setter
       set: function(newValue) {
@@ -36,9 +58,13 @@ export default {
         this.$store.dispatch(A.MANAGEMENT_SUBUNIT_NAME_CHANGE);
       }
     },
-    saveDisabled(){
-      return !this.$store.state.managementStore.hasUnsavedChanges;
-    },
+    saveDisabled() {
+      return (
+        !this.$store.state.managementStore.hasUnsavedChanges ||
+        (this.$store.state.managementStore.hasUnsavedChanges &&
+          this.isInvalidEditedName())
+      );
+    }
   },
   methods: {
     save() {
@@ -70,6 +96,17 @@ export default {
         );
       }
       this.$store.dispatch(A.CHANGES_SAVED);
+    },
+    isInvalidEditedName() {
+      return this.editedName != null && this.editedName.trim().length === 0;
+    },
+    validateFields() {
+      this.errors.splice(0, this.errors.length);
+      if (this.isInvalidEditedName()) {
+        this.errors.push(
+          "Numele subunității trebuie să conțină cel puțin un caracter."
+        );
+      }
     }
   }
 };

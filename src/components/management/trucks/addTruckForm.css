@@ -1,9 +1,14 @@
-.add-truck-form{
+.add-truck-form {
   width: 600px;
   height: 250px;
   padding-top: 30px;
 }
 
-.add-truck-button{
+.add-truck-button {
   width: 200px;
+}
+
+.errors-add-truck {
+  color: #f74356;
+  font-weight: bold;
 }

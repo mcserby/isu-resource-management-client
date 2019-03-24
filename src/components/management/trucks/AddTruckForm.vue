@@ -2,9 +2,28 @@
   <div>
     <div class="form-group add-truck-form">
       <label class="form-label" for="name">Numele scurt</label>
-      <input type="text" required v-model="shortName" class="form-control" id="shortName">
+      <input
+        type="text"
+        required
+        v-model="shortName"
+        class="form-control"
+        id="shortName"
+        @input="validateFields()"
+      >
       <label class="form-label" for="name">Numele lung</label>
-      <input type="text" required v-model="longName" class="form-control" id="longName">
+      <input
+        type="text"
+        required
+        v-model="longName"
+        class="form-control"
+        id="longName"
+        @input="validateFields()"
+      >
+    </div>
+    <div class="errors-add-truck" v-if="errors.length>0">
+      <div v-for="error in errors" v-bind:key="error">
+        <p class="error">{{error}}</p>
+      </div>
     </div>
     <button
       type="button"
@@ -37,6 +56,7 @@ export default {
       // setter
       set: function(newValue) {
         this.editedShortName = newValue;
+        this.$store.dispatch(A.SELECTED_RESOURCE_DATA_CHANGED);
       }
     },
     longName: {
@@ -53,28 +73,24 @@ export default {
       // setter
       set: function(newValue) {
         this.editedLongName = newValue;
+        this.$store.dispatch(A.SELECTED_RESOURCE_DATA_CHANGED);
       }
     }
   },
   data: () => {
     return {
+      errors: [],
       editedShortName: null,
       editedLongName: null
     };
   },
   methods: {
     isSaveDisabled() {
-      var isUnchanged =
-        (this.editedShortName == null || this.editedShortName === "") &&
-        (this.editedLongName == null || this.editedLongName === "");
-
-      if (!isUnchanged) {
-        this.$store.dispatch(A.SELECTED_RESOURCE_DATA_CHANGED);
-      }
-
       return (
-        isUnchanged &&
-        this.$store.state.managementStore.hasNewlyCreatedResource === false
+        !this.$store.state.managementStore.hasUnsavedChanges ||
+        ((this.$store.state.managementStore.hasUnsavedChanges &&
+          this.isInvalidEditedShortName()) ||
+          this.isInvalidEditedLongName())
       );
     },
     saveTruck() {
@@ -112,6 +128,29 @@ export default {
         );
       }
       this.$store.dispatch(A.CHANGES_SAVED);
+    },
+    isInvalidEditedShortName() {
+      return (
+        this.editedShortName != null && this.editedShortName.trim().length === 0
+      );
+    },
+    isInvalidEditedLongName() {
+      return (
+        this.editedLongName != null && this.editedLongName.trim().length === 0
+      );
+    },
+    validateFields() {
+      this.errors.splice(0, this.errors.length);
+      if (this.isInvalidEditedShortName()) {
+        this.errors.push(
+          "Numele scurt trebuie să conțină cel puțin un caracter."
+        );
+      }
+      if (this.isInvalidEditedLongName()) {
+        this.errors.push(
+          "Numele lung trebuie să conțină cel puțin un caracter."
+        );
+      }
     }
   }
 };
