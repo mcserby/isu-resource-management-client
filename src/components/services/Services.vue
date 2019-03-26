@@ -166,15 +166,16 @@ export default {
       return this.$store.state.servicesStore.isDeleteServiceDialogOpen;
     },
     filteredServices() {
+      let filteredServicesByDay = this.services.filter(s => s.day === this.activeTab.servicesDay);
       const searchText = this.removeAccents(
         this.$store.state.servicesStore.searchText.toLowerCase()
       );
       if (searchText === "") {
-        return this.services;
+        return filteredServicesByDay;
       }
       let words = searchText.split(" ").filter(w => w.length > 0);
       let filteredServicesByName = new Set(
-        this.services.filter(s =>
+        filteredServicesByDay.filter(s =>
           words.every(
             w =>
               s.name &&
@@ -183,7 +184,7 @@ export default {
         )
       );
       let filteredServicesByFunction = new Set(
-        this.services.filter(s =>
+        filteredServicesByDay.filter(s =>
           words.every(
             w =>
               s.role &&
