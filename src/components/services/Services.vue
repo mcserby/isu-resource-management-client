@@ -167,7 +167,7 @@ export default {
       return this.$store.state.servicesStore.isDeleteServiceDialogOpen;
     },
     filteredServices() {
-     let filteredServicesByDay = this.services.filter(s => s.day === this.activeTab.servicesDay);
+      let filteredServicesByDay = this.services.filter(s => s.day === this.activeTab.servicesDay);
       const searchText = this.removeAccents(
         this.$store.state.servicesStore.searchText.toLowerCase()
       );
