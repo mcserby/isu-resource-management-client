@@ -94,7 +94,7 @@ export default {
     },
     confirmationDialogText() {
       return (
-        "Sunteți sigur că doriți să ștergeți : " + this.getResourceToDelete()
+        "Serviciul și toate resursele asignate serviciului vor fi șterse. Sunteți sigur că doriți să ștergeți : " + this.getResourceToDelete()
       );
     },
     displayConfirmationDialog() {
