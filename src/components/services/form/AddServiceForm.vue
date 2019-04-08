@@ -16,8 +16,10 @@
               <input type="text" required v-model="title" class="form-control" id="title">
             </div>
             <div class="form-group">
-              <label class="form-label" for="role">Funcție</label>
-              <input type="text" required v-model="role" class="form-control" id="role">
+              <label class="form-label">Funcție</label>
+              <select v-model="selectedFunction">
+                <option v-for="f in functions" :value="f.name">{{f.name}}</option>
+              </select>
             </div>
             <div class="form-group">
               <label class="form-label" for="contact">Contact</label>
@@ -53,31 +55,35 @@ export default {
     return {
       name: "",
       title: "",
-      role: "",
-      contact: ""
+      contact: "",
+      functions: [],
+      selectedFunction: null
     };
   },
   computed: {
     saveDisabled() {
-      return this.name.trim() == "" ||
-        this.title.trim() == "" ||
-        this.role.trim() == "" ||
-        this.contact.trim() == "";
+      return this.name.trim() === "" ||
+        this.title.trim() === "" ||
+        this.selectedFunction === null
+        this.contact.trim() === "";
     }
   },
-  mounted() {},
+  mounted() {
+    this.functions = this.$store.state.managementStore.managedFunctions;
+    this.selectedFunction = this.functions[0];
+  },
   methods: {
     saveAndAddAnother() {
       this.$emit(
         "saveAndAddAnother",
-        new Service("", this.name, this.title, this.role, this.contact)
+        new Service("", this.name, this.title, this.selectedFunction, this.contact)
       );
-      this.name = this.role = this.title = this.contact = "";
+      this.name = this.selectedFunction = this.title = this.contact = "";
     },
     saveAndClose() {
       this.$emit(
         "saveAndClose",
-        new Service("", this.name, this.title, this.role, this.contact)
+        new Service("", this.name, this.title, this.selectedFunction, this.contact)
       );
     },
     cancel() {

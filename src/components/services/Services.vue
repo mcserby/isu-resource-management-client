@@ -120,6 +120,7 @@ import ServicesUpdatedNotification from "../../contracts/services/servicesUpdate
 import EditServiceForm from "./form/EditServiceForm.vue";
 import DeleteServiceRequest from "../../contracts/services/deleteServiceRequest.js";
 import UpdateServiceRequest from "../../contracts/services/updateServiceRequest.js";
+import FunctionsUpdatedNotification from "../../contracts/management/functions/functionsUpdatedNotification";
 
 export default {
   name: "Services",
@@ -196,7 +197,14 @@ export default {
         ...filteredServicesByName,
         ...filteredServicesByFunction
       ]);
-      return Array.from(allFilteredServices);
+
+      //Sort services by supported functions priority
+      let managedFunctions = this.$store.state.managementStore.managedFunctions.map(f => f.name);
+      let sortedServices = this.services.slice().sort(function(a, b){
+        return managedFunctions.indexOf(a.role) - managedFunctions.indexOf(b.role);
+      });
+
+      return sortedServices;
     },
     lastUpdate() {
       return this.$store.state.servicesStore.lastUpdate;
@@ -218,6 +226,7 @@ export default {
         new ServicesUpdatedNotification(r.services, r.lastUpdate)
       );
     };
+
     let onError = function(error) {
       console.err(error);
     };
@@ -225,6 +234,19 @@ export default {
     this.$store.dispatch(
       A.WEBSOCKET_SUBSCRIBE,
       new WebsocketSubscribe("services", onServicesReceived, onError)
+    );
+
+    let onFunctionsReceived = function(response) {
+      let r = JSON.parse(response.body);
+      self.$store.dispatch(
+        A.MANAGED_FUNCTIONS_RECEIVED,
+        new FunctionsUpdatedNotification(r.functions)
+      );
+    };
+
+    this.$store.dispatch(
+      A.WEBSOCKET_SUBSCRIBE,
+      new WebsocketSubscribe("functions", onFunctionsReceived, onError)
     );
   },
   methods: {
