@@ -60,7 +60,13 @@ const mutations = {
     state.lastUpdate = servicesUpdate.lastUpdate;
   },
   [M.CLEAR_ALL_SERVICES](state) {
-    state.services = [];
+    let availableServices = [];
+    state.services.forEach(service => {
+      if(service.day !== state.activeTab.servicesDay){
+        availableServices.push(service);
+      }
+    });
+    state.services = availableServices;
   },
   [M.APPLY_SERVICE_FILTER](state, searchText) {
     state.searchText = searchText;

@@ -119,6 +119,7 @@ import AddServiceRequest from "../../contracts/services/addServiceRequest.js";
 import ServicesUpdatedNotification from "../../contracts/services/servicesUpdatedNotification.js";
 import EditServiceForm from "./form/EditServiceForm.vue";
 import DeleteServiceRequest from "../../contracts/services/deleteServiceRequest.js";
+import DeleteServicesRequest from "../../contracts/services/deleteServicesRequest.js";
 import UpdateServiceRequest from "../../contracts/services/updateServiceRequest.js";
 import FunctionsUpdatedNotification from "../../contracts/management/functions/functionsUpdatedNotification";
 
@@ -210,10 +211,12 @@ export default {
       return this.$store.state.servicesStore.lastUpdate;
     },
     noServicesAvailable() {
-      return this.$store.state.servicesStore.services.length === 0;
+      let filteredServicesByDay = this.services.filter(s => s.day === this.activeTab.servicesDay);
+      return filteredServicesByDay.length === 0;
     },
     servicesAvailable() {
-      return this.$store.state.servicesStore.services.length > 0;
+      let filteredServicesByDay = this.services.filter(s => s.day === this.activeTab.servicesDay);
+      return filteredServicesByDay.length > 0;
     }
   },
   mounted: function() {
@@ -270,7 +273,10 @@ export default {
       this.$store.dispatch(A.CLEAR_ALL_SERVICES);
       this.$store.dispatch(
         A.WEBSOCKET_SEND,
-        new WebsocketSend("deleteAllServices", "")
+        new WebsocketSend(
+          "deleteAllServices", 
+          new DeleteServicesRequest(this.activeTab.servicesDay)
+        )
       );
       this.displayConfirmationDialog = false;
     },
