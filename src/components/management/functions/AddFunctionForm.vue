@@ -91,6 +91,7 @@ export default {
           )
         );
       }
+      
       this.$store.dispatch(A.CHANGES_SAVED);
     },
     isInvalidEditedName() {

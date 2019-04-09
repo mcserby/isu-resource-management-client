@@ -55,7 +55,7 @@ export default {
       // setter
       set: function(newValue) {
         this.editedName = newValue;
-        this.$store.dispatch(A.MANAGEMENT_SUBUNIT_NAME_CHANGE);
+        this.$store.dispatch(A.SELECTED_RESOURCE_DATA_CHANGED);
       }
     },
     saveDisabled() {
@@ -95,6 +95,7 @@ export default {
           )
         );
       }
+
       this.$store.dispatch(A.CHANGES_SAVED);
     },
     isInvalidEditedName() {

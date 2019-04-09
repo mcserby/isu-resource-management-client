@@ -27,6 +27,7 @@
           type="button"
           class="btn custom-resource-management-button"
           @click="addResource"
+          :disabled="isAddingDisabled()"
         >Adaugă</button>
         <button
           type="button"
@@ -108,6 +109,9 @@ export default {
     }
   },
   methods: {
+    isAddingDisabled(){
+      return this.$store.state.managementStore.hasUnsavedChanges;
+    },
     isSelectedResource(resourceType) {
       return (
         this.$store.state.managementStore.selectedResourceType === resourceType
