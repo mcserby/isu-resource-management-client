@@ -5,7 +5,6 @@ import Function from "../../contracts/management/functions/function";
 import Truck from "../../contracts/management/trucks/truck";
 import SubUnit from "../../contracts/management/subunits/subUnit.js";
 import Utils from "../../services/utils";
-import { stat } from "fs";
 
 const state = {
   managedSubUnits: [],
