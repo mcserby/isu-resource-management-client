@@ -296,7 +296,8 @@ export default {
             service.name,
             service.title,
             service.role,
-            service.contact
+            service.contact,
+            this.activeTab.servicesDay
           )
         )
       );
@@ -311,7 +312,8 @@ export default {
             service.name,
             service.title,
             service.role,
-            service.contact
+            service.contact,
+            this.activeTab.servicesDay
           )
         )
       );
