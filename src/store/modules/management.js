@@ -5,6 +5,7 @@ import Function from "../../contracts/management/functions/function";
 import Truck from "../../contracts/management/trucks/truck";
 import SubUnit from "../../contracts/management/subunits/subUnit.js";
 import Utils from "../../services/utils";
+import { stat } from "fs";
 
 const state = {
   managedSubUnits: [],
@@ -92,8 +93,16 @@ const mutations = {
     state.managedSubUnits = subUnitsUpdatedNotification.subUnitsList.map(
       s => new SubUnit(s.id, s.name)
     );
+
     if (state.selectedSubUnit === null) {
       state.selectedSubUnit = state.managedSubUnits[0];
+    } else {
+      let unitsWithId = state.managedSubUnits.filter(s => s.id === state.selectedSubUnit.id);
+      if (unitsWithId.length > 0) {
+        state.selectedSubUnit = unitsWithId[0];
+      } else {
+        state.selectedSubUnit = state.managedSubUnits[0];
+      }
     }
   },
   [M.SELECT_MANAGED_FUNCTION]({ commit }, managedFunction) {
@@ -108,6 +117,13 @@ const mutations = {
     state.managedFunctions = functionsUpdatedNotification.functions;
     if (state.selectedFunction === null) {
       state.selectedFunction = state.managedFunctions[0];
+    } else {
+      let functionsWithId = state.managedFunctions.filter(s => s.id === state.selectedFunction.id);
+      if (functionsWithId.length > 0) {
+        state.selectedFunction = functionsWithId[0];
+      } else {
+        state.selectedFunction = state.managedFunctions[0];
+      }
     }
   },
   [M.SELECT_MANAGED_TRUCK]({ commit }, managedTruck) {
@@ -122,6 +138,14 @@ const mutations = {
     state.managedTrucks = trucksUpdatedNotification.trucks;
     if (state.selectedTruck === null) {
       state.selectedTruck = state.managedTrucks[0];
+    } else {
+      let trucksWithId = state.managedTrucks.filter(s => s.id === state.selectedTruck.id);
+      if (trucksWithId.length > 0) {
+        state.selectedTruck = trucksWithId[0];
+      }
+      else {
+        state.selectedTruck = state.managedTrucks[0];
+      }
     }
   },
   [M.ADD_MANAGED_RESOURCE]({ commit }) {
