@@ -43,23 +43,21 @@
             <div class="resource-editor">
               <div class="form-group">
                 <label class="form-label" for="vehicleType">Tip</label>
-                <input
-                  type="text"
-                  minlength="1"
-                  required
+                <select
                   v-model="vehicleType"
                   @input="updateResource()"
-                  @mousedown="clearVehicleTypeSelection()"
-                  autocomplete="off"
                   class="form-control"
                   id="vehicleType"
                   aria-describedby="nameHelp"
                   placeholder="Tip"
                   list="vehicleNames"
                 >
-                <datalist id="vehicleNames">
-                  <option v-for="type in vehicleTypes" :value="type.shortName" v-bind:label="type.shortName"/>
-                </datalist>
+                  <option
+                    v-for="type in vehicleTypes"
+                    :value="type.shortName"
+                    v-bind:label="type.shortName"
+                  />
+                </select>
               </div>
               <div class="form-group">
                 <label class="form-label" for="plateNumber">Număr de înmatriculare</label>
@@ -212,7 +210,7 @@ export default {
     );
   },
   methods: {
-    clearVehicleTypeSelection(){
+    clearVehicleTypeSelection() {
       this.vehicleType = null;
     },
     addNewResourceDisabled() {
