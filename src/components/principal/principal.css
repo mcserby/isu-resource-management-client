@@ -23,10 +23,10 @@
 }
 
 .units-container {
-  height: calc(100vh - 339px);
-  height: -moz-calc(100vh - 339px);
-  height: -webkit-calc(100vh - 339px);
-  height: -o-calc(100vh - 339px);
+  height: calc(100vh - 360px);
+  height: -moz-calc(100vh - 360px);
+  height: -webkit-calc(100vh - 360px);
+  height: -o-calc(100vh - 360px);
 }
 
 .app-sa .unit-wrapper-wrapper {
@@ -37,7 +37,7 @@
   grid-gap: 5px;
   width: 100%;
   grid-row: 2 / span 1;
-  max-height: calc(100vh - 388px);
+  height: calc(100vh - 388px);
   overflow-y: scroll;
   overflow-x: hidden;
 }
