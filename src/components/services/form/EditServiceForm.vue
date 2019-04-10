@@ -16,8 +16,10 @@
               <input type="text" required v-model="serviceTitle" class="form-control" id="title">
             </div>
             <div class="form-group">
-              <label class="form-label" for="serviceRole">Funcție</label>
-              <input type="text" required v-model="serviceRole" class="form-control" id="role">
+              <label class="form-label">Funcție</label>
+              <select v-model="selectedFunction">
+                <option v-for="f in functions" :value="f.name">{{f.name}}</option>
+              </select>
             </div>
             <div class="form-group">
               <label class="form-label" for="serviceContact">Contact</label>
@@ -57,16 +59,19 @@ export default {
     return {
       serviceName: "",
       serviceTitle: "",
-      serviceRole: "",
-      serviceContact: ""
+      serviceContact: "",
+      functions: [],
+      selectedFunction: null
     };
   },
   computed: {},
   mounted() {
     this.serviceName = this.service.name;
     this.serviceTitle = this.service.title;
-    this.serviceRole = this.service.role;
     this.serviceContact = this.service.contact;
+    this.functions = this.$store.state.managementStore.managedFunctions;
+    this.selectedFunction = this.service.role;
+    this.day = this.service.day;
   },
   methods: {
     saveAndClose() {
@@ -76,8 +81,9 @@ export default {
           this.service.id,
           this.serviceName,
           this.serviceTitle,
-          this.serviceRole,
-          this.serviceContact
+          this.selectedFunction,
+          this.serviceContact,
+          this.day
         )
       );
     },
