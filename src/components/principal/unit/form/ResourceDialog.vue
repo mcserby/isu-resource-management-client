@@ -115,7 +115,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="custom-button btn" @click="cancel">Închide</button>
+            <button type="button" class="custom-button btn" @click="cancel">Salvează și închide</button>
           </div>
         </div>
       </div>

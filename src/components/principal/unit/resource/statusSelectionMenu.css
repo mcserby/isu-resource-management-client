@@ -75,19 +75,19 @@
 }
 
 .menu-option-first-intervention {
-  background-color: #53b4ff;
+  background-color: #616161;
 }
 
 .menu-option-first-intervention:hover{
-  background-color: #3e6dff;
+  background-color: #3b3b3b;
 }
 
 .menu-option-other-resources {
-  background-color: #53b4ff;
+  background-color: #616161;;
 }
 
 .menu-option-other-resources:hover{
-  background-color: #3e6dff;
+  background-color: #3b3b3b;
 }
 
 .menu-option-reserve {
