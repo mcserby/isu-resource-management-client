@@ -44,13 +44,14 @@
               <div class="form-group">
                 <label class="form-label" for="vehicleType">Tip</label>
                 <select
+                  minlength="1"
+                  required
                   v-model="vehicleType"
-                  @input="updateResource()"
+                  @change="updateResource()"
                   class="form-control"
                   id="vehicleType"
                   aria-describedby="nameHelp"
                   placeholder="Tip"
-                  list="vehicleNames"
                 >
                   <option
                     v-for="type in vehicleTypes"
