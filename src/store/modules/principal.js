@@ -147,6 +147,11 @@ const mutations = {
         unit.lastUpdateOtherResource
       );
       Vue.set(updatedUnit, "lastUpdateEquipment", unit.lastUpdateEquipment);
+      Vue.set(
+        updatedUnit,
+        "lastUpdateReserveResource",
+        unit.lastUpdateReserveResource
+      );
     }
   },
   [M.CLEAR_UNIT_RESOURCES](state, unitId) {
