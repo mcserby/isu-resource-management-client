@@ -108,257 +108,268 @@
 </template>
 
 <script>
-import Service from "./Service.vue";
-import A from "../../constants/actions";
-import WSA from "../../constants/actions";
-import WebsocketSubscribe from "../../contracts/websocketSubscribe";
-import WebsocketSend from "../../contracts/websocketSend";
-import ConfirmationDialog from "../common/ConfirmationDialog.vue";
-import AddServiceForm from "./form/AddServiceForm.vue";
-import AddServiceRequest from "../../contracts/services/addServiceRequest.js";
-import ServicesUpdatedNotification from "../../contracts/services/servicesUpdatedNotification.js";
-import EditServiceForm from "./form/EditServiceForm.vue";
-import DeleteServiceRequest from "../../contracts/services/deleteServiceRequest.js";
-import DeleteServicesRequest from "../../contracts/services/deleteServicesRequest.js";
-import UpdateServiceRequest from "../../contracts/services/updateServiceRequest.js";
-import FunctionsUpdatedNotification from "../../contracts/management/functions/functionsUpdatedNotification";
+  import Service from "./Service.vue";
+  import A from "../../constants/actions";
+  import WSA from "../../constants/actions";
+  import WebsocketSubscribe from "../../contracts/websocketSubscribe";
+  import WebsocketSend from "../../contracts/websocketSend";
+  import ConfirmationDialog from "../common/ConfirmationDialog.vue";
+  import AddServiceForm from "./form/AddServiceForm.vue";
+  import AddServiceRequest from "../../contracts/services/addServiceRequest.js";
+  import ServicesUpdatedNotification from "../../contracts/services/servicesUpdatedNotification.js";
+  import EditServiceForm from "./form/EditServiceForm.vue";
+  import DeleteServiceRequest from "../../contracts/services/deleteServiceRequest.js";
+  import DeleteServicesRequest from "../../contracts/services/deleteServicesRequest.js";
+  import UpdateServiceRequest from "../../contracts/services/updateServiceRequest.js";
+  import FunctionsUpdatedNotification from "../../contracts/management/functions/functionsUpdatedNotification";
 
-export default {
-  name: "Services",
-  components: {
-    Service,
-    ConfirmationDialog,
-    AddServiceForm,
-    EditServiceForm
-  },
-  data: () => {
-    return {
-      confirmationDialogTitle: "Schimb de tură",
-      confirmationDialogText:
-        "Sunteți sigur că doriți să ștergeți toate datele",
-      deleteServiceConfirmationTitle: "Ștergere serviciu",
-      deleteServiceConfirmationText:
-        "Sunteți sigur că doriți să ștergeți serviciul",
-      displayConfirmationDialog: false,
-      displayAddServiceForm: false
-    };
-  },
-  computed: {
-    searchText: {
-      get() {
-        return this.$store.state.servicesStore.searchText;
+  export default {
+    name: "Services",
+    components: {
+      Service,
+      ConfirmationDialog,
+      AddServiceForm,
+      EditServiceForm
+    },
+    data: () => {
+      return {
+        confirmationDialogTitle: "Schimb de tură",
+        confirmationDialogText:
+          "Sunteți sigur că doriți să ștergeți toate datele",
+        deleteServiceConfirmationTitle: "Ștergere serviciu",
+        deleteServiceConfirmationText:
+          "Sunteți sigur că doriți să ștergeți serviciul",
+        displayConfirmationDialog: false,
+        displayAddServiceForm: false
+      };
+    },
+    computed: {
+      searchText: {
+        get() {
+          return this.$store.state.servicesStore.searchText;
+        },
+        set(value) {
+          this.$store.dispatch(A.APPLY_SERVICE_FILTER, value);
+        }
       },
-      set(value) {
-        this.$store.dispatch(A.APPLY_SERVICE_FILTER, value);
+      services() {
+        return this.$store.state.servicesStore.services;
+      },
+      tabs() {
+        return this.$store.state.servicesStore.tabs;
+      },
+      activeTab() {
+        return this.$store.state.servicesStore.activeTab;
+      },
+      isEditServiceDialogOpen() {
+        return this.$store.state.servicesStore.isEditServiceDialogOpen;
+      },
+      isDeleteServiceDialogOpen() {
+        return this.$store.state.servicesStore.isDeleteServiceDialogOpen;
+      },
+
+      filteredServices() {
+        //Sort services by role
+        let sortedServices = this.sortByRole(this.services);
+
+        let filteredServicesByDay = sortedServices.filter(s => s.day === this.activeTab.servicesDay);
+        const searchText = this.removeAccents(
+          this.$store.state.servicesStore.searchText.toLowerCase()
+        );
+        if (searchText === "") {
+          return filteredServicesByDay;
+        }
+        let words = searchText.split(" ").filter(w => w.length > 0);
+        let filteredServicesByName = new Set(
+          filteredServicesByDay.filter(s =>
+            words.every(
+              w =>
+                s.name &&
+                this.removeAccents(s.name.toLowerCase()).indexOf(w) !== -1
+            )
+          )
+        );
+        let filteredServicesByFunction = new Set(
+          filteredServicesByDay.filter(s =>
+            words.every(
+              w =>
+                s.role &&
+                this.removeAccents(s.role.toLowerCase()).indexOf(w) !== -1
+            )
+          )
+        );
+        let allFilteredServices = new Set([
+          ...filteredServicesByName,
+          ...filteredServicesByFunction
+        ]);
+
+        return allFilteredServices;
+      },
+      lastUpdate() {
+        return this.$store.state.servicesStore.lastUpdate;
+      },
+      noServicesAvailable() {
+        let filteredServicesByDay = this.services.filter(s => s.day === this.activeTab.servicesDay);
+        return filteredServicesByDay.length === 0;
+      },
+      servicesAvailable() {
+        let filteredServicesByDay = this.services.filter(s => s.day === this.activeTab.servicesDay);
+        return filteredServicesByDay.length > 0;
       }
     },
-    services() {
-      return this.$store.state.servicesStore.services;
-    },
-    tabs() {
-      return this.$store.state.servicesStore.tabs;
-    },
-    activeTab() {
-      return this.$store.state.servicesStore.activeTab;
-    },
-    isEditServiceDialogOpen() {
-      return this.$store.state.servicesStore.isEditServiceDialogOpen;
-    },
-    isDeleteServiceDialogOpen() {
-      return this.$store.state.servicesStore.isDeleteServiceDialogOpen;
-    },
-    filteredServices() {
-      let filteredServicesByDay = this.services.filter(s => s.day === this.activeTab.servicesDay);
-      const searchText = this.removeAccents(
-        this.$store.state.servicesStore.searchText.toLowerCase()
+    mounted: function() {
+      console.log("Services.vue mounted");
+      const self = this;
+      let onServicesReceived = function(response) {
+        let r = JSON.parse(response.body);
+        self.$store.dispatch(
+          A.INIT_SERVICES,
+          new ServicesUpdatedNotification(r.services, r.lastUpdate)
+        );
+      };
+
+      let onError = function(error) {
+        console.err(error);
+      };
+
+      this.$store.dispatch(
+        A.WEBSOCKET_SUBSCRIBE,
+        new WebsocketSubscribe("services", onServicesReceived, onError)
       );
-      if (searchText === "") {
-        return filteredServicesByDay;
+
+      let onFunctionsReceived = function(response) {
+        let r = JSON.parse(response.body);
+        self.$store.dispatch(
+          A.MANAGED_FUNCTIONS_RECEIVED,
+          new FunctionsUpdatedNotification(r.functions)
+        );
+      };
+
+      this.$store.dispatch(
+        A.WEBSOCKET_SUBSCRIBE,
+        new WebsocketSubscribe("functions", onFunctionsReceived, onError)
+      );
+    },
+    methods: {
+      changeTab(tab) {
+        this.$store.dispatch(A.CHANGE_ACTIVE_TAB, tab);
+      },
+      tabClass: function(tabName) {
+        return [
+          "nav-link",
+          "btn",
+          tabName === this.activeTab.name ? "active" : ""
+        ].join(" ");
+      },
+      deleteServices() {
+        this.displayConfirmationDialog = true;
+      },
+      addService() {
+        this.displayAddServiceForm = true;
+      },
+      onConfirm() {
+        this.$store.dispatch(A.CLEAR_ALL_SERVICES);
+        this.$store.dispatch(
+          A.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "deleteAllServices",
+            new DeleteServicesRequest(this.activeTab.servicesDay)
+          )
+        );
+        this.displayConfirmationDialog = false;
+      },
+      onCancelDeletion() {
+        this.displayConfirmationDialog = false;
+      },
+      onCancelAdding() {
+        this.displayAddServiceForm = false;
+      },
+      onSaveAndAddAnother(service) {
+        this.displayAddServiceForm = false;
+        this.$store.dispatch(
+          A.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "addService",
+            new AddServiceRequest(
+              service.name,
+              service.title,
+              service.role,
+              service.contact,
+              this.activeTab.servicesDay
+            )
+          )
+        );
+        this.displayAddServiceForm = true;
+      },
+      sortByRole(services){
+        let managedFunctions = this.$store.state.managementStore.managedFunctions.map(f => f.name);
+
+        return services.slice().sort(function(a, b){
+          if(managedFunctions.indexOf(a.role) != -1 && managedFunctions.indexOf(b.role) != -1){
+            return managedFunctions.indexOf(a.role) - managedFunctions.indexOf(b.role);
+          } else if (managedFunctions.indexOf(a.role) === -1 && managedFunctions.indexOf(b.role) != -1){
+            return 1;
+          } else if (managedFunctions.indexOf(a.role) != -1 && managedFunctions.indexOf(b.role) === -1){
+            return -1;
+          }
+        });
+      },
+      onSaveAndClose(service) {
+        this.$store.dispatch(
+          WSA.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "addService",
+            new AddServiceRequest(
+              service.name,
+              service.title,
+              service.role,
+              service.contact,
+              this.activeTab.servicesDay
+            )
+          )
+        );
+        this.displayAddServiceForm = false;
+      },
+      removeAccents(text) {
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      },
+      onCancelServiceEdit() {
+        this.$store.dispatch(A.CLOSE_EDIT_SERVICE_DIALOG);
+      },
+      onCancelServiceDeletion() {
+        this.$store.dispatch(A.CLOSE_DELETE_SERVICE_DIALOG);
+      },
+      onConfirmServiceDeletion() {
+        this.$store.dispatch(
+          WSA.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "deleteService",
+            new DeleteServiceRequest(this.$store.state.servicesStore.service.id)
+          )
+        );
+        this.$store.dispatch(A.CLOSE_DELETE_SERVICE_DIALOG);
+      },
+      onConfirmServiceEdit(updatedService) {
+        this.$store.dispatch(
+          WSA.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "updateService",
+            new UpdateServiceRequest(updatedService)
+          )
+        );
+        this.$store.dispatch(A.CLOSE_EDIT_SERVICE_DIALOG);
+      },
+      generateReport() {
+        this.$store.dispatch(
+          A.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "getEquipmentReport",
+            new DeleteServiceRequest("")
+          )
+        );
       }
-      let words = searchText.split(" ").filter(w => w.length > 0);
-      let filteredServicesByName = new Set(
-        filteredServicesByDay.filter(s =>
-          words.every(
-            w =>
-              s.name &&
-              this.removeAccents(s.name.toLowerCase()).indexOf(w) !== -1
-          )
-        )
-      );
-      let filteredServicesByFunction = new Set(
-        filteredServicesByDay.filter(s =>
-          words.every(
-            w =>
-              s.role &&
-              this.removeAccents(s.role.toLowerCase()).indexOf(w) !== -1
-          )
-        )
-      );
-      let allFilteredServices = new Set([
-        ...filteredServicesByName,
-        ...filteredServicesByFunction
-      ]);
-
-      //Sort services by supported functions priority
-      let managedFunctions = this.$store.state.managementStore.managedFunctions.map(f => f.name);
-      let sortedServices = this.services.slice().sort(function(a, b){
-        return managedFunctions.indexOf(a.role) - managedFunctions.indexOf(b.role);
-      });
-
-      return sortedServices;
-    },
-    lastUpdate() {
-      return this.$store.state.servicesStore.lastUpdate;
-    },
-    noServicesAvailable() {
-      let filteredServicesByDay = this.services.filter(s => s.day === this.activeTab.servicesDay);
-      return filteredServicesByDay.length === 0;
-    },
-    servicesAvailable() {
-      let filteredServicesByDay = this.services.filter(s => s.day === this.activeTab.servicesDay);
-      return filteredServicesByDay.length > 0;
     }
-  },
-  mounted: function() {
-    console.log("Services.vue mounted");
-    const self = this;
-    let onServicesReceived = function(response) {
-      let r = JSON.parse(response.body);
-      self.$store.dispatch(
-        A.INIT_SERVICES,
-        new ServicesUpdatedNotification(r.services, r.lastUpdate)
-      );
-    };
-
-    let onError = function(error) {
-      console.err(error);
-    };
-
-    this.$store.dispatch(
-      A.WEBSOCKET_SUBSCRIBE,
-      new WebsocketSubscribe("services", onServicesReceived, onError)
-    );
-
-    let onFunctionsReceived = function(response) {
-      let r = JSON.parse(response.body);
-      self.$store.dispatch(
-        A.MANAGED_FUNCTIONS_RECEIVED,
-        new FunctionsUpdatedNotification(r.functions)
-      );
-    };
-
-    this.$store.dispatch(
-      A.WEBSOCKET_SUBSCRIBE,
-      new WebsocketSubscribe("functions", onFunctionsReceived, onError)
-    );
-  },
-  methods: {
-    changeTab(tab) {
-      this.$store.dispatch(A.CHANGE_ACTIVE_TAB, tab);
-    },
-    tabClass: function(tabName) {
-      return [
-        "nav-link",
-        "btn",
-        tabName === this.activeTab.name ? "active" : ""
-      ].join(" ");
-    },
-    deleteServices() {
-      this.displayConfirmationDialog = true;
-    },
-    addService() {
-      this.displayAddServiceForm = true;
-    },
-    onConfirm() {
-      this.$store.dispatch(A.CLEAR_ALL_SERVICES);
-      this.$store.dispatch(
-        A.WEBSOCKET_SEND,
-        new WebsocketSend(
-          "deleteAllServices", 
-          new DeleteServicesRequest(this.activeTab.servicesDay)
-        )
-      );
-      this.displayConfirmationDialog = false;
-    },
-    onCancelDeletion() {
-      this.displayConfirmationDialog = false;
-    },
-    onCancelAdding() {
-      this.displayAddServiceForm = false;
-    },
-    onSaveAndAddAnother(service) {
-      this.displayAddServiceForm = false;
-      this.$store.dispatch(
-        A.WEBSOCKET_SEND,
-        new WebsocketSend(
-          "addService",
-          new AddServiceRequest(
-            service.name,
-            service.title,
-            service.role,
-            service.contact,
-            this.activeTab.servicesDay
-          )
-        )
-      );
-      this.displayAddServiceForm = true;
-    },
-    onSaveAndClose(service) {
-      this.$store.dispatch(
-        WSA.WEBSOCKET_SEND,
-        new WebsocketSend(
-          "addService",
-          new AddServiceRequest(
-            service.name,
-            service.title,
-            service.role,
-            service.contact,
-            this.activeTab.servicesDay
-          )
-        )
-      );
-      this.displayAddServiceForm = false;
-    },
-    removeAccents(text) {
-      return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    },
-    onCancelServiceEdit() {
-      this.$store.dispatch(A.CLOSE_EDIT_SERVICE_DIALOG);
-    },
-    onCancelServiceDeletion() {
-      this.$store.dispatch(A.CLOSE_DELETE_SERVICE_DIALOG);
-    },
-    onConfirmServiceDeletion() {
-      this.$store.dispatch(
-        WSA.WEBSOCKET_SEND,
-        new WebsocketSend(
-          "deleteService",
-          new DeleteServiceRequest(this.$store.state.servicesStore.service.id)
-        )
-      );
-      this.$store.dispatch(A.CLOSE_DELETE_SERVICE_DIALOG);
-    },
-    onConfirmServiceEdit(updatedService) {
-      this.$store.dispatch(
-        WSA.WEBSOCKET_SEND,
-        new WebsocketSend(
-          "updateService",
-          new UpdateServiceRequest(updatedService)
-        )
-      );
-      this.$store.dispatch(A.CLOSE_EDIT_SERVICE_DIALOG);
-    },
-    generateReport() {
-      this.$store.dispatch(
-        A.WEBSOCKET_SEND,
-        new WebsocketSend(
-          "getEquipmentReport",
-          new DeleteServiceRequest("")
-        )
-      );
-    }
-  }
-};
+  };
 </script>
 
 <style src="./services.css"></style>
