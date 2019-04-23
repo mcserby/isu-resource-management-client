@@ -21,8 +21,8 @@ const state = {
 };
 
 const actions = {
-  [A.CHANGE_ACTIVE_TAB]({ commit }, tab) {
-    commit(M.CHANGE_ACTIVE_TAB, tab);
+  [A.CHANGE_ACTIVE_TAB_SERVICES]({ commit }, tab) {
+    commit(M.CHANGE_ACTIVE_TAB_SERVICES, tab);
   },
   [A.INIT_SERVICES]({ commit }, servicesUpdate) {
     commit(M.INIT_SERVICES, servicesUpdate);
@@ -51,7 +51,7 @@ const actions = {
 };
 
 const mutations = {
-  [M.CHANGE_ACTIVE_TAB](state, tab) {
+  [M.CHANGE_ACTIVE_TAB_SERVICES](state, tab) {
     state.activeTab = tab;
   },
   [M.INIT_SERVICES](state, servicesUpdate) {

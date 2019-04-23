@@ -25,9 +25,11 @@ export default {
   DELETE_RESOURCE: "deleteResource",
   UPDATE_RESOURCE: "updateResource",
   APPLY_RESOURCE_FILTER: "applyResourceFilter",
-  APPLY_SERVICE_FILTER: "applyServiceFilter",
   SHOW_PDF_FILE: "showPdfFile",
+  // Services section
+  CHANGE_ACTIVE_TAB_SERVICES: "changeActiveTabServices",
   INIT_SERVICES: "initServices",
+  APPLY_SERVICE_FILTER: "applyServiceFilter",
   CLEAR_ALL_SERVICES: "clearAllService",
   OPEN_DELETE_SERVICE_DIALOG: 'openDeleteServiceDialog',
   OPEN_EDIT_SERVICE_DIALOG: 'openEditServiceDialog',

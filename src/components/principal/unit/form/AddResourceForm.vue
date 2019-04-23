@@ -152,7 +152,8 @@ export default {
       validationPerformedAtLeastOnce: false,
       selectedResourceId: null,
       justMounted: true,
-      changesPerformed: false
+      changesPerformed: false,
+      genericLicencePlateAllowedMultipleTimes: '00000'
     };
   },
   computed: {
@@ -318,17 +319,12 @@ export default {
         this.errors.push(
           "Numărul de înmatriculare trebuie să aibă cel puțin 5 caractere"
         );
-      } else if (licencePlates.find(pn => pn === this.plateNumber)) {
+      } else if (this.plateNumber !== this.genericLicencePlateAllowedMultipleTimes && licencePlates.find(pn => pn === this.plateNumber)) {
         this.errors.push("Numărul de înmatriculare trebuie să fie unic");
       }
       if (this.identificationNumber.length < 1) {
         this.errors.push(
           "Numarul de identificare trebuie să aibă cel puțin 1 caracter"
-        );
-      }
-      if (this.crew.length < 3) {
-        this.errors.push(
-          "Echipajul trebuie să conțină cel puțin un nume pe prima linie"
         );
       }
     },

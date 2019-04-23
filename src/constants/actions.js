@@ -24,9 +24,11 @@ export default {
   CLOSE_STATUS_MENU: "closeStatusMenu",
   DELETE_RESOURCE: "deleteResource",
   UPDATE_RESOURCE: "updateResource",
+  SHOW_PDF_FILE: "showPdfFile",
+  // Services section
   APPLY_RESOURCE_FILTER: "applyResourceFilter",
   APPLY_SERVICE_FILTER: "applyServiceFilter",
-  SHOW_PDF_FILE: "showPdfFile",
+  CHANGE_ACTIVE_TAB_SERVICES: "changeActiveTabServices",
   INIT_SERVICES: "initServices",
   CLEAR_ALL_SERVICES: "clearAllService",
   OPEN_DELETE_SERVICE_DIALOG: "openDeleteServiceDialog",

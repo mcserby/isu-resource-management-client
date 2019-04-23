@@ -54,12 +54,12 @@ export default {
   computed: {
     crewSize() {
       let crewSize = 0;
+      const captainCount = this.resource.captain !== "" ? 1 : 0;
       if (this.resource.status.status === ResourceStatus.IN_MISSION) {
         crewSize = this.resource.status.crew ? this.resource.status.crew.length : 0;
       } else {
-        crewSize = this.resource.crew ? this.resource.crew.length + 1 : 1;
+        crewSize = this.resource.crew ? this.resource.crew.length + captainCount : captainCount;
       }
-
       return crewSize;
     },
     statusClass(){
