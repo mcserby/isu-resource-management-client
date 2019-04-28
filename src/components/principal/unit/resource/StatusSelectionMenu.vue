@@ -125,7 +125,7 @@ export default {
         new WebsocketSend(
           "updateStatus",
           new UpdateResourceStatus(
-            this.resource.plateNumber,
+            this.resource.id,
             new Status(ResourceStatus.AVAILABLE, null, null, null)
           )
         )
@@ -139,7 +139,7 @@ export default {
         new WebsocketSend(
           "updateStatus",
           new UpdateResourceStatus(
-            this.resource.plateNumber,
+            this.resource.id,
             new Status(ResourceStatus.UNAVAILABLE, null, null, null)
           )
         )
@@ -157,7 +157,7 @@ export default {
         new WebsocketSend(
           "updateStatus",
           new UpdateResourceStatus(
-            this.resource.plateNumber,
+            this.resource.id,
             new Status(
               ResourceStatus.IN_MISSION,
               this.key,
@@ -176,7 +176,7 @@ export default {
         new WebsocketSend(
           "updateResourceType",
           new UpdateResourceType(
-            this.resource.plateNumber,
+            this.resource.id,
             ResourceType.FIRST_INTERVENTION)
           )
         );
@@ -189,7 +189,7 @@ export default {
         new WebsocketSend(
           "updateResourceType",
           new UpdateResourceType(
-            this.resource.plateNumber,
+            this.resource.id,
             ResourceType.OTHER)
         )
       );
@@ -202,7 +202,7 @@ export default {
         new WebsocketSend(
           "updateResourceType",
           new UpdateResourceType(
-            this.resource.plateNumber,
+            this.resource.id,
             ResourceType.RESERVE)
         )
       );

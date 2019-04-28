@@ -1,6 +1,6 @@
 class UpdateResourceStatus {
-  constructor(plateNumber, resourceStatus) {
-    this.plateNumber = plateNumber;
+  constructor(id, resourceStatus) {
+    this.id = id;
     this.resourceStatus = resourceStatus;
   }
 }

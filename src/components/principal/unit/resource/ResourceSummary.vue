@@ -74,7 +74,7 @@ export default {
     },
     isStatusMenuVisible() {
       return this.$store.state.principalStore.statusMenuIsOpen &&
-        this.$store.state.principalStore.activeStatusMenuId === this.resource.plateNumber;
+        this.$store.state.principalStore.activeStatusMenuId === this.resource.id;
     },
 
     isResourceInMission(){
@@ -94,8 +94,7 @@ export default {
         event.clientX > window.innerWidth - 280 ? "left" : "right";
       this.statusMenuYPosition =
         event.clientY > window.innerHeight / 2 ? "down" : "up";
-      //TODO Use unique id instead of plateNumber when available on backend.
-      this.$store.dispatch(A.OPEN_STATUS_MENU, this.resource.plateNumber);
+      this.$store.dispatch(A.OPEN_STATUS_MENU, this.resource.id);
     }
   },
   directives: {
