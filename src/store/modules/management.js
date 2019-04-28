@@ -2,22 +2,22 @@ import A from "../../constants/actions";
 import M from "../../constants/mutations";
 import ManagedResourceType from "../../constants/managedResourceType";
 import Function from "../../contracts/management/functions/function";
-import Truck from "../../contracts/management/trucks/truck";
+import VehicleType from "../../contracts/management/vehicles/vehicleType";
 import SubUnit from "../../contracts/management/subunits/subUnit.js";
 import Utils from "../../services/utils";
 
 const state = {
   managedSubUnits: [],
   managedFunctions: [],
-  managedTrucks: [],
+  managedVehicleTypes: [],
   selectedResourceType: ManagedResourceType.SUBUNITS,
   nextSelectedResourceType: null,
   selectedSubUnit: null,
   nextSelectedSubUnit: null,
   selectedFunction: null,
   nextSelectedFunction: null,
-  selectedTruck: null,
-  nextSelectedTruck: null,
+  selectedVehicleType: null,
+  nextSelectedVehicleType: null,
   hasNewlyCreatedResource: false,
   hasUnsavedChanges: false,
   showUnsavedChangesDialog: false
@@ -39,11 +39,11 @@ const actions = {
   [A.MANAGED_FUNCTIONS_RECEIVED]({ commit }, functionsUpdatedNotification) {
     commit(M.MANAGED_FUNCTIONS_RECEIVED, functionsUpdatedNotification);
   },
-  [A.SELECT_MANAGED_TRUCK]({ commit }, managedTruck) {
-    commit(M.SELECT_MANAGED_TRUCK, managedTruck);
+  [A.SELECT_MANAGED_VEHICLE_TYPE]({ commit }, managedVehicleType) {
+    commit(M.SELECT_MANAGED_VEHICLE_TYPE, managedVehicleType);
   },
-  [A.MANAGED_TRUCKS_RECEIVED]({ commit }, trucksUpdatedNotification) {
-    commit(M.MANAGED_TRUCKS_RECEIVED, trucksUpdatedNotification);
+  [A.MANAGED_VEHICLE_TYPES_RECEIVED]({ commit }, vehicleTypesUpdatedNotification) {
+    commit(M.MANAGED_VEHICLE_TYPES_RECEIVED, vehicleTypesUpdatedNotification);
   },
   [A.ADD_MANAGED_RESOURCE]({ commit }) {
     commit(M.ADD_MANAGED_RESOURCE);
@@ -125,25 +125,25 @@ const mutations = {
       }
     }
   },
-  [M.SELECT_MANAGED_TRUCK]({ commit }, managedTruck) {
+  [M.SELECT_MANAGED_VEHICLE_TYPE]({ commit }, managedVehicleType) {
     if (state.hasUnsavedChanges === false) {
-      state.selectedTruck = managedTruck;
+      state.selectedVehicleType = managedVehicleType;
     } else {
       state.showUnsavedChangesDialog = true;
-      state.nextSelectedTruck = managedTruck;
+      state.nextSelectedVehicleType = managedVehicleType;
     }
   },
-  [M.MANAGED_TRUCKS_RECEIVED]({ commit }, trucksUpdatedNotification) {
-    state.managedTrucks = trucksUpdatedNotification.trucks;
-    if (state.selectedTruck === null) {
-      state.selectedTruck = state.managedTrucks[0];
+  [M.MANAGED_VEHICLE_TYPES_RECEIVED]({ commit }, vehicleTypesUpdatedNotification) {
+    state.managedVehicleTypes = vehicleTypesUpdatedNotification.vehicleTypes;
+    if (state.selectedVehicleType === null) {
+      state.selectedVehicleType = state.managedVehicleTypes[0];
     } else {
-      let trucksWithId = state.managedTrucks.filter(s => s.id === state.selectedTruck.id);
-      if (trucksWithId.length > 0) {
-        state.selectedTruck = trucksWithId[0];
+      let vehicleTypesWithId = state.managedVehicleTypes.filter(s => s.id === state.selectedVehicleType.id);
+      if (vehicleTypesWithId.length > 0) {
+        state.selectedVehicleType = vehicleTypesWithId[0];
       }
       else {
-        state.selectedTruck = state.managedTrucks[0];
+        state.selectedVehicleType = state.managedVehicleTypes[0];
       }
     }
   },
@@ -156,8 +156,8 @@ const mutations = {
         case ManagedResourceType.FUNCTIONS:
           addFunction();
           break;
-        case ManagedResourceType.TRUCKS:
-          addTruck();
+        case ManagedResourceType.VEHICLE_TYPES:
+          addVehicleType();
           break;
       }
 
@@ -205,10 +205,10 @@ const mutations = {
           state.nextSelectedResourceType = null;
         }
         break;
-      case ManagedResourceType.TRUCKS:
-        if (state.nextSelectedTruck != null) {
-          state.selectedTruck = state.nextSelectedTruck;
-          state.nextSelectedTruck = null;
+      case ManagedResourceType.VEHICLE_TYPES:
+        if (state.nextSelectedVehicleType != null) {
+          state.selectedVehicleType = state.nextSelectedVehicleType;
+          state.nextSelectedVehicleType = null;
         } else if (state.nextSelectedResourceType != null) {
           state.selectedResourceType = state.nextSelectedResourceType;
           state.nextSelectedResourceType = null;
@@ -250,16 +250,16 @@ function deleteManagedResource() {
     case ManagedResourceType.FUNCTIONS:
       deleteFunction();
       break;
-    case ManagedResourceType.TRUCKS:
-      deleteTruck();
+    case ManagedResourceType.VEHICLE_TYPES:
+      deleteVehicleType();
       break;
   }
 }
 
-function addTruck() {
-  let newTruck = new Truck(Utils.createUUID(), "**Autospeciala nouă**", "**Autospeciala nouă**");
-  state.managedTrucks.push(newTruck);
-  state.selectedTruck = newTruck;
+function addVehicleType() {
+  let newVehicleType = new VehicleType(Utils.createUUID(), "**Autospeciala nouă**", "**Autospeciala nouă**");
+  state.managedVehicleTypes.push(newVehicleType);
+  state.selectedVehicleType = newVehicleType;
 }
 
 function addFunction() {
@@ -288,9 +288,9 @@ function deleteFunction() {
   state.selectedFunction = state.managedFunctions[0];
 }
 
-function deleteTruck() {
-  state.managedTrucks.pop(
-    state.managedTrucks.find(t => t.id === state.selectedTruck.id)
+function deleteVehicleType() {
+  state.managedVehicleTypes.pop(
+    state.managedVehicleTypes.find(t => t.id === state.selectedVehicleType.id)
   );
-  state.selectedTruck = state.managedTrucks[0];
+  state.selectedVehicleType = state.managedVehicleTypes[0];
 }

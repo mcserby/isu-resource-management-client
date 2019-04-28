@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="form-group add-truck-form">
+    <div class="form-group add-vehicle-form">
       <label class="form-label" for="name">Numele scurt</label>
       <input
         type="text"
@@ -20,35 +20,35 @@
         @input="validateFields()"
       >
     </div>
-    <div class="errors-add-truck" v-if="errors.length>0">
+    <div class="errors-add-vehicle" v-if="errors.length>0">
       <div v-for="error in errors" v-bind:key="error">
         <p class="error">{{error}}</p>
       </div>
     </div>
     <button
       type="button"
-      class="btn custom-button add-truck-button"
-      @click="saveTruck"
+      class="btn custom-button add-vehicle-button"
+      @click="saveVehicleType"
       :disabled="isSaveDisabled()"
     >Salvează</button>
   </div>
 </template>
 <script>
-import UpdateTruckRequest from "../../../contracts/management/trucks/updateTruckRequest";
-import AddTruckRequest from "../../../contracts/management/trucks/addTruckRequest";
+import UpdateVehicleTypeRequest from "../../../contracts/management/vehicles/updateVehicleTypeRequest";
+import AddVehicleTypeRequest from "../../../contracts/management/vehicles/addVehicleTypeRequest";
 import A from "../../../constants/actions";
 import WebsocketSend from "../../../contracts/websocketSend";
 
 export default {
-  name: "AddTruckForm",
+  name: "AddVehicleTypeForm",
   computed: {
     shortName: {
       // getter
       get: function() {
         if (this.editedShortName != null) {
           return this.editedShortName;
-        } else if (this.$store.state.managementStore.selectedTruck != null) {
-          return this.$store.state.managementStore.selectedTruck.shortName;
+        } else if (this.$store.state.managementStore.selectedVehicleType != null) {
+          return this.$store.state.managementStore.selectedVehicleType.shortName;
         } else {
           return null;
         }
@@ -64,8 +64,8 @@ export default {
       get: function() {
         if (this.editedLongName != null) {
           return this.editedLongName;
-        } else if (this.$store.state.managementStore.selectedTruck != null) {
-          return this.$store.state.managementStore.selectedTruck.longName;
+        } else if (this.$store.state.managementStore.selectedVehicleType != null) {
+          return this.$store.state.managementStore.selectedVehicleType.longName;
         } else {
           return null;
         }
@@ -93,19 +93,19 @@ export default {
           this.isInvalidEditedLongName())
       );
     },
-    saveTruck() {
+    saveVehicleType() {
       if (this.$store.state.managementStore.hasNewlyCreatedResource === true) {
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
-            "addTruck",
-            new AddTruckRequest(
-              this.$store.state.managementStore.selectedTruck.id,
+            "addVehicleType",
+            new AddVehicleTypeRequest(
+              this.$store.state.managementStore.selectedVehicleType.id,
               this.editedShortName == null
-                ? this.$store.state.managementStore.selectedTruck.shortName
+                ? this.$store.state.managementStore.selectedVehicleType.shortName
                 : this.editedShortName,
               this.editedLongName === null
-                ? this.$store.state.managementStore.selectedTruck.longName
+                ? this.$store.state.managementStore.selectedVehicleType.longName
                 : this.editedLongName
             )
           )
@@ -114,14 +114,14 @@ export default {
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
-            "updateTruck",
-            new UpdateTruckRequest(
-              this.$store.state.managementStore.selectedTruck.id,
+            "updateVehicleType",
+            new UpdateVehicleTypeRequest(
+              this.$store.state.managementStore.selectedVehicleType.id,
               this.editedShortName == null
-                ? this.$store.state.managementStore.selectedTruck.shortName
+                ? this.$store.state.managementStore.selectedVehicleType.shortName
                 : this.editedShortName,
               this.editedLongName === null
-                ? this.$store.state.managementStore.selectedTruck.longName
+                ? this.$store.state.managementStore.selectedVehicleType.longName
                 : this.editedLongName
             )
           )
@@ -156,4 +156,4 @@ export default {
   }
 };
 </script>
-<style src="./addTruckForm.css"></style>
+<style src="./addVehicleTypeForm.css"></style>

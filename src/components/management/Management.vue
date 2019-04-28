@@ -16,9 +16,9 @@
             @click="selectResourceType(ManagedResourceType.FUNCTIONS)"
           >Funcții</div>
           <div
-            :class="getSelectedResourceClass(ManagedResourceType.TRUCKS)"
+            :class="getSelectedResourceClass(ManagedResourceType.VEHICLE_TYPES)"
             class="resource-type resource-type-auto"
-            @click="selectResourceType(ManagedResourceType.TRUCKS)"
+            @click="selectResourceType(ManagedResourceType.VEHICLE_TYPES)"
           >Tipuri de autospeciale</div>
         </div>
       </div>
@@ -39,7 +39,7 @@
       <div class="managed-resources">
         <SubUnitsManagement v-if="isSelectedResource(ManagedResourceType.SUBUNITS)"></SubUnitsManagement>
         <FunctionsManagement v-if="isSelectedResource(ManagedResourceType.FUNCTIONS)"></FunctionsManagement>
-        <TrucksManagement v-if="isSelectedResource(ManagedResourceType.TRUCKS)"></TrucksManagement>
+        <VehicleTypesManagement v-if="isSelectedResource(ManagedResourceType.VEHICLE_TYPES)"></VehicleTypesManagement>
       </div>
     </div>
     <ConfirmationDialog
@@ -63,12 +63,12 @@
 import ManagementHeader from "./header/ManagementHeader.vue";
 import SubUnitsManagement from "./subunit/SubUnitsManagement.vue";
 import FunctionsManagement from "./functions/FunctionsManagement.vue";
-import TrucksManagement from "./trucks/TrucksManagement.vue";
+import VehicleTypesManagement from "./vehicles/VehicleTypesManagement.vue";
 import A from "../../constants/actions";
 import ManagedResourceType from "../../constants/managedResourceType";
 import DeleteFunctionRequest from "../../contracts/management/functions/DeleteFunctionRequest";
 import DeleteSubUnitRequest from "../../contracts/management/subunits/DeleteSubUnitRequest";
-import DeleteTruckRequest from "../../contracts/management/trucks/DeleteTruckRequest";
+import DeleteVehicleTypeRequest from "../../contracts/management/vehicles/DeleteVehicleTypeRequest";
 import WebsocketSend from "../../contracts/websocketSend";
 import ConfirmationDialog from "../common/ConfirmationDialog.vue";
 
@@ -78,7 +78,7 @@ export default {
     ManagementHeader,
     FunctionsManagement,
     SubUnitsManagement,
-    TrucksManagement,
+    VehicleTypesManagement,
     ConfirmationDialog
   },
   props: [],
@@ -95,7 +95,7 @@ export default {
     },
     confirmationDialogText() {
       return (
-        "Serviciul și toate resursele asignate serviciului vor fi șterse. Sunteți sigur că doriți să ștergeți : " + this.getResourceToDelete()
+       "Sunteți sigur că doriți să ștergeți : " + this.getResourceToDelete()
       );
     },
     displayConfirmationDialog() {
@@ -158,8 +158,8 @@ export default {
         case ManagedResourceType.FUNCTIONS:
           return this.$store.state.managementStore.selectedFunction.name;
           break;
-        case ManagedResourceType.TRUCKS:
-          return this.$store.state.managementStore.selectedTruck.shortName;
+        case ManagedResourceType.VEHICLE_TYPES:
+          return this.$store.state.managementStore.selectedVehicleType.shortName;
           break;
       }
     },
@@ -171,8 +171,8 @@ export default {
         case ManagedResourceType.FUNCTIONS:
           this.deleteFunction();
           break;
-        case ManagedResourceType.TRUCKS:
-          this.deleteTruck();
+        case ManagedResourceType.VEHICLE_TYPES:
+          this.deleteVehicleType();
           break;
       }
     },
@@ -208,17 +208,17 @@ export default {
         this.$store.state.managementStore.managedSubUnits[0]
       );
     },
-    deleteTruck() {
-      let truckId = this.$store.state.managementStore.selectedTruck.id;
-      if (truckId != null) {
+    deleteVehicleType() {
+      let vehicleTypeId = this.$store.state.managementStore.selectedVehicleType.id;
+      if (vehicleTypeId != null) {
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
-          new WebsocketSend("deleteTruck", new DeleteTruckRequest(truckId))
+          new WebsocketSend("deleteVehicleType", new DeleteVehicleTypeRequest(vehicleTypeId))
         );
       }
       this.$store.dispatch(
         A.DELETE_MANAGED_RESOURCE,
-        this.$store.state.managementStore.managedTrucks[0]
+        this.$store.state.managementStore.managedVehicleTypes[0]
       );
     }
   },
