@@ -180,7 +180,7 @@ export default {
         new WebsocketSend(
           "updateStatus",
           new UpdateResourceStatus(
-            this.resource.plateNumber,
+            this.resource.id,
             new Status(status, null, null, null)
           )
         )
