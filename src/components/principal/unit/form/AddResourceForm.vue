@@ -134,7 +134,7 @@ import WebsocketUnsubscribe from "../../../../contracts/websocketUnsubscribe";
 import UpdateSubUnitRequest from "../../../../contracts/edit/updateSubUnitRequest";
 import ResourceSummary from "../resource/ResourceSummary.vue";
 import Utils from "../../../../services/utils";
-import TrucksUpdatedNotification from "../../../../contracts/management/trucks/trucksUpdatedNotification";
+import VehicleTypesUpdatedNotification from "../../../../contracts/management/vehicles/vehicleTypesUpdatedNotification";
 
 export default {
   name: "AddResourceForm",
@@ -158,7 +158,7 @@ export default {
   },
   computed: {
     vehicleTypes() {
-      return this.$store.state.managementStore.managedTrucks;
+      return this.$store.state.managementStore.managedVehicleTypes;
     },
     saveDisabled() {
       return !this.changesPerformed;
@@ -194,11 +194,11 @@ export default {
       this.setEditorFields(this.filteredResources[0]);
     }
 
-    let onTrucksReceived = function(response) {
+    let onVehicleTypesReceived = function(response) {
       let r = JSON.parse(response.body);
       self.$store.dispatch(
-        A.MANAGED_TRUCKS_RECEIVED,
-        new TrucksUpdatedNotification(r.trucks)
+        A.MANAGED_VEHICLE_TYPES_RECEIVED,
+        new VehicleTypesUpdatedNotification(r.vehicleTypes)
       );
     };
 
@@ -208,7 +208,7 @@ export default {
 
     this.$store.dispatch(
       A.WEBSOCKET_SUBSCRIBE,
-      new WebsocketSubscribe("trucks", onTrucksReceived, onError)
+      new WebsocketSubscribe("vehicleTypes", onVehicleTypesReceived, onError)
     );
   },
   methods: {
@@ -368,7 +368,7 @@ export default {
   beforeDestroy() {
     this.$store.dispatch(
       A.WEBSOCKET_UNSUBSCRIBE,
-      new WebsocketUnsubscribe("trucks")
+      new WebsocketUnsubscribe("vehicleTypes")
     );
   }
 };

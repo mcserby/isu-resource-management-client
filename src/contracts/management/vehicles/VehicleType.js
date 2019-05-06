@@ -1,6 +1,6 @@
 // Function contract
 
-class AddTruckRequest {
+class VehicleType {
   constructor(id, shortName, longName) {
     this.id = id;
     this.shortName = shortName;
@@ -8,4 +8,4 @@ class AddTruckRequest {
   }
 }
 
-export default AddTruckRequest;
+export default VehicleType;

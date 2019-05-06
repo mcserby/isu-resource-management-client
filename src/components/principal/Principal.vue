@@ -189,7 +189,6 @@ export default {
     };
 
     let onReportReceived = function(response) {
-      console.log("received response:", response.body);
       self.$store.dispatch(A.SHOW_PDF_FILE, response.body);
     };
 

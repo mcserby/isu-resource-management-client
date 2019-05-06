@@ -319,7 +319,7 @@ const mutations = {
   },
   [M.SHOW_PDF_FILE](state, response) {
     // create the blob object with content-type "application/pdf"
-    let newBlob = new Blob([b64toBlob(response)], { type: "application/pdf" });
+    let newBlob = new Blob([b64toBlob(response)], { type: "application/xlsx" });
 
     // IE doesn't allow using a blob object directly as link href
     // instead it is necessary to use msSaveOrOpenBlob
@@ -333,7 +333,7 @@ const mutations = {
     const data = window.URL.createObjectURL(newBlob);
     let link = document.createElement("a");
     link.href = data;
-    link.download = "Report.xlsx";
+    link.download = "Raport S61.xlsx";
     link.click();
   }
 };

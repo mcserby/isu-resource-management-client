@@ -1,14 +1,14 @@
-.add-truck-form {
+.add-vehicle-form {
   width: 600px;
   height: 250px;
   padding-top: 30px;
 }
 
-.add-truck-button {
+.add-vehicle-button {
   width: 200px;
 }
 
-.errors-add-truck {
+.errors-add-vehicle {
   color: #f74356;
   font-weight: bold;
 }
