@@ -66,9 +66,9 @@ import FunctionsManagement from "./functions/FunctionsManagement.vue";
 import VehicleTypesManagement from "./vehicles/VehicleTypesManagement.vue";
 import A from "../../constants/actions";
 import ManagedResourceType from "../../constants/managedResourceType";
-import DeleteFunctionRequest from "../../contracts/management/functions/DeleteFunctionRequest";
-import DeleteSubUnitRequest from "../../contracts/management/subunits/DeleteSubUnitRequest";
-import DeleteVehicleTypeRequest from "../../contracts/management/vehicles/DeleteVehicleTypeRequest";
+import DeleteFunctionRequest from "../../contracts/management/functions/deleteFunctionRequest";
+import DeleteSubUnitRequest from "../../contracts/management/subunits/deleteSubUnitRequest";
+import DeleteVehicleTypeRequest from "../../contracts/management/vehicles/deleteVehicleTypeRequest";
 import WebsocketSend from "../../contracts/websocketSend";
 import ConfirmationDialog from "../common/ConfirmationDialog.vue";
 
