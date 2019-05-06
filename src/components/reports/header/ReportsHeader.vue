@@ -1,6 +1,6 @@
 <template>
   <div class="principal-header">
-    <div class="principal-title">ISU EasyManage - Management</div>
+    <div class="principal-title">ISU EasyManage - Raport</div>
     <div class="other-modules-wrapper">
       <div class="service-button">
         <router-link class="btn custom-button" role="button" to="/principal">Principal</router-link>
@@ -12,7 +12,7 @@
         <router-link class="btn custom-button" role="button" to="/uat">UAT</router-link>
       </div>
       <div class="report-button">
-        <router-link class="btn custom-button" role="button" to="/report">Raport</router-link>
+        <router-link class="btn custom-button" role="button" to="/management">Management</router-link>
       </div>
     </div>
   </div>

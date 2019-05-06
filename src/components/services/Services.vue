@@ -31,7 +31,7 @@
           <router-link class="custom-button btn" role="button" to="/management">Management</router-link>
         </div>
         <div class="report-button">
-          <button class="custom-button btn" role="button" @click="generateReport()">Raport</button>
+          <router-link class="custom-button btn" role="button" to="/report">Raport</router-link>
         </div>
       </div>
     </div>
@@ -359,15 +359,7 @@
         );
         this.$store.dispatch(A.CLOSE_EDIT_SERVICE_DIALOG);
       },
-      generateReport() {
-        this.$store.dispatch(
-          A.WEBSOCKET_SEND,
-          new WebsocketSend(
-            "getEquipmentReport",
-            new DeleteServiceRequest("")
-          )
-        );
-      }
+
     }
   };
 </script>
