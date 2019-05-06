@@ -252,7 +252,7 @@
     },
     methods: {
       changeTab(tab) {
-        this.$store.dispatch(A.CHANGE_ACTIVE_TAB, tab);
+        this.$store.dispatch(A.CHANGE_ACTIVE_TAB_SERVICES, tab);
       },
       tabClass: function(tabName) {
         return [
