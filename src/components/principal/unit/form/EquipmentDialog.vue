@@ -32,7 +32,7 @@
               <label class="form-label" for="usable">Operațional</label>
               <div class="equipment-number-container">
                 <button class="btn plus-minus-button" @click="sub('usable')">-</button>
-                <input type="number" class="form-control" v-model="equipment.usable" id="usable">
+                <input type="number" class="form-control" v-model="equipment.usable" id="usable" @keydown="monitorNumberKeyPressed">
                 <button class="btn plus-minus-button" @click="add('usable')">+</button>
               </div>
             </div>
@@ -40,7 +40,7 @@
               <label class="form-label" for="reserves">Rezervă</label>
               <div class="equipment-number-container">
                 <button class="btn plus-minus-button" @click="sub('reserves')">-</button>
-                <input type="number" class="form-control" v-model="equipment.reserves" id="reserves">
+                <input type="number" class="form-control" v-model="equipment.reserves" id="reserves" @keydown="monitorNumberKeyPressed">
                 <button class="btn plus-minus-button" @click="add('reserves')">+</button>
               </div>
             </div>
@@ -48,7 +48,7 @@
               <label class="form-label" for="unusable">Neoperațional</label>
               <div class="equipment-number-container">
                 <button class="btn plus-minus-button" @click="sub('unusable')">-</button>
-                <input type="number" class="form-control" v-model="equipment.unusable" id="unusable">
+                <input type="number" class="form-control" v-model="equipment.unusable" id="unusable" @keydown="monitorNumberKeyPressed">
                 <button class="btn plus-minus-button" @click="add('unusable')">+</button>
               </div>
             </div>
@@ -98,6 +98,12 @@
       sub: function (property) {
         if(this.equipment[property] > 0) {
           this.equipment[property]--;
+        }
+      },
+      monitorNumberKeyPressed: function(evt) {
+        // Do not allow the following chars in the number input: + - e E , .
+        if ([69, 187, 188, 189, 190].includes(evt.keyCode)) {
+          evt.preventDefault();
         }
       }
     },
