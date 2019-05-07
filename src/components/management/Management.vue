@@ -108,7 +108,7 @@ export default {
       switch (this.$store.state.managementStore.selectedResourceType) {
         case ManagedResourceType.SUBUNITS:
           return (
-                   "Serviciul și toate resursele asignate serviciului vor fi șterse. Sunteți sigur că doriți să ștergeți : " +
+            "Serviciul și toate resursele asignate serviciului vor fi șterse. Sunteți sigur că doriți să ștergeți : " +
             this.$store.state.managementStore.selectedSubUnit.name
           );
           break;
