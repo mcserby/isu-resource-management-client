@@ -45,6 +45,7 @@ import ConfirmationDialog from "../common/ConfirmationDialog.vue";
 import AddResourceForm from "./unit/form/AddResourceForm.vue";
 import A from "../../constants/actions";
 import WebsocketSubscribe from "../../contracts/websocketSubscribe";
+import WebsocketUnsubscribe from "../../contracts/websocketUnsubscribe";
 import WebsocketSend from "../../contracts/websocketSend";
 import UnitButtons from "./unit/buttons/UnitButtons.vue";
 import ResourceDialog from "./unit/form/ResourceDialog";
@@ -220,6 +221,12 @@ export default {
     this.$store.dispatch(
       A.WEBSOCKET_SUBSCRIBE,
       new WebsocketSubscribe("equipmentReport", onReportReceived, onError)
+    );
+  },
+  beforeDestroy() {
+    this.$store.dispatch(
+      A.WEBSOCKET_UNSUBSCRIBE,
+      new WebsocketUnsubscribe("equipmentReport")
     );
   }
 };
