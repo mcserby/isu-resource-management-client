@@ -5,6 +5,7 @@ import Services from "../components/services/Services.vue";
 import Uat from "../components/uat/Uat.vue";
 import Principal from "../components/principal/Principal.vue";
 import Management from "../components/management/Management.vue";
+import Report from "../components/reports/Report.vue";
 
 Vue.use(Router);
 
@@ -28,6 +29,11 @@ export default new Router({
       path: "/uat",
       name: "UAT",
       component: Uat
+    },
+    {
+      path: "/report",
+      name: "Report",
+      component: Report
     },
     {
       path: "/management",
