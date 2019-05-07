@@ -17,7 +17,7 @@
             </div>
             <div class="form-group">
               <label class="form-label">Funcție</label>
-              <select v-model="selectedFunction">
+              <select class="form-control" v-model="selectedFunction">
                 <option v-for="f in functions" :value="f.name">{{f.name}}</option>
               </select>
             </div>
