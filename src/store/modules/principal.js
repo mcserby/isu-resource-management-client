@@ -109,8 +109,8 @@ const actions = {
   [A.APPLY_RESOURCE_FILTER]({ commit }, searchText) {
     commit(M.APPLY_RESOURCE_FILTER, searchText);
   },
-  [A.SHOW_PDF_FILE]({ commit }, response) {
-    commit(M.SHOW_PDF_FILE, response);
+  [A.SHOW_PDF_FILE]({ commit }, data) {
+    commit(M.SHOW_PDF_FILE, data);
   }
 };
 
@@ -317,9 +317,9 @@ const mutations = {
   [M.APPLY_RESOURCE_FILTER](state, searchText) {
     state.searchText = searchText;
   },
-  [M.SHOW_PDF_FILE](state, response) {
+  [M.SHOW_PDF_FILE](state, param) {
     // create the blob object with content-type "application/pdf"
-    let newBlob = new Blob([b64toBlob(response)], { type: "application/xlsx" });
+    let newBlob = new Blob([b64toBlob(param['response'])], { type: "application/xlsx" });
 
     // IE doesn't allow using a blob object directly as link href
     // instead it is necessary to use msSaveOrOpenBlob
@@ -333,7 +333,7 @@ const mutations = {
     const data = window.URL.createObjectURL(newBlob);
     let link = document.createElement("a");
     link.href = data;
-    link.download = "Raport S61.xlsx";
+    link.download = param['fileName']//"Raport S61.xlsx";
     link.click();
   }
 };

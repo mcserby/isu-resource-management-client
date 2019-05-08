@@ -189,8 +189,12 @@ export default {
       console.err(error);
     };
 
-    let onReportReceived = function(response) {
-      self.$store.dispatch(A.SHOW_PDF_FILE, response.body);
+    let onEquipmentReportReceived = function(response) {
+      self.$store.dispatch(A.SHOW_PDF_FILE, {'response': response.body, 'fileName': 'Raport S61.xlsx'});
+    };
+
+    let onMissionReportReceived = function(response) {
+      self.$store.dispatch(A.SHOW_PDF_FILE, {'response': response.body,'fileName': 'Raport misiuni.xlsx'});
     };
 
     this.$store.dispatch(
@@ -220,7 +224,11 @@ export default {
     );
     this.$store.dispatch(
       A.WEBSOCKET_SUBSCRIBE,
-      new WebsocketSubscribe("equipmentReport", onReportReceived, onError)
+      new WebsocketSubscribe("equipmentReport", onEquipmentReportReceived, onError)
+    );
+    this.$store.dispatch(
+      A.WEBSOCKET_SUBSCRIBE,
+      new WebsocketSubscribe("missionsReport", onMissionReportReceived, onError)
     );
   },
   beforeDestroy() {
