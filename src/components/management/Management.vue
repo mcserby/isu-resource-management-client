@@ -45,7 +45,7 @@
     <ConfirmationDialog
       v-if="displayConfirmationDialog"
       :title="confirmationDialogTitle"
-      :text="confirmationDialogText"
+      :text="confirmationDialogText()"
       @confirm="onConfirm"
       @cancel="onCancel"
     ></ConfirmationDialog>
@@ -93,11 +93,6 @@ export default {
     selectedResourceType() {
       return this.$store.state.managementStore.selectedResourceType;
     },
-    confirmationDialogText() {
-      return (
-       "Sunteți sigur că doriți să ștergeți : " + this.getResourceToDelete()
-      );
-    },
     displayConfirmationDialog() {
       return this.$store.state.principalStore.confirmationDialogIsOpen;
     },
@@ -109,7 +104,29 @@ export default {
     }
   },
   methods: {
-    isAddingDisabled(){
+    confirmationDialogText() {
+      switch (this.$store.state.managementStore.selectedResourceType) {
+        case ManagedResourceType.SUBUNITS:
+          return (
+            "Serviciul și toate resursele asignate serviciului vor fi șterse. Sunteți sigur că doriți să ștergeți : " +
+            this.$store.state.managementStore.selectedSubUnit.name
+          );
+          break;
+        case ManagedResourceType.FUNCTIONS:
+          return (
+            "Sunteți sigur că doriți să ștergeți : " +
+            this.$store.state.managementStore.selectedFunction.name
+          );
+          break;
+        case ManagedResourceType.VEHICLE_TYPES:
+          return (
+            "Sunteți sigur că doriți să ștergeți : " +
+            this.$store.state.managementStore.selectedVehicleType.shortName
+          );
+          break;
+      }
+    },
+    isAddingDisabled() {
       return this.$store.state.managementStore.hasUnsavedChanges;
     },
     isSelectedResource(resourceType) {
@@ -159,7 +176,8 @@ export default {
           return this.$store.state.managementStore.selectedFunction.name;
           break;
         case ManagedResourceType.VEHICLE_TYPES:
-          return this.$store.state.managementStore.selectedVehicleType.shortName;
+          return this.$store.state.managementStore.selectedVehicleType
+            .shortName;
           break;
       }
     },
@@ -209,11 +227,15 @@ export default {
       );
     },
     deleteVehicleType() {
-      let vehicleTypeId = this.$store.state.managementStore.selectedVehicleType.id;
+      let vehicleTypeId = this.$store.state.managementStore.selectedVehicleType
+        .id;
       if (vehicleTypeId != null) {
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
-          new WebsocketSend("deleteVehicleType", new DeleteVehicleTypeRequest(vehicleTypeId))
+          new WebsocketSend(
+            "deleteVehicleType",
+            new DeleteVehicleTypeRequest(vehicleTypeId)
+          )
         );
       }
       this.$store.dispatch(
