@@ -188,13 +188,6 @@ export default {
       console.err(error);
     };
 
-    let onEquipmentReportReceived = function(response) {
-      self.$store.dispatch(A.SHOW_PDF_FILE, {'response': response.body, 'fileName': 'Raport S61.xlsx'});
-    };
-
-    let onMissionReportReceived = function(response) {
-      self.$store.dispatch(A.SHOW_PDF_FILE, {'response': response.body,'fileName': 'Raport misiuni.xlsx'});
-    };
 
     this.$store.dispatch(
       A.WEBSOCKET_SUBSCRIBE,
@@ -220,16 +213,9 @@ export default {
         onUnLockSubUnitReceived,
         onError
       )
-    );
-    this.$store.dispatch(
-      A.WEBSOCKET_SUBSCRIBE,
-      new WebsocketSubscribe("equipmentReport", onEquipmentReportReceived, onError)
-    );
-    this.$store.dispatch(
-      A.WEBSOCKET_SUBSCRIBE,
-      new WebsocketSubscribe("missionsReport", onMissionReportReceived, onError)
-    );
-  },
+    )
+
+  }
 
 };
 </script>
