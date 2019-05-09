@@ -51,17 +51,6 @@ export default {
     activeTab() {
       return this.$store.state.principalStore.activeTab;
     }
-  },
-  methods: {
-    generateReport() {
-      this.$store.dispatch(
-        A.WEBSOCKET_SEND,
-        new WebsocketSend(
-          "getEquipmentReport",
-          new UnlockSubUnitRequest("", "")
-        )
-      );
-    }
   }
 };
 </script>
