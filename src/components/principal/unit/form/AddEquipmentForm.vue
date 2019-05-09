@@ -179,7 +179,7 @@
         this.errors.splice(0, this.errors.length);
 
         if (this.equipmentType.length < 1) {
-          this.errors.push("Tipul echipamentului e obligatoriu pozitiv");
+          this.errors.push("Tipul echipamentului trebuie să conțină cel puțin un caracter");
         }
 
         if (this.isInteger(this.usable)) {
