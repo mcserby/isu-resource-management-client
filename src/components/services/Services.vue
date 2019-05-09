@@ -358,15 +358,6 @@
           )
         );
         this.$store.dispatch(A.CLOSE_EDIT_SERVICE_DIALOG);
-      },
-      generateReport() {
-        this.$store.dispatch(
-          A.WEBSOCKET_SEND,
-          new WebsocketSend(
-            "getEquipmentReport",
-            new DeleteServiceRequest("")
-          )
-        );
       }
     }
   };

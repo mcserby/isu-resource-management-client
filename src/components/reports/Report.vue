@@ -26,6 +26,7 @@
   import A from "../../constants/actions";
   import WebsocketSend from "../../contracts/websocketSend";
   import UnlockSubUnitRequest from "../../contracts/edit/unlockSubUnitRequest";
+  import WebsocketUnsubscribe from "../../contracts/websocketUnsubscribe";
 
   export default {
     name: 'Report',
@@ -51,6 +52,16 @@
           )
         );
       }
+    },
+    beforeDestroy() {
+      this.$store.dispatch(
+        A.WEBSOCKET_UNSUBSCRIBE,
+        new WebsocketUnsubscribe("equipmentReport")
+      );
+      this.$store.dispatch(
+        A.WEBSOCKET_UNSUBSCRIBE,
+        new WebsocketUnsubscribe("missionsReport")
+      );
     }
   }
 </script>
