@@ -31,6 +31,7 @@ export default {
   CHANGE_ACTIVE_TAB_SERVICES: "changeActiveTabServices",
   INIT_SERVICES: "initServices",
   CLEAR_ALL_SERVICES: "clearAllService",
+  TRANSFER_SERVICES: "transferServices",
   OPEN_DELETE_SERVICE_DIALOG: "openDeleteServiceDialog",
   OPEN_EDIT_SERVICE_DIALOG: "openEditServiceDialog",
   CLOSE_DELETE_SERVICE_DIALOG: "closeDeleteServiceDialog",
