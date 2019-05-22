@@ -305,7 +305,6 @@
         this.displayConfirmationDialog = false;
       },
       onTransfer() {
-        this.$store.dispatch(A.TRANSFER_SERVICES);
         this.$store.dispatch(
           A.WEBSOCKET_SEND,
           new WebsocketSend(
