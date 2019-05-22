@@ -47,6 +47,10 @@
       <button class="custom-service-button add-button btn" @click="addService()">
         <span class="service-button-font-size">Adaugă date</span>
       </button>
+
+      <button class="custom-service-button transfer-button btn" @click="transferServices()" :hidden="isTodayActive" :disabled="isFilterActive">
+        <span class="service-button-font-size">Transferă</span>
+      </button>
     </div>
     <div class="last-updated-services" v-if="noServicesAvailable">
       <span>
@@ -98,6 +102,13 @@
       @confirm="onConfirm"
       @cancel="onCancelDeletion"
     ></ConfirmationDialog>
+    <ConfirmationDialog
+      v-if="displayTransferDialog"
+      :text="transferDialogText"
+      :title="transferDialogTitle"
+      @confirm="onTransfer"
+      @cancel="onCancelTransfer"
+    ></ConfirmationDialog>
     <AddServiceForm
       v-if="displayAddServiceForm"
       @cancel="onCancelAdding"
@@ -120,6 +131,7 @@
   import EditServiceForm from "./form/EditServiceForm.vue";
   import DeleteServiceRequest from "../../contracts/services/deleteServiceRequest.js";
   import DeleteServicesRequest from "../../contracts/services/deleteServicesRequest.js";
+  import TransferServicesRequest from "../../contracts/services/transferServicesRequest.js";
   import UpdateServiceRequest from "../../contracts/services/updateServiceRequest.js";
   import FunctionsUpdatedNotification from "../../contracts/management/functions/functionsUpdatedNotification";
 
@@ -140,7 +152,12 @@
         deleteServiceConfirmationText:
           "Sunteți sigur că doriți să ștergeți serviciul",
         displayConfirmationDialog: false,
-        displayAddServiceForm: false
+        displayTransferDialog: false,
+        displayAddServiceForm: false,
+        transferDialogText: 
+          "Sunteți sigur ca doriți sa transferați datele in tab-ul \"Azi\"? Datele curente din tab-ul \"Azi\" vor fi suprascrise",
+        transferDialogTitle:
+          "Transfer servicii"
       };
     },
     computed: {
@@ -215,6 +232,12 @@
       servicesAvailable() {
         let filteredServicesByDay = this.services.filter(s => s.day === this.activeTab.servicesDay);
         return filteredServicesByDay.length > 0;
+      },
+      isTodayActive() {
+        return this.activeTab.servicesDay === "TODAY";
+      },
+      isFilterActive() {
+        return this.$store.state.servicesStore.searchText !== '';
       }
     },
     mounted: function() {
@@ -267,6 +290,9 @@
       addService() {
         this.displayAddServiceForm = true;
       },
+      transferServices() {
+        this.displayTransferDialog = true;
+      },
       onConfirm() {
         this.$store.dispatch(A.CLEAR_ALL_SERVICES);
         this.$store.dispatch(
@@ -278,8 +304,22 @@
         );
         this.displayConfirmationDialog = false;
       },
+      onTransfer() {
+        this.$store.dispatch(
+          A.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "transferServices",
+            new TransferServicesRequest()
+          )
+        );
+        this.displayTransferDialog = false;
+        this.$store.dispatch(A.CHANGE_ACTIVE_TAB_SERVICES, this.$store.state.servicesStore.tabs[0]);
+      },
       onCancelDeletion() {
         this.displayConfirmationDialog = false;
+      },
+      onCancelTransfer() {
+        this.displayTransferDialog = false;
       },
       onCancelAdding() {
         this.displayAddServiceForm = false;

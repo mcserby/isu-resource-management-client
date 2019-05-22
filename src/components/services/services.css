@@ -111,7 +111,7 @@
 
 .app-sa .services-buttons {
   margin-right: 5px;
-  width: 200px;
+  width: 400px;
   margin-top: 10px;
   display: grid;
 }
@@ -150,6 +150,11 @@
 
 .app-sa .add-button {
   grid-column: 2 / span 1;
+  grid-row: 1 / span 1;
+}
+
+.app-sa .transfer-button {
+  grid-column: 3 / span 1;
   grid-row: 1 / span 1;
 }
 
