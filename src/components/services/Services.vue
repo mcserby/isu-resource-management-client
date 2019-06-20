@@ -239,7 +239,11 @@
         return allFilteredServices;
       },
       lastUpdate() {
-        return this.$store.state.servicesStore.lastUpdate;
+        if(this.activeTab.servicesDay === "TODAY"){
+          return this.$store.state.servicesStore.lastUpdateToday;
+        }else{
+          return this.$store.state.servicesStore.lastUpdateTomorrow;
+        }
       },
       noServicesAvailable() {
         let filteredServicesByDay = this.services.filter(s => s.day === this.activeTab.servicesDay);
@@ -263,7 +267,7 @@
         let r = JSON.parse(response.body);
         self.$store.dispatch(
           A.INIT_SERVICES,
-          new ServicesUpdatedNotification(r.services, r.lastUpdate)
+          new ServicesUpdatedNotification(r.services, r.lastUpdateToday, r.lastUpdateTomorrow)
         );
       };
 
