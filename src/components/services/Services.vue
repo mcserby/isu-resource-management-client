@@ -239,6 +239,9 @@
         return allFilteredServices;
       },
       lastUpdate() {
+        // the following line is used for updating the last update time when a service is updated
+        let sortedServices = this.sortByRole(this.services);
+        
         if(this.activeTab.servicesDay === "TODAY"){
           return this.$store.state.servicesStore.lastUpdateToday;
         }else{
