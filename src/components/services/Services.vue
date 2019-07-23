@@ -102,13 +102,20 @@
       @confirm="onConfirm"
       @cancel="onCancelDeletion"
     ></ConfirmationDialog>
-    <ConfirmationDialog
+    <TransferDialog
       v-if="displayTransferDialog"
       :text="transferDialogText"
       :title="transferDialogTitle"
       @confirm="onTransfer"
       @cancel="onCancelTransfer"
-    ></ConfirmationDialog>
+    ></TransferDialog>
+    <NotificationDialog
+      v-if="displayTransferFinishedDialog"
+      :text="transferFinishedDialogText"
+      :title="transferFinishedDialogTitle"
+      @ok="onTransferFinished"
+      @cancel="onTransferFinished"
+    ></NotificationDialog>
     <AddServiceForm
       v-if="displayAddServiceForm"
       @cancel="onCancelAdding"
@@ -125,6 +132,8 @@
   import WebsocketSubscribe from "../../contracts/websocketSubscribe";
   import WebsocketSend from "../../contracts/websocketSend";
   import ConfirmationDialog from "../common/ConfirmationDialog.vue";
+  import NotificationDialog from "../common/NotificationDialog.vue";
+  import TransferDialog from "../common/TransferDialog.vue";
   import AddServiceForm from "./form/AddServiceForm.vue";
   import AddServiceRequest from "../../contracts/services/addServiceRequest.js";
   import ServicesUpdatedNotification from "../../contracts/services/servicesUpdatedNotification.js";
@@ -140,6 +149,8 @@
     components: {
       Service,
       ConfirmationDialog,
+      NotificationDialog,
+      TransferDialog,
       AddServiceForm,
       EditServiceForm
     },
@@ -153,11 +164,16 @@
           "Sunteți sigur că doriți să ștergeți serviciul",
         displayConfirmationDialog: false,
         displayTransferDialog: false,
+        displayTransferFinishedDialog: false,
         displayAddServiceForm: false,
         transferDialogText: 
           "Sunteți sigur ca doriți sa transferați datele in tab-ul \"Azi\"? Datele curente din tab-ul \"Azi\" vor fi suprascrise",
         transferDialogTitle:
-          "Transfer servicii"
+          "Transfer servicii",
+        transferFinishedDialogText: 
+          "Datele din tab-ul \"Azi\" au fost copiate din tab-ul \"Maine\"",
+        transferFinishedDialogTitle:
+          "Transfer servicii incheiat"
       };
     },
     computed: {
@@ -223,7 +239,14 @@
         return allFilteredServices;
       },
       lastUpdate() {
-        return this.$store.state.servicesStore.lastUpdate;
+        // the following line is used for updating the last update time when a service is updated
+        let sortedServices = this.sortByRole(this.services);
+        
+        if(this.activeTab.servicesDay === "TODAY"){
+          return this.$store.state.servicesStore.lastUpdateToday;
+        }else{
+          return this.$store.state.servicesStore.lastUpdateTomorrow;
+        }
       },
       noServicesAvailable() {
         let filteredServicesByDay = this.services.filter(s => s.day === this.activeTab.servicesDay);
@@ -247,7 +270,7 @@
         let r = JSON.parse(response.body);
         self.$store.dispatch(
           A.INIT_SERVICES,
-          new ServicesUpdatedNotification(r.services, r.lastUpdate)
+          new ServicesUpdatedNotification(r.services, r.lastUpdateToday, r.lastUpdateTomorrow)
         );
       };
 
@@ -314,6 +337,10 @@
         );
         this.displayTransferDialog = false;
         this.$store.dispatch(A.CHANGE_ACTIVE_TAB_SERVICES, this.$store.state.servicesStore.tabs[0]);
+        this.displayTransferFinishedDialog = true;
+      },
+      onTransferFinished() {
+        this.displayTransferFinishedDialog = false;
       },
       onCancelDeletion() {
         this.displayConfirmationDialog = false;

@@ -1,9 +1,10 @@
 // Service contract
 
 class ServicesUpdatedNotification {
-  constructor(services, lastUpdate) {
+  constructor(services, lastUpdateToday, lastUpdateTomorrow) {
     this.services = services;
-    this.lastUpdate = lastUpdate;
+    this.lastUpdateToday = lastUpdateToday;
+    this.lastUpdateTomorrow = lastUpdateTomorrow;
   }
 }
 
