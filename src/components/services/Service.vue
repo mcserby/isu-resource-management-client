@@ -13,6 +13,9 @@
       <div class="service-role">
         <div class="service-element-container">{{service.role}}</div>
       </div>
+      <div class="service-subUnit">
+        <div class="service-element-container">{{service.subUnit}}</div>
+      </div>
       <div class="service-contact">
         <div class="service-element-container">{{service.contact}}</div>
       </div>

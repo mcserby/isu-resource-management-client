@@ -8,7 +8,7 @@
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label class="form-label" for="name">Nume si Prenume</label>
+              <label class="form-label" for="name">Nume și Prenume</label>
               <input type="text" required v-model="name" class="form-control" id="name">
             </div>
             <div class="form-group">
@@ -19,6 +19,12 @@
               <label class="form-label">Funcție</label>
               <select class="form-control" v-model="selectedFunction">
                 <option v-for="f in functions" :value="f.name">{{f.name}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Detașament</label>
+              <select class="form-control" v-model="selectedSubUnit">
+                <option v-for="su in subUnits" :value="su.name">{{su.name}}</option>
               </select>
             </div>
             <div class="form-group">
@@ -57,7 +63,9 @@ export default {
       title: "",
       contact: "",
       functions: [],
-      selectedFunction: null
+      subUnits: [],
+      selectedFunction: null,
+      selectedSubUnit: null
     };
   },
   computed: {
@@ -65,25 +73,28 @@ export default {
       return this.name.trim() === "" ||
         this.title.trim() === "" ||
         this.selectedFunction === null ||
+        this.selectedSubUnit === null ||
         this.contact.trim() === "";
     }
   },
   mounted() {
     this.functions = this.$store.state.managementStore.managedFunctions;
     this.selectedFunction = this.functions[0];
+    this.subUnits = this.$store.state.managementStore.managedSubUnits;
+    this.selectedSubUnit = this.subUnits[0];
   },
   methods: {
     saveAndAddAnother() {
       this.$emit(
         "saveAndAddAnother",
-        new Service("", this.name, this.title, this.selectedFunction, this.contact)
+        new Service("", this.name, this.title, this.selectedFunction, this.selectedSubUnit, this.contact)
       );
-      this.name = this.selectedFunction = this.title = this.contact = "";
+      this.name = this.selectedFunction = this.selectedSubUnit = this.title = this.contact = "";
     },
     saveAndClose() {
       this.$emit(
         "saveAndClose",
-        new Service("", this.name, this.title, this.selectedFunction, this.contact)
+        new Service("", this.name, this.title, this.selectedFunction, this.selectedSubUnit, this.contact)
       );
     },
     cancel() {
