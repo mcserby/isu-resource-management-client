@@ -5,6 +5,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Editează serviciu</h5>
+            <button type="button" class="btn custom-close-button" @click="cancel">X</button>
           </div>
           <div class="modal-body">
             <div class="form-group">
@@ -47,7 +48,7 @@
             <button
               type="button"
               class="custom-button btn"
-              @click="closeWithoutSaving"
+              @click="cancel"
             >Închide fără a salva</button>
           </div>
         </div>
@@ -98,7 +99,7 @@ export default {
         )
       );
     },
-    closeWithoutSaving() {
+    cancel() {
       this.$emit("cancel");
     }
   }
