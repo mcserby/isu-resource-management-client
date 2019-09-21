@@ -75,6 +75,7 @@
         <div class="service-header-name">Nume și Prenume</div>
         <div class="service-header-title">Grad</div>
         <div class="service-header-role">Funcție</div>
+        <div class="service-header-subUnit">Detașament</div>
         <div class="service-header-contact">Contact</div>
         <div class="service-header-actions">Acțiuni</div>
       </div>
@@ -361,6 +362,7 @@
               service.name,
               service.title,
               service.role,
+              service.subUnit,
               service.contact,
               this.activeTab.servicesDay
             )
@@ -390,6 +392,7 @@
               service.name,
               service.title,
               service.role,
+              service.subUnit,
               service.contact,
               this.activeTab.servicesDay
             )

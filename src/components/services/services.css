@@ -97,14 +97,20 @@
   font-size: x-large;
 }
 
-.app-sa .service-header-contact {
+.app-sa .service-header-subUnit {
   grid-column: 13 / span 3;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
-.app-sa .service-header-actions {
+.app-sa .service-header-contact {
   grid-column: 16 / span 3;
+  grid-row: 1 / span 1;
+  font-size: x-large;
+}
+
+.app-sa .service-header-actions {
+  grid-column: 19 / span 3;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
