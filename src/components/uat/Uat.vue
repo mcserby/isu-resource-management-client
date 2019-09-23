@@ -1,6 +1,6 @@
 <template>
-<div style="background-color: red">
-  <h1>UAT</h1>
+<div style="background-color: grey">
+  <UatHeader></UatHeader>
   <div id="map"></div>
 </div>
 </template>
@@ -18,10 +18,13 @@ import {
   OSM
 } from 'ol/source.js';
 
+import UatHeader from './header/UatHeader';
 
 export default {
   name: 'UAT',
-
+  components: {
+    UatHeader
+  },
   computed: {
 
   },
