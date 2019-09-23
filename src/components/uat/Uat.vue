@@ -1,7 +1,23 @@
 <template>
 <div style="background-color: grey">
   <UatHeader></UatHeader>
-  <div id="map"></div>
+  <div class='row'>
+    <div class='column map-column'>
+        <div id="map" style="height: 100%; width: 100%;"></div>
+    </div>
+    <div class='column points-of-interest-column'>
+      <div class='menu'>
+        <h2>Puncte de interes</h2>
+        <ul>
+          <li> punct de interes 1</li>
+          <li> punct de interes 2</li>
+          <li> punct de interes 3</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div></div>
 </div>
 </template>
 
@@ -48,3 +64,5 @@ export default {
   }
 }
 </script>
+
+<style src="./uat.css"></style>

@@ -1,0 +1,21 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: stretch;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+}
+
+.map-column {
+  flex: 4;
+}
+
+.points-of-interest-column {
+  flex: 1;
+}
