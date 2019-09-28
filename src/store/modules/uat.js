@@ -1,44 +1,53 @@
 import A from '../../constants/actions';
 import M from '../../constants/mutations';
+import Location from '../../contracts/uat/location';
+
+const dummyLocations = [
+  new Location("1", "Pe dealu cu flori", [2000.0, 2000.5], [{
+    id: 1,
+    name: "Padurea cu alune"
+  }, {
+    id: 2,
+    name: "Cenusareasa"
+  }]),
+  new Location("2", "Acasa la Serby", [4000.0, 3000.5], [{
+    id: 1,
+    name: "Living"
+  }, {
+    id: 2,
+    name: "Bucatarie"
+  }])
+]
 
 const state = {
-  locations: [{
-      id: "1",
-      name: "Pe dealu cu flori",
-      location: {
-        "type": "Point",
-        "coordinates": [2000.0, 2000.5]
-      },
-      pointsOfInterest: [{
-        id: 1,
-        name: "Padurea cu alune"
-      }, {
-        id: 2,
-        name: "Cenusareasa"
-      }]
-    },
-    {
-      id: "2",
-      name: "Acasa la Serby",
-      location: {
-        "type": "Point",
-        "coordinates": [4000.0, 3000.5]
-      },
-      pointsOfInterest: [{
-        id: 1,
-        name: "Living"
-      }, {
-        id: 2,
-        name: "Bucatarie"
-      }]
-    }
-  ],
+  locations: dummyLocations,
   currentLocation: null
 };
 
-const actions = {};
+const actions = {
+  [A.ADD_LOCATION]({
+    commit
+  }, location) {
+    commit(M.ADD_LOCATION, location);
+  },
+  [A.DELETE_LOCATION]({
+    commit
+  }, location) {
+    commit(M.DELETE_LOCATION, location);
+  },
+};
 
-const mutations = {};
+const mutations = {
+  [M.ADD_LOCATION](state, location) {
+    state.locations.push(location);
+  },
+  [M.DELETE_LOCATION](state, location) {
+    const locationIndex = state.locations.findIndex(
+      l => l.id === location.id
+    );
+    state.locations.splice(locationIndex, 1);
+  }
+};
 
 const getters = {};
 

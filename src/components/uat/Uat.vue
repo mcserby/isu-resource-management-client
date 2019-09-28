@@ -18,7 +18,7 @@
 
 import UatHeader from './header/UatHeader';
 import Locations from './Locations';
-import MapInitializationService from '../../services/uat/mapInitializationService.js'
+import MapService from '../../services/uat/mapService.js'
 
 export default {
   name: 'UAT',
@@ -27,13 +27,17 @@ export default {
     Locations
   },
   computed: {
-
+    locations(){
+      return this.$store.state.uatStore.locations;
+    }
   },
   methods: {
 
   },
   mounted: function() {
-    MapInitializationService.initMap();
+    MapService.initMap();
+    // initLocations from server
+    this.locations.forEach(l => MapService.addLocation(l));
     console.log("UAT module mounted");
   }
 }

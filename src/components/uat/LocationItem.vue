@@ -1,5 +1,5 @@
 <template>
-  <div class="location">
+  <div class="location-item">
       {{location.name}}
   </div>
 </template>
@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: "Location",
+  name: "LocationItem",
   props: ["location"],
 }
 </script>

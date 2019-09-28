@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="location-wrapper" v-for="(location) in locations" v-bind:key="location.id">
-    <Location :location="location" @mouseClick="onLocationClick(location)"></Location>
+    <LocationItem :location="location" @mouseClick="onLocationClick(location)"></LocationItem>
     <div class="delete-resource">
       <button type="button" class="btn custom-close-button" @click="deleteLocation(location)">X</button>
     </div>
@@ -17,7 +17,9 @@
 
 <script>
 
-import Location from './Location';
+import LocationItem from './LocationItem';
+import MapService from '../../services/uat/mapService';
+import A from "../../constants/actions.js";
 
 export default {
   name: 'Locations',
@@ -25,7 +27,7 @@ export default {
     return {};
   },
   components: {
-    Location
+    LocationItem
   },
   computed: {
     locations(){
@@ -35,6 +37,11 @@ export default {
   methods: {
     addLocation(){
       console.log("add new point of interest");
+    },
+    deleteLocation(location){
+      console.log('deleting location', location);
+      MapService.deleteLocation(location);
+      this.$store.dispatch(A.DELETE_LOCATION, location);
     },
     onLocationClick(point){
       console.log("clicked point of interest");

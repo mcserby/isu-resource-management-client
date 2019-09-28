@@ -6,6 +6,6 @@
   display: flex;
   justify-content: space-between;
 }
-.location {
+.location-item {
   padding-left: 10px;
 }
