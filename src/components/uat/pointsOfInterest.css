@@ -1,0 +1,11 @@
+.point-of-interest-browser-list {
+  font-size: x-large;
+}
+
+.point-of-interest-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.point-of-interest {
+  padding-left: 10px;
+}
