@@ -109,7 +109,7 @@ export default {
   },
 
   zoomToLocation: function(location) {
-    console.log("zoomToLocation not implemented")
+    map.getView().animate({zoom: 3}, {center: location.coordinates});
   },
 
 }

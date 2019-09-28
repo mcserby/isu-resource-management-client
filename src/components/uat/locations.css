@@ -5,6 +5,7 @@
 .location-wrapper {
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
 }
 .location-item {
   padding-left: 10px;

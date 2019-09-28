@@ -7,7 +7,9 @@
     </div>
   </div>
   <div class="location-wrapper" v-for="(location) in locations" v-bind:key="location.id">
-    <LocationItem :location="location" @mouseClick="onLocationClick(location)"></LocationItem>
+    <div v-on:click="zoomToLocation(location)">
+      <LocationItem :location="location"></LocationItem>
+    </div>
     <div class="delete-resource">
       <button type="button" class="btn custom-close-button" @click="deleteLocation(location)">X</button>
     </div>
@@ -50,8 +52,8 @@ export default {
       MapService.deleteLocation(location);
       this.$store.dispatch(A.DELETE_LOCATION, location);
     },
-    onLocationClick(point){
-      console.log("clicked point of interest");
+    zoomToLocation(location){
+      MapService.zoomToLocation(location);
     }
   },
 }
