@@ -39,6 +39,12 @@ const actions = {
 
 const mutations = {
   [M.ADD_LOCATION](state, location) {
+    const locationIndex = state.locations.findIndex(
+      l => l.id === location.id
+    );
+    if(locationIndex >= 0){
+      state.locations.splice(locationIndex, 1);
+    }
     state.locations.push(location);
   },
   [M.DELETE_LOCATION](state, location) {

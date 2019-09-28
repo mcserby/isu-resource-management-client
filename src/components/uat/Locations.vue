@@ -3,7 +3,7 @@
   <h2 style="text-align:center">Locații</h2>
   <div :class="{ 'half-opacity': addingLocation }">
     <div class="">
-      <button type="button" class="custom-button btn" @click="addLocation()">{{buttonText}}</button>
+      <button type="button" class="custom-button btn" @click="addNewLocation()">{{buttonText}}</button>
     </div>
   </div>
   <div style="height: calc(100vh - 250px); overflow-y: scroll">
@@ -52,8 +52,8 @@ export default {
     }
   },
   methods: {
-    addLocation() {
-      this.addingLocation = !this.addingLocation;
+    addNewLocation() {
+      this.addingLocation = true;
       MapService.unsetMapClickHandler(this.editLocationIfClicked);
       MapService.setMapClickHandler(this.triggerCreateLocation);
     },
@@ -76,15 +76,15 @@ export default {
     submitLocation(location) {
       this.$store.dispatch(A.ADD_LOCATION, location);
       MapService.addLocation(location);
-      this.addingLocation = !this.addingLocation;
+      this.addingLocation = false;
       MapService.unsetMapClickHandler(this.triggerCreateLocation);
       MapService.setMapClickHandler(this.editLocationIfClicked);
       this.editLocation = false;
     },
     cancelEditLocation() {
+      this.addingLocation = false;
       this.editLocation = false;
       console.log("location creation/edditing has been canceled.");
-
     },
     deleteLocation(location) {
       console.log('deleting location', location);
