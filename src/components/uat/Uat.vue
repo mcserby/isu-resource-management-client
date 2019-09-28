@@ -6,10 +6,7 @@
         <div id="map" style="height: 100%; width: 100%;"></div>
     </div>
     <div class='column points-of-interest-column'>
-      <div>
-        <h2 style="text-align:center">Puncte de interes</h2>
-        <PointsOfInterest></PointsOfInterest>
-      </div>
+        <Locations></Locations>
     </div>
   </div>
 
@@ -20,14 +17,14 @@
 <script>
 
 import UatHeader from './header/UatHeader';
-import PointsOfInterest from './PointsOfInterest';
+import Locations from './Locations';
 import MapInitializationService from '../../services/uat/mapInitializationService.js'
 
 export default {
   name: 'UAT',
   components: {
     UatHeader,
-    PointsOfInterest
+    Locations
   },
   computed: {
 

@@ -6,7 +6,7 @@ import Projection from 'ol/proj/Projection';
 import Static from 'ol/source/ImageStatic';
 import {getCenter} from 'ol/extent';
 
-const extent = [0, 0, 16557, 11693];
+const extent = [0, 0, 8279, 5847];
 const projection = new Projection({
   code: 'cluj-image',
   units: 'pixels',
