@@ -52,4 +52,6 @@ export default {
   SHOW_UNSAVED_CHANGES_DIALOG: "showUnsavedChangesDialog",
   HIDE_UNSAVED_CHANGES_DIALOG: "hideUnsavedChangesDialog",
   MANAGEMENT_SUBUNIT_NAME_CHANGE: "managementSubunitNameChange",
+  ADD_LOCATION: "addLocation",
+  DELETE_LOCATION: "deleteLocation",
 };
