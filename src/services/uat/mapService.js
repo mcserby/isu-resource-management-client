@@ -47,13 +47,13 @@ var image = new Icon({
 
 function iconStyleFunction(feature) {
   return new Style({
-      image: image,
-      text: new Text({
-        font: 'bold 16px sans-serif',
-        offsetY: 35,
-        text: feature.getProperties().name
-      })
-    });
+    image: image,
+    text: new Text({
+      font: 'bold 16px sans-serif',
+      offsetY: 35,
+      text: feature.getProperties().name
+    })
+  });
 }
 
 const vectorLayer = new VectorLayer({
@@ -92,6 +92,7 @@ export default {
   },
 
   addLocation: function(location) {
+    this.deleteLocation(location);
     const locationFeature = new Feature({
       id: location.id,
       geometry: new Point(location.coordinates),
@@ -106,14 +107,25 @@ export default {
     console.log("featuresToRemove: ", featuresToRemove);
     featuresToRemove.forEach(f => locationsLayerSource.removeFeature(f));
   },
-  setMapClickHandler: function(mapClickHandler){
+  setMapClickHandler: function(mapClickHandler) {
     map.on('click', mapClickHandler);
   },
-  unsetMapClickHandler: function(mapClickHandler){
+  unsetMapClickHandler: function(mapClickHandler) {
     map.un('click', mapClickHandler);
   },
   zoomToLocation: function(location) {
-    map.getView().animate({zoom: 3}, {center: location.coordinates});
+    map.getView().animate({
+      zoom: 3
+    }, {
+      center: location.coordinates
+    });
   },
-
+  getLocationAtPixel: function(event) {
+    var feature = map.forEachFeatureAtPixel(event.pixel,
+      function(feature) {
+        console.log(feature);
+        return feature;
+      });
+    return feature;
+  }
 }

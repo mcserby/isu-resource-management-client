@@ -32,13 +32,6 @@ export default {
     }
   },
   methods: {
-
-  },
-  mounted: function() {
-    MapService.initMap();
-    // initLocations from server
-    this.locations.forEach(l => MapService.addLocation(l));
-    console.log("UAT module mounted");
   }
 }
 </script>
