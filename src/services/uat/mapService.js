@@ -109,7 +109,7 @@ export default {
   },
 
   zoomToLocation: function(location) {
-
+    console.log("zoomToLocation not implemented")
   },
 
 }

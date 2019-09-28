@@ -9,3 +9,7 @@
 .location-item {
   padding-left: 10px;
 }
+
+.half-opacity {
+   opacity: 0.5;
+}

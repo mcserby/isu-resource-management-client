@@ -1,9 +1,9 @@
 <template>
-<div class="location-list">
+<div class="location-list" :class="{ 'half-opacity': addingLocation }">
   <h2 style="text-align:center">Locații</h2>
   <div class="">
     <div class="">
-      <button type="button" class="custom-button btn" @click="addLocation()">Adaugă o locație</button>
+      <button type="button" class="custom-button btn" @click="addLocation()">{{buttonText}}</button>
     </div>
   </div>
   <div class="location-wrapper" v-for="(location) in locations" v-bind:key="location.id">
@@ -24,19 +24,26 @@ import A from "../../constants/actions.js";
 export default {
   name: 'Locations',
   data: () => {
-    return {};
+    return {
+      addingLocation: false,
+      addLocationButtonText: "Adaugă o locație",
+      selectLocationOnMap: "Selectează locația pe hartă (X)"
+    };
   },
   components: {
     LocationItem
   },
   computed: {
+    buttonText(){
+      return this.addingLocation ? this.selectLocationOnMap : this.addLocationButtonText;
+    },
     locations(){
       return this.$store.state.uatStore.locations;
     }
   },
   methods: {
     addLocation(){
-      console.log("add new point of interest");
+      this.addingLocation = !this.addingLocation;
     },
     deleteLocation(location){
       console.log('deleting location', location);
