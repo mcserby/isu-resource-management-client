@@ -1,0 +1,16 @@
+.location-list {
+  font-size: x-large;
+}
+
+.location-wrapper {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.location-item {
+  padding-left: 10px;
+}
+
+.half-opacity {
+   opacity: 0.5;
+}

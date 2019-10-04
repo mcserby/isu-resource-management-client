@@ -31,6 +31,7 @@ export default {
   CHANGE_ACTIVE_TAB_SERVICES: "changeActiveTabServices",
   INIT_SERVICES: "initServices",
   CLEAR_ALL_SERVICES: "clearAllService",
+  TRANSFER_SERVICES: "transferServices",
   OPEN_DELETE_SERVICE_DIALOG: "openDeleteServiceDialog",
   OPEN_EDIT_SERVICE_DIALOG: "openEditServiceDialog",
   CLOSE_DELETE_SERVICE_DIALOG: "closeDeleteServiceDialog",
@@ -52,4 +53,6 @@ export default {
   SHOW_UNSAVED_CHANGES_DIALOG: "showUnsavedChangesDialog",
   HIDE_UNSAVED_CHANGES_DIALOG: "hideUnsavedChangesDialog",
   MANAGEMENT_SUBUNIT_NAME_CHANGE: "managementSubunitNameChange",
+  ADD_LOCATION: "addLocation",
+  DELETE_LOCATION: "deleteLocation",
 };

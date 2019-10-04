@@ -24,8 +24,9 @@
 
   import ReportsHeader from "./header/ReportsHeader.vue";
   import A from "../../constants/actions";
+  import ReportType from "../../constants/reportType";
   import WebsocketSend from "../../contracts/websocketSend";
-  import UnlockSubUnitRequest from "../../contracts/edit/unlockSubUnitRequest";
+  import GetReportRequest from "../../contracts/reports/getReportRequest";
   import WebsocketSubscribe from "../../contracts/websocketSubscribe";
   import WebsocketUnsubscribe from "../../contracts/websocketUnsubscribe";
 
@@ -40,7 +41,7 @@
           A.WEBSOCKET_SEND,
           new WebsocketSend(
             "getEquipmentReport",
-            new UnlockSubUnitRequest("", "")
+            new GetReportRequest(ReportType.EQUIPMENT)
           ),
         );
       },
@@ -49,7 +50,7 @@
           A.WEBSOCKET_SEND,
           new WebsocketSend(
             "getMissionsReport",
-            new UnlockSubUnitRequest("", "")
+           new GetReportRequest(ReportType.MISSIONS)
           )
         );
       }
@@ -79,11 +80,11 @@
         self.$store.dispatch(A.SHOW_PDF_FILE, {'response': response.body, 'fileName': 'Raport misiuni.xlsx'});
       };
       this.$store.dispatch(
-        A.WEBSOCKET_SUBSCRIBE,
+        A.WEBSOCKET_SUBSCRIBE_USER,
         new WebsocketSubscribe("equipmentReport", onEquipmentReportReceived, onError)
       );
       this.$store.dispatch(
-        A.WEBSOCKET_SUBSCRIBE,
+        A.WEBSOCKET_SUBSCRIBE_USER,
         new WebsocketSubscribe("missionsReport", onMissionReportReceived, onError)
       );
 

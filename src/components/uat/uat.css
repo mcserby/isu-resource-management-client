@@ -1,0 +1,22 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  height: calc(100vh - 150px);
+  align-items: stretch;
+}
+
+.column {
+  display: flex;
+  height: calc(100vh - 150px);
+  flex-direction: column;
+}
+
+.map-column {
+  flex: 4;
+}
+
+.points-of-interest-column {
+  flex: 1;
+}

@@ -5,6 +5,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Editează serviciu</h5>
+            <button type="button" class="btn custom-close-button" @click="cancel">X</button>
           </div>
           <div class="modal-body">
             <div class="form-group">
@@ -19,6 +20,12 @@
               <label class="form-label">Funcție</label>
               <select class="form-control" v-model="selectedFunction">
                 <option v-for="f in functions" :value="f.name">{{f.name}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Detașament</label>
+              <select class="form-control" v-model="selectedSubUnit">
+                <option v-for="su in subUnits" :value="su.name">{{su.name}}</option>
               </select>
             </div>
             <div class="form-group">
@@ -41,7 +48,7 @@
             <button
               type="button"
               class="custom-button btn"
-              @click="closeWithoutSaving"
+              @click="cancel"
             >Închide fără a salva</button>
           </div>
         </div>
@@ -61,7 +68,9 @@ export default {
       serviceTitle: "",
       serviceContact: "",
       functions: [],
-      selectedFunction: null
+      subUnits: [],
+      selectedFunction: null,
+      selectedSubUnit: null
     };
   },
   computed: {},
@@ -70,7 +79,9 @@ export default {
     this.serviceTitle = this.service.title;
     this.serviceContact = this.service.contact;
     this.functions = this.$store.state.managementStore.managedFunctions;
+    this.subUnits = this.$store.state.managementStore.managedSubUnits;
     this.selectedFunction = this.service.role;
+    this.selectedSubUnit = this.service.subUnit;
     this.day = this.service.day;
   },
   methods: {
@@ -82,12 +93,13 @@ export default {
           this.serviceName,
           this.serviceTitle,
           this.selectedFunction,
+          this.selectedSubUnit,
           this.serviceContact,
           this.day
         )
       );
     },
-    closeWithoutSaving() {
+    cancel() {
       this.$emit("cancel");
     }
   }

@@ -1,0 +1,5 @@
+export default {
+    EQUIPMENT: 'EQUIPMENT',
+    MISSIONS: 'MISSIONS',
+    SERVICES: 'SERVICES'
+}

@@ -57,7 +57,8 @@ const mutations = {
   [M.INIT_SERVICES](state, servicesUpdate) {
     state.services.splice(0, state.services.length);
     state.services = servicesUpdate.services;
-    state.lastUpdate = servicesUpdate.lastUpdate;
+    state.lastUpdateToday = servicesUpdate.lastUpdateToday;
+    state.lastUpdateTomorrow = servicesUpdate.lastUpdateTomorrow;
   },
   [M.CLEAR_ALL_SERVICES](state) {
     let availableServices = [];
