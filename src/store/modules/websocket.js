@@ -98,10 +98,12 @@ const mutations = {
     }, 100);
   },
   [M.WEBSOCKET_UNSUBSCRIBE](state, websocketUnsubscribe) {
-    var sendUnsubscribe = setInterval(websocketSend => {
+    const sendUnsubscribe = setInterval(websocketSend => {
       if (state.websocketStompClient && state.connected === true) {
-        var subscription = state.subscriptions[websocketUnsubscribe.topicName];
-        subscription.unsubscribe();
+        const subscription = state.subscriptions[websocketUnsubscribe.topicName];
+        if(subscription){
+          subscription.unsubscribe();
+        }
         clearInterval(sendUnsubscribe);
       } else {
         console.log("Not connected to websocket yet!!!");
