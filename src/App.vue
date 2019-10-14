@@ -50,6 +50,7 @@ export default {
     authenticationService.authenticate(this.$store, () => {
       this.$store.dispatch(A.WEBSOCKET_CONNECT);
       this.subscribeToWebsocketTopics();
+      this.$router.push('/principal');
       console.log("application mounted");
     });
   }
