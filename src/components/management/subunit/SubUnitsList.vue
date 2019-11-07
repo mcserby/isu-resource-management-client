@@ -14,7 +14,7 @@
 
 <script>
 import draggable from "vuedraggable";
-import UpdateSubUnitsOrderRequest from "../../../contracts/management/subUnits/updateSubUnitsOrderRequest";
+import UpdateSubUnitsOrderRequest from "../../../contracts/management/subunits/updateSubUnitsOrderRequest";
 import A from "../../../constants/actions";
 import WebsocketSend from "../../../contracts/websocketSend";
 

@@ -25,9 +25,9 @@
   </div>
 </template>
 <script>
-import UpdateFunctionRequest from "../../../contracts/management/functions/UpdateFunctionRequest";
-import AddFunctionRequest from "../../../contracts/management/functions/AddFunctionRequest";
-import DeleteFunctionRequest from "../../../contracts/management/functions/DeleteFunctionRequest";
+import UpdateFunctionRequest from "../../../contracts/management/functions/updateFunctionRequest";
+import AddFunctionRequest from "../../../contracts/management/functions/addFunctionRequest";
+import DeleteFunctionRequest from "../../../contracts/management/functions/deleteFunctionRequest";
 import A from "../../../constants/actions";
 import WebsocketSend from "../../../contracts/websocketSend";
 

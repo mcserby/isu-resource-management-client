@@ -1,4 +1,4 @@
-.row {
+.uat-row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -7,7 +7,7 @@
   align-items: stretch;
 }
 
-.column {
+.uat-column {
   display: flex;
   height: calc(100vh - 150px);
   flex-direction: column;

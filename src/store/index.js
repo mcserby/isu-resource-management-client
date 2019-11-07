@@ -7,6 +7,7 @@ import ServicesStore from "./modules/services";
 import UatStore from "./modules/uat";
 import ReportStore from "./modules/report";
 import WebsocketStore from "./modules/websocket";
+import UserStore from './modules/user';
 
 Vue.use(Vuex);
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     managementStore: ManagementStore,
     uatStore: UatStore,
     reportStore: ReportStore,
-    websocket: WebsocketStore
+    websocket: WebsocketStore,
+    user: UserStore,
   }
 });

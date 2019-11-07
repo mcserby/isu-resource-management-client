@@ -54,4 +54,7 @@ export default {
   MANAGEMENT_SUBUNIT_NAME_CHANGE: "managementSubunitNameChange",
   ADD_LOCATION: "addLocation",
   DELETE_LOCATION: "deleteLocation",
+  AUTH_UPDATE_TOKEN: "authUpdateToken",
+  AUTH_LOGOUT: "authLogout",
+  AUTH_SET_USER_PROFILE: "authSetUserProfile",
 };

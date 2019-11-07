@@ -97,6 +97,7 @@ export default {
   },
   mounted: function() {
     MapService.initMap();
+    // TODO read locations from backend
     this.locations.forEach(l => MapService.addLocation(l));
     MapService.setMapClickHandler(this.editLocationIfClicked);
   }

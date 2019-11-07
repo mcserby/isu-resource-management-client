@@ -14,7 +14,7 @@
 
 <script>
 import draggable from "vuedraggable";
-import UpdateFunctionsRequest from "../../../contracts/management/functions/UpdateFunctionsRequest";
+import UpdateFunctionsRequest from "../../../contracts/management/functions/updateFunctionsRequest";
 import A from "../../../constants/actions";
 import WebsocketSend from "../../../contracts/websocketSend";
 

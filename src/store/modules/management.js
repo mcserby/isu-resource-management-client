@@ -2,7 +2,7 @@ import A from "../../constants/actions";
 import M from "../../constants/mutations";
 import ManagedResourceType from "../../constants/managedResourceType";
 import Function from "../../contracts/management/functions/function";
-import VehicleType from "../../contracts/management/vehicles/vehicleType";
+import VehicleType from "../../contracts/management/vehicles/VehicleType";
 import SubUnit from "../../contracts/management/subunits/subUnit.js";
 import Utils from "../../services/utils";
 
