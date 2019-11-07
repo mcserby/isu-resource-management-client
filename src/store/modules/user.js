@@ -4,7 +4,10 @@ import M from '../../constants/mutations';
 const state = {
   isOpen: false,
   authInstance: null,
-  userProfile: null,
+  userProfile: {
+    username: "anonymous",
+    userRoles: ["supervisor"],
+  },
 }
 
 const actions = {
@@ -35,6 +38,7 @@ const mutations = {
 
   [M.AUTH_SET_USER_PROFILE] (state, profile) {
     state.userProfile = profile
+    console.log(state.userProfile)
   },
 
 }

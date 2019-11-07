@@ -38,6 +38,9 @@ export default {
     resourceType() {
       return this.$store.state.principalStore.activeTab.resourceType;
     },
+    userRoles() {
+      return this.$store.state.user.userProfile.userRoles;
+    },
     isShiftExchangeNotAllowed() {
       let currentResourceType = this.resourceType;
       if (currentResourceType !== ResourceType.EQUIPMENT) {
@@ -52,7 +55,15 @@ export default {
         return currentEquipments.length === 0 || this.isUnitLocked;
       }
     },
+    userHasRightsToEditCurrentUnit() {
+      return Boolean(
+        this.userRoles.find(r => r === 'supervisor' || r === this.unit.name)
+      );
+    },
     isUnitLocked() {
+      if(!this.userHasRightsToEditCurrentUnit){
+        return true;
+      }
       const lockUnit = this.$store.state.principalStore.lockUnits.find(
         u => u.id === this.unit.id
       );
