@@ -58,4 +58,6 @@ export default {
   AUTH_UPDATE_TOKEN: "authUpdateToken",
   AUTH_LOGOUT: "authLogout",
   AUTH_SET_USER_PROFILE: "authSetUserProfile",
+  // LOCATIONS section
+  INIT_LOCATIONS: "initLocations"
 };

@@ -35,6 +35,9 @@ const actions = {
   }, location) {
     commit(M.DELETE_LOCATION, location);
   },
+  [A.INIT_LOCATIONS]({ commit }, locationsUpdate) {
+    commit(M.INIT_LOCATIONS, locationsUpdate);
+  },
 };
 
 const mutations = {
@@ -52,7 +55,11 @@ const mutations = {
       l => l.id === location.id
     );
     state.locations.splice(locationIndex, 1);
-  }
+  },
+  [M.INIT_LOCATIONS](state, locationsUpdate) {
+    state.locations.splice(0, state.locations.length);
+    state.locations = locationsUpdate.locations;
+  },
 };
 
 const getters = {};
