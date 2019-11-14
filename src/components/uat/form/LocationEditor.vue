@@ -13,6 +13,10 @@
               <label class="form-label" for="locationName">Nume Locație</label>
               <input type="text" minlength="1" required v-model="newLocation.name" class="form-control" id="locationName" placeholder="Nume">
             </div>
+            <div class="form-group">
+              <label class="form-label" for="locationPointsOfInterest">Obiective</label>
+              <input type="text" minlength="1" required v-model="newLocation.pointsOfInterest" class="form-control" id="locationPointsOfInterest" placeholder="Obiective">
+            </div>
             <div class="errors">
               <div v-for="error in errors" v-bind:key="error">
                 <p class="error">{{error}}</p>

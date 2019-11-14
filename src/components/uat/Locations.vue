@@ -31,6 +31,7 @@ import WebsocketSubscribe from "../../contracts/websocketSubscribe";
 import Location from '../../contracts/uat/location';
 import LocationEditor from './form/LocationEditor';
 import AddLocationRequest from "../../contracts/uat/addLocationRequest.js";
+import UpdateLocationRequest from "../../contracts/uat/updateLocationRequest.js";
 import LocationsUpdatedNotification from "../../contracts/uat/locationsUpdatedNotification.js";
 
 export default {
@@ -79,21 +80,34 @@ export default {
       }
     },
     submitLocation(location) {
-      this.$store.dispatch(
+      if(this.addingLocation){
+          this.$store.dispatch(
           WSA.WEBSOCKET_SEND,
           new WebsocketSend(
             "addLocation",
             new AddLocationRequest(
               location.name,
               location.coordinates,
-              null
-              //TODO: send pointsOfInterest
+              location.pointsOfInterest.split(",")
             )
           )
         );
+      this.addingLocation = false;
+      }else{
+        this.$store.dispatch(
+          WSA.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "updateLocation",
+            new UpdateLocationRequest( 
+              location.id,
+              location.name,
+              location.coordinates,
+              location.pointsOfInterest.split(",") )
+          )
+        );
+      }
 
       MapService.addLocation(location);
-      this.addingLocation = false;
       MapService.unsetMapClickHandler(this.triggerCreateLocation);
       MapService.setMapClickHandler(this.editLocationIfClicked);
       this.editLocation = false;
