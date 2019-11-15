@@ -32,6 +32,7 @@ import Location from '../../contracts/uat/location';
 import LocationEditor from './form/LocationEditor';
 import AddLocationRequest from "../../contracts/uat/addLocationRequest.js";
 import UpdateLocationRequest from "../../contracts/uat/updateLocationRequest.js";
+import DeleteLocationRequest from "../../contracts/uat/deleteLocationRequest.js";
 import LocationsUpdatedNotification from "../../contracts/uat/locationsUpdatedNotification.js";
 
 export default {
@@ -121,6 +122,13 @@ export default {
       console.log('deleting location', location);
       MapService.deleteLocation(location);
       this.$store.dispatch(A.DELETE_LOCATION, location);
+      this.$store.dispatch(
+          WSA.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "deleteLocation",
+            new DeleteLocationRequest(location.id)
+          )
+        );
     },
     zoomToLocation(location) {
       MapService.zoomToLocation(location);
