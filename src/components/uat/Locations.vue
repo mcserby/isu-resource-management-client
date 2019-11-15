@@ -81,6 +81,9 @@ export default {
       }
     },
     submitLocation(location) {
+      if(location.pointsOfInterest != null && location.pointsOfInterest != undefined && location.pointsOfInterest.length > 0){
+        location.pointsOfInterest = location.pointsOfInterest.split(",");
+      }
       if(this.addingLocation){
           this.$store.dispatch(
           WSA.WEBSOCKET_SEND,
@@ -89,7 +92,7 @@ export default {
             new AddLocationRequest(
               location.name,
               location.coordinates,
-              location.pointsOfInterest.split(",")
+              location.pointsOfInterest
             )
           )
         );
@@ -103,7 +106,7 @@ export default {
               location.id,
               location.name,
               location.coordinates,
-              location.pointsOfInterest.split(",") )
+              location.pointsOfInterest )
           )
         );
       }
