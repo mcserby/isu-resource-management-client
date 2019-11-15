@@ -2,25 +2,8 @@ import A from '../../constants/actions';
 import M from '../../constants/mutations';
 import Location from '../../contracts/uat/location';
 
-const dummyLocations = [
-  new Location("1", "Pe dealu cu flori", [2000.0, 2000.5], [{
-    id: 1,
-    name: "Padurea cu alune"
-  }, {
-    id: 2,
-    name: "Cenusareasa"
-  }]),
-  new Location("2", "Acasa la Serby", [4000.0, 3000.5], [{
-    id: 1,
-    name: "Living"
-  }, {
-    id: 2,
-    name: "Bucatarie"
-  }])
-]
-
 const state = {
-  locations: dummyLocations,
+  locations: [],
   currentLocation: null
 };
 
@@ -34,6 +17,9 @@ const actions = {
     commit
   }, location) {
     commit(M.DELETE_LOCATION, location);
+  },
+  [A.INIT_LOCATIONS]({ commit }, locationsUpdate) {
+    commit(M.INIT_LOCATIONS, locationsUpdate);
   },
 };
 
@@ -52,7 +38,11 @@ const mutations = {
       l => l.id === location.id
     );
     state.locations.splice(locationIndex, 1);
-  }
+  },
+  [M.INIT_LOCATIONS](state, locationsUpdate) {
+    state.locations.splice(0, state.locations.length);
+    state.locations = locationsUpdate.locations;
+  },
 };
 
 const getters = {};

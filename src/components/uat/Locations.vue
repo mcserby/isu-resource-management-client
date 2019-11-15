@@ -25,8 +25,15 @@ import LocationItem from './LocationItem';
 import MapService from '../../services/uat/mapService';
 import Utils from '../../services/utils';
 import A from '../../constants/actions';
+import WSA from "../../constants/actions";
+import WebsocketSend from "../../contracts/websocketSend";
+import WebsocketSubscribe from "../../contracts/websocketSubscribe";
 import Location from '../../contracts/uat/location';
 import LocationEditor from './form/LocationEditor';
+import AddLocationRequest from "../../contracts/uat/addLocationRequest.js";
+import UpdateLocationRequest from "../../contracts/uat/updateLocationRequest.js";
+import DeleteLocationRequest from "../../contracts/uat/deleteLocationRequest.js";
+import LocationsUpdatedNotification from "../../contracts/uat/locationsUpdatedNotification.js";
 
 export default {
   name: 'Locations',
@@ -74,9 +81,37 @@ export default {
       }
     },
     submitLocation(location) {
-      this.$store.dispatch(A.ADD_LOCATION, location);
-      MapService.addLocation(location);
+      if(location.pointsOfInterest != null && location.pointsOfInterest != undefined && location.pointsOfInterest.length > 0){
+        location.pointsOfInterest = location.pointsOfInterest.split(",");
+      }
+      if(this.addingLocation){
+          this.$store.dispatch(
+          WSA.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "addLocation",
+            new AddLocationRequest(
+              location.name,
+              location.coordinates,
+              location.pointsOfInterest
+            )
+          )
+        );
       this.addingLocation = false;
+      }else{
+        this.$store.dispatch(
+          WSA.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "updateLocation",
+            new UpdateLocationRequest( 
+              location.id,
+              location.name,
+              location.coordinates,
+              location.pointsOfInterest )
+          )
+        );
+      }
+
+      MapService.addLocation(location);
       MapService.unsetMapClickHandler(this.triggerCreateLocation);
       MapService.setMapClickHandler(this.editLocationIfClicked);
       this.editLocation = false;
@@ -90,16 +125,39 @@ export default {
       console.log('deleting location', location);
       MapService.deleteLocation(location);
       this.$store.dispatch(A.DELETE_LOCATION, location);
+      this.$store.dispatch(
+          WSA.WEBSOCKET_SEND,
+          new WebsocketSend(
+            "deleteLocation",
+            new DeleteLocationRequest(location.id)
+          )
+        );
     },
     zoomToLocation(location) {
       MapService.zoomToLocation(location);
     },
   },
   mounted: function() {
-    MapService.initMap();
-    // TODO read locations from backend
-    this.locations.forEach(l => MapService.addLocation(l));
-    MapService.setMapClickHandler(this.editLocationIfClicked);
+    const self = this;
+    let onLocationsReceived = function(response) {
+        let r = JSON.parse(response.body);
+        self.$store.dispatch(
+          A.INIT_LOCATIONS,
+          new LocationsUpdatedNotification(r.locations)
+        );
+      };
+
+      let onError = function(error) {
+        console.err(error);
+      };
+
+      this.$store.dispatch(
+        A.WEBSOCKET_SUBSCRIBE,
+        new WebsocketSubscribe("locations", onLocationsReceived, onError)
+      );
+      MapService.initMap();
+      this.locations.forEach(l => MapService.addLocation(l));
+      MapService.setMapClickHandler(this.editLocationIfClicked);
   }
 }
 </script>

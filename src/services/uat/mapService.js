@@ -96,7 +96,8 @@ export default {
     const locationFeature = new Feature({
       id: location.id,
       geometry: new Point(location.coordinates),
-      name: location.name
+      name: location.name,
+      pointsOfInterest: location.pointsOfInterest
     });
     locationFeature.setId(location.id);
     locationsLayerSource.addFeature(locationFeature);
