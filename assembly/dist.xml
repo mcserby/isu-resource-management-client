@@ -11,5 +11,11 @@
             <include>*/**</include>
         </includes>
     </fileSet>
+    <fileSet>
+      <directory>${project.basedir}</directory>
+      <includes>
+        <include>realm-export.json</include>
+      </includes>
+    </fileSet>
   </fileSets>
 </assembly>
