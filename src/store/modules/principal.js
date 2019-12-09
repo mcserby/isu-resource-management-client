@@ -5,7 +5,6 @@ import Tab from "../../contracts/tab";
 import ResourceType from "../../constants/resourceType";
 import ResourceStatus from "../../constants/resourceStatus";
 import LockUnit from "../../contracts/edit/lockUnit";
-import LockSubUnitResponse from "../../contracts/edit/lockSubUnitResponse";
 import StatusCode from "../../constants/statusCode";
 import Utils from "../../services/utils";
 import { stat } from "fs";
@@ -34,6 +33,7 @@ const state = {
   activeEquipment: null,
   shiftExchangePendingUnit: null,
   updateResourcePendingUnit: null,
+  unlockSubUnitPending: false,
   resourceDialogIsOpen: false,
   equipmentDialogIsOpen: false,
   addEquipmentDialogIsOpen: false,
@@ -81,6 +81,12 @@ const actions = {
   },
   [A.UPDATE_RESOURCES_PENDING]({ commit }, unitId) {
     commit(M.UPDATE_RESOURCES_PENDING, unitId);
+  },
+  [A.UNLOCK_SUBUNIT_PENDING]({ commit }) {
+    commit(M.UNLOCK_SUBUNIT_PENDING);
+  },
+  [A.UNLOCK_SUBUNIT_NOT_PENDING]({ commit }) {
+    commit(M.UNLOCK_SUBUNIT_NOT_PENDING);
   },
   [A.LOCK_UNIT_RESPONSE_RECEIVED]({ commit }, response) {
     commit(M.LOCK_UNIT_RESPONSE_RECEIVED, response);
@@ -282,6 +288,12 @@ const mutations = {
     }
     state.shiftExchangePendingUnit = null;
     state.updateResourcePendingUnit = null;
+  },
+  [M.UNLOCK_SUBUNIT_PENDING](state) {
+   state.unlockSubUnitPending = true;
+  },
+  [M.UNLOCK_SUBUNIT_NOT_PENDING](state) {
+   state.unlockSubUnitPending = false;
   },
   [M.LOCK_UNIT](state, lockResponse) {
     let unit = state.lockUnits.find(u => u.id === lockResponse.subUnitId);

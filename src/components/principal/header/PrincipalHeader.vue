@@ -34,7 +34,6 @@
 <script>
 import A from "../../../constants/actions";
 import WebsocketSend from "../../../contracts/websocketSend";
-import UnlockSubUnitRequest from "../../../contracts/edit/unlockSubUnitRequest";
 
 export default {
   name: "PrincipalHeader",

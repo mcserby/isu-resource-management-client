@@ -13,6 +13,8 @@ export default {
   WEBSOCKET_SUBSCRIBE_USER: "websocketSubscribeUser",
   WEBSOCKET_SEND: "websocketSend",
   LOCK_UNIT_RESPONSE_RECEIVED: "lockUnitResponseReceived",
+  UNLOCK_SUBUNIT_PENDING: "unlockSubUnitPending",
+  UNLOCK_SUBUNIT_NOT_PENDING: "unlockSubUnitNotPending",
   SHIFT_EXCHANGE_PENDING: "shiftExchangePending",
   UPDATE_RESOURCES_PENDING: "updateResourcesPending",
   LOCK_UNIT: "lockUnit",

@@ -53,7 +53,6 @@ import UpdateSubUnitRequest from "../../contracts/edit/updateSubUnitRequest";
 import UnlockSubUnitRequest from "../../contracts/edit/unlockSubUnitRequest";
 import AddEquipmentForm from "./unit/form/AddEquipmentForm.vue";
 import EquipmentDialog from "./unit/form/EquipmentDialog";
-import LockSubUnitRequest from "../../contracts/edit/lockSubUnitRequest";
 
 export default {
   name: "Principal",
@@ -129,6 +128,7 @@ export default {
     },
     onConfirm() {
       this.$store.dispatch(A.CLOSE_CONFIRMATION_DIALOG);
+      this.$store.dispatch(A.UNLOCK_SUBUNIT_PENDING);
       this.$store.dispatch(
         A.CLEAR_UNIT_RESOURCES,
         this.$store.state.principalStore.activeUnit.id
@@ -138,16 +138,6 @@ export default {
         new WebsocketSend(
           "updateSubUnit",
           new UpdateSubUnitRequest(this.$store.state.principalStore.activeUnit)
-        )
-      );
-      this.$store.dispatch(
-        A.WEBSOCKET_SEND,
-        new WebsocketSend(
-          "unlockSubUnit",
-          new UnlockSubUnitRequest(
-            this.$store.state.principalStore.activeUnit.id,
-            this.resourceType
-          )
         )
       );
     },
@@ -184,6 +174,20 @@ export default {
       self.$store.dispatch(A.UNLOCK_UNIT, r);
     };
 
+    let onUpdateSubUnitResponseReceived = function(response) {
+      self.$store.dispatch(A.UNLOCK_SUBUNIT_NOT_PENDING);
+      self.$store.dispatch(
+        A.WEBSOCKET_SEND,
+        new WebsocketSend(
+          "unlockSubUnit",
+          new UnlockSubUnitRequest(
+            self.$store.state.principalStore.activeUnit.id,
+            self.resourceType
+          )
+        )
+      );
+    };
+
     let onError = function(error) {
       console.err(error);
     };
@@ -206,6 +210,16 @@ export default {
         onError
       )
     );
+
+    this.$store.dispatch(
+      A.WEBSOCKET_SUBSCRIBE_USER,
+      new WebsocketSubscribe(
+        "updateSubUnitResponse",
+        onUpdateSubUnitResponseReceived,
+        onError
+      )
+    );
+
     this.$store.dispatch(
       A.WEBSOCKET_SUBSCRIBE,
       new WebsocketSubscribe(
