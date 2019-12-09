@@ -1,7 +1,6 @@
 <template>
   <div>
-  <ReportsHeader></ReportsHeader>
-
+    <Header title="Rapoarte" :displaySearchBar="false" :modules="modules"></Header>
     <div class="report-list-buttons">
       <button
         type="button"
@@ -22,18 +21,24 @@
 
 <script>
 
-  import ReportsHeader from "./header/ReportsHeader.vue";
+  import Header from "../common/header/Header.vue";
   import A from "../../constants/actions";
   import ReportType from "../../constants/reportType";
   import WebsocketSend from "../../contracts/websocketSend";
   import GetReportRequest from "../../contracts/reports/getReportRequest";
   import WebsocketSubscribe from "../../contracts/websocketSubscribe";
   import WebsocketUnsubscribe from "../../contracts/websocketUnsubscribe";
+  import Modules from '../../config/modules';
 
   export default {
     name: 'Report',
+    data: () => {
+      return {
+        modules: [Modules.principal, Modules.services, Modules.management, Modules.uat],
+      };
+    },
     components: {
-      ReportsHeader
+      Header
     },
     methods: {
       generateReport () {
