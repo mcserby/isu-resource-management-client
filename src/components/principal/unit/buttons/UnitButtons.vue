@@ -6,11 +6,11 @@
         :disabled="isShiftExchangeNotAllowed"
         @click="shiftExchange()"
       >
-        <span class="button-font-size">Schimb de tură</span>
+        <span class="button-font-size">{{shiftExchangeButtonText}}</span>
       </button>
     </div>
     <div>
-      <button class="custom-button btn" :disabled="isUnitLocked" @click="addResources()">
+      <button class="custom-button btn" v-show="userHasRightsToEditCurrentUnit" :disabled="isUnitLocked" @click="addResources()">
         <span class="button-font-size">Actualizează</span>
       </button>
     </div>
@@ -54,6 +54,9 @@ export default {
         );
         return currentEquipments.length === 0 || this.isUnitLocked;
       }
+    },
+    shiftExchangeButtonText(){
+      return this.userHasRightsToEditCurrentUnit? 'Schimb de tură' : 'Nu aveți permisiune de editare';
     },
     userHasRightsToEditCurrentUnit() {
       return Boolean(
