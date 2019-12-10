@@ -15,6 +15,12 @@
       </form>
     </div>
     <div v-if="searchText !== ''" class="filter-activated">Filtru activ!</div>
+    <div class="user-info">
+      <span>Salut {{username}}!</span>
+      <span> </span>
+      <span> </span>
+      <span><a href="#" v-on:click="logout($event)">Deconectare</a></span>
+    </div>
     <div class="other-modules-wrapper">
       <div v-for="module in modules" v-bind:class="module.class" v-if="hasPermissions(module.associatedRole)">
         <router-link class="custom-button btn" role="button" :to="module.link">{{module.name}}</router-link>
@@ -25,6 +31,8 @@
 
 <script>
 
+  import A from "../../../constants/actions";
+
   export default {
     name: "Header",
     props: {
@@ -34,6 +42,9 @@
     },
     components: {},
     computed: {
+      username() {
+        return this.$store.state.user.userProfile.username;
+      },
       userRoles() {
         return this.$store.state.user.userProfile.userRoles;
       },
@@ -58,6 +69,11 @@
           this.userRoles.find(r => r === moduleName)
         );
       },
+      logout(event){
+        this.$store.dispatch(A.AUTH_LOGOUT, null);
+        console.log("user logout successfully.");
+        event.preventDefault();
+      }
     }
   };
 </script>
