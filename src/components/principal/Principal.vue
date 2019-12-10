@@ -1,6 +1,6 @@
 <template>
   <div class="principal app-sa">
-    <PrincipalHeader></PrincipalHeader>
+    <Header title="Principal" :displaySearchBar="true" :modules="modules" v-on:text="onSearchTextChanged"></Header>
     <ul class="nav nav-tabs">
       <li class="nav-item" v-for="tab in tabs">
         <template class="nav-item">
@@ -48,17 +48,18 @@ import WebsocketSubscribe from "../../contracts/websocketSubscribe";
 import WebsocketSend from "../../contracts/websocketSend";
 import UnitButtons from "./unit/buttons/UnitButtons.vue";
 import ResourceDialog from "./unit/form/ResourceDialog";
-import PrincipalHeader from "./header/PrincipalHeader.vue";
+import Header from "../common/header/Header.vue";
 import UpdateSubUnitRequest from "../../contracts/edit/updateSubUnitRequest";
 import UnlockSubUnitRequest from "../../contracts/edit/unlockSubUnitRequest";
 import AddEquipmentForm from "./unit/form/AddEquipmentForm.vue";
 import EquipmentDialog from "./unit/form/EquipmentDialog";
+import Modules from '../../config/modules';
 
 export default {
   name: "Principal",
   components: {
     EquipmentDialog,
-    PrincipalHeader,
+    Header,
     ResourceDialog,
     Unit,
     ConfirmationDialog,
@@ -68,7 +69,8 @@ export default {
   },
   data: () => {
     return {
-      confirmationDialogTitle: "Schimb de tură"
+      confirmationDialogTitle: "Schimb de tură",
+      modules: [ Modules.management, Modules.reports, Modules.services, Modules.uat],
     };
   },
   computed: {
@@ -125,6 +127,9 @@ export default {
         "btn",
         tabName === this.activeTab.name ? "active" : ""
       ].join(" ");
+    },
+    onSearchTextChanged(value){
+      this.$store.dispatch(A.APPLY_RESOURCE_FILTER, value);
     },
     onConfirm() {
       this.$store.dispatch(A.CLOSE_CONFIRMATION_DIALOG);

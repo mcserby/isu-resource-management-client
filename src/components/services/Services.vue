@@ -1,40 +1,6 @@
 ﻿<template>
   <div>
-    <div class="services-header-menu">
-      <div class="services-search-bar-wrapper">
-        <form>
-          <div class="row no-gutters align-items-center">
-            <div class="col-auto">
-              <i class="fas fa-search h4 text-body"></i>
-            </div>
-            <div class="col">
-              <input
-                class="form-control form-control-lg form-control-borderless"
-                v-model="searchText"
-                type="search"
-                placeholder="Caută după nume, prenume sau funcție"
-              >
-            </div>
-          </div>
-        </form>
-      </div>
-      <div v-if="searchText !== ''" class="filter-activated">Filtru activ!</div>
-      <div class="services-title">ISU EasyManage - Servicii</div>
-      <div class="services-other-modules-wrapper">
-        <div class="principal-button">
-          <router-link class="custom-button btn" role="button" to="/principal">Principal</router-link>
-        </div>
-        <div class="uat-button">
-          <router-link class="custom-button btn" role="button" to="/uat">UAT</router-link>
-        </div>
-        <div class="management-button">
-          <router-link class="custom-button btn" role="button" to="/management">Management</router-link>
-        </div>
-        <div class="report-button">
-          <router-link class="custom-button btn" role="button" to="/report">Raport</router-link>
-        </div>
-      </div>
-    </div>
+    <Header title="Servicii" :displaySearchBar="true" :modules="modules" v-on:text="onSearchTextChanged"></Header>
     <div class="services-buttons">
       <button
         class="custom-service-button delete-button btn"
@@ -144,10 +110,13 @@
   import TransferServicesRequest from "../../contracts/services/transferServicesRequest.js";
   import UpdateServiceRequest from "../../contracts/services/updateServiceRequest.js";
   import FunctionsUpdatedNotification from "../../contracts/management/functions/functionsUpdatedNotification";
+  import Modules from '../../config/modules';
+  import Header from '../common/header/Header'
 
   export default {
     name: "Services",
     components: {
+      Header,
       Service,
       ConfirmationDialog,
       NotificationDialog,
@@ -167,25 +136,18 @@
         displayTransferDialog: false,
         displayTransferFinishedDialog: false,
         displayAddServiceForm: false,
-        transferDialogText: 
+        transferDialogText:
           "Sunteți sigur ca doriți sa transferați datele in tab-ul \"Azi\"? Datele curente din tab-ul \"Azi\" vor fi suprascrise",
         transferDialogTitle:
           "Transfer servicii",
-        transferFinishedDialogText: 
+        transferFinishedDialogText:
           "Datele din tab-ul \"Azi\" au fost copiate din tab-ul \"Maine\"",
         transferFinishedDialogTitle:
-          "Transfer servicii incheiat"
+          "Transfer servicii incheiat",
+        modules: [Modules.principal, Modules.management, Modules.reports, Modules.uat],
       };
     },
     computed: {
-      searchText: {
-        get() {
-          return this.$store.state.servicesStore.searchText;
-        },
-        set(value) {
-          this.$store.dispatch(A.APPLY_SERVICE_FILTER, value);
-        }
-      },
       services() {
         return this.$store.state.servicesStore.services;
       },
@@ -242,7 +204,7 @@
       lastUpdate() {
         // the following line is used for updating the last update time when a service is updated
         let sortedServices = this.sortByRole(this.services);
-        
+
         if(this.activeTab.servicesDay === "TODAY"){
           return this.$store.state.servicesStore.lastUpdateToday;
         }else{
@@ -307,6 +269,9 @@
           "btn",
           tabName === this.activeTab.name ? "active" : ""
         ].join(" ");
+      },
+      onSearchTextChanged(value) {
+        this.$store.dispatch(A.APPLY_SERVICE_FILTER, value);
       },
       deleteServices() {
         this.displayConfirmationDialog = true;

@@ -1,6 +1,6 @@
 <template>
 <div>
-  <UatHeader></UatHeader>
+  <Header title="UAT" :displaySearchBar="true" :modules="modules"></Header>
   <div class='uat-row'>
     <div class='uat-column map-column'>
         <div id="map" style="height: 100%; width: 100%;"></div>
@@ -16,14 +16,19 @@
 
 <script>
 
-import UatHeader from './header/UatHeader';
+import Header from '../common/header/Header';
 import Locations from './Locations';
-import MapService from '../../services/uat/mapService.js'
+import Modules from '../../config/modules';
 
 export default {
   name: 'UAT',
+  data: () => {
+    return {
+      modules: [Modules.principal, Modules.services, Modules.management, Modules.reports],
+    };
+  },
   components: {
-    UatHeader,
+    Header,
     Locations
   },
   computed: {
