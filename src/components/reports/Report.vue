@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header title="Rapoarte" :displaySearchBar="false" :modules="modules"></Header>
+    <Header title="Rapoarte" :displaySearchBar="false"></Header>
     <div class="report-list-buttons">
       <button
         type="button"
@@ -28,13 +28,11 @@
   import GetReportRequest from "../../contracts/reports/getReportRequest";
   import WebsocketSubscribe from "../../contracts/websocketSubscribe";
   import WebsocketUnsubscribe from "../../contracts/websocketUnsubscribe";
-  import Modules from '../../config/modules';
 
   export default {
     name: 'Report',
     data: () => {
       return {
-        modules: [Modules.principal, Modules.services, Modules.management, Modules.uat],
       };
     },
     components: {
