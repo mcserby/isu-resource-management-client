@@ -23,21 +23,21 @@
 }
 
 .units-container {
-  height: calc(100vh - 360px);
-  height: -moz-calc(100vh - 360px);
-  height: -webkit-calc(100vh - 360px);
-  height: -o-calc(100vh - 360px);
+  height: calc(100vh - 330px);
+  height: -moz-calc(100vh - 330px);
+  height: -webkit-calc(100vh - 330px);
+  height: -o-calc(100vh - 330px);
 }
 
 .app-sa .unit-wrapper-wrapper {
   display: inline-grid;
   grid-template-columns: repeat( auto-fit, minmax(40px, 1fr) );
   background-color: #f2f2f2;
-  padding: 0 0px 10px 10px;
+  padding: 0 0 10px 10px;
   grid-gap: 5px;
   width: 100%;
   grid-row: 2 / span 1;
-  height: calc(100vh - 403px);
+  height: calc(100vh - 385px);
   overflow-y: scroll;
   overflow-x: hidden;
 }

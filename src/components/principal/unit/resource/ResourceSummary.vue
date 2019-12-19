@@ -40,7 +40,7 @@ import ResourceStatus from '../../../../constants/resourceStatus.js';
 
 export default {
   name: "ResourceSummary",
-  props: ["resource", "rowNr"],
+  props: ["resource", "rowNr", "editingEnabled"],
   data: () => {
     return {
       statusMenuXPosition: "right",
@@ -90,6 +90,9 @@ export default {
       this.$emit('mouseClick', this.resource);
     },
     showStatusMenu: function(event) {
+      if(!this.editingEnabled){
+        return;
+      }
       this.statusMenuXPosition =
         event.clientX > window.innerWidth - 280 ? "left" : "right";
       this.statusMenuYPosition =

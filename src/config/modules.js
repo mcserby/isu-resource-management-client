@@ -7,7 +7,7 @@ export default {
   },
   services: {
     name: 'Servicii',
-    class: 'servicii-button',
+    class: 'service-button',
     link: '/services',
     associatedRole: 'servicii',
   },

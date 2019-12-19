@@ -1,7 +1,7 @@
 <template>
   <div class="principal-header">
     <div class="principal-title">ISU EasyManage - {{title}}</div>
-    <div class="search-bar-wrapper" :if="displaySearchBar">
+    <div class="search-bar-wrapper" v-if="displaySearchBar">
       <form>
         <div class="row no-gutters align-items-center">
           <div class="col-auto">
@@ -9,7 +9,7 @@
           </div>
           <div class="col">
             <input class="form-control form-control-lg form-control-borderless"
-                   v-model="searchText" type="search" placeholder="Caută după cheia misiunii">
+                   v-model="searchText" type="search" :placeholder="searchBarPlaceholder">
           </div>
         </div>
       </form>
@@ -32,13 +32,20 @@
 <script>
 
   import A from "../../../constants/actions";
+  import Modules from '../../../config/modules';
 
   export default {
     name: "Header",
     props: {
       title : String,
       displaySearchBar: Boolean,
-      modules: Array,
+      searchBarPlaceholder: String,
+    },
+    data: () => {
+      return {
+        confirmationDialogTitle: "Schimb de tură",
+        modules: [ Modules.principal, Modules.services, Modules.reports, Modules.management, Modules.uat],
+      };
     },
     components: {},
     computed: {

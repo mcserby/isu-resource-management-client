@@ -1,6 +1,6 @@
 <template>
 <div>
-  <Header title="UAT" :displaySearchBar="true" :modules="modules"></Header>
+  <Header title="UAT" :displaySearchBar="true" :search-bar-placeholder="'Caută locații'" :modules="modules"></Header>
   <div class='uat-row'>
     <div class='uat-column map-column'>
         <div id="map" style="height: 100%; width: 100%;"></div>

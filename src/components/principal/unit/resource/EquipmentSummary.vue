@@ -15,7 +15,6 @@
       <div class="equipment-unusable-summary">
         <div class="equipment-element-container">{{equipment.unusable}}</div>
       </div>
-
   </div>
 </template>
 
@@ -25,9 +24,12 @@
 
   export default {
     name: 'EquipmentSummary',
-    props: ["equipment", "rowNr"],
+    props: ["equipment", "rowNr", "editingEnabled"],
     methods: {
       mouseClick: function () {
+        if(!this.editingEnabled){
+          return;
+        }
         this.$store.dispatch(A.OPEN_VIEW_RESOURCE_DIALOG, this.equipment);
       }
     }
