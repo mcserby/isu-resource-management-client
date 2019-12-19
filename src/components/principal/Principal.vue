@@ -53,7 +53,6 @@ import UpdateSubUnitRequest from "../../contracts/edit/updateSubUnitRequest";
 import UnlockSubUnitRequest from "../../contracts/edit/unlockSubUnitRequest";
 import AddEquipmentForm from "./unit/form/AddEquipmentForm.vue";
 import EquipmentDialog from "./unit/form/EquipmentDialog";
-import Modules from '../../config/modules';
 
 export default {
   name: "Principal",
@@ -70,7 +69,6 @@ export default {
   data: () => {
     return {
       confirmationDialogTitle: "Schimb de tură",
-      modules: [ Modules.management, Modules.reports, Modules.services, Modules.uat],
     };
   },
   computed: {

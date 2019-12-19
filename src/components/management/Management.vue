@@ -72,7 +72,6 @@ import DeleteSubUnitRequest from "../../contracts/management/subunits/deleteSubU
 import DeleteVehicleTypeRequest from "../../contracts/management/vehicles/deleteVehicleTypeRequest";
 import WebsocketSend from "../../contracts/websocketSend";
 import ConfirmationDialog from "../common/ConfirmationDialog.vue";
-import Modules from '../../config/modules';
 
 export default {
   name: "Management",
@@ -89,7 +88,6 @@ export default {
       ManagedResourceType: ManagedResourceType,
       confirmationDialogTitle: "Ștergere resursă",
       unsavedChangesTitle: "Modificări nesalvate",
-      modules: [Modules.principal, Modules.services, Modules.reports, Modules.uat],
     };
   },
   computed: {
