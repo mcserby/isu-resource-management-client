@@ -68,12 +68,12 @@
       },
     },
     methods: {
-      hasPermissions(moduleName){
-        if(!moduleName){
+      hasPermissions(role){
+        if(!role){
           return true;
         }
         return Boolean(
-          this.userRoles.find(r => r === moduleName)
+          this.userRoles.find(r => r === role)
         );
       },
       logout(event){

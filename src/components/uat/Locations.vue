@@ -81,7 +81,7 @@ export default {
       }
     },
     submitLocation(location) {
-      if(location.pointsOfInterest != null && location.pointsOfInterest != undefined && location.pointsOfInterest.length > 0){
+      if(location.pointsOfInterest && location.pointsOfInterest.length > 0){
         location.pointsOfInterest = location.pointsOfInterest.split(",");
       }
       if(this.addingLocation){
@@ -102,7 +102,7 @@ export default {
           WSA.WEBSOCKET_SEND,
           new WebsocketSend(
             "updateLocation",
-            new UpdateLocationRequest( 
+            new UpdateLocationRequest(
               location.id,
               location.name,
               location.coordinates,
@@ -110,8 +110,6 @@ export default {
           )
         );
       }
-
-      MapService.addLocation(location);
       MapService.unsetMapClickHandler(this.triggerCreateLocation);
       MapService.setMapClickHandler(this.editLocationIfClicked);
       this.editLocation = false;
@@ -141,10 +139,12 @@ export default {
     const self = this;
     let onLocationsReceived = function(response) {
         let r = JSON.parse(response.body);
+        console.log(r);
         self.$store.dispatch(
           A.INIT_LOCATIONS,
           new LocationsUpdatedNotification(r.locations)
         );
+        self.locations.forEach(l => MapService.addLocation(l));
       };
 
       let onError = function(error) {
