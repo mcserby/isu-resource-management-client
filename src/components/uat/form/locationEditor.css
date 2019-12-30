@@ -11,6 +11,14 @@
   font-weight: bold;
 }
 
+.app-sa .odd {
+  background-color: #e9f8fc;
+}
+
+.app-sa .even {
+  background-color: #bce9f6;
+}
+
 .app-sa .dialog {
   display: block;
 }

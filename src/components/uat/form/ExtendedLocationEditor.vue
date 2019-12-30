@@ -20,8 +20,8 @@
           <div class="modal-body body-wrapper">
             <div class="unit-of-interest-browser-list">
               <div
-                class="unit-of-interest-browser-summary"
                 v-for="(pointOfInterest) in location.pointsOfInterest"
+                v-bind:class="['unit-of-interest-browser-summary', rowColor(pointOfInterest)]"
                 v-bind:key="pointOfInterest.id"
               >
                 <span @click="onPointOfInterestClick(pointOfInterest)">
@@ -99,12 +99,11 @@
         this.changesPerformed = true;
       },
       addNewPointOfInterestDisabled () {
-        return false
+        return false;
       },
       saveAndClose () {
-        this.clearFormValues()
-        this.closeAddResourceDialog()
-        this.updateUnit()
+        this.closeAddPointOfInterestDialog();
+        this.$emit('saveLocation', this.location);
       },
       cancel () {
         this.closeAddPointOfInterestDialog();
@@ -124,21 +123,16 @@
       closeAddPointOfInterestDialog () {
         this.$emit('cancelEditLocation');
       },
-      updateUnit () {
-      },
-      updateResource () {
-      },
-      validateFields () {
-      },
       onPointOfInterestClick (pointOfInterest) {
         console.log('should open point of interest')
         this.currentPointOfInterest = pointOfInterest;
+        this.selectedPointOfInterestId = this.currentPointOfInterest.id;
       },
       rowColor (pointOfInterest) {
-        if (pointOfInterest.id === this.selectedResourceId) {
-          return 1;
+        if (pointOfInterest.id === this.selectedPointOfInterestId) {
+          return 'even';
         }
-        return 0;
+        return 'odd';
       },
       deletePointOfInterest (pointOfInterest) {
         this.location.pointsOfInterest = this.location.pointsOfInterest.filter(p => p.id !== pointOfInterest.id)
@@ -153,6 +147,7 @@
     beforeMount() {
       if (this.location.pointsOfInterest.length > 0) {
         this.initialPointOfInterest = this.location.pointsOfInterest[0];
+        this.selectedPointOfInterestId = this.initialPointOfInterest.id;
       }
     }
   }

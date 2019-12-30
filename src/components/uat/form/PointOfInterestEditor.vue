@@ -9,7 +9,7 @@
         v-model="interest.name"
         @change="updateName()"
         class="form-control"
-        id="point-of-interest-name"
+        name="point-of-interest-name"
         aria-describedby="nameHelp"
         placeholder="Nume punct de interes"
       >
@@ -22,7 +22,7 @@
         v-model="interest.contact"
         class="form-control"
         @input="updateContact()"
-        id="point-of-interest-contact"
+        name="point-of-interest-contact"
         rows="3"
       ></textarea>
     </div>
@@ -34,7 +34,7 @@
         v-model="interest.comments"
         class="form-control"
         @input="updateComments()"
-        id="point-of-interest-comments"
+        name="point-of-interest-comments"
         rows="3"
       ></textarea>
     </div>
