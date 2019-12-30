@@ -1,0 +1,102 @@
+.editor-dialog {
+  max-width: 796px;
+}
+
+.location-dialog-container {
+  position: fixed;
+  background-color: #d2f0f9;
+  z-index: 30;
+  width: 100%;
+  height: 100%;
+  font-weight: bold;
+}
+
+.app-sa .dialog {
+  display: block;
+}
+
+.app-sa .add-unit-of-interest-dialog {
+  max-width: 796px;
+}
+
+.app-sa .error {
+  color: #F74356;
+}
+
+.app-sa .form-label {
+  color: #4682b4;
+  font-weight: bold;
+}
+
+.app-sa .body-wrapper {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(8, [col] 12.5% ) ;
+  grid-template-rows: repeat(1, [row] auto  );
+}
+
+.app-sa .unit-of-interest-browser-list {
+  grid-column: col 1 / span 3;
+  grid-row: row ;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.app-sa .unit-of-interest-editor {
+  grid-column: col 4 / span 4 ;
+  grid-row: row ;
+}
+
+.unit-of-interest-browser-summary > span {
+  cursor: pointer;
+}
+
+.app-sa .unit-of-interest-summary {
+  display: grid;
+  grid-template-columns: repeat(8, [col] 12.5% ) ;
+  grid-template-rows: repeat(1, [row] auto  );
+}
+
+.app-sa .close-button-custom {
+  width: 5%;
+  justify-content: right;
+  background-color: #F74356;
+  color: #f2f2f2;
+  padding: 5px;
+  font-size: medium
+}
+
+.app-sa .close-button-custom:hover:enabled{
+  color: #f2f2f2;
+  background-color: #930614;
+}
+
+.app-sa .unit-of-interest-summary-card {
+  grid-column: col / span 5;
+  grid-row: row ;
+}
+
+.app-sa .add-unit-of-interest-button-wrapper {
+  grid-column: col / span 7;
+  grid-row: row ;
+}
+
+
+.app-sa .delete-unit-of-interest {
+  grid-column: col 7 / span 1;
+  grid-row: row ;
+}
+
+.app-sa .delete-unit-of-interest > button {
+  margin-top: 5px;
+}
+
+.errors {
+}
+
+.status-radio-selector {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 50% 50%;
+}
+

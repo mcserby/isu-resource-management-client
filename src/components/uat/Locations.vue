@@ -16,7 +16,8 @@
       </div>
     </div>
   </div>
-  <LocationEditor v-if="editLocation" :newLocation="newLocation" @saveLocation="submitLocation" @cancelEditLocation="cancelEditLocation"></LocationEditor>
+<!--  <LocationEditor v-if="editLocation" :newLocation="newLocation" @saveLocation="submitLocation" @cancelEditLocation="cancelEditLocation"></LocationEditor>-->
+  <ExtendedLocationEditor v-if="editLocation" :location="newLocation"  @saveLocation="submitLocation" @cancelEditLocation="cancelEditLocation"></ExtendedLocationEditor>
 </div>
 </template>
 
@@ -34,6 +35,7 @@ import AddLocationRequest from "../../contracts/uat/addLocationRequest.js";
 import UpdateLocationRequest from "../../contracts/uat/updateLocationRequest.js";
 import DeleteLocationRequest from "../../contracts/uat/deleteLocationRequest.js";
 import LocationsUpdatedNotification from "../../contracts/uat/locationsUpdatedNotification.js";
+import ExtendedLocationEditor from './form/ExtendedLocationEditor';
 
 export default {
   name: 'Locations',
@@ -47,6 +49,7 @@ export default {
     };
   },
   components: {
+    ExtendedLocationEditor,
     LocationItem,
     LocationEditor
   },
