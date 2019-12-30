@@ -1,6 +1,6 @@
 ﻿<template>
   <div>
-    <Header title="Servicii" :displaySearchBar="true" :modules="modules" v-on:text="onSearchTextChanged"></Header>
+    <Header title="Servicii" :displaySearchBar="true" :search-bar-placeholder="'Caută servicii'" v-on:text="onSearchTextChanged"></Header>
     <div class="services-buttons">
       <button
         class="custom-service-button delete-button btn"
@@ -110,7 +110,6 @@
   import TransferServicesRequest from "../../contracts/services/transferServicesRequest.js";
   import UpdateServiceRequest from "../../contracts/services/updateServiceRequest.js";
   import FunctionsUpdatedNotification from "../../contracts/management/functions/functionsUpdatedNotification";
-  import Modules from '../../config/modules';
   import Header from '../common/header/Header'
 
   export default {
@@ -144,7 +143,6 @@
           "Datele din tab-ul \"Azi\" au fost copiate din tab-ul \"Maine\"",
         transferFinishedDialogTitle:
           "Transfer servicii incheiat",
-        modules: [Modules.principal, Modules.management, Modules.reports, Modules.uat],
       };
     },
     computed: {

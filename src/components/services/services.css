@@ -5,17 +5,6 @@
   width: 75%;
 }
 
-.app-sa .services-title {
-  grid-row: 1 / span 1;
-  grid-column: 4 / span 4;
-  font-size: 2em;
-  font-weight: bold;
-  color: #f74356;
-  text-shadow: 2px 2px 2px #000000;
-  text-align: center;
-  padding-top: 35px;
-}
-
 .app-sa .filter-activated {
   grid-row: 3 / span 1;
   grid-column: 1 / span 3;
@@ -26,51 +15,6 @@
   text-shadow: 2px 2px 2px #000000;
   text-align: left;
   margin-left: 5px;
-}
-
-.app-sa .services-other-modules-wrapper {
-  grid-row: 2 / span 1;
-  grid-column: 10 / span 1;
-  display: grid;
-  align-content: center;
-}
-
-.app-sa .principal-button {
-  grid-row: 1 / span 1;
-  grid-column: 1 / span 1;
-  width: 90%;
-  height: 90%;
-}
-
-.app-sa .uat-button {
-  grid-row: 2 / span 1;
-  grid-column: 1 / span 1;
-  width: 90%;
-  height: 90%;
-}
-
-.app-sa .report-button {
-  grid-row: 1 / span 1;
-  grid-column: 2 / span 1;
-  width: 90%;
-  height: 90%;
-}
-
-.app-sa .services {
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-top: 10px;
-}
-
-.app-sa .services-header {
-  display: grid;
-  position: relative;
-  text-align: left;
-  font-size: x-large;
-  font-weight: 500;
-  color: #f2f2f2;
-  background-color: #616161;
-  grid-auto-columns: 1fr;
 }
 
 .app-sa .service-header-rowNr {
@@ -168,10 +112,4 @@
   margin-left: 5px;
   margin-top: 10px;
   color: #616161;
-}
-
-.app-sa .services-header-menu {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(3, 50px);
 }

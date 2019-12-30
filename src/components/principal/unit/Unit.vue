@@ -1,10 +1,10 @@
 <template>
   <div>
     <div v-for="(resource,index) in filteredResources" v-bind:key="resource.id">
-      <ResourceSummary :resource="resource" :rowNr="0" @mouseClick="onResourceClick($event)"></ResourceSummary>
+      <ResourceSummary :resource="resource" :rowNr="0" :editing-enabled="userHasRightsToEditCurrentUnit" @mouseClick="onResourceClick($event)"></ResourceSummary>
     </div>
     <div v-for="(equipment,index) in filteredEquipment" v-bind:key="equipment.equipmentId">
-      <EquipmentSummary :equipment="equipment" :rowNr="0"></EquipmentSummary>
+      <EquipmentSummary :equipment="equipment" :editing-enabled="userHasRightsToEditCurrentUnit" :rowNr="0"></EquipmentSummary>
     </div>
   </div>
 </template>
@@ -14,9 +14,10 @@
   import ResourceSummary from './resource/ResourceSummary.vue';
   import A from '../../../constants/actions';
   import EquipmentSummary from './resource/EquipmentSummary.vue';
+  import VueMoment from 'vue-moment';
   import Vue from 'vue';
 
-  Vue.use(require('vue-moment'));
+  Vue.use(VueMoment);
 
   export default {
     name: 'Unit',
@@ -40,7 +41,15 @@
       },
       filteredEquipment(){
         return this.unit.equipment.filter(r => r.resourceType === this.resourceType);
-      }
+      },
+      userRoles() {
+        return this.$store.state.user.userProfile.userRoles;
+      },
+      userHasRightsToEditCurrentUnit() {
+        return Boolean(
+          this.userRoles.find(r => r === 'supervisor' || r === this.unit.name)
+        );
+      },
     },
     methods: {
       onResourceClick(resource){

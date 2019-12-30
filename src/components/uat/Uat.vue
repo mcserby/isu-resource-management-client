@@ -1,6 +1,6 @@
 <template>
 <div>
-  <Header title="UAT" :displaySearchBar="true" :modules="modules"></Header>
+  <Header title="UAT" :displaySearchBar="true" :search-bar-placeholder="'Caută locații'"></Header>
   <div class='uat-row'>
     <div class='uat-column map-column'>
         <div id="map" style="height: 100%; width: 100%;"></div>
@@ -18,13 +18,11 @@
 
 import Header from '../common/header/Header';
 import Locations from './Locations';
-import Modules from '../../config/modules';
 
 export default {
   name: 'UAT',
   data: () => {
     return {
-      modules: [Modules.principal, Modules.services, Modules.management, Modules.reports],
     };
   },
   components: {

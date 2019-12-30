@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header title="Management" :displaySearchBar="false" :modules="modules"></Header>
+    <Header title="Management" :displaySearchBar="false"></Header>
     <div class="managed-resources-grid">
       <div class="managed-resource-type">Tipul de resursă</div>
       <div class="managed-resource-types">
@@ -72,7 +72,6 @@ import DeleteSubUnitRequest from "../../contracts/management/subunits/deleteSubU
 import DeleteVehicleTypeRequest from "../../contracts/management/vehicles/deleteVehicleTypeRequest";
 import WebsocketSend from "../../contracts/websocketSend";
 import ConfirmationDialog from "../common/ConfirmationDialog.vue";
-import Modules from '../../config/modules';
 
 export default {
   name: "Management",
@@ -89,7 +88,6 @@ export default {
       ManagedResourceType: ManagedResourceType,
       confirmationDialogTitle: "Ștergere resursă",
       unsavedChangesTitle: "Modificări nesalvate",
-      modules: [Modules.principal, Modules.services, Modules.reports, Modules.uat],
     };
   },
   computed: {
