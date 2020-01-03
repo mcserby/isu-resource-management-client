@@ -58,19 +58,25 @@ export default {
       return this.addingLocation ? this.selectLocationOnMap : this.addLocationButtonText;
     },
     locations() {
-      return this.$store.state.uatStore.locations;
+      const searchText =  this.removeAccents(this.$store.state.uatStore.filteringText.toLowerCase());
+      if(searchText === ''){
+        return this.$store.state.uatStore.locations;
+      }
+      let words = searchText.split(' ').filter(w => w.length > 0);
+      return this.$store.state.uatStore.locations.filter(l => words.every(w => l.name && this.removeAccents(l.name.toLowerCase()).indexOf(w) !== -1));
     }
   },
   methods: {
+    removeAccents(text){
+      return text.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    },
     addNewLocation() {
       this.addingLocation = true;
       MapService.unsetMapClickHandler(this.editLocationIfClicked);
       MapService.setMapClickHandler(this.triggerCreateLocation);
     },
     triggerCreateLocation(mapEvent) {
-      console.log(mapEvent);
-      const location = new Location(Utils.createUUID(), "Locație nouă", mapEvent.coordinate, []);
-      this.newLocation = location;
+      this.newLocation = new Location(Utils.createUUID(), "Locație nouă", mapEvent.coordinate, []);;
       this.editLocation = true;
     },
     editLocationIfClicked(mapEvent) {
@@ -84,34 +90,31 @@ export default {
       }
     },
     submitLocation(location) {
-      if(location.pointsOfInterest && location.pointsOfInterest.length > 0){
-        location.pointsOfInterest = location.pointsOfInterest.split(",");
-      }
-      if(this.addingLocation){
-          this.$store.dispatch(
+      if (this.addingLocation) {
+        this.$store.dispatch(
           WSA.WEBSOCKET_SEND,
           new WebsocketSend(
-            "addLocation",
+            'addLocation',
             new AddLocationRequest(
               location.name,
               location.coordinates,
               location.pointsOfInterest
             )
           )
-        );
-      this.addingLocation = false;
-      }else{
+        )
+        this.addingLocation = false
+      } else {
         this.$store.dispatch(
           WSA.WEBSOCKET_SEND,
           new WebsocketSend(
-            "updateLocation",
+            'updateLocation',
             new UpdateLocationRequest(
               location.id,
               location.name,
               location.coordinates,
-              location.pointsOfInterest )
+              location.pointsOfInterest)
           )
-        );
+        )
       }
       MapService.unsetMapClickHandler(this.triggerCreateLocation);
       MapService.setMapClickHandler(this.editLocationIfClicked);
@@ -120,7 +123,7 @@ export default {
     cancelEditLocation() {
       this.addingLocation = false;
       this.editLocation = false;
-      console.log("location creation/edditing has been canceled.");
+      console.log("location creation/editing has been canceled.");
     },
     deleteLocation(location) {
       console.log('deleting location', location);
@@ -138,6 +141,12 @@ export default {
       MapService.zoomToLocation(location);
     },
   },
+  watch: {
+    locations(newLocations) {
+      MapService.clearMap();
+      newLocations.forEach(l => MapService.addLocation(l));
+    }
+  },
   mounted: function() {
     const self = this;
     let onLocationsReceived = function(response) {
@@ -147,7 +156,8 @@ export default {
           A.INIT_LOCATIONS,
           new LocationsUpdatedNotification(r.locations)
         );
-        self.locations.forEach(l => MapService.addLocation(l));
+        /*MapService.clearMap();
+        self.locations.forEach(l => MapService.addLocation(l));*/
       };
 
       let onError = function(error) {

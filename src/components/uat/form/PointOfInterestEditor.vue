@@ -6,6 +6,7 @@
         type="text"
         minlength="5"
         required
+        :disabled="!editorEnabled"
         v-model="interest.name"
         @change="updateName()"
         class="form-control"
@@ -19,6 +20,7 @@
       <textarea
         minlength="5"
         required
+        :disabled="!editorEnabled"
         v-model="interest.contact"
         class="form-control"
         @input="updateContact()"
@@ -31,6 +33,7 @@
       <textarea
         minlength="5"
         required
+        :disabled="!editorEnabled"
         v-model="interest.comments"
         class="form-control"
         @input="updateComments()"
@@ -59,19 +62,24 @@
         errors: [],
       };
     },
+    computed: {
+      editorEnabled(){
+        return Boolean(this.interest.id);
+      }
+    },
     methods: {
       updateName () {
-        this.$emit("edited");
+        this.$emit("edited", this.interest);
       },
       updateContact() {
-        this.$emit("edited");
+        this.$emit("edited", this.interest);
       },
       updateComments() {
-        this.$emit("edited");
+        this.$emit("edited", this.interest);
       }
     },
     mounted () {
-      console.log('mounted with point of interest: ', this.pointsOfInterest);
+      console.log('mounted with point of interest: ', this.interest);
     }
   }
 </script>

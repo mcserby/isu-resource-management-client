@@ -67,7 +67,7 @@
 </template>
 
 <script>
-  import A from '../../../constants/actions'
+
   import Utils from '../../../services/utils';
   import PointOfInterestEditor from './PointOfInterestEditor';
   import PointOfInterest from '../../../contracts/uat/pointOfInterest';
@@ -81,9 +81,8 @@
     data: () => {
       return {
         errors: [],
-        selectedPointOfInterestId: null,
         changesPerformed: false,
-        currentPointOfInterest: new PointOfInterest(Utils.createUUID(), 'Adaugă un obiectiv', '', ''),
+        currentPointOfInterest: new PointOfInterest(null, 'Adaugă un obiectiv', '', ''),
       }
     },
     computed: {
@@ -95,15 +94,22 @@
       }
     },
     methods: {
-      onPointOfInterestEdited () {
+      onPointOfInterestEdited (point) {
         this.changesPerformed = true;
+        console.log('edited:', point);
+        const pointOfInterestId = this.location.pointsOfInterest.findIndex(p => p.id === point.id);
+        if(pointOfInterestId !== -1) {
+          this.location.pointsOfInterest.splice(pointOfInterestId, 1, point);
+        } else {
+          this.location.pointsOfInterest.push(point);
+        }
       },
       addNewPointOfInterestDisabled () {
         return false;
       },
       saveAndClose () {
-        this.closeAddPointOfInterestDialog();
         this.$emit('saveLocation', this.location);
+        this.closeAddPointOfInterestDialog();
       },
       cancel () {
         this.closeAddPointOfInterestDialog();
@@ -146,8 +152,7 @@
     },
     beforeMount() {
       if (this.location.pointsOfInterest.length > 0) {
-        this.initialPointOfInterest = this.location.pointsOfInterest[0];
-        this.selectedPointOfInterestId = this.initialPointOfInterest.id;
+        this.currentPointOfInterest = this.location.pointsOfInterest[0];
       }
     }
   }

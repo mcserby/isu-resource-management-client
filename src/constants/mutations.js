@@ -60,5 +60,6 @@ export default {
   AUTH_LOGOUT: "authLogout",
   AUTH_SET_USER_PROFILE: "authSetUserProfile",
   // LOCATIONS section
-  INIT_LOCATIONS: "initLocations"
+  INIT_LOCATIONS: "initLocations",
+  APPLY_LOCATION_FILTER: "applyLocationFilter"
 };

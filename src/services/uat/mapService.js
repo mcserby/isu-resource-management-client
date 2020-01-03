@@ -91,6 +91,10 @@ export default {
     });
   },
 
+  clearMap: function(){
+    locationsLayerSource.clear();
+  },
+
   addLocation: function(location) {
     this.deleteLocation(location);
     const locationFeature = new Feature({
@@ -102,18 +106,21 @@ export default {
     locationFeature.setId(location.id);
     locationsLayerSource.addFeature(locationFeature);
   },
+
   deleteLocation: function(location) {
     console.log(locationsLayerSource.getFeatures());
     const featuresToRemove = locationsLayerSource.getFeatures().filter(f => f.getId() === location.id);
-    console.log("featuresToRemove: ", featuresToRemove);
     featuresToRemove.forEach(f => locationsLayerSource.removeFeature(f));
   },
+
   setMapClickHandler: function(mapClickHandler) {
     map.on('click', mapClickHandler);
   },
+
   unsetMapClickHandler: function(mapClickHandler) {
     map.un('click', mapClickHandler);
   },
+
   zoomToLocation: function(location) {
     map.getView().animate({
       zoom: 3
@@ -122,7 +129,7 @@ export default {
     });
   },
   getLocationAtPixel: function(event) {
-    var feature = map.forEachFeatureAtPixel(event.pixel,
+    const feature = map.forEachFeatureAtPixel(event.pixel,
       function(feature) {
         console.log(feature);
         return feature;
