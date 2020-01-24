@@ -1,6 +1,6 @@
 <template>
 <div class="location-list">
-  <h2 style="text-align:center">Locații</h2>
+  <h2 style="text-align:center">Locații și obiective</h2>
   <div :class="{ 'half-opacity': addingLocation }">
     <div class="">
       <button type="button" class="custom-button btn" @click="addNewLocation()">{{buttonText}}</button>
@@ -11,12 +11,24 @@
       <div v-on:click="zoomToLocation(location)">
         <LocationItem :location="location"></LocationItem>
       </div>
-      <div class="delete-resource">
-        <button type="button" class="btn custom-close-button" @click="deleteLocation(location)">X</button>
+      <div style="display: flex">
+        <div class="edit-resource">
+          <button type="button" class="btn custom-edit-button" @click="startEditLocation(location.id)"><img src="static/icons/edit.png"/></button>
+        </div>
+        <div class="delete-resource">
+          <button type="button" class="btn custom-close-button" @click="triggerDeleteLocation(location)">X</button>
+        </div>
       </div>
     </div>
   </div>
-  <LocationEditor v-if="editLocation" :newLocation="newLocation" @saveLocation="submitLocation" @cancelEditLocation="cancelEditLocation"></LocationEditor>
+  <ExtendedLocationEditor v-if="editLocation" :location="newLocation"  @saveLocation="submitLocation" @cancelEditLocation="cancelEditLocation"></ExtendedLocationEditor>
+  <ConfirmationDialog
+    v-if="isDeleteLocationDialogOpen"
+    :title="deleteLocationConfirmationTitle"
+    :text="deleteLocationConfirmationText"
+    @confirm="onConfirmLocationDeletion"
+    @cancel="onCancelLocationDeletion"
+  ></ConfirmationDialog>
 </div>
 </template>
 
@@ -34,6 +46,8 @@ import AddLocationRequest from "../../contracts/uat/addLocationRequest.js";
 import UpdateLocationRequest from "../../contracts/uat/updateLocationRequest.js";
 import DeleteLocationRequest from "../../contracts/uat/deleteLocationRequest.js";
 import LocationsUpdatedNotification from "../../contracts/uat/locationsUpdatedNotification.js";
+import ExtendedLocationEditor from './form/ExtendedLocationEditor';
+import ConfirmationDialog from "../common/ConfirmationDialog.vue";
 
 export default {
   name: 'Locations',
@@ -44,74 +58,83 @@ export default {
       selectLocationOnMap: "Selectează locația pe hartă (X)",
       editLocation: false,
       newLocation: null,
+      isDeleteLocationDialogOpen: false,
+      locationToDelete: null,
+      deleteLocationConfirmationTitle: "Ștergere locație",
+      deleteLocationConfirmationTemplate: "Locația și toate obiectivele asignate locației vor fi șterse. Sunteți sigur că doriți să ștergeți locația ",
+      deleteLocationConfirmationText: null,
     };
   },
   components: {
+    ExtendedLocationEditor,
     LocationItem,
-    LocationEditor
+    LocationEditor,
+    ConfirmationDialog
   },
   computed: {
     buttonText() {
       return this.addingLocation ? this.selectLocationOnMap : this.addLocationButtonText;
     },
     locations() {
-      return this.$store.state.uatStore.locations;
+      const searchText =  this.removeAccents(this.$store.state.uatStore.filteringText.toLowerCase());
+      if(searchText === ''){
+        return this.$store.state.uatStore.locations;
+      }
+      let words = searchText.split(' ').filter(w => w.length > 0);
+      return this.$store.state.uatStore.locations.filter(l => words.every(w => l.name && this.removeAccents(l.name.toLowerCase()).indexOf(w) !== -1));
     }
   },
   methods: {
+    removeAccents(text){
+      return text.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    },
     addNewLocation() {
       this.addingLocation = true;
       MapService.unsetMapClickHandler(this.editLocationIfClicked);
       MapService.setMapClickHandler(this.triggerCreateLocation);
     },
     triggerCreateLocation(mapEvent) {
-      console.log(mapEvent);
-      const location = new Location(Utils.createUUID(), "Locație nouă", mapEvent.coordinate, []);
-      this.newLocation = location;
+      this.newLocation = new Location(Utils.createUUID(), "Locație nouă", mapEvent.coordinate, []);;
       this.editLocation = true;
     },
     editLocationIfClicked(mapEvent) {
-      console.log(mapEvent);
       const location = MapService.getLocationAtPixel(mapEvent);
       if (location) {
-        console.log(location);
         console.log('found location with id ', location.getId());
-        this.newLocation = JSON.parse(JSON.stringify(this.locations.filter(l => l.id === location.getId())[0]));
-        this.editLocation = true;
+        this.startEditLocation(location.getId());
       }
     },
+    startEditLocation(locationId){
+      this.newLocation = JSON.parse(JSON.stringify(this.locations.filter(l => l.id === locationId)[0]));
+      this.editLocation = true;
+    },
     submitLocation(location) {
-      if(location.pointsOfInterest != null && location.pointsOfInterest != undefined && location.pointsOfInterest.length > 0){
-        location.pointsOfInterest = location.pointsOfInterest.split(",");
-      }
-      if(this.addingLocation){
-          this.$store.dispatch(
+      if (this.addingLocation) {
+        this.$store.dispatch(
           WSA.WEBSOCKET_SEND,
           new WebsocketSend(
-            "addLocation",
+            'addLocation',
             new AddLocationRequest(
               location.name,
               location.coordinates,
               location.pointsOfInterest
             )
           )
-        );
-      this.addingLocation = false;
-      }else{
+        )
+        this.addingLocation = false
+      } else {
         this.$store.dispatch(
           WSA.WEBSOCKET_SEND,
           new WebsocketSend(
-            "updateLocation",
-            new UpdateLocationRequest( 
+            'updateLocation',
+            new UpdateLocationRequest(
               location.id,
               location.name,
               location.coordinates,
-              location.pointsOfInterest )
+              location.pointsOfInterest)
           )
-        );
+        )
       }
-
-      MapService.addLocation(location);
       MapService.unsetMapClickHandler(this.triggerCreateLocation);
       MapService.setMapClickHandler(this.editLocationIfClicked);
       this.editLocation = false;
@@ -119,7 +142,20 @@ export default {
     cancelEditLocation() {
       this.addingLocation = false;
       this.editLocation = false;
-      console.log("location creation/edditing has been canceled.");
+      console.log("location creation/editing has been canceled.");
+    },
+    triggerDeleteLocation(location){
+      this.locationToDelete = location;
+      this.deleteLocationConfirmationText = this.deleteLocationConfirmationTemplate + this.locationToDelete.name;
+      this.isDeleteLocationDialogOpen = true;
+    },
+    onCancelLocationDeletion(){
+      this.locationToDelete = null;
+      this.isDeleteLocationDialogOpen = false;
+    },
+    onConfirmLocationDeletion(){
+      this.isDeleteLocationDialogOpen = false;
+      this.deleteLocation(this.locationToDelete);
     },
     deleteLocation(location) {
       console.log('deleting location', location);
@@ -137,14 +173,23 @@ export default {
       MapService.zoomToLocation(location);
     },
   },
+  watch: {
+    locations(newLocations) {
+      MapService.clearMap();
+      newLocations.forEach(l => MapService.addLocation(l));
+    }
+  },
   mounted: function() {
     const self = this;
     let onLocationsReceived = function(response) {
         let r = JSON.parse(response.body);
+        console.log(r);
         self.$store.dispatch(
           A.INIT_LOCATIONS,
           new LocationsUpdatedNotification(r.locations)
         );
+        /*MapService.clearMap();
+        self.locations.forEach(l => MapService.addLocation(l));*/
       };
 
       let onError = function(error) {

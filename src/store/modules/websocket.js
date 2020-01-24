@@ -76,7 +76,6 @@ const mutations = {
         if (subscription != null) {
           state.subscriptions[websocketSubscribe.topicName] = subscription;
         }
-
         clearInterval(sendSubscribe);
       } else {
         console.log("Not connected to websocket yet!!!");

@@ -39,6 +39,19 @@ body {
   font-size: medium
 }
 
+.app-sa .custom-edit-button {
+  width: 30px;
+  justify-content: right;
+  padding: 5px;
+  margin-right: 10px;
+  font-size: medium
+}
+
+.app-sa .custom-edit-button img {
+  width: 30px;
+  height: 30px;
+}
+
 .app-sa .custom-close-button:hover:enabled {
   color: #f2f2f2;
   background-color: #930614;

@@ -63,13 +63,17 @@ export default {
       name: "",
       title: "",
       contact: "",
-      functions: [],
-      subUnits: [],
       selectedFunction: null,
       selectedSubUnit: null
     };
   },
   computed: {
+    functions() {
+      return this.$store.state.managementStore.managedFunctions;
+    },
+    subUnits() {
+      return this.$store.state.managementStore.managedSubUnits;
+    },
     saveDisabled() {
       return this.name.trim() === "" ||
         this.title.trim() === "" ||
@@ -79,10 +83,6 @@ export default {
     }
   },
   mounted() {
-    this.functions = this.$store.state.managementStore.managedFunctions;
-    this.selectedFunction = this.functions[0];
-    this.subUnits = this.$store.state.managementStore.managedSubUnits;
-    this.selectedSubUnit = this.subUnits[0];
   },
   methods: {
     saveAndAddAnother() {

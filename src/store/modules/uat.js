@@ -4,7 +4,8 @@ import Location from '../../contracts/uat/location';
 
 const state = {
   locations: [],
-  currentLocation: null
+  currentLocation: null,
+  filteringText: '',
 };
 
 const actions = {
@@ -20,6 +21,9 @@ const actions = {
   },
   [A.INIT_LOCATIONS]({ commit }, locationsUpdate) {
     commit(M.INIT_LOCATIONS, locationsUpdate);
+  },
+  [A.APPLY_LOCATION_FILTER]({ commit }, text) {
+    commit(M.APPLY_LOCATION_FILTER, text);
   },
 };
 
@@ -42,6 +46,10 @@ const mutations = {
   [M.INIT_LOCATIONS](state, locationsUpdate) {
     state.locations.splice(0, state.locations.length);
     state.locations = locationsUpdate.locations;
+  },
+
+  [M.APPLY_LOCATION_FILTER](state, text) {
+    state.filteringText = text;
   },
 };
 

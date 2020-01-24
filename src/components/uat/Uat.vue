@@ -1,6 +1,6 @@
 <template>
 <div>
-  <Header title="UAT" :displaySearchBar="true" :search-bar-placeholder="'Caută locații'"></Header>
+  <Header title="UAT" :displaySearchBar="true" :search-bar-placeholder="'Caută locații'" v-on:text="onSearchTextChanged"></Header>
   <div class='uat-row'>
     <div class='uat-column map-column'>
         <div id="map" style="height: 100%; width: 100%;"></div>
@@ -16,8 +16,9 @@
 
 <script>
 
-import Header from '../common/header/Header';
-import Locations from './Locations';
+  import A from '../../constants/actions';
+  import Header from '../common/header/Header';
+  import Locations from './Locations';
 
 export default {
   name: 'UAT',
@@ -35,6 +36,9 @@ export default {
     }
   },
   methods: {
+    onSearchTextChanged(value){
+      this.$store.dispatch(A.APPLY_LOCATION_FILTER, value);
+    },
   }
 }
 </script>

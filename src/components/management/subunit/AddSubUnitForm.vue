@@ -4,6 +4,7 @@
       <label class="form-label" for="name">Numele subunității</label>
       <input
         type="text"
+        :disabled="true"
         minlength="1"
         maxlength="10"
         required
