@@ -3,7 +3,7 @@
     <div v-for="(resource,index) in filteredResources" v-bind:key="resource.id">
       <ResourceSummary :resource="resource" :rowNr="0" :editing-enabled="userHasRightsToEditCurrentUnit" @mouseClick="onResourceClick($event)"></ResourceSummary>
     </div>
-    <div v-for="(equipment,index) in filteredEquipment" v-bind:key="equipment.equipmentId">
+    <div style="margin-bottom: 5px" v-for="(equipment,index) in filteredEquipment" v-bind:key="equipment.equipmentId">
       <EquipmentSummary :equipment="equipment" :editing-enabled="userHasRightsToEditCurrentUnit" :rowNr="0"></EquipmentSummary>
     </div>
   </div>
