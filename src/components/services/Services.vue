@@ -1,6 +1,6 @@
 ﻿<template>
   <div>
-    <Header title="Servicii" :displaySearchBar="true" :search-bar-placeholder="'Caută servicii'" v-on:text="onSearchTextChanged"></Header>
+    <Header title="Servicii" :displaySearchBar="true" :search-bar-placeholder="'Caută după nume și prenume sau funcție'" v-on:text="onSearchTextChanged"></Header>
     <div class="services-buttons">
       <button
         class="custom-service-button delete-button btn"
