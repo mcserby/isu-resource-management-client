@@ -1,6 +1,6 @@
 <template>
 <div class="location-list">
-  <h2 style="text-align:center">Locații</h2>
+  <h2 style="text-align:center">Locații și obiective</h2>
   <div :class="{ 'half-opacity': addingLocation }">
     <div class="">
       <button type="button" class="custom-button btn" @click="addNewLocation()">{{buttonText}}</button>
@@ -16,13 +16,19 @@
           <button type="button" class="btn custom-edit-button" @click="startEditLocation(location.id)"><img src="static/icons/edit.png"/></button>
         </div>
         <div class="delete-resource">
-          <button type="button" class="btn custom-close-button" @click="deleteLocation(location)">X</button>
+          <button type="button" class="btn custom-close-button" @click="triggerDeleteLocation(location)">X</button>
         </div>
       </div>
     </div>
   </div>
-<!--  <LocationEditor v-if="editLocation" :newLocation="newLocation" @saveLocation="submitLocation" @cancelEditLocation="cancelEditLocation"></LocationEditor>-->
   <ExtendedLocationEditor v-if="editLocation" :location="newLocation"  @saveLocation="submitLocation" @cancelEditLocation="cancelEditLocation"></ExtendedLocationEditor>
+  <ConfirmationDialog
+    v-if="isDeleteLocationDialogOpen"
+    :title="deleteLocationConfirmationTitle"
+    :text="deleteLocationConfirmationText"
+    @confirm="onConfirmLocationDeletion"
+    @cancel="onCancelLocationDeletion"
+  ></ConfirmationDialog>
 </div>
 </template>
 
@@ -41,6 +47,7 @@ import UpdateLocationRequest from "../../contracts/uat/updateLocationRequest.js"
 import DeleteLocationRequest from "../../contracts/uat/deleteLocationRequest.js";
 import LocationsUpdatedNotification from "../../contracts/uat/locationsUpdatedNotification.js";
 import ExtendedLocationEditor from './form/ExtendedLocationEditor';
+import ConfirmationDialog from "../common/ConfirmationDialog.vue";
 
 export default {
   name: 'Locations',
@@ -51,12 +58,18 @@ export default {
       selectLocationOnMap: "Selectează locația pe hartă (X)",
       editLocation: false,
       newLocation: null,
+      isDeleteLocationDialogOpen: false,
+      locationToDelete: null,
+      deleteLocationConfirmationTitle: "Ștergere locație",
+      deleteLocationConfirmationTemplate: "Locația și toate obiectivele asignate locației vor fi șterse. Sunteți sigur că doriți să ștergeți locația ",
+      deleteLocationConfirmationText: null,
     };
   },
   components: {
     ExtendedLocationEditor,
     LocationItem,
-    LocationEditor
+    LocationEditor,
+    ConfirmationDialog
   },
   computed: {
     buttonText() {
@@ -130,6 +143,19 @@ export default {
       this.addingLocation = false;
       this.editLocation = false;
       console.log("location creation/editing has been canceled.");
+    },
+    triggerDeleteLocation(location){
+      this.locationToDelete = location;
+      this.deleteLocationConfirmationText = this.deleteLocationConfirmationTemplate + this.locationToDelete.name;
+      this.isDeleteLocationDialogOpen = true;
+    },
+    onCancelLocationDeletion(){
+      this.locationToDelete = null;
+      this.isDeleteLocationDialogOpen = false;
+    },
+    onConfirmLocationDeletion(){
+      this.isDeleteLocationDialogOpen = false;
+      this.deleteLocation(this.locationToDelete);
     },
     deleteLocation(location) {
       console.log('deleting location', location);
