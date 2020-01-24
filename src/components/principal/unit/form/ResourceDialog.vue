@@ -37,6 +37,7 @@
                   <label class="form-label radio-inline" for="operational">Operațional:</label>
                   <input
                     type="radio"
+                    :disabled="!userHasRightsToEditCurrentUnit"
                     :value="operational"
                     v-model="resource.status.status"
                     id="operational"
@@ -47,6 +48,7 @@
                   <label class="form-label radio-inline" for="nonoperational">Neoperațional:</label>
                   <input
                     type="radio"
+                    :disabled="!userHasRightsToEditCurrentUnit"
                     :value="nonoperational"
                     v-model="resource.status.status"
                     id="nonoperational"
@@ -159,7 +161,15 @@ export default {
     },
     nonoperational() {
       return ResourceStatus.NONOPERATIONAL;
-    }
+    },
+    userRoles() {
+      return this.$store.state.user.userProfile.userRoles;
+    },
+    userHasRightsToEditCurrentUnit() {
+      return Boolean(
+        this.userRoles.find(r => r === 'supervisor' || r === this.unit.name)
+      );
+    },
 
   },
   methods: {
