@@ -11,8 +11,13 @@
       <div v-on:click="zoomToLocation(location)">
         <LocationItem :location="location"></LocationItem>
       </div>
-      <div class="delete-resource">
-        <button type="button" class="btn custom-close-button" @click="deleteLocation(location)">X</button>
+      <div style="display: flex">
+        <div class="edit-resource">
+          <button type="button" class="btn custom-edit-button" @click="startEditLocation(location.id)"><img src="static/icons/edit.png"/></button>
+        </div>
+        <div class="delete-resource">
+          <button type="button" class="btn custom-close-button" @click="deleteLocation(location)">X</button>
+        </div>
       </div>
     </div>
   </div>
@@ -80,14 +85,15 @@ export default {
       this.editLocation = true;
     },
     editLocationIfClicked(mapEvent) {
-      console.log(mapEvent);
       const location = MapService.getLocationAtPixel(mapEvent);
       if (location) {
-        console.log(location);
         console.log('found location with id ', location.getId());
-        this.newLocation = JSON.parse(JSON.stringify(this.locations.filter(l => l.id === location.getId())[0]));
-        this.editLocation = true;
+        this.startEditLocation(location.getId());
       }
+    },
+    startEditLocation(locationId){
+      this.newLocation = JSON.parse(JSON.stringify(this.locations.filter(l => l.id === locationId)[0]));
+      this.editLocation = true;
     },
     submitLocation(location) {
       if (this.addingLocation) {
