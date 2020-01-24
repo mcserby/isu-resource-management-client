@@ -30,6 +30,7 @@
           :disabled="isAddingDisabled()"
         >Adaugă</button>
         <button
+          :disabled="deleteButtonIsDisabled"
           type="button"
           class="btn custom-resource-management-button"
           @click="openConfirmationDialog"
@@ -102,6 +103,18 @@ export default {
     },
     unsavedChangesText() {
       return "Aveți modificări nesalvate. Sunteți sigur ca doriți să părăsiți pagina";
+    },
+    deleteButtonIsDisabled() {
+      if(this.isSelectedResource(ManagedResourceType.SUBUNITS)){
+        return this.$store.state.managementStore.managedSubUnits.length === 0;
+      }
+      if(this.isSelectedResource(ManagedResourceType.FUNCTIONS)){
+        return this.$store.state.managementStore.managedFunctions.length === 0;
+      }
+      if(this.isSelectedResource(ManagedResourceType.VEHICLE_TYPES)){
+        return this.$store.state.managementStore.managedVehicleTypes.length === 0;
+      }
+      return true;
     }
   },
   methods: {
