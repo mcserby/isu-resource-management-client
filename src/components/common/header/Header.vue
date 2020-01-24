@@ -22,9 +22,11 @@
       <span><a href="#" v-on:click="logout($event)">Deconectare</a></span>
     </div>
     <div class="other-modules-wrapper">
-      <div v-for="module in modules" v-bind:class="module.class" v-if="hasPermissions(module.associatedRole)">
-        <router-link class="custom-button btn" role="button" :to="module.link">{{module.name}}</router-link>
-      </div>
+        <div class="other-modules-inner-container">
+         <div v-for="module in modules" class="module-button" v-if="hasPermissions(module.associatedRole)">
+            <router-link class="custom-button btn" role="button" :to="module.link">{{module.name}}</router-link>
+          </div>
+        </div>
     </div>
   </div>
 </template>
