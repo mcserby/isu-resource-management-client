@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="location-item" @click="isCollapsed = !isCollapsed">
-      <span v-if="location.pointsOfInterest.length == 0">&nbsp&nbsp</span>
-      <span v-if="isCollapsed && location.pointsOfInterest.length > 0">+</span>
-      <span v-if="!isCollapsed && location.pointsOfInterest.length > 0">-</span>
+    <div class="location-item">
+      <span v-if="location.pointsOfInterest.length === 0">&nbsp&nbsp</span>
+      <span @click="isCollapsed = !isCollapsed" v-if="isCollapsed && location.pointsOfInterest.length > 0">+</span>
+      <span @click="isCollapsed = !isCollapsed" v-if="!isCollapsed && location.pointsOfInterest.length > 0">-</span>
       <span>{{name}}</span>
       <span>({{location.pointsOfInterest.length}})</span>
     </div>
@@ -23,10 +23,10 @@
 
   export default {
     name: 'LocationItem',
-    props: ['location'],
+    props: ['location', 'isSelected'],
     data: () => {
       return {
-        isCollapsed: true,
+        isCollapsed: !this.isSelected,
       }
     },
     computed: {

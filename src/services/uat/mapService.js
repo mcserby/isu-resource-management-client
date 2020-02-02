@@ -41,14 +41,18 @@ var locationsLayerSource = new VectorSource({});
 
 //vectorSource.addFeature(new Feature(new Circle([5e6, 7e6], 1e6)));
 
-var image = new Icon({
-  src: 'static/blacklocation.png',
-  scale: 0.05,
-});
-
 function iconStyleFunction(feature) {
+  let imgSrc = 'static/icons/blacklocation.png';
+  let scale = 0.04;
+  if(feature.getProperties().isSelected){
+    imgSrc = 'static/icons/red.png';
+    scale = 0.12;
+  }
   return new Style({
-    image: image,
+    image:  new Icon({
+      src: imgSrc,
+      scale: scale,
+    }),
     text: new Text({
       font: 'bold 16px sans-serif',
       offsetY: 35,
@@ -103,6 +107,7 @@ export default {
       id: location.id,
       geometry: new Point(location.coordinates),
       name: name,
+      isSelected: false,
       pointsOfInterest: location.pointsOfInterest
     });
     locationFeature.setId(location.id);
@@ -110,7 +115,6 @@ export default {
   },
 
   deleteLocation: function(location) {
-    console.log(locationsLayerSource.getFeatures());
     const featuresToRemove = locationsLayerSource.getFeatures().filter(f => f.getId() === location.id);
     featuresToRemove.forEach(f => locationsLayerSource.removeFeature(f));
   },
@@ -124,16 +128,27 @@ export default {
   },
 
   zoomToLocation: function(location) {
+    this.unHighlightAllFeatures();
+    this.highlightFeature(location.id);
     map.getView().animate({
-      zoom: 3
-    }, {
-      center: location.coordinates
+      zoom: 3,
+      duration: 250,
+      center: location.coordinates,
     });
   },
+
+  unHighlightAllFeatures(){
+    locationsLayerSource.getFeatures().forEach(f => f.setProperties({isSelected: false}));
+  },
+
+  highlightFeature(locationId){
+    const featuresToHighlight = locationsLayerSource.getFeatures().filter(f => f.getId() === locationId);
+    featuresToHighlight.forEach(f => f.setProperties({isSelected: true}));
+  },
+
   getLocationAtPixel: function(event) {
     const feature = map.forEachFeatureAtPixel(event.pixel,
       function(feature) {
-        console.log(feature);
         return feature;
       });
     return feature;

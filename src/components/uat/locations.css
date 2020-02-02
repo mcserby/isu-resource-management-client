@@ -15,6 +15,10 @@
    opacity: 0.5;
 }
 
+.selected-location {
+  background-color: #bce9f6;
+}
+
 .points-of-interest-container {
   padding-left: 50px;
 }
