@@ -94,7 +94,7 @@ export default {
       MapService.setMapClickHandler(this.triggerCreateLocation);
     },
     triggerCreateLocation(mapEvent) {
-      this.newLocation = new Location(Utils.createUUID(), "Locație nouă", mapEvent.coordinate, []);;
+      this.newLocation = new Location(Utils.createUUID(), '', mapEvent.coordinate, []);;
       this.editLocation = true;
     },
     editLocationIfClicked(mapEvent) {

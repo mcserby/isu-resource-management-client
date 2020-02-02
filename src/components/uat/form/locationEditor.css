@@ -58,6 +58,8 @@
 .unit-of-interest-browser-summary {
   display: flex;
   justify-content: space-between;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .unit-of-interest-browser-summary > span {

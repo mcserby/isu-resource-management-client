@@ -9,7 +9,7 @@
               minlength="3"
               required
               v-model="location.name"
-              @change="updateLocationName()"
+              @input="updateLocationName()"
               class="form-control"
               id="point-of-interest-name"
               aria-describedby="nameHelp"
@@ -130,7 +130,6 @@
         this.$emit('cancelEditLocation');
       },
       onPointOfInterestClick (pointOfInterest) {
-        console.log('should open point of interest')
         this.currentPointOfInterest = pointOfInterest;
         this.selectedPointOfInterestId = this.currentPointOfInterest.id;
       },
