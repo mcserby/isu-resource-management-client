@@ -183,13 +183,11 @@ export default {
     const self = this;
     let onLocationsReceived = function(response) {
         let r = JSON.parse(response.body);
-        console.log(r);
+        console.log('received locations:', r);
         self.$store.dispatch(
           A.INIT_LOCATIONS,
           new LocationsUpdatedNotification(r.locations)
         );
-        /*MapService.clearMap();
-        self.locations.forEach(l => MapService.addLocation(l));*/
       };
 
       let onError = function(error) {

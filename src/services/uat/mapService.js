@@ -26,6 +26,7 @@ import {
   Text,
   RegularShape
 } from 'ol/style';
+import Utils from '../utils'
 
 const extent = [0, 0, 8279, 5847];
 const projection = new Projection({
@@ -97,10 +98,11 @@ export default {
 
   addLocation: function(location) {
     this.deleteLocation(location);
+    const name = Utils.limitToNCharacters(location.name, 35);
     const locationFeature = new Feature({
       id: location.id,
       geometry: new Point(location.coordinates),
-      name: location.name,
+      name: name,
       pointsOfInterest: location.pointsOfInterest
     });
     locationFeature.setId(location.id);

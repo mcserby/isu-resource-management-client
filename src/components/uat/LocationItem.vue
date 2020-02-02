@@ -19,6 +19,8 @@
 
 
 <script>
+  import Utils from '../../services/utils'
+
   export default {
     name: 'LocationItem',
     props: ['location'],
@@ -29,7 +31,7 @@
     },
     computed: {
       name() {
-        return this.location.name.length > 35? this.location.name.substring(0, 35) + '...': this.location.name;
+        return Utils.limitToNCharacters(this.location.name, 35);
       }
     }
   }
