@@ -1,5 +1,5 @@
 .editor-dialog {
-  max-width: 796px;
+  max-width: 1024px;
 }
 
 .location-dialog-container {
@@ -55,6 +55,13 @@
   grid-row: row ;
 }
 
+.unit-of-interest-browser-summary {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 .unit-of-interest-browser-summary > span {
   cursor: pointer;
 }
@@ -106,5 +113,8 @@
   display: grid;
   grid-gap: 10px;
   grid-template-columns: 50% 50%;
+}
+
+.delete-point-of-interest {
 }
 

@@ -35,7 +35,9 @@ const mutations = {
     if(locationIndex >= 0){
       state.locations.splice(locationIndex, 1);
     }
+    location.pointsOfInterest.sort((p1, p2) => p1.name.localeCompare(p2.name));
     state.locations.push(location);
+    state.locations.sort((l1, l2) => l1.name.localeCompare(l2.name));
   },
   [M.DELETE_LOCATION](state, location) {
     const locationIndex = state.locations.findIndex(
@@ -45,6 +47,8 @@ const mutations = {
   },
   [M.INIT_LOCATIONS](state, locationsUpdate) {
     state.locations.splice(0, state.locations.length);
+    locationsUpdate.locations.forEach(l => l.pointsOfInterest.sort((p1, p2) => p1.name.localeCompare(p2.name)));
+    locationsUpdate.locations.sort((l1, l2) => l1.name.localeCompare(l2.name));
     state.locations = locationsUpdate.locations;
   },
 

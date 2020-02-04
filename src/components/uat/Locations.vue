@@ -7,9 +7,9 @@
     </div>
   </div>
   <div style="height: calc(100vh - 250px); overflow-y: scroll">
-    <div class="location-wrapper" :class="{ 'half-opacity': addingLocation }" v-for="(location) in locations" v-bind:key="location.id">
-      <div v-on:click="zoomToLocation(location)">
-        <LocationItem :location="location"></LocationItem>
+    <div class="location-wrapper" :class="{ 'half-opacity': addingLocation, 'selected-location': isSelected(location) }" v-for="(location) in locations" v-bind:key="location.id">
+      <div v-on:click="selectLocation(location)">
+        <LocationItem :location="location" :isSelected="isSelected(location)"></LocationItem>
       </div>
       <div style="display: flex">
         <div class="edit-resource">
@@ -63,6 +63,7 @@ export default {
       deleteLocationConfirmationTitle: "Ștergere locație",
       deleteLocationConfirmationTemplate: "Locația și toate obiectivele asignate locației vor fi șterse. Sunteți sigur că doriți să ștergeți locația ",
       deleteLocationConfirmationText: null,
+      selectedLocationId: '',
     };
   },
   components: {
@@ -88,13 +89,16 @@ export default {
     removeAccents(text){
       return text.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
     },
+    isSelected(location){
+      return this.selectedLocationId === location.id;
+    },
     addNewLocation() {
       this.addingLocation = true;
       MapService.unsetMapClickHandler(this.editLocationIfClicked);
       MapService.setMapClickHandler(this.triggerCreateLocation);
     },
     triggerCreateLocation(mapEvent) {
-      this.newLocation = new Location(Utils.createUUID(), "Locație nouă", mapEvent.coordinate, []);;
+      this.newLocation = new Location(Utils.createUUID(), '', mapEvent.coordinate, []);;
       this.editLocation = true;
     },
     editLocationIfClicked(mapEvent) {
@@ -169,7 +173,8 @@ export default {
           )
         );
     },
-    zoomToLocation(location) {
+    selectLocation(location) {
+      this.selectedLocationId = location.id;
       MapService.zoomToLocation(location);
     },
   },
@@ -183,13 +188,11 @@ export default {
     const self = this;
     let onLocationsReceived = function(response) {
         let r = JSON.parse(response.body);
-        console.log(r);
+        console.log('received locations:', r);
         self.$store.dispatch(
           A.INIT_LOCATIONS,
           new LocationsUpdatedNotification(r.locations)
         );
-        /*MapService.clearMap();
-        self.locations.forEach(l => MapService.addLocation(l));*/
       };
 
       let onError = function(error) {

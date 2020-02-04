@@ -9,4 +9,8 @@ export default {
     });
   },
 
+  limitToNCharacters(text, maxNumberOfCharacters){
+    return text.length > maxNumberOfCharacters? text.substring(0, maxNumberOfCharacters) + '...': text;
+  }
+
 }
