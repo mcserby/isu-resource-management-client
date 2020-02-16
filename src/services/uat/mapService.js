@@ -102,7 +102,7 @@ export default {
 
   addLocation: function(location) {
     this.deleteLocation(location);
-    const name = Utils.limitToNCharacters(location.name, 35);
+    const name = Utils.limitToNCharacters(location.name, 25);
     const locationFeature = new Feature({
       id: location.id,
       geometry: new Point(location.coordinates),

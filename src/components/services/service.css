@@ -15,6 +15,7 @@
 }
 
 .app-sa .service-rowNr {
+  text-align: center;
   grid-column: 1 / span 1;
   grid-row: 1 / span 1;
   font-size: x-large;
@@ -27,31 +28,31 @@
 }
 
 .app-sa .service-title {
-  grid-column: 7 / span 3;
+  grid-column: 4 / span 1;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
 .app-sa .service-role {
-  grid-column: 10 / span 3;
+  grid-column: 5 / span 1;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
 .app-sa .service-subUnit {
-  grid-column: 13 / span 3;
+  grid-column: 6 / span 1;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
 .app-sa .service-contact {
-  grid-column: 16 / span 3;
+  grid-column: 7 / span 2;
   grid-row: 1 / span 1;
   font-size: x-large;
 }
 
 .app-sa .service-actions {
-  grid-column: 19 / span 3;
+  grid-column: 9 / span 2;
   grid-row: 1 / span 1;
   font-size: x-large;
 }

@@ -31,7 +31,7 @@
     },
     computed: {
       name() {
-        return Utils.limitToNCharacters(this.location.name, 35);
+        return Utils.limitToNCharacters(this.location.name, 25);
       }
     }
   }
