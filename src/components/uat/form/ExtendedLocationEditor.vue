@@ -82,7 +82,7 @@
       return {
         errors: [],
         changesPerformed: false,
-        currentPointOfInterest: new PointOfInterest(null, 'Adaugă un obiectiv', '', ''),
+        currentPointOfInterest: new PointOfInterest(null, '', '', ''),
       }
     },
     computed: {
@@ -115,7 +115,7 @@
         this.closeAddPointOfInterestDialog();
       },
       addNewPointOfInterest () {
-        this.currentPointOfInterest = new PointOfInterest(Utils.createUUID(), 'Punct de interes nou', '', '');
+        this.currentPointOfInterest = new PointOfInterest(Utils.createUUID(), '', '', '');
         this.location.pointsOfInterest.push(JSON.parse(JSON.stringify(this.currentPointOfInterest)));
         this.changesPerformed = true;
       },
