@@ -2,7 +2,7 @@
   "name": "isu-resource-management-client",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "FREQUENTIS-NT\\ACentea <Andrei.CENTEA@frequentis.com>",
+  "author": "ISU Team",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
