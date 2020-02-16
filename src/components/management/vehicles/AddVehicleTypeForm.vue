@@ -1,18 +1,20 @@
 <template>
   <div>
     <div class="form-group add-vehicle-form">
-      <label class="form-label" for="name">Numele scurt</label>
+      <label class="form-label" for="shortName">Numele scurt</label>
       <input
         type="text"
+        :disabled="nameEditDisabled"
         required
         v-model="shortName"
         class="form-control"
         id="shortName"
         @input="validateFields()"
       >
-      <label class="form-label" for="name">Numele lung</label>
+      <label class="form-label" for="longName">Numele lung</label>
       <input
         type="text"
+        :disabled="nameEditDisabled"
         required
         v-model="longName"
         class="form-control"
@@ -42,6 +44,9 @@ import WebsocketSend from "../../../contracts/websocketSend";
 export default {
   name: "AddVehicleTypeForm",
   computed: {
+    nameEditDisabled() {
+      return this.$store.state.managementStore.managedVehicleTypes.length === 0;
+    },
     shortName: {
       // getter
       get: function() {

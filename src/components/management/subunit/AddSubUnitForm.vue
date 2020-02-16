@@ -4,7 +4,7 @@
       <label class="form-label" for="name">Numele subunității</label>
       <input
         type="text"
-        :disabled="true"
+        :disabled="subunitNameDisabled"
         minlength="1"
         maxlength="10"
         required
@@ -40,6 +40,9 @@ export default {
     return { errors: [], editedName: null };
   },
   computed: {
+    subunitNameDisabled() {
+      return this.$store.state.managementStore.managedSubUnits.length === 0;
+    },
     name: {
       // getter
       get: function() {

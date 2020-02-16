@@ -4,6 +4,7 @@
       <label class="form-label" for="name">Numele funcției</label>
       <input
         type="text"
+        :disabled="nameEditDisabled"
         required
         v-model="name"
         class="form-control"
@@ -37,6 +38,9 @@ export default {
     return { errors: [], editedName: null };
   },
   computed: {
+    nameEditDisabled() {
+      return this.$store.state.managementStore.managedFunctions.length === 0;
+    },
     name: {
       // getter
       get: function() {
@@ -91,7 +95,7 @@ export default {
           )
         );
       }
-      
+
       this.$store.dispatch(A.CHANGES_SAVED);
     },
     isInvalidEditedName() {
