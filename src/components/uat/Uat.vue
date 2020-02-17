@@ -1,6 +1,8 @@
 <template>
 <div>
-  <Header title="UAT" :displaySearchBar="true" :search-bar-placeholder="'Caută locații'" v-on:text="onSearchTextChanged"></Header>
+  <Header title="UAT" :displaySearchBar="true"
+          :initial-search-text="initialSearchText"
+          :search-bar-placeholder="'Caută locații'" v-on:text="onSearchTextChanged"></Header>
   <div class='uat-row'>
     <div class='uat-column map-column'>
         <div id="map" style="height: 100%; width: 100%;"></div>
@@ -31,6 +33,9 @@ export default {
     Locations
   },
   computed: {
+    initialSearchText() {
+      return this.$store.state.uatStore.filteringText;
+    },
     locations(){
       return this.$store.state.uatStore.locations;
     }

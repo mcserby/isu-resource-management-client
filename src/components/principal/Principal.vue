@@ -1,6 +1,8 @@
 <template>
   <div class="principal app-sa">
-    <Header title="Principal" :displaySearchBar="true" :search-bar-placeholder="'Caută după cheia misiunii'" v-on:text="onSearchTextChanged"></Header>
+    <Header title="Principal" :displaySearchBar="true"
+            :initial-search-text="initialSearchText"
+            :search-bar-placeholder="'Caută după cheia misiunii'" v-on:text="onSearchTextChanged"></Header>
     <ul class="nav nav-tabs">
       <li class="nav-item" v-for="tab in tabs">
         <template class="nav-item">
@@ -72,6 +74,9 @@ export default {
     };
   },
   computed: {
+    initialSearchText() {
+      return this.$store.state.principalStore.searchText;
+    },
     units() {
       return this.$store.state.principalStore.units;
     },

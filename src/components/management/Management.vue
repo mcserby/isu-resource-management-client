@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header title="Management" :displaySearchBar="false"></Header>
+    <Header title="Management" :displaySearchBar="false"  :initial-search-text="''"></Header>
     <div class="managed-resources-grid">
       <div class="managed-resource-type">Tipul de resursă</div>
       <div class="managed-resource-types">

@@ -1,6 +1,9 @@
 ﻿<template>
   <div>
-    <Header title="Servicii" :displaySearchBar="true" :search-bar-placeholder="'Caută după nume și prenume sau funcție'" v-on:text="onSearchTextChanged"></Header>
+    <Header title="Servicii" :displaySearchBar="true"
+            :initial-search-text="initialSearchText"
+            :search-bar-placeholder="'Caută după nume și prenume sau funcție'"
+            v-on:text="onSearchTextChanged"></Header>
     <div class="services-buttons">
       <button
         class="custom-service-button delete-button btn"
@@ -161,7 +164,9 @@
       isDeleteServiceDialogOpen() {
         return this.$store.state.servicesStore.isDeleteServiceDialogOpen;
       },
-
+      initialSearchText() {
+        return this.$store.state.servicesStore.searchText;
+      },
       filteredServices() {
         //Sort services by role
         let sortedServices = this.sortByRole(this.services);
