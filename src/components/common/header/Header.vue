@@ -42,6 +42,7 @@
       title : String,
       displaySearchBar: Boolean,
       searchBarPlaceholder: String,
+      initialSearchText: String,
     },
     data: () => {
       return {
@@ -59,7 +60,7 @@
       },
       searchText: {
         get() {
-          return this.$store.state.principalStore.searchText;
+          return this.initialSearchText;
         },
         set(value) {
           this.$emit('text', value);

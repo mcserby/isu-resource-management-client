@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header title="Rapoarte" :displaySearchBar="false"></Header>
+    <Header title="Rapoarte" :displaySearchBar="false" :initial-search-text="''"></Header>
     <div class="report-list-buttons">
       <button
         type="button"

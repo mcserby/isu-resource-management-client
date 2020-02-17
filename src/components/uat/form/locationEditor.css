@@ -56,6 +56,7 @@
 }
 
 .unit-of-interest-browser-summary {
+  text-align: left;
   display: flex;
   justify-content: space-between;
   margin-top: 5px;
