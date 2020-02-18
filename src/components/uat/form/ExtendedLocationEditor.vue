@@ -45,7 +45,7 @@
                     :disabled="addNewPointOfInterestDisabled()"
                   >Adaugă obiectiv
                   </button>
-                </div>u
+                </div>
               </div>
             </div>
             <PointOfInterestEditor :interest="currentPointOfInterest" @edited="onPointOfInterestEdited"></PointOfInterestEditor>
