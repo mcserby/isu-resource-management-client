@@ -70,27 +70,6 @@
     },
     mounted: function () {
       console.log("Report.vue mounted");
-      const self = this;
-      let onError = function (error) {
-        console.err(error);
-      };
-
-      let onEquipmentReportReceived = function (response) {
-        self.$store.dispatch(A.SHOW_PDF_FILE, {'response': response.body, 'fileName': 'Raport S61.xlsx'});
-      };
-
-      let onMissionReportReceived = function (response) {
-        self.$store.dispatch(A.SHOW_PDF_FILE, {'response': response.body, 'fileName': 'Raport misiuni.xlsx'});
-      };
-      this.$store.dispatch(
-        A.WEBSOCKET_SUBSCRIBE_USER,
-        new WebsocketSubscribe("equipmentReport", onEquipmentReportReceived, onError)
-      );
-      this.$store.dispatch(
-        A.WEBSOCKET_SUBSCRIBE_USER,
-        new WebsocketSubscribe("missionsReport", onMissionReportReceived, onError)
-      );
-
     }
   }
 </script>

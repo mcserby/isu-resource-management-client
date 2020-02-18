@@ -42,6 +42,26 @@ export default {
         A.WEBSOCKET_SUBSCRIBE,
         new WebsocketSubscribe("unitUpdatedNotification", onUnitUpdated, onError)
       );
+
+      if(this.$store.state.user.userProfile.userRoles.find(r => r === 'rapoarte')) {
+        console.log("subscribing to reports...");
+        let onEquipmentReportReceived = function (response) {
+          self.$store.dispatch(A.SHOW_PDF_FILE, {'response': response.body, 'fileName': 'Raport S61.xlsx'});
+        };
+
+        let onMissionReportReceived = function (response) {
+          self.$store.dispatch(A.SHOW_PDF_FILE, {'response': response.body, 'fileName': 'Raport misiuni.xlsx'});
+        };
+        this.$store.dispatch(
+          A.WEBSOCKET_SUBSCRIBE_USER,
+          new WebsocketSubscribe("equipmentReport", onEquipmentReportReceived, onError)
+        );
+        this.$store.dispatch(
+          A.WEBSOCKET_SUBSCRIBE_USER,
+          new WebsocketSubscribe("missionsReport", onMissionReportReceived, onError)
+        );
+      }
+
     }
   },
   beforeMount: function() {
