@@ -20,7 +20,7 @@ function stompConnect() {
       state.connectionError = error;
       state.connected = false;
       state.subscriptions = [];
-      setTimeout(stompConnect(), 1000);
+      setTimeout(stompConnect(), 10000);
     }
   );
 }
@@ -80,7 +80,7 @@ const mutations = {
       } else {
         console.log("Not connected to websocket yet!!!");
       }
-    }, 100);
+    }, 20000);
   },
   [M.WEBSOCKET_SUBSCRIBE_USER](state, websocketSubscribe) {
     var sendSubscribe = setInterval(websocketSend => {
@@ -94,7 +94,7 @@ const mutations = {
       } else {
         console.log("Not connected to websocket yet!!!");
       }
-    }, 100);
+    }, 20000);
   },
   [M.WEBSOCKET_UNSUBSCRIBE](state, websocketUnsubscribe) {
     const sendUnsubscribe = setInterval(websocketSend => {
@@ -107,7 +107,7 @@ const mutations = {
       } else {
         console.log("Not connected to websocket yet!!!");
       }
-    }, 100);
+    }, 20000);
   },
   [M.WEBSOCKET_SEND](state, websocketSend) {
     if (state.websocketStompClient && state.websocketStompClient.connected) {
