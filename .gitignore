@@ -18,8 +18,9 @@ yarn-error.log*
 *.sln
 *.iml
 
-# Maven wrapper
-mvnw
-mvnw.cmd
+# Custom dev settings
 maven.config
 .gitconfig
+mvnw
+mvnw.cmd
+.mvn/

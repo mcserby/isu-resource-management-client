@@ -24,3 +24,17 @@ npm test
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+
+## Maven Setup
+
+In order to avoid using installed maven version on the machine(and existing maven configuration), or to avoid installing it:
+
+# setup maven wrapper for the current project
+mvn -N io.takari:maven:wrapper
+
+# run maven wrapper instead of installed maven
+./mvnw clean install
+mvnw.cmd clean install
+
+For more details refer to the project [page](https://github.com/takari/maven-wrapper).
